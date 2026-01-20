@@ -13,7 +13,18 @@ return new class extends Migration
     {
         Schema::create('desarrollador', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre', 40);
+            $table->string('email', 40);
+            $table->enum('rol', ['administrador', 'desarrollador', 'product_owner'])->default('administrador');
+            $table->string('contraseña');//Que tipo debe ser la contraseña
+            $table->dateTime('fecha_alta');
+
+            //Para actualizar la tabla
             $table->timestamps();
+
+            //relaciones con la tabla administrador
+            $table->foreignId('id_administrador')->constrained('administrador')->cascadeOnDelete()->cascadeOnUpdate();
+
         });
     }
 

@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('comentario', function (Blueprint $table) {
             $table->id();
+            $table->text('texto');
+            $table->date('fecha');
+
+            //Para actualizarlo a tiempo
             $table->timestamps();
+
+            $table->foreign('id_desarrollador')->constrained('desarrollador')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
