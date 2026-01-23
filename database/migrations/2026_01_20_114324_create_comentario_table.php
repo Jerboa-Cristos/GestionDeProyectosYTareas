@@ -19,7 +19,7 @@ return new class extends Migration
             //Para actualizarlo a tiempo
             $table->timestamps();
 
-            $table->foreign('id_desarrollador')->constrained('desarrollador')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('id_desarrollador')->constrained('desarrollador')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
