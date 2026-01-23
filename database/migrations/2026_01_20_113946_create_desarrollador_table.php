@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 40);
             $table->string('email', 40);
-            $table->enum('rol', ['administrador', 'desarrollador', 'product_owner'])->default('administrador');
+            $table->enum('rol', ['administrador', 'desarrollador', 'product_owner'])->default('desarrollador');
             $table->string('contraseña');//Que tipo debe ser la contraseña
             $table->dateTime('fecha_alta');
 
