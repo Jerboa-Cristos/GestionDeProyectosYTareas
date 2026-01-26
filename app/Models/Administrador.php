@@ -14,6 +14,6 @@ class Administrador extends Model
     }
 
     public function productOwners() {
-        //return $this->hasMany(ProductOwner::class);
+        return $this->hasMany(ProductOwner::class);
     }
 }
