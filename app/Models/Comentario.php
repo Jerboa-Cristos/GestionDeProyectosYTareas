@@ -9,6 +9,7 @@ class Comentario extends Model
     protected $table = 'comentario';
     protected $fillable = ['texto', 'fecha'];
 
+    
     public function desarrollador() {
         return $this->belongsTo(Desarrollador::class);
     }
