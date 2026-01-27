@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('tarea', function (Blueprint $table) {
             $table->id();
+            $table->text('descripcion');
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
+
             $table->timestamps();
+
+            $table->foreignId('id_desarrollador')->constrained('desarrollador')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
