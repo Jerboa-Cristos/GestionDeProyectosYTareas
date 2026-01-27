@@ -17,4 +17,8 @@ class Comentario extends Model
     public function productowner() {
         return $this->belongsTo(ProductOwner::class);
     }
+
+    public function tarea() {
+        return $this->belongsTo(Tarea::class);
+    }
 }
