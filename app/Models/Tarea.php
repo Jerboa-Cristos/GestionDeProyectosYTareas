@@ -21,6 +21,10 @@ class Tarea extends Model
         return $this->belongsTo(Sprint::class);
     }
 
+    public function estado() {
+        return $this->belongsTo(Estado::class);
+    }
+
     public function comentario() {
         return $this->hasMany(Comentario::class);
     }
