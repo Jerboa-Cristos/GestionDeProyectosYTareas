@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 40);
             $table->string('email', 40);
-            $table->string('contraseña');//Que tipo debe ser la contraseña
+            $table->string('password');
             $table->dateTime('fecha_alta');
 
             //Para actualizar las tablas

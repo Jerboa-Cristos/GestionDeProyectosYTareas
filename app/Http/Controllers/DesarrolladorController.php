@@ -9,4 +9,8 @@ class DesarrolladorController extends Controller
     //El desarrolladro puede:
     //Comentar tareas
     //Editar Tareas
+
+    public function mostrarDes() {
+        
+    }
 }

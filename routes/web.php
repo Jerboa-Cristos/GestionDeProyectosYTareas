@@ -31,3 +31,7 @@ Route::get('/', function () {
 //  Edición de tareas
 //  Creación de tareas
 
+//Desarrollador
+//  Dashboard
+//  Tareas Listado
+//  Tablero kanban (No se puede añadir tareas nuevas)
