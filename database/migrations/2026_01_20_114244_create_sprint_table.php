@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('sprint', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre', 40);
+            $table->dateTime('fecha_inicio');
+            $table->dateTime('fecha_fin');
             $table->timestamps();
+
+            //relaciones
+            $table->foreignId('id_proyecto')->constrained('proyecto')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
