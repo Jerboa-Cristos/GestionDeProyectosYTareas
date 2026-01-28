@@ -13,7 +13,17 @@ return new class extends Migration
     {
         Schema::create('proyecto', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre', 40);
+            $table->text('descripcion', 300);
+            $table->dateTime('fecha_inicio');
+            $table->dateTime('fecha_fin');
             $table->timestamps();
+
+            //relaciones
+            $table->foreignId('id_product_owner')->constrained('product_owner')->cascadeOnDelete()->cascaOnUpdate();
+            $table->foreignId('id_desarrollador')->constrained('desarrollador')->cascadeOnDelete()->cascadeOnUpdate();
+
+
         });
     }
 
