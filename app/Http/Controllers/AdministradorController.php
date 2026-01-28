@@ -13,24 +13,15 @@ class AdministradorController extends Controller
     //Crear usuarios
     public function crearUsuarios(Request $request) {
         $usuarios = $request->validate([
-            'nombre'=>'',
-            'email'=>'',
-            'password'=>''
-
-        ]);
-        
-        if($request = 'Desarrollador') {
-            Desarrollador::create($usuarios);
-        } else {
-            //ProductOwner::create($usuarios);
-        }
-
-        
+            'nombre'=>'required|max:40',
+            'email'=>'required|unique:users|email',
+            'password'=>'required|confirmed',
+        ]);        
     }
 
     //Editar usuarios
-    public function editarUsuarios() {
-
+    public function editarUsuarios(Request $request) {
+        
     }
 
     //Borrar usuarios
