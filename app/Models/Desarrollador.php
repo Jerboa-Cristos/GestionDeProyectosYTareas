@@ -12,4 +12,16 @@ class Desarrollador extends Model
     public function administrador() {
         return $this->belongsTo(Administrador::class);
     }
+
+    public function tarea() {
+        return $this->hasMany(Tarea::class);
+    }
+
+    public function proyecto() {
+        return $this->belongsTo(Proyecto::class);
+    }
+
+    public function comentario() {
+        return $this->hasMany(Comentario::class);
+    }
 }
