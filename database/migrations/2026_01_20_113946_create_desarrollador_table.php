@@ -23,6 +23,7 @@ return new class extends Migration
 
             //relaciones con la tabla administrador
             $table->foreignId('id_administrador')->constrained('administrador')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('id_proyecto')->constrained('proyecto')->cascadeOnDelete()->cascadeOnUpdate();
 
         });
     }

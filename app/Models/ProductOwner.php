@@ -19,9 +19,16 @@ class ProductOwner extends Model
         return $this->hasMany(Proyecto::class, 'id_product_owner');
     }
 
+
     public function sprints(){
         return $this->hasManyThrough(Sprint::class, Proyecto::class, 'id_product_owner', 'id_proyecto');
     }
+
+    public function comentarios(){
+        return $this->hasMany(Comentario::class, 'id_productOwner');
+    }
+
+    
 
 
 }
