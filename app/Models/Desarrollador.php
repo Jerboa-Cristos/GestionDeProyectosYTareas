@@ -10,6 +10,7 @@ class Desarrollador extends Model
     protected $fillable = ['nombre', 'email', 'constraseña', 'fecha_alta'];
 
     public function administrador() {
+        
         return $this->belongsTo(Administrador::class);
     }
 

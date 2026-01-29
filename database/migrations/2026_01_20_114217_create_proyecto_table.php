@@ -21,7 +21,7 @@ return new class extends Migration
 
             //relaciones
             $table->foreignId('id_product_owner')->constrained('product_owner')->cascadeOnDelete()->cascaOnUpdate();
-            $table->foreignId('id_desarrollador')->constrained('desarrollador')->cascadeOnDelete()->cascadeOnUpdate();
+
 
 
         });
