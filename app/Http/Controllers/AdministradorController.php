@@ -26,17 +26,16 @@ class AdministradorController extends Controller
     }
 
     //Editar usuarios
-    public function editarUsuarios(Request $request) {
-        $email = $request->get('email');
+    public function editarUsuarios(Request $request, $id) {
         $rol = $request->get('rol');
         if($rol == 'Desarrollador') {
-            Desarrollador::where('email', $email)->firstOrFail()->update([
+            Desarrollador::find($id)->firstOrFail()->update([
                 'nombre'=>$request->get('nombre'),
                 'email'=>$request->get('email'),
                 'password'=>$request->get('password')
             ]);
         } else {
-            ProductOwner::where('email', $email)->firstOrFail()->update([
+            ProductOwner::find($id)->firstOrFail()->update([
                 'nombre'=>$request->get('nombre'),
                 'email'=>$request->get('email'),
                 'password'=>$request->get('password')
@@ -45,13 +44,12 @@ class AdministradorController extends Controller
     }
 
     //Borrar usuarios
-    public function eliminarUsuarios(Request $request) {
-        $email = $request->get('email');
+    public function eliminarUsuarios(Request $request, $id) {
         $rol = $request->get('rol');
         if($rol == 'Desarrollador') {
-            Desarrollador::where('email', $email)->firstOrFail()->delete();
+            Desarrollador::find($id)->firstOrFail()->delete();
         } else {
-            ProductOwner::where('email', $email)->firstOrFail()->delete();
+            ProductOwner::find($id)->firstOrFail()->delete();
         }
     }
 }

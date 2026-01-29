@@ -13,13 +13,13 @@ class ComentarioController extends Controller
         Comentario::create($request);
     }
 
-    public function editar(Request $request) {
-        Comentario::where('texto', $request->get('texto'))->firstOrFail()->update([
+    public function editar(Request $request, $id) {
+        Comentario::find($id)->firstOrFail()->update([
             'texto'=>$request->get('texto'),
         ]);
     }
 
-    public function eliminar(Request $request) {
-        Comentario::where('texto', $request->get('texto'))->firstOrFail()->delete();
+    public function eliminar($id) {
+        Comentario::find($id)->firstOrFail()->delete();
     }
 }
