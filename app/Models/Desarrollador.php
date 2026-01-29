@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Desarrollador extends Model
 {
     protected $table = 'desarrollador';
-    protected $fillable = ['nombre', 'email', 'constraseña', 'fecha_alta'];
+    protected $fillable = ['nombre', 'email', 'constraseña'];
 
     public function administrador() {
         

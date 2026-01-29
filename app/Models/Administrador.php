@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Administrador extends Model
 {
     protected $table = 'administrador';
-    protected $fillable = ['nombre', 'email', 'constraseña', 'fecha_alta'];
+    protected $fillable = ['nombre', 'email', 'constraseña'];
 
     public function desarrolladores() {
         return $this->hasMany(Desarrollador::class);
