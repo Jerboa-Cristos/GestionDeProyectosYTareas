@@ -27,23 +27,31 @@ class AdministradorController extends Controller
 
     //Editar usuarios
     public function editarUsuarios(Request $request) {
-        $usuarios = $request->validate([
-            'nombre'=>'required|max:100',
-            'email'=>'required|unique:users|email',
-            'password'=>'required|confirmed',
-        ]);
-
         $email = $request->get('email');
         $rol = $request->get('rol');
         if($rol == 'Desarrollador') {
-            Desarrollador::fileinode($email);
+            Desarrollador::where('email', $email)->firstOrFail()->update([
+                'nombre'=>$request->get('nombre'),
+                'email'=>$request->get('email'),
+                'password'=>$request->get('password')
+            ]);
         } else {
-            ProductOwner::create($usuarios);
+            ProductOwner::where('email', $email)->firstOrFail()->update([
+                'nombre'=>$request->get('nombre'),
+                'email'=>$request->get('email'),
+                'password'=>$request->get('password')
+            ]);
         }
     }
 
     //Borrar usuarios
-    public function eliminarUsuarios() {
-
+    public function eliminarUsuarios(Request $request) {
+        $email = $request->get('email');
+        $rol = $request->get('rol');
+        if($rol == 'Desarrollador') {
+            Desarrollador::where('email', $email)->firstOrFail()->delete();
+        } else {
+            ProductOwner::where('email', $email)->firstOrFail()->delete();
+        }
     }
 }
