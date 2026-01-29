@@ -13,7 +13,7 @@ class AdministradorController extends Controller
     //Crear usuarios
     public function crearUsuarios(Request $request) {
         $usuarios = $request->validate([
-            'nombre'=>'required|max:40',
+            'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|confirmed',
         ]);
@@ -28,7 +28,7 @@ class AdministradorController extends Controller
     //Editar usuarios
     public function editarUsuarios(Request $request) {
         $usuarios = $request->validate([
-            'nombre'=>'required|max:40',
+            'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|confirmed',
         ]);
