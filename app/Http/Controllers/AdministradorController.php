@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Desarrollador;
-
+use App\Models\ProductOwner;
 use Illuminate\Http\Request;
 
 class AdministradorController extends Controller
@@ -11,12 +11,17 @@ class AdministradorController extends Controller
     //El Administrador puede:
 
     //Crear usuarios
-    public function crearUsuarios(Request $request) {
+    public function crearUsuarios(Request $request, string $choice) {
         $usuarios = $request->validate([
             'nombre'=>'required|max:40',
             'email'=>'required|unique:users|email',
             'password'=>'required|confirmed',
         ]);        
+        if($choice == 'Desarrollador') {
+            Desarrollador::create($usuarios);
+        } else {
+            ProductOwner::create($usuarios);
+        }
     }
 
     //Editar usuarios
