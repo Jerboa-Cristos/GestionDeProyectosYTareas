@@ -8,7 +8,7 @@ class Proyecto extends Model
 {
     protected $table = 'proyecto';
 
-    protected $fillable = ['nombre', 'descripcion', 'fecha_inicio', 'fecha_fin', 'id_product_owner'];
+    protected $fillable = ['nombre', 'descripcion'];
 
     public function product_owner(){
         return $this->belongsTo(ProductOwner::class, 'id_product_owner');
