@@ -22,7 +22,7 @@ class Tarea extends Model
     }
 
     public function estado() {
-        return $this->belongsTo(Estado::class);
+        return $this->belongsToMany(Estado::class);
     }
 
     public function comentario() {
