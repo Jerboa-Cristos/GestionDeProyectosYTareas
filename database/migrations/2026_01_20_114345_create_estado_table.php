@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('estado', function (Blueprint $table) {
             $table->id();
+            $table->enum('tipo', ['Por Hacer', 'En Curso', 'En Revision', 'Finalizado']);
             $table->timestamps();
         });
     }
