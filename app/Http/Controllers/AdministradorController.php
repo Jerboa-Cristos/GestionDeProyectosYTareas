@@ -16,7 +16,7 @@ class AdministradorController extends Controller
 #region
     public function indexDesarrollador(){ //Mostrar datos sobre usuarios
         $desarrolladores=Desarrollador::all();
-        return view('administrador/gestionUsuarios',['desarrolador'=>$desarrolladores]);
+        return view('administrador/index',['desarrolador'=>$desarrolladores]);
     }
 
         //Crear usuarios
@@ -59,7 +59,7 @@ class AdministradorController extends Controller
 #region
     public function indexProductOwner(){ //Mostrar datos sobre usuarios
         $productOwners=ProductOwner::all();
-        return view('administrador/gestionUsuarios',['product_owner'=>$productOwners]);
+        return view('administrador/index',['product_owner'=>$productOwners]);
     }
 
             //Crear usuarios
