@@ -9,14 +9,14 @@ class AdministradorController extends Controller
 {
 
     public function create() {//FORMULARIO para crear la entidad. Solo devuelve la vista al formulario
-        return view('/administrador/create');
+        return view('administrador.create_Admin');
     }
 
 //DESARROLLADOR
 #region
     public function indexDesarrollador(){ //Mostrar datos sobre usuarios
         $desarrolladores=Desarrollador::all();
-        return view('administrador/index',['desarrolador'=>$desarrolladores]);
+        return view('administrador.index_Admin',['desarrolador'=>$desarrolladores]);
     }
 
         //Crear usuarios
@@ -32,12 +32,12 @@ class AdministradorController extends Controller
 
     public function showDesarrollador($id) {//Muestra solo UNA cosa específica
         $desarrollador = Desarrollador::find($id);
-        return view('administrador/show')->with('desarrollador', $desarrollador);
+        return view('administrador.show_Admin')->with('desarrollador', $desarrollador);
     }
 
     public function editDesarrollador($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
         $desarrollador=Desarrollador::find($id);
-        return view('/administrador/edit')->with('desarrollador', $desarrollador);
+        return view('/administrador.edit_Admin')->with('desarrollador', $desarrollador);
     }
 
     //Editar usuarios
@@ -59,7 +59,7 @@ class AdministradorController extends Controller
 #region
     public function indexProductOwner(){ //Mostrar datos sobre usuarios
         $productOwners=ProductOwner::all();
-        return view('administrador/index',['product_owner'=>$productOwners]);
+        return view('administrador.index_Admin',['product_owner'=>$productOwners]);
     }
 
             //Crear usuarios
@@ -75,12 +75,12 @@ class AdministradorController extends Controller
 
     public function showProductOwner($id) {//Muestra solo UNA cosa específica
         $productOwner=ProductOwner::find($id);
-        return view('administrador/show')->with('productOwner', $productOwner);
+        return view('administrador.show_Admin')->with('productOwner', $productOwner);
     }
 
     public function editProductOwner($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
         $productOwner=ProductOwner::find($id);
-        return view('/administrador/edit')->with('productOwner', $productOwner);
+        return view('/administrador.edit_Admin')->with('productOwner', $productOwner);
     }
 
     //Editar usuarios
