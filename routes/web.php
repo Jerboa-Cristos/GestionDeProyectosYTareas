@@ -19,7 +19,12 @@ Route::get('/', function () {
 
 //  Product Owner
 Route::get('index', [ProductOwnerController::class, 'index'])->name('index');
-Route::get('crearProyecto', [ProductOwnerController::class, 'crearProyecto'])->name('crear.proyecto');
+Route::get('create', [ProductOwnerController::class, 'create'])->name('cargarFormulario');
+Route::post('store', [ProductOwnerController::class, 'store'])->name('guardar');
+Route::get('edit/{id}', [ProductOwnerController::class, 'edit'])->name('editar');
+Route::get('show/{id}', [ProductOwnerController::class, 'show'])->name('mostrar');
+Route::put('update/{id}', [ProductOwnerController::class, 'update'])->name('actualizar');
+Route::delete('destroy/{id}', [ProductOwnerController::class, 'destroy'])->name('eliminar');
 
 
 //Administrador:

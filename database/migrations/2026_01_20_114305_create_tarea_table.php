@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('tarea', function (Blueprint $table) {
             $table->id();
-            $table->enum('tipo', ['Backend', 'Frontend', 'Diseño', 'Despliegue', 'Epic']);
+            $table->enum('tipo', ['Backend', 'Frontend', 'Diseño','Despliegue', 'Revision', 'Testing']);
             $table->text('descripcion');
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
 
             $table->timestamps();
-            
+
             //Foreign Key
             $table->foreignId('id_sprint')->constrained('sprint')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_proyecto')->constrained('proyecto')->cascadeOnDelete()->cascadeOnUpdate();
