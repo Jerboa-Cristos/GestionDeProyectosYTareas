@@ -19,7 +19,7 @@ class ProyectoSeeder extends Seeder
         $faker = Faker::create('es_Es');
 
         for($i=0; $i<=5; $i++) {
-            DB::table('product_owner')->insert([
+            DB::table('proyecto')->insert([
                 'nombre'=> $faker->name(),
                 'descripcion'=> $faker->text(),
                 'fecha_inicio'=>date('Y-m-d'),

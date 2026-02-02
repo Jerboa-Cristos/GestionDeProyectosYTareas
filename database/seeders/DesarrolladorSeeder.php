@@ -19,7 +19,7 @@ class DesarrolladorSeeder extends Seeder
         $faker = Faker::create('es_ES');
 
         for($i = 0; $i<=15; $i++) {
-            DB::table('desarrolador')->insert([
+            DB::table('desarrollador')->insert([
                 'nombre' => $faker->name(),
                 'email' => $faker->email(),
                 'password' => $faker->password(5, 10),
