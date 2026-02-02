@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tarea_estado', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_tarea')->constrained('tarea')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('id_estado')->constrained('estado')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

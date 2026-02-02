@@ -13,7 +13,7 @@ class AdministradorController extends Controller
     //Crear usuarios
     public function crearUsuarios(Request $request) {
         $usuarios = $request->validate([
-            'nombre'=>'required|max:40',
+            'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|confirmed',
         ]);
@@ -26,24 +26,30 @@ class AdministradorController extends Controller
     }
 
     //Editar usuarios
-    public function editarUsuarios(Request $request) {
-        $usuarios = $request->validate([
-            'nombre'=>'required|max:40',
-            'email'=>'required|unique:users|email',
-            'password'=>'required|confirmed',
-        ]);
-
-        $email = $request->get('email');
+    public function editarUsuarios(Request $request, $id) {
         $rol = $request->get('rol');
         if($rol == 'Desarrollador') {
-            Desarrollador::fileinode($email);
+            Desarrollador::find($id)->firstOrFail()->update([
+                'nombre'=>$request->get('nombre'),
+                'email'=>$request->get('email'),
+                'password'=>$request->get('password')
+            ]);
         } else {
-            ProductOwner::create($usuarios);
+            ProductOwner::find($id)->firstOrFail()->update([
+                'nombre'=>$request->get('nombre'),
+                'email'=>$request->get('email'),
+                'password'=>$request->get('password')
+            ]);
         }
     }
 
     //Borrar usuarios
-    public function eliminarUsuarios() {
-
+    public function eliminarUsuarios(Request $request, $id) {
+        $rol = $request->get('rol');
+        if($rol == 'Desarrollador') {
+            Desarrollador::find($id)->firstOrFail()->delete();
+        } else {
+            ProductOwner::find($id)->firstOrFail()->delete();
+        }
     }
 }
