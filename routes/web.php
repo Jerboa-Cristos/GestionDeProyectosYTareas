@@ -1,18 +1,26 @@
 <?php
 
+use App\Http\Controllers\ProductOwnerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 //RUTAS
 //Login
 
-//Dashboard:
+//Dashboard (Panel de control):
 //  Administrador
 //  Desarrollador
+
+
 //  Product Owner
+Route::get('index', [ProductOwnerController::class, 'index'])->name('index');
+Route::get('crearProyecto', [ProductOwnerController::class, 'crearProyecto'])->name('crear.proyecto');
+
 
 //Administrador:
 //  Listado de usuarios

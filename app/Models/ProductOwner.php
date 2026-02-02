@@ -8,7 +8,7 @@ class ProductOwner extends Model
 {
     protected $table = 'product_owner';
 
-    protected $fillable = ['nombre', 'email', 'password', 'fecha_alta', 'id_administrador'];
+    protected $fillable = ['nombre', 'email', 'password'];
 
     public function administrador(){
         return $this->belongsTo(Administrador::class);
@@ -28,7 +28,7 @@ class ProductOwner extends Model
         return $this->hasMany(Comentario::class, 'id_productOwner');
     }
 
-    
+
 
 
 }
