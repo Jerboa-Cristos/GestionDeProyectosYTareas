@@ -8,12 +8,31 @@ use Illuminate\Http\Request;
 
 class ComentarioController extends Controller
 {
-    //Se debe añadir a la base de datos
-    public function guardar(Request $request) {
+
+    public function index() { //Obtiene toda la información de la tabla
+        $comentarios=Comentario::all();
+        return view('/dashboard', 'comentarios', $comentarios);
+    }
+
+    public function create() {//FORMULARIO para crear la entidad
+        return view('/tarea/infromacion');
+    }
+
+    public function guardar(Request $request) {//Guarda la infromación del formulario ya validado en el 
         Comentario::create($request);
     }
 
-    public function editar(Request $request, $id) {
+    public function show($id) {
+        $comentario =Comentario::find($id);
+        return view('/tarea/informacion', 'comentario', $comentario);
+    }
+
+    public function edit($id) {//FORMULARIO para editar comentarios
+        $comentario =Comentario::find($id);
+        return view('/tarea/informacion', 'comentario', $comentario);
+    }
+
+    public function update(Request $request, $id) { //Guarda la versión corregida
         Comentario::find($id)->firstOrFail()->update([
             'texto'=>$request->get('texto'),
         ]);

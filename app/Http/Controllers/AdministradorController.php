@@ -7,49 +7,94 @@ use Illuminate\Http\Request;
 
 class AdministradorController extends Controller
 {
-    //Aquí se ponen las funciones. Las funciones pueden devolver vistas a páginas
-    //El Administrador puede:
 
-    //Crear usuarios
-    public function crearUsuarios(Request $request) {
+    public function create() {//FORMULARIO para crear la entidad. Solo devuelve la vista al formulario
+        return view('/administrador/create');
+    }
+
+//DESARROLLADOR
+#region
+    public function indexDesarrollador(){ //Mostrar datos sobre usuarios
+        $desarrolladores=Desarrollador::all();
+        return view('administrador/gestionUsuarios',['desarrolador'=>$desarrolladores]);
+    }
+
+        //Crear usuarios
+    public function guardarDesarrollador(Request $request) {
         $usuarios = $request->validate([
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|confirmed',
         ]);
-        $rol = $request->get('rol');
-        if($rol == 'Desarrollador') {
-            Desarrollador::create($usuarios);
-        } else {
-            ProductOwner::create($usuarios);
-        }
+        Desarrollador::create($usuarios);
+        //Faltaria la redirección con el mensaje de success
+    }
+
+    public function showDesarrollador($id) {//Muestra solo UNA cosa específica
+        $desarrollador = Desarrollador::find($id);
+        return view('administrador/show')->with('desarrollador', $desarrollador);
+    }
+
+    public function editDesarrollador($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
+        $desarrollador=Desarrollador::find($id);
+        return view('/administrador/edit')->with('desarrollador', $desarrollador);
     }
 
     //Editar usuarios
-    public function editarUsuarios(Request $request, $id) {
-        $rol = $request->get('rol');
-        if($rol == 'Desarrollador') {
-            Desarrollador::find($id)->firstOrFail()->update([
-                'nombre'=>$request->get('nombre'),
-                'email'=>$request->get('email'),
-                'password'=>$request->get('password')
-            ]);
-        } else {
-            ProductOwner::find($id)->firstOrFail()->update([
-                'nombre'=>$request->get('nombre'),
-                'email'=>$request->get('email'),
-                'password'=>$request->get('password')
-            ]);
-        }
+    public function updateDesarrollador(Request $request, $id) {
+        Desarrollador::find($id)->firstOrFail()->update([
+            'nombre'=>$request->get('nombre'),
+            'email'=>$request->get('email'),
+            'password'=>$request->get('password')
+        ]);
     }
 
     //Borrar usuarios
-    public function eliminarUsuarios(Request $request, $id) {
-        $rol = $request->get('rol');
-        if($rol == 'Desarrollador') {
-            Desarrollador::find($id)->firstOrFail()->delete();
-        } else {
-            ProductOwner::find($id)->firstOrFail()->delete();
-        }
+    public function eliminarDesarrollador($id) {
+        Desarrollador::find($id)->firstOrFail()->delete();
     }
+#endregion
+
+//PRODUCT OWNER
+#region
+    public function indexProductOwner(){ //Mostrar datos sobre usuarios
+        $productOwners=ProductOwner::all();
+        return view('administrador/gestionUsuarios',['product_owner'=>$productOwners]);
+    }
+
+            //Crear usuarios
+    public function guardarProductOwner(Request $request) {
+        $usuarios = $request->validate([
+            'nombre'=>'required|max:100',
+            'email'=>'required|unique:users|email',
+            'password'=>'required|confirmed',
+        ]);
+        ProductOwner::create($usuarios);
+        //Faltaria la redirección con el mensaje de success
+    }
+
+    public function showProductOwner($id) {//Muestra solo UNA cosa específica
+        $productOwner=ProductOwner::find($id);
+        return view('administrador/show')->with('productOwner', $productOwner);
+    }
+
+    public function editProductOwner($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
+        $productOwner=ProductOwner::find($id);
+        return view('/administrador/edit')->with('productOwner', $productOwner);
+    }
+
+    //Editar usuarios
+    public function updateProductOwner(Request $request, $id) {
+        ProductOwner::find($id)->firstOrFail()->update([
+            'nombre'=>$request->get('nombre'),
+            'email'=>$request->get('email'),
+            'password'=>$request->get('password')
+        ]);
+    }
+
+    //Borrar usuarios
+    public function eliminarProductOwner($id) {
+        ProductOwner::find($id)->firstOrFail()->delete();
+    }
+#endregion
 }
