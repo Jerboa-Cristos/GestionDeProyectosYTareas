@@ -3,11 +3,35 @@
 namespace App\Http\Controllers;
 use App\Models\Desarrollador;
 use App\Models\ProductOwner;
+use App\Models\Administrador;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
 
 class AdministradorController extends Controller
 {
+
+//ADMINISTRADOR
+#region
+    public function show($id) {
+        //$user = Auth::user();//Obtenemos el usuario que esta logeado actualmente 
+
+        $admin = Administrador::findOrFail($id);
+        return view('administrador.show_Admin')->with('administrador', $admin);
+    }
+
+    public function edit($id) {
+        $admin=Administrador::findOrFail($id);
+        return view('/administrador.edit_Admin')->with('administrador', $admin);
+    }
+
+    public function update(Request $request, $id) {
+        Administrador::find($id)->firstOrFail()->update([
+            'nombre'=>$request->get('nombre'),
+            'email'=>$request->get('email'),
+            'password'=>$request->get('password')
+        ]);
+    }
+#endregion
 
     public function create() {//FORMULARIO para crear la entidad. Solo devuelve la vista al formulario
         return view('administrador.create_Admin');
