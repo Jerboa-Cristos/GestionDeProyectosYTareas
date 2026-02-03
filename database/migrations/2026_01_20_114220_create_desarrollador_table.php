@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('desarrollador', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 100);
-            $table->string('email', 40);
+            $table->string('email', 40)->unique();
             $table->string('password');//Que tipo debe ser la contraseña
             $table->dateTime('fecha_alta');
 

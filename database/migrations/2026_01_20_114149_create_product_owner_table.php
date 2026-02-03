@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('product_owner', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 100);
-            $table->string('email', 40);
+            $table->string('email', 40)->unique();
             $table->string('password');
             $table->dateTime('fecha_alta');
             //crea 2 tablas, la tabla de cuando fue creada y la tabla de cuando se actualiza
