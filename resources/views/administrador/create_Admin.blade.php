@@ -6,12 +6,11 @@
     <title>Gestión Usuarios</title>
 </head>
 <body>
-    @forelse ($desarrolladores as $persona)
-    <li>
-        {{$persona->nombre} {$persona->email}}
-    </li>
-    @empty
-        <li>No hay nada</li>
-    @endforelse
+    <form method='post' action="{{route('Store_Desarrollador')}}">
+        
+    @csfr
+    <label></label>
+
+    </form>
 </body>
 </html>

@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\ProductOwnerController;
 use Illuminate\Support\Facades\Route;
@@ -6,16 +8,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-
-
-//RUTAS
-//Login
-
-//Dashboard (Panel de control):
-//  Administrador
-//  Desarrollador
-
 
 //  Product Owner
 Route::get('index', [ProductOwnerController::class, 'index'])->name('index');
@@ -48,6 +40,16 @@ Route::put('update_Admin/{id}', [AdministradorController::class, 'updateProductO
 Route::delete('destroy_Admin/{id}', [AdministradorController::class, 'eliminarDesarrollador'])->name('delete_Desarrollador');
 Route::delete('destroy_Admin/{id}', [AdministradorController::class, 'eliminarProductOwner'])->name('delete_Product_Owner');
 //Desarrollador
-//  Dashboard
-//  Tareas Listado
-//  Tablero kanban (No se puede añadir tareas nuevas)
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
