@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Desarrollador;
 use App\Models\ProductOwner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; 
 
 class AdministradorController extends Controller
 {
