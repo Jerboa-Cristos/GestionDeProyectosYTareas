@@ -27,16 +27,16 @@ Route::put('update/{id}', [ProductOwnerController::class, 'update'])->name('actu
 Route::delete('destroy/{id}', [ProductOwnerController::class, 'destroy'])->name('eliminar');
 
 
-//Administrador
+//Administrador. Pensar como se podría hacer de una mejor manera
 Route::get('index_Admin', [AdministradorController::class, 'indexDesarrollador'])->name('Index_Desarrollador');
 Route::get('index_Admin', [AdministradorController::class, 'indexProductOwner'])->name('Index_Product_Owner');
 
-Route::get('create_Admin',[AdministradorController::class, 'create'])->name('crear_users');
+Route::get('create_Admin',[AdministradorController::class, 'create'])->name('crear_users');//ESTO DEBE SER UN FORMULARIO
 
 Route::post('store_Admin',[AdministradorController::class, 'guardarDesarrollador'])->name('Store_Desarrollador');
 Route::post('store_Admin',[AdministradorController::class, 'guardarProductOwner'])->name('Store_Product_Owner');
 
-Route::get('edit_Admin/{id}', [AdministradorController::class, 'editDesarrollador'])->name('Edit_Desarrollador');
+Route::get('edit_Admin/{id}', [AdministradorController::class, 'editDesarrollador'])->name('Edit_Desarrollador');//ESTO DEBE SER UN FORMULARIO
 Route::get('edit_Admin/{id}', [AdministradorController::class, 'editProductOwner'])->name('Edit_Product_Owner');
 
 Route::get('show_Admin/{id}', [AdministradorController::class, 'showDesarrollador'])->name('show_Desarrollador');

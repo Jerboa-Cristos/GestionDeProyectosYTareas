@@ -23,22 +23,22 @@ class ComentarioController extends Controller
     }
 
     public function show($id) {
-        $comentario =Comentario::find($id);
+        $comentario =Comentario::findOrFail($id);
         return view('/tarea/informacion', 'comentario', $comentario);
     }
 
     public function edit($id) {//FORMULARIO para editar comentarios
-        $comentario =Comentario::find($id);
+        $comentario =Comentario::findOrFail($id);
         return view('/tarea/informacion', 'comentario', $comentario);
     }
 
     public function update(Request $request, $id) { //Guarda la versión corregida
-        Comentario::find($id)->firstOrFail()->update([
+        Comentario::findOrFail($id)->firstOrFail()->update([
             'texto'=>$request->get('texto'),
         ]);
     }
 
     public function eliminar($id) {
-        Comentario::find($id)->firstOrFail()->delete();
+        Comentario::findOrFail($id)->firstOrFail()->delete();
     }
 }

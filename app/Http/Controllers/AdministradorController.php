@@ -31,12 +31,12 @@ class AdministradorController extends Controller
     }
 
     public function showDesarrollador($id) {//Muestra solo UNA cosa específica
-        $desarrollador = Desarrollador::find($id);
+        $desarrollador = Desarrollador::findOrFail($id);
         return view('administrador.show_Admin')->with('desarrollador', $desarrollador);
     }
 
     public function editDesarrollador($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
-        $desarrollador=Desarrollador::find($id);
+        $desarrollador=Desarrollador::findOrFail($id);
         return view('/administrador.edit_Admin')->with('desarrollador', $desarrollador);
     }
 
@@ -51,7 +51,7 @@ class AdministradorController extends Controller
 
     //Borrar usuarios
     public function eliminarDesarrollador($id) {
-        Desarrollador::find($id)->firstOrFail()->delete();
+        Desarrollador::findOrFail($id)->firstOrFail()->delete();
     }
 #endregion
 
@@ -74,18 +74,18 @@ class AdministradorController extends Controller
     }
 
     public function showProductOwner($id) {//Muestra solo UNA cosa específica
-        $productOwner=ProductOwner::find($id);
+        $productOwner=ProductOwner::findOrFail($id);
         return view('administrador.show_Admin')->with('productOwner', $productOwner);
     }
 
     public function editProductOwner($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
-        $productOwner=ProductOwner::find($id);
+        $productOwner=ProductOwner::findOrFail($id);
         return view('/administrador.edit_Admin')->with('productOwner', $productOwner);
     }
 
     //Editar usuarios
     public function updateProductOwner(Request $request, $id) {
-        ProductOwner::find($id)->firstOrFail()->update([
+        ProductOwner::findOrFail($id)->firstOrFail()->update([
             'nombre'=>$request->get('nombre'),
             'email'=>$request->get('email'),
             'password'=>$request->get('password')
@@ -94,7 +94,7 @@ class AdministradorController extends Controller
 
     //Borrar usuarios
     public function eliminarProductOwner($id) {
-        ProductOwner::find($id)->firstOrFail()->delete();
+        ProductOwner::findOrFail($id)->firstOrFail()->delete();
     }
 #endregion
 }
