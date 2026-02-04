@@ -19,26 +19,29 @@ class ComentarioController extends Controller
     }
 
     public function guardar(Request $request) {//Guarda la infromación del formulario ya validado en el 
+        $request->validate([
+            'texto'=>'required|max:300',
+        ]);
         Comentario::create($request);
     }
 
-    public function show($id) {
-        $comentario =Comentario::findOrFail($id);
+    public function show(Request $request) {
+        $comentario =Comentario::findOrFail($request->get('id'));
         return view('/tarea/informacion', 'comentario', $comentario);
     }
 
-    public function edit($id) {//FORMULARIO para editar comentarios
-        $comentario =Comentario::findOrFail($id);
+    public function edit(Request $request) {//FORMULARIO para editar comentarios
+        $comentario =Comentario::findOrFail($request->get('id'));
         return view('/tarea/informacion', 'comentario', $comentario);
     }
 
-    public function update(Request $request, $id) { //Guarda la versión corregida
-        Comentario::findOrFail($id)->firstOrFail()->update([
+    public function update(Request $request) { //Guarda la versión corregida
+        Comentario::findOrFail($request->get('id'))->firstOrFail()->update([
             'texto'=>$request->get('texto'),
         ]);
     }
 
-    public function eliminar($id) {
-        Comentario::findOrFail($id)->firstOrFail()->delete();
+    public function eliminar(Request $request) {
+        Comentario::findOrFail($request->get('id'))->firstOrFail()->delete();
     }
 }

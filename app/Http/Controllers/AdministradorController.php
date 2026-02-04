@@ -12,20 +12,25 @@ class AdministradorController extends Controller
 
 //ADMINISTRADOR
 #region
-    public function show($id) {
+    public function show(Request $request) {
         //$user = Auth::user();//Obtenemos el usuario que esta logeado actualmente 
 
-        $admin = Administrador::findOrFail($id);
+        $admin = Administrador::findOrFail($request->get('id'));
         return view('administrador.show_Admin')->with('administrador', $admin);
     }
 
-    public function edit($id) {
-        $admin=Administrador::findOrFail($id);
+    public function edit(Request $request) {
+        $admin=Administrador::findOrFail($request->get('id'));
         return view('/administrador.edit_Admin')->with('administrador', $admin);
     }
 
-    public function update(Request $request, $id) {
-        Administrador::find($id)->firstOrFail()->update([
+    public function update(Request $request) {
+        $request->validate([
+            'nombre'=>'required|max:100',
+            'email'=>'required|unique:users|email',
+            'password'=>'required|confirmed',
+        ]);
+        Administrador::find($request->get('id'))->firstOrFail()->update([
             'nombre'=>$request->get('nombre'),
             'email'=>$request->get('email'),
             'password'=>$request->get('password')
@@ -46,28 +51,33 @@ class AdministradorController extends Controller
 
         //Crear usuarios
     public function guardarDesarrollador(Request $request) {
-        $usuarios = $request->validate([
+        $request->validate([
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|confirmed',
         ]);
-        Desarrollador::create($usuarios);
+        Desarrollador::create($request);
         //Faltaria la redirección con el mensaje de success
     }
 
-    public function showDesarrollador($id) {//Muestra solo UNA cosa específica
-        $desarrollador = Desarrollador::findOrFail($id);
+    public function showDesarrollador(Request $request) {//Muestra solo UNA cosa específica
+        $desarrollador = Desarrollador::findOrFail($request->get('id'));
         return view('administrador.show_Admin')->with('desarrollador', $desarrollador);
     }
 
-    public function editDesarrollador($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
-        $desarrollador=Desarrollador::findOrFail($id);
+    public function editDesarrollador(Request $request) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
+        $desarrollador=Desarrollador::findOrFail($request->get('id'));
         return view('/administrador.edit_Admin')->with('desarrollador', $desarrollador);
     }
 
     //Editar usuarios
-    public function updateDesarrollador(Request $request, $id) {
-        Desarrollador::find($id)->firstOrFail()->update([
+    public function updateDesarrollador(Request $request) {
+        $request->validate([
+            'nombre'=>'required|max:100',
+            'email'=>'required|unique:users|email',
+            'password'=>'required|confirmed',
+        ]);
+        Desarrollador::find($request->get('id'))->firstOrFail()->update([
             'nombre'=>$request->get('nombre'),
             'email'=>$request->get('email'),
             'password'=>$request->get('password')
@@ -75,8 +85,8 @@ class AdministradorController extends Controller
     }
 
     //Borrar usuarios
-    public function eliminarDesarrollador($id) {
-        Desarrollador::findOrFail($id)->firstOrFail()->delete();
+    public function eliminarDesarrollador(Request $request) {
+        Desarrollador::findOrFail($request->get('id'))->firstOrFail()->delete();
     }
 #endregion
 
@@ -89,28 +99,28 @@ class AdministradorController extends Controller
 
             //Crear usuarios
     public function guardarProductOwner(Request $request) {
-        $usuarios = $request->validate([
+        $request->validate([
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|confirmed',
         ]);
-        ProductOwner::create($usuarios);
+        ProductOwner::create($request);
         //Faltaria la redirección con el mensaje de success
     }
 
-    public function showProductOwner($id) {//Muestra solo UNA cosa específica
-        $productOwner=ProductOwner::findOrFail($id);
+    public function showProductOwner(Request $request) {//Muestra solo UNA cosa específica
+        $productOwner=ProductOwner::findOrFail($request->get('id'));
         return view('administrador.show_Admin')->with('productOwner', $productOwner);
     }
 
-    public function editProductOwner($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
-        $productOwner=ProductOwner::findOrFail($id);
+    public function editProductOwner(Request $request) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
+        $productOwner=ProductOwner::findOrFail($request->get('id'));
         return view('/administrador.edit_Admin')->with('productOwner', $productOwner);
     }
 
     //Editar usuarios
-    public function updateProductOwner(Request $request, $id) {
-        ProductOwner::findOrFail($id)->firstOrFail()->update([
+    public function updateProductOwner(Request $request) {
+        ProductOwner::findOrFail($request->get('id'))->firstOrFail()->update([
             'nombre'=>$request->get('nombre'),
             'email'=>$request->get('email'),
             'password'=>$request->get('password')
@@ -118,8 +128,8 @@ class AdministradorController extends Controller
     }
 
     //Borrar usuarios
-    public function eliminarProductOwner($id) {
-        ProductOwner::findOrFail($id)->firstOrFail()->delete();
+    public function eliminarProductOwner(Request $request) {
+        ProductOwner::findOrFail($request->get('id'))->firstOrFail()->delete();
     }
 #endregion
 }
