@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Estado extends Model
 {
-    //
+     protected $table = 'estado';
+    protected $fillable = ['tipo'];
+
+    public function tarea() {
+        return $this->belongsToMany(Tarea::class);
+    }
 }
