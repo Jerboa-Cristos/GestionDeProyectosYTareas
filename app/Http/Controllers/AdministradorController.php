@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Desarrollador;
 use App\Models\ProductOwner;
 use App\Models\Administrador;
+use App\Models\Proyecto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
 
@@ -18,24 +19,24 @@ class AdministradorController extends Controller
         return view('administrador.index_Admin',['administradores'=>$administradores]);
     }
 
-    public function show(Request $request) {
+    public function show($id) {
         //$user = Auth::user();//Obtenemos el usuario que esta logeado actualmente 
-        $admin = Administrador::findOrFail($request->get('id'));
+        $admin = Administrador::findOrFail($id);
         return view('administrador.show_Admin')->with('administrador', $admin);
     }
 
-    public function edit(Request $request) {
-        $admin=Administrador::findOrFail($request->get('id'));
+    public function edit($id) {
+        $admin=Administrador::findOrFail($id);
         return view('administrador.edit_Admin')->with('administrador', $admin);
     }
 
-    public function update(Request $request) {
+    public function update(Request $request, $id) {
         $admin_info = $request->validate([
             'nombre'=>'required|max:100',
             'email'=>'required|unique|email',
             'password'=>'required|confirmed',
         ]);
-        Administrador::find($request->get('id'))->firstOrFail()->update([
+        Administrador::find($id)->firstOrFail()->update([
             'nombre'=>$admin_info('nombre'),
             'email'=>$admin_info('email'),
             'password'=>$admin_info('password'),
@@ -49,15 +50,16 @@ class AdministradorController extends Controller
     public function create() {//FORMULARIO para crear la entidad. Solo devuelve la vista al formulario
         //Le tenemos que mandar toda la información que necesitará para crear a los usuarios ya de base
         //La información de administradores, su id. 
-        $administradores=Administrador::get('id');
-        return view('administrador.create_Admin')->with('administradores', $administradores);
+        //$administradores=Administrador::get('id'); //Para el administrador no es necesario, puedo usar su Auth. 
+        return view('administrador.create_Admin');
     }
 
     public function indexUsuarios(){ //Mostrar datos sobre usuarios
         $desarrolladores=Desarrollador::all();
         $productOwners=ProductOwner::all();
         $administradores=Administrador::all();
-        return view('administrador.index_Admin',['desarrolladores'=>$desarrolladores, 'product_owners'=>$productOwners, 'administradores'=>$administradores]);
+        $proyectos=Proyecto::all();
+        return view('administrador.index_Admin',['desarrolladores'=>$desarrolladores, 'product_owners'=>$productOwners, 'administradores'=>$administradores, 'proyectos'=>$proyectos]);
     }
 
 //DESARROLLADOR
@@ -87,19 +89,19 @@ class AdministradorController extends Controller
         ]);
     }
 
-    public function showDesarrollador(Request $request) {//Muestra solo UNA cosa específica
-        $desarrollador = Desarrollador::findOrFail($request->get('id'));
+    public function showDesarrollador($id) {//Muestra solo UNA cosa específica
+        $desarrollador = Desarrollador::findOrFail($id);
         return view('administrador.show_Admin')->with('desarrollador', $desarrollador);
     }
 
-    public function editDesarrollador(Request $request) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
-        $desarrollador=Desarrollador::findOrFail($request->get('id'));
+    public function editDesarrollador($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
+        $desarrollador=Desarrollador::findOrFail($id);
         $administradores=Administrador::get('id');
-        return view('/administrador.edit_Admin', ['desarrolladores'=>$desarrollador, 'administradores'=>$administradores]);
+        return view('administrador.edit_Admin', ['desarrollador'=>$desarrollador, 'administradores'=>$administradores]);
     }
 
     //Editar usuarios
-    public function updateDesarrollador(Request $request) {
+    public function updateDesarrollador(Request $request, $id) {
             $usuarios = $request->validate([
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
@@ -107,7 +109,7 @@ class AdministradorController extends Controller
             'id_administrador'=>'required|exists:administrador,id',
             'fecha_alta'=>'required|date',
         ]);
-        Desarrollador::find($request->get('id'))->firstOrFail()->update([
+        Desarrollador::find($id)->firstOrFail()->update([
             'nombre'=>$usuarios('nombre'),
             'email'=>$usuarios('email'),
             'password'=>$usuarios('password'),
@@ -119,8 +121,9 @@ class AdministradorController extends Controller
     }
 
     //Borrar usuarios
-    public function eliminarDesarrollador(Request $request) {
-        Desarrollador::findOrFail($request->get('id'))->firstOrFail()->delete();
+    public function eliminarDesarrollador($id) {
+        Desarrollador::findOrFail($id)->firstOrFail()->delete();
+        return redirect()->back()->with('success','Eliminado con exito');
     }
 #endregion
 
@@ -151,15 +154,15 @@ class AdministradorController extends Controller
         ]);
     }
 
-    public function showProductOwner(Request $request) {//Muestra solo UNA cosa específica
-        $productOwner=ProductOwner::findOrFail($request->get('id'));
+    public function showProductOwner($id) {//Muestra solo UNA cosa específica
+        $productOwner=ProductOwner::findOrFail($id);
         return view('administrador.show_Admin')->with('productOwner', $productOwner);
     }
 
-    public function editProductOwner(Request $request) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
-        $productOwner=ProductOwner::findOrFail($request->get('id'));
+    public function editProductOwner($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
+        $productOwner=ProductOwner::findOrFail($id);
         $administradores=Administrador::get('id');
-        return view('/administrador.edit_Admin', ['product_owners'=>$productOwner, 'administradores'=>$administradores]);
+        return view('administrador.edit_Admin', ['product_owners'=>$productOwner, 'administradores'=>$administradores]);
     }
 
     //Editar usuarios
@@ -183,8 +186,8 @@ class AdministradorController extends Controller
     }
 
     //Borrar usuarios
-    public function eliminarProductOwner(Request $request) {
-        ProductOwner::findOrFail($request->get('id'))->firstOrFail()->delete();
+    public function eliminarProductOwner($id) {
+        ProductOwner::findOrFail($id)->firstOrFail()->delete();
     }
 #endregion
 }
