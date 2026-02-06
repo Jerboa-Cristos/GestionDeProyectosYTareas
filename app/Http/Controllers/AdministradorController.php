@@ -14,50 +14,70 @@ class AdministradorController extends Controller
 #region
     public function show(Request $request) {
         //$user = Auth::user();//Obtenemos el usuario que esta logeado actualmente 
-
-        $admin = Administrador::findOrFail($request->get('id'));
+        $admin = Administrador::findOrFail($id);
         return view('administrador.show_Admin')->with('administrador', $admin);
     }
 
-    public function edit(Request $request) {
-        $admin=Administrador::findOrFail($request->get('id'));
-        return view('/administrador.edit_Admin')->with('administrador', $admin);
+    public function edit($id) {
+        $admin=Administrador::findOrFail($id);
+        return view('administrador.edit_Admin')->with('administrador', $admin);
     }
 
-    public function update(Request $request) {
-        $request->validate([
+    public function update(Request $request, $id) {
+        $admin_info = $request->validate([
             'nombre'=>'required|max:100',
-            'email'=>'required|unique:users|email',
+            'email'=>'required|unique|email',
             'password'=>'required|confirmed',
         ]);
-        Administrador::find($request->get('id'))->firstOrFail()->update([
-            'nombre'=>$request->get('nombre'),
-            'email'=>$request->get('email'),
-            'password'=>$request->get('password')
+        Administrador::find($id)->firstOrFail()->update([
+            'nombre'=>$admin_info('nombre'),
+            'email'=>$admin_info('email'),
+            'password'=>$admin_info('password'),
+            'fecha_alta'=>date('Y-m-d'),
+            'created_at'=>date('Y-m-d'),
+            'updated_at'=>date('Y-m-d'),
         ]);
     }
 #endregion
 
     public function create() {//FORMULARIO para crear la entidad. Solo devuelve la vista al formulario
-        return view('administrador.create_Admin');
+        //Le tenemos que mandar toda la información que necesitará para crear a los usuarios ya de base
+        //La información de administradores, su id. 
+        $administradores=Administrador::id();
+        return view('administrador.create_Admin')->with('administradores', $administradores);
+    }
+
+    public function indexUsuarios(){ //Mostrar datos sobre usuarios
+        $desarrolladores=Desarrollador::all();
+        $productOwners=ProductOwner::all();
+        return view('administrador.index_Admin',['desarrolador'=>$desarrolladores, 'product_owner'=>$productOwners]);
     }
 
 //DESARROLLADOR
 #region
-    public function indexDesarrollador(){ //Mostrar datos sobre usuarios
+    public function indexDesarrolladores(){ //Mostrar datos sobre desarrolladores solo
         $desarrolladores=Desarrollador::all();
-        return view('administrador.index_Admin',['desarrolador'=>$desarrolladores]);
+        return view('administrador.index_Admin',['desarrollador'=>$desarrolladores]);
     }
 
-        //Crear usuarios
+    //Crear desarrolladores
     public function guardarDesarrollador(Request $request) {
         $request->validate([
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|confirmed',
+            'id_administrador'=>'required|exists:administrador,id',
+            'fecha_alta'=>'required|date',
         ]);
-        Desarrollador::create($request);
-        //Faltaria la redirección con el mensaje de success
+        Desarrollador::create([
+            'nombre'=>$usuarios('nombre'),
+            'email'=>$usuarios('email'),
+            'password'=>$usuarios('password'),
+            'id_administrador'=>$usuarios('id_administrador'),
+            'fecha_alta'=>date('Y-m-d'),
+            'created_at'=>date('Y-m-d'),
+            'updated_at'=>date('Y-m-d'),
+        ]);
     }
 
     public function showDesarrollador(Request $request) {//Muestra solo UNA cosa específica
@@ -65,22 +85,29 @@ class AdministradorController extends Controller
         return view('administrador.show_Admin')->with('desarrollador', $desarrollador);
     }
 
-    public function editDesarrollador(Request $request) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
-        $desarrollador=Desarrollador::findOrFail($request->get('id'));
+    public function editDesarrollador($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
+        $desarrollador=Desarrollador::findOrFail($id);
+        $administradores=Administrador::id();
         return view('/administrador.edit_Admin')->with('desarrollador', $desarrollador);
     }
 
     //Editar usuarios
-    public function updateDesarrollador(Request $request) {
-        $request->validate([
+    public function updateDesarrollador(Request $request, $id) {
+            $usuarios = $request->validate([
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|confirmed',
+            'id_administrador'=>'required|exists:administrador,id',
+            'fecha_alta'=>'required|date',
         ]);
-        Desarrollador::find($request->get('id'))->firstOrFail()->update([
-            'nombre'=>$request->get('nombre'),
-            'email'=>$request->get('email'),
-            'password'=>$request->get('password')
+        Desarrollador::find($id)->firstOrFail()->update([
+            'nombre'=>$usuarios('nombre'),
+            'email'=>$usuarios('email'),
+            'password'=>$usuarios('password'),
+            'id_administrador'=>$usuarios('id_administrador'),
+            'fecha_alta'=>date('Y-m-d'),
+            'created_at'=>date('Y-m-d'),
+            'updated_at'=>date('Y-m-d'),
         ]);
     }
 
@@ -103,9 +130,18 @@ class AdministradorController extends Controller
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|confirmed',
+            'id_administrador'=>'required|exists:administrador,id',
+            'fecha_alta'=>'required|date',
         ]);
-        ProductOwner::create($request);
-        //Faltaria la redirección con el mensaje de success
+        Desarrollador::create([
+            'nombre'=>$usuarios('nombre'),
+            'email'=>$usuarios('email'),
+            'password'=>$usuarios('password'),
+            'id_administrador'=>$usuarios('id_administrador'),
+            'fecha_alta'=>date('Y-m-d'),
+            'created_at'=>date('Y-m-d'),
+            'updated_at'=>date('Y-m-d'),
+        ]);
     }
 
     public function showProductOwner(Request $request) {//Muestra solo UNA cosa específica
@@ -113,17 +149,29 @@ class AdministradorController extends Controller
         return view('administrador.show_Admin')->with('productOwner', $productOwner);
     }
 
-    public function editProductOwner(Request $request) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
-        $productOwner=ProductOwner::findOrFail($request->get('id'));
+    public function editProductOwner($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
+        $productOwner=ProductOwner::findOrFail($id);
+        $administradores=Administrador::id();
         return view('/administrador.edit_Admin')->with('productOwner', $productOwner);
     }
 
     //Editar usuarios
-    public function updateProductOwner(Request $request) {
-        ProductOwner::findOrFail($request->get('id'))->firstOrFail()->update([
-            'nombre'=>$request->get('nombre'),
-            'email'=>$request->get('email'),
-            'password'=>$request->get('password')
+    public function updateProductOwner(Request $request, $id) {
+            $usuarios = $request->validate([
+            'nombre'=>'required|max:100',
+            'email'=>'required|unique:users|email',
+            'password'=>'required|confirmed',
+            'id_administrador'=>'required|exists:administrador,id',
+            'fecha_alta'=>'required|date',
+        ]);
+        ProductOwner::find($id)->firstOrFail()->update([
+            'nombre'=>$usuarios('nombre'),
+            'email'=>$usuarios('email'),
+            'password'=>$usuarios('password'),
+            'id_administrador'=>$usuarios('id_administrador'),
+            'fecha_alta'=>date('Y-m-d'),
+            'created_at'=>date('Y-m-d'),
+            'updated_at'=>date('Y-m-d'),
         ]);
     }
 
