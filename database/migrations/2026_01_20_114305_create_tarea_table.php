@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('tarea', function (Blueprint $table) {
             $table->id();
-            $table->enum('tipo', ['Backend', 'Frontend', 'Diseño','Despliegue', 'Revision', 'Testing']);
-            $table->text('descripcion');
+            $table->enum('tipo', ['Backend', 'Frontend', 'Diseño','Despliegue', 'Testing']);
+            $table->text('descripcion', 300)->nullable();
             $table->date('fecha_inicio');
-            $table->date('fecha_fin');
+            $table->date('fecha_fin')->nullable();
 
             $table->timestamps();
 

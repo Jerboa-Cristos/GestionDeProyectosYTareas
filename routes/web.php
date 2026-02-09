@@ -4,21 +4,32 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\ProductOwnerController;
 use App\Http\Controllers\DesarrolladorController;
+use App\Http\Controllers\ProyectoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-//  Product Owner
+//  Product Owner Rutas para crear el proyecto
 Route::get('index', [ProductOwnerController::class, 'index'])->name('index');
 Route::get('create', [ProductOwnerController::class, 'create'])->name('cargarFormulario');
 Route::post('store', [ProductOwnerController::class, 'store'])->name('guardar');
-Route::get('edit/{id}', [ProductOwnerController::class, 'edit'])->name('editar');
 Route::get('show/{id}', [ProductOwnerController::class, 'show'])->name('mostrar');
+Route::get('edit/{id}', [ProductOwnerController::class, 'edit'])->name('editar');
 Route::put('update/{id}', [ProductOwnerController::class, 'update'])->name('actualizar');
 Route::delete('destroy/{id}', [ProductOwnerController::class, 'destroy'])->name('eliminar');
 
+//SPRINT
+Route::get('index_sprint', [ProyectoController::class, 'index'])->name('index');
+Route::get('create_sprint', [ProyectoController::class, 'create'])->name('cargarFormulario');
+Route::post('store_sprint/{id_proyecto}', [ProyectoController::class, 'store'])->name('guardar');
+Route::get('show_sprint/{id}', [ProyectoController::class, 'show'])->name('mostrar');
+Route::get('edit_sprint/{id}', [ProyectoController::class, 'edit'])->name('editar_formulario');
+Route::put('update_sprint/{id}', [ProyectoController::class, 'update'])->name('actualizar');
+Route::delete('destroy_sprint/{id}', [ProyectoController::class], 'destroy')->name('eliminar');
+
+//TAREA
 
 //Administrador. Pensar como se podría hacer de una mejor manera
 Route::get('index_Admin', [AdministradorController::class, 'indexDesarrollador'])->name('Index_Desarrollador');
