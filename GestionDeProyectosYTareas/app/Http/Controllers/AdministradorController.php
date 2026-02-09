@@ -76,13 +76,15 @@ class AdministradorController extends Controller
             'email'=>'required|unique:users|email',
             'password'=>'required|confirmed',
             'id_administrador'=>'required|exists:administrador,id',
+            'id_proyecto'=>'required|exists:proyecto,id',
             'fecha_alta'=>'required|date',
         ]);
         Desarrollador::create([
             'nombre'=>$usuarios('nombre'),
             'email'=>$usuarios('email'),
             'password'=>$usuarios('password'),
-            'id_administrador'=>Administrador::Auth()->id(),
+            'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
+            'id_proyecto'=> 1, //Proyecto::get('id'), por ahora esta hardcodeado
             'fecha_alta'=>date('Y-m-d'),
             'created_at'=>date('Y-m-d'),
             'updated_at'=>date('Y-m-d'),
@@ -113,7 +115,7 @@ class AdministradorController extends Controller
             'nombre'=>$usuarios('nombre'),
             'email'=>$usuarios('email'),
             'password'=>$usuarios('password'),
-            'id_administrador'=>Administrador::Auth()->id(),
+            'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
             'fecha_alta'=>date('Y-m-d'),
             'created_at'=>date('Y-m-d'),
             'updated_at'=>date('Y-m-d'),
@@ -147,7 +149,7 @@ class AdministradorController extends Controller
             'nombre'=>$usuarios('nombre'),
             'email'=>$usuarios('email'),
             'password'=>$usuarios('password'),
-            'id_administrador'=>Administrador::Auth()->id(),
+            'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
             'fecha_alta'=>date('Y-m-d'),
             'created_at'=>date('Y-m-d'),
             'updated_at'=>date('Y-m-d'),
@@ -178,7 +180,7 @@ class AdministradorController extends Controller
             'nombre'=>$usuarios('nombre'),
             'email'=>$usuarios('email'),
             'password'=>$usuarios('password'),
-            'id_administrador'=>Administrador::Auth()->id(),
+            'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
             'fecha_alta'=>date('Y-m-d'),
             'created_at'=>date('Y-m-d'),
             'updated_at'=>date('Y-m-d'),
@@ -188,6 +190,7 @@ class AdministradorController extends Controller
     //Borrar usuarios
     public function eliminarProductOwner($id) {
         ProductOwner::findOrFail($id)->firstOrFail()->delete();
+        return redirect()->back()->with('success','Eliminado con exito');
     }
 #endregion
 }

@@ -8,7 +8,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Desarrollador extends Model
 {
     protected $table = 'desarrollador';
-    protected $fillable = ['nombre', 'email', 'password'];
+    protected $fillable = ['nombre', 'email', 'password', 'fecha_alta', 'id_administrador', 'id_proyecto'];
 
     public function administrador() {
         
