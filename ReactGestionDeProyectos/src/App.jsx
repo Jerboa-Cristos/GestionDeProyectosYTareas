@@ -5,7 +5,7 @@ function App() {
 
 
   return (
-    <div>
+    <div className="bg-blueDark h-screen w-screen">
       <MenuLateral/>
     </div>
   )
