@@ -11,7 +11,8 @@ class TareaController extends Controller
     //Request - devuelve todo de la página, incluyendo el id
     public function indexTarea() { //Para poder listar las tareas
         $tareas = Tarea::all();
-        return view('tareas.tablero', ['tareas'=>$tareas]);
+        $nombre="1";
+        return view('tareas.tablero', ['tareas'=>$tareas, 'nombre'=>$nombre]);
     }
 
     public function showTarea(Request $request) {
@@ -23,7 +24,7 @@ class TareaController extends Controller
 
         Tarea::find($request->get('id'))->firstOrFail()->update([
             'tipo'=>$request->get('tipo'),
-            'descripcion'=>$request->get('descripcion'), 
+            'descripcion'=>$request->get('descripcion'),
             'fecha_fin'=>$request->get('fecha_fin'),
         ]);
         //Preguntar sobre como cambiar el estado en la tabla de muchos a muchos
@@ -41,7 +42,7 @@ class TareaController extends Controller
     public function storeEstado(Request $request) {
         Estado::create($request);
     }
-    
+
     //Mostrar el estado de la tarea
     public function showEstado($id_tarea) {
         $estados = Estado::findOrFail($id_tarea);

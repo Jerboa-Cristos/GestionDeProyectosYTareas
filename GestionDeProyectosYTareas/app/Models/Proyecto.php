@@ -8,7 +8,7 @@ class Proyecto extends Model
 {
     protected $table = 'proyecto';
 
-    protected $fillable = ['nombre', 'descripcion'];
+    protected $fillable = ['nombre', 'descripcion', 'fecha_inicio', 'fecha_fin', 'id_product_owner'];
 
     public function product_owner(){
         return $this->belongsTo(ProductOwner::class, 'id_product_owner');
@@ -19,11 +19,11 @@ class Proyecto extends Model
     }
 
     public function sprints(){
-        return $this->hasMany(Sprint::class, 'id_sprint');
+        return $this->hasMany(Sprint::class, 'id_proyecto');
     }
 
     public function tareas(){
-        return $this->hasMany(Tarea::class, 'id_tarea');
+        return $this->hasMany(Tarea::class, 'id_proyecto');
     }
 
 

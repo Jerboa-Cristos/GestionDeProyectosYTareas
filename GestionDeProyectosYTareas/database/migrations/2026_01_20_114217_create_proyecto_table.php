@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('nombre', 40);
             $table->text('descripcion', 300);
             $table->dateTime('fecha_inicio');
-            $table->dateTime('fecha_fin');
+            $table->dateTime('fecha_fin')->nullable();
             $table->timestamps();
 
             //relaciones
-            $table->foreignId('id_product_owner')->constrained('product_owner')->cascadeOnDelete()->cascaOnUpdate();
+            $table->foreignId('id_product_owner')->constrained('product_owner')->cascadeOnDelete()->cascadeOnUpdate();
 
 
 
