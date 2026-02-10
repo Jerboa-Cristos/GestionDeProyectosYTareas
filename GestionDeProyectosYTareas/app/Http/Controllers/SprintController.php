@@ -24,6 +24,8 @@ class SprintController extends Controller
             'fecha_fin' => 'nullable|date'
         ]);
 
+        //cambiar la relacion
+
         Tarea::create([
             'tipo' => $validar_datos['tipo'],
             'descripcion' => $validar_datos['descripcion'],
@@ -46,7 +48,7 @@ class SprintController extends Controller
 
 
     public function update(Request $request, $id){
-        
+
     }
 
     public function destroy($id){

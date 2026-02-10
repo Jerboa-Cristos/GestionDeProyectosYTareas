@@ -14,6 +14,9 @@ Route::get('/', function () {
 require __DIR__.'/auth.php';
 
 
+
+
+
 //  Product Owner Rutas para crear el proyecto
 Route::get('index', [ProductOwnerController::class, 'index'])->name('index');
 Route::get('create', [ProductOwnerController::class, 'create'])->name('cargarFormulario');
