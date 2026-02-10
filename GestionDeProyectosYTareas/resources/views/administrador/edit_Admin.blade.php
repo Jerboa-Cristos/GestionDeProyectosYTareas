@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil</title>
+</head>
+<body>
+    <h1>Editar Usuario</h1>
+
+    <form method="post" action="{{ route('updateDesarrollador', $desarrollador) }}">  
+          <div> 
+              @method('PATCH')
+              @csrf
+
+              <label for="nombre">nombre</label>
+              <input type="text"  name="nombre" value="{{$desarrollador->nombre}}"/>
+          </div>
+          <div>
+              <label for="email">email</label>
+              <input type="text"  name="email" value="{{$desarrollador->email}}"/>
+          </div>
+            <div>
+              <label for="password">password</label>
+              <input type="password"  name="password" value="{{$desarrollador->password}}"/>
+          </div>
+
+          <button type="submit" >Actualizar</button>
+      </form>
+</body>
+</html>
