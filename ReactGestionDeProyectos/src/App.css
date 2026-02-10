@@ -2,6 +2,7 @@
 
 
 @theme {
+  /*COLORES*/
   --color-blueBase: #BBEDDF;
   --color-blueDark: #184E77;
   --color-turquesa: #34A0A4;
@@ -9,4 +10,6 @@
   --color-warning: #FB7E7E;
   --color-WhiteWhite: #FFFFFF;
   --color-GreenLite: #B5E48C; 
+
+  
 }
