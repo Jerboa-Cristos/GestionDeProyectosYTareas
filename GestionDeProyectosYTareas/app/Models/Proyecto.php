@@ -19,11 +19,11 @@ class Proyecto extends Model
     }
 
     public function sprints(){
-        return $this->hasMany(Sprint::class, 'id_sprint');
+        return $this->hasMany(Sprint::class, 'id_proyecto');
     }
 
     public function tareas(){
-        return $this->hasMany(Tarea::class, 'id_tarea');
+        return $this->hasMany(Tarea::class, 'id_proyecto');
     }
 
 

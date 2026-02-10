@@ -12,7 +12,7 @@ class ProductOwner extends Model
     protected $fillable = ['nombre', 'email', 'password'];
 
     public function administrador(){
-        return $this->belongsTo(Administrador::class);
+        return $this->belongsTo(Administrador::class, 'id_administrador');
 
     }
 
@@ -26,7 +26,7 @@ class ProductOwner extends Model
     }
 
     public function comentarios(){
-        return $this->hasMany(Comentario::class, 'id_productOwner');
+        return $this->hasMany(Comentario::class, 'id_product_owner');
     }
 
 

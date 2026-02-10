@@ -33,10 +33,14 @@ class ProductOwnerController extends Controller
 
         ]);
 
+        //cuando tengamos login
         //$usuario = Auth::user();
         //$id = Auth::id();
 
-        Proyecto::create([
+        //solo un ejemplo para probar la relacion entre proyecto y product owner, luego se debe cambiar por el id del usuario logeado
+        $product_owner = ProductOwner::findOrFail(1);
+
+        $proyecto = new Proyecto([
             'nombre' => $validar_datos['nombre'],
             'descripcion' => $validar_datos['descripcion'],
             'fecha_inicio' => $validar_datos['fecha_inicio'],
@@ -44,8 +48,13 @@ class ProductOwnerController extends Controller
             'id_product_owner' => 1
         ]);
 
+        //relacion para guardar proyecto
+        $product_owner->proyectos()->save($proyecto);
+
         return redirect()->route('index');
     }
+
+
 
     //4.Muestra la información de un proyecto
     public function show($id){

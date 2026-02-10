@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Sprint;
+use App\Models\Proyecto;
 
 class ProyectoController extends Controller
 {
@@ -23,12 +24,16 @@ class ProyectoController extends Controller
             'fecha_fin' => 'nullable|date'
         ]);
 
-        Sprint::create([
+        $proyecto = Proyecto::findOrFail($id_proyecto);
+
+        $sprint = new Sprint([
             'nombre' => $validar_datos['nombre'],
             'fecha_inicio' => $validar_datos['fecha_inicio'],
             'fecha_fin' => $validar_datos['fecha_fin'],
             'id_proyecto' => $id_proyecto
         ]);
+
+        $proyecto->sprints()->save($sprint);
 
         return redirect()->route('index');
     }

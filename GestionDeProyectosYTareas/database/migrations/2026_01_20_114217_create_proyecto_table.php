@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
 
             //relaciones
-            $table->foreignId('id_product_owner')->constrained('product_owner')->cascadeOnDelete()->cascaOnUpdate();
+            $table->foreignId('id_product_owner')->constrained('product_owner')->cascadeOnDelete()->cascadeOnUpdate();
 
 
 
