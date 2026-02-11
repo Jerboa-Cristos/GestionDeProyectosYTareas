@@ -13,9 +13,6 @@ class Tarea extends Model
         return $this->belongsTo(Desarrollador::class);
     }
 
-    public function proyecto() {
-        return $this->belongsTo(Proyecto::class);
-    }
 
     public function sprint() {
         return $this->belongsTo(Sprint::class);

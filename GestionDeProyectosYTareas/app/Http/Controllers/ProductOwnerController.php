@@ -93,24 +93,26 @@ class ProductOwnerController extends Controller
 
     //MOSTRAR INFORMACION DE UN SOLO PRODUCT_OWNER
 
-    public function show_solo(Request $request) {
+    public function show_product_owner(Request $request) {
         //$user = Auth::user();//Obtenemos el usuario que esta logeado actualmente
 
         $product_owner = ProductOwner::findOrFail($request->get('id'));
         return view('administrador.show_Admin')->with('product_owner', $product_owner);
     }
 
-    public function edit_solo(Request $request) {
+    public function edit_product_owner(Request $request) {
         $product_owner= ProductOwner::findOrFail($request->get('id'));
         return view('/administrador.edit_Admin')->with('product_owner', $product_owner);
     }
 
-    public function update_solo(Request $request) {
+    public function update_product_owner(Request $request) {
         ProductOwner::find($request->get('id'))->firstOrFail()->update([
             'nombre'=>$request->get('nombre'),
             'email'=>$request->get('email'),
             'password'=>$request->get('password')
         ]);
+
+        
     }
 
 }

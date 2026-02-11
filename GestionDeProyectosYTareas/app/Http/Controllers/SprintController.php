@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tarea;
+use App\Models\Sprint;
 
 class SprintController extends Controller
 {
@@ -25,14 +26,17 @@ class SprintController extends Controller
         ]);
 
         //cambiar la relacion
+        $sprint = Sprint::findOrFail(1);
 
-        Tarea::create([
+        $tarea = new Tarea([
             'tipo' => $validar_datos['tipo'],
             'descripcion' => $validar_datos['descripcion'],
             'fecha_inicio' => $validar_datos['fecha_inicio'],
             'fecha_fin' => $validar_datos['fecha_fin'],
             ''
         ]);
+
+        $sprint->tareas()->save($tarea);
     }
 
 
@@ -57,4 +61,35 @@ class SprintController extends Controller
 
         return redirect()->route('index');
     }
+
+    //CRUD PARA MOSTRAR - EDITAR - GUARDAR - ELIMINAR SPRINT
+    public function show_sprint($id){
+        $sprint = Sprint::findOrFail($id);
+        return view('sprint.show_sprint', compact('sprint'));
+    }
+
+    public function edit_sprint($id){
+        $editar_sprint = Sprint::findOrFail($id);
+        return view('sprint.edit', compact('editar_sprint'));
+    }
+
+    public function update_sprint(Request $request, $id){
+        $validar_datos = $request->validate([
+            'nombre' => 'required|string|max:40',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'nullable|date'
+        ]);
+
+        Sprint::findOrFail($id)->update($validar_datos);
+        return redirect()->route('index');
+    }
+
+    public function destroy_sprint($id){
+        $datos_sprint = Sprint::finOrFail($id);
+        $datos_sprint->delete();
+
+        return redirect()->route('index');
+
+    }
+
 }
