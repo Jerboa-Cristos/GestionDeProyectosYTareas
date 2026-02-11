@@ -1,9 +1,9 @@
 import axios from 'axios';
-import rutaApi from '../api/rutaApi';
+import rutaApi from '../../api/rutaApi';
 import React, { useEffect } from 'react';
 
-import Input from '../Components/Input';
-import Label from '../Components/Label';
+import Input from '../../Components/Input';
+import Label from '../../Components/Label';
 
 function Login() {
    /* useEffect(()=>{
@@ -22,7 +22,10 @@ function Login() {
 
     return(
         <main>
-            <div className={`bg-white`}>
+            <div className={`bg-white `}>
+                <div>
+                    
+                </div>
                 <h1>Iniciar Sesión</h1>
                 <form onSubmit={useEffect}>
                     <Input className='Login' placeholder='Login'/>

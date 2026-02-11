@@ -1,6 +1,6 @@
-import Button from '../Components/Button';
-import Input from '../Components/Input';
-import Label from '../Components/Label';
+import Button from '../../Components/Button';
+import Input from '../../Components/Input';
+import Label from '../../Components/Label';
 //import {useAuth} from '../hooks/auth';
 import {useState} from 'react';
 import {Link, NavLink} from 'react-router-dom';

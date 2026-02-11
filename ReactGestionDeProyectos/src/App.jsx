@@ -1,7 +1,8 @@
 import './App.css'
 import React from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Login from './pages/login';
+import Login from './pages/Login/login';
+import Base from './Components/Base';
 
 function App() {
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import {rutaApi} from '../api/rutaApi';
+import {rutaApi} from '../../api/rutaApi';
 
 import Base from './Components/Base';
 
