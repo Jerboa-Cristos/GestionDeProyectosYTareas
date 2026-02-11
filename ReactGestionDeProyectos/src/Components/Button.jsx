@@ -1,8 +1,8 @@
 const Button = ({type='submit', className, ...props}) => (
     <button type={type} 
-    className={`${className} inline-flex items-center bg-opacity-0
-    font-semibold text-blueDark uppercase hover:bg-blueDark focus:bg-red
-    active:bg-blueDark disabled:opacity-0 `}
+    className={`${className} inline-flex items-center
+    font-semibold text-blueDark uppercase bg-blueBase hover:bg-blueDark
+    active:bg-blueDark disabled:opacity-0`}
       {...props}
       />
 )
