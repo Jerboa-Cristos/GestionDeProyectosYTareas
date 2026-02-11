@@ -1,11 +1,8 @@
 import axios from 'axios';
 import React from 'react';
+import {rutaApi} from '../api/rutaApi';
 
 import Base from './Components/Base';
-
-function rutaApi(){
-   return 'http://localhost:8000';
-}
 
 function Dashboard() {
 axios.get(rutaApi()+'/dashboard')
