@@ -1,21 +1,48 @@
 import { useState } from "react"
+import { register } from "../../services/authService"
+import { useNavigate } from "react-router-dom"
+
 
 function Register () {
-    let [name, setName] = useState('')
-    let [email, setEmail] = useState('')
-    let [password, setPassword] = useState('')
-    let [confirmed_password, setConfirmed_password] = useState('')
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmed_password, setConfirmed_password] = useState('')
+    const [errors, setErrors] = useState([])
+    const navigate = useNavigate()
 
-    let submit = (e) => {
+    const submit = (e) => {
         e.preventDefault()
-        console.log(name)
-    }
+        register({name: name, email: email, password: password, confirmed_password: confirmed_password}).then(res => {
+            if(res.data.errors){
+                setErrors(res.data.errors)
+            }else{
+                console.log(res.data)
+                localStorage.setItem("user", JSON.stringify(res.data))
+                localStorage.setItem('isAuthenticated', true)
+                
+                navigate('/dashboard')
+            }
+        })
 
-    
+        
+    }
 
     return (
         <form onSubmit={submit} className="space-y-6 mt-4 max-w-md mx-auto border border-blue-300 rounded-lg p-3"   method="post">
-            <h1 className="font-black text-2x1">Register</h1>
+            <h1 className="font-black text-center text-2x1">Register</h1>
+
+            {
+            errors.length > 0 && <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                <ul className="list-disc pl-5 space-y-1 text-sm">
+                    {errors.map((error, index) => 
+                    <li key={index}>{error}</li>
+                    )}
+                    
+                </ul>
+            </div>
+            }
+
 
             <div className="grid gap-2">
                 <label className="text-sm leading-none font-medium select-none peer-disabled:cursor">Name: </label>
@@ -64,8 +91,8 @@ function Register () {
 
 
             </div>
+            <button type="submit" className="bg-green-400 hover:bg-green-700  font-medium py-2 px-4 rounded-lg  mx-auto block">Submit</button>
 
-            <button type="submit" className="bg-green-400 hover:bg-green-700 text:white font-medium py-2 px-4 rounded-lg">Submit</button>
         </form>
 
         
