@@ -1,9 +1,7 @@
 import axios from 'axios';
 import rutaApi from '../../api/rutaApi';
 import React, { useEffect } from 'react';
-
 import Input from '../../Components/Input';
-import Label from '../../Components/Label';
 
 //Se puede hacer una variable const que contenga un string del Tailwind para poder meterlo en el código de página
 const PantallaAzul = "flex bg-blueDark items-center justify-center min-h-screen";
