@@ -6,7 +6,7 @@ import Input from '../../Components/Input';
 import Label from '../../Components/Label';
 
 //Se puede hacer una variable const que contenga un string del Tailwind para poder meterlo en el código de página
-const PantallaAzul = "static bg-blueDark h-screen w-screen";
+const PantallaAzul = "flex bg-blueDark h-screen w-screen";
 
 
 function Login() {
@@ -29,24 +29,24 @@ function Login() {
     return(
         <div className={PantallaAzul}>
             <div className={`flex bg-white box-content m-5 w-350 h-195 rounded-md`}>
-                <div className={`grid m-80 items-baseline`}>
+                <div className={`grid m-80 text-center`}>
                     <h1>Iniciar Sesión</h1>
                     <form onSubmit={useEffect}>
-                    <Input 
-                    className='Login' 
-                    type='text' 
-                    placeholder='Login' 
-                    requiered/>
-                    <Input 
-                    className='Password' 
-                    type='password'
-                    placeholder='Password' 
-                    requiered/>
-                    <select name='rol'>
-                        <option value="admin">Admin</option>
-                        <option value="productOwner">Product Owner</option>
-                        <option value="desarrollador">Desarrollador</option>
-                    </select>
+                        <Input 
+                        className='Login' 
+                        type='text' 
+                        placeholder='Login' 
+                        requiered/>
+                        <Input 
+                        className='Password' 
+                        type='password'
+                        placeholder='Password' 
+                        requiered/>
+                        <select name='rol'>
+                            <option value="admin">Admin</option>
+                            <option value="productOwner">Product Owner</option>
+                            <option value="desarrollador">Desarrollador</option>
+                        </select>
                     <button type='submit' className={`uppercase`}>Iniciar Sesion</button>
 
                 </form>
