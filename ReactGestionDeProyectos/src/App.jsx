@@ -34,11 +34,10 @@ function App() {
     setIsAuthenticated(auth === "true")
   }, [location])
 
+// <Route path="/" element={<Login/>}/> LOGIN NUESTRO
+
   return (
     
-
-    
-
       <>
         <Routes>
           <Route path='/' element={<Navigate to='/register' />} />
@@ -55,7 +54,6 @@ function App() {
           <Route path="/base" element={<><div className="bg-blueDark h-screen w-screen"></div><Base /></>}/>
           
 
-            <Route path="/" element={<Login/>}/>
             <Route path="/DashboardAdmin" element={<DashboardAdmin/>}/>
             <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>
             <Route path="/PerfilUsuario" element={<PerfilUsuario/>}/>
