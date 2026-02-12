@@ -34,8 +34,8 @@ class ProductOwnerController extends Controller
         ]);
 
         //cuando tengamos login
-        //$usuario = Auth::user();
-        //$id = Auth::id();
+        $usuario = Auth::user();
+        $id = Auth::id();
 
         //solo un ejemplo para probar la relacion entre proyecto y product owner, luego se debe cambiar por el id del usuario logeado
         $product_owner = ProductOwner::findOrFail(1);

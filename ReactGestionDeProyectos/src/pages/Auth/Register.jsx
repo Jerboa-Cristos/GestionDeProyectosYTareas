@@ -45,8 +45,7 @@ function Register () {
 
 
             <div className="grid gap-2">
-                <label className="text-sm leading-none font-medium select-none peer-disabled:cursor">Name: </label>
-                
+                <label className="text-sm leading-none font-medium select-none peer-disabled:cursor">Name: </label>  
                 <input 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -89,15 +88,12 @@ function Register () {
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-2x2" 
                 placeholder="Enter to Confirm your password"/>
 
-
             </div>
             <button type="submit" className="bg-green-400 hover:bg-green-700  font-medium py-2 px-4 rounded-lg  mx-auto block">Submit</button>
 
         </form>
 
-        
     )
 }
-
 
 export default Register

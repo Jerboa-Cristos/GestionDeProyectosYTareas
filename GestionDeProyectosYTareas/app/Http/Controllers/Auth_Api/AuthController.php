@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ProductOwner;
 
 class AuthController extends Controller
 {
     public function register(Request $request){
+        //Validator::make() para validar los datos recibidos en la petición
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             //email debe ser único en la tabla users
@@ -33,10 +35,43 @@ class AuthController extends Controller
         $input['name'] = $user->name;
         $input['email'] = $user->email;
         //plainTextToken es para tener formato en el token
+        //App es el nombre del token, que se añade a la base de datos de su tabla tokens
         $input['token'] = $user->createToken("App")->plainTextToken;
 
         return response()->json($input);
     }
+
+
+    public function registerProduct_Owner(Request $request ){
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required|string|max:40',
+            'email' => 'required|email|unique:product_owner',
+            'password' => 'required|same:confirmed_password',
+            
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+
+        $product_owner = ProductOwner::create([
+            'nombre' => $request->nombre,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'fecha_alta' => now(),
+            'id_administrador' => 1
+        ]);
+
+        $input['nombre'] = $product_owner->nombre;
+        $input['email'] = $product_owner->email;
+        $input['token'] = $product_owner->createToken('Product_Owner')->plainTextToken;
+
+        return response()->json($input);
+    }
+
+
+
+
 
     public function login(Request $request) {
         //Auth::attempt() verifica las credenciales y si son correctas, el user inicia sesión
