@@ -1,15 +1,14 @@
 import './App.css'
+import { useEffect } from 'react';
 
-import axios from 'axios';
-import React, { useEffect } from 'react';
+
 
 //Cris
-import DashboardAdmin from './pages/Administrador/dashboardAdmin';
-import GestionUsuarios from './pages/Administrador/gestionUsuarios';
-import PerfilUsuario from './pages/PerfilUsuario';
-import CreacionUsuarios from './pages/Administrador/CreacionUsuarios';
-import LoginVisual from './pages/Login/login'; //Modificar y adaptarlo al que ya tenemos
-
+//import DashboardAdmin from './pages/Admin/DashboardAdmin';
+//import GestionUsuarios from './pages/Admin/GestionUsuarios';
+//import PerfilUsuario from './pages/Admin/PerfilUsuario';
+//import CreacionUsuarios from './pages/Admin/CreacionUsuarios';
+//import Login from './pages/Login/login'; //Modificar y adaptarlo al que ya tenemos
 
 //<Route path="/base" element={<><div className="bg-blueDark h-screen w-screen"></div><Base /></>}/>
 
@@ -21,9 +20,9 @@ import Dashboard from './pages/Auth/Dashboard'
 import Profile from './pages/Auth/Profile'
 import {useState} from 'react'
 
-function rutaApi(){
-   return 'http://localhost';
-}
+//proyecto
+import Crear_Proyecto from './pages/Product_Owner/Crear_Proyecto';
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -40,23 +39,29 @@ function App() {
     
       <>
         <Routes>
-          <Route path='/' element={<Navigate to='/register' />} />
+          {/*<Route path='/' element={<Navigate to='/register' />} />*/}
           <Route path="/register" element={<Register/>} />
-          <Route path='/login' element={<Login/>} />
+          <Route path='/login' element={<Login/>} /> 
+          
           {isAuthenticated && (
             <>
             <Route path='/dashboard' element={<Dashboard/>} />
-            <Route path="/profile" element={<Profile/>}/>
-            
+            <Route path="/profile" element={<Profile/>}/>   
             </>
           )}
-          
 
+          <Route path="/proyecto" element={<Crear_Proyecto/>}/>
+
+        
+           {/**CRIS
+            
             <Route path="/DashboardAdmin" element={<DashboardAdmin/>}/>
             <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>
             <Route path="/PerfilUsuario" element={<PerfilUsuario/>}/>
             <Route path="/CreacionUsuarios" element={<CreacionUsuarios/>}/>
-            <Route path="/LoginVisual" element={<LoginVisual/>}/>
+            
+            */} 
+
         </Routes>
       </>
   )
