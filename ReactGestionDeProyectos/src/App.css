@@ -4,9 +4,21 @@
 @theme {
   /*COLORES*/
   --color-blueBase: #BBEDDF;
+  --color-BlueBaseDark: #b0d8d3;
+
   --color-blueDark: #184E77;
+  --color-BlueDarkDark: #0B4068;
+
   --color-turquesa: #34A0A4;
+
   --color-blueblue: #1A759F;
+  --color-blueDashboard: #168AAD;
+
   --color-warning: #FB7E7E;
+  --color-warningDark: #DE5050;
+
+
   --color-GreenLite: #B5E48C; 
+
+
 }

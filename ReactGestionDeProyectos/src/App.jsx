@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 //import CreacionUsuarios from './pages/Admin/CreacionUsuarios';
 //import Login from './pages/Login/login'; //Modificar y adaptarlo al que ya tenemos
 
+//<Route path="/base" element={<><div className="bg-blueDark h-screen w-screen"></div><Base /></>}/>
 
 //melissa
 import {Routes, Route, Navigate, useLocation} from 'react-router-dom'
@@ -19,8 +20,6 @@ import Dashboard from './pages/Auth/Dashboard'
 import Profile from './pages/Auth/Profile'
 import {useState} from 'react'
 
-//proyecto
-import Crear_Proyecto from './pages/Product_Owner/Crear_Proyecto';
 
 
 function App() {
