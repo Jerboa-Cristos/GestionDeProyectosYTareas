@@ -5,6 +5,14 @@ import React, { useEffect } from 'react';
 
 import Base from './Components/Base';
 
+//Cris
+import DashboardAdmin from './pages/Admin/DashboardAdmin';
+import GestionUsuarios from './pages/Admin/GestionUsuarios';
+import PerfilUsuario from './pages/Admin/PerfilUsuario';
+import CreacionUsuarios from './pages/Admin/CreacionUsuarios';
+import Login from './pages/Login/login'; //Modificar y adaptarlo al que ya tenemos
+
+
 //melissa
 import {Routes, Route, Navigate, useLocation} from 'react-router-dom'
 import Register from './pages/Auth/Register'
@@ -46,6 +54,12 @@ function App() {
 
           <Route path="/base" element={<><div className="bg-blueDark h-screen w-screen"></div><Base /></>}/>
           
+
+            <Route path="/" element={<Login/>}/>
+            <Route path="/DashboardAdmin" element={<DashboardAdmin/>}/>
+            <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>
+            <Route path="/PerfilUsuario" element={<PerfilUsuario/>}/>
+            <Route path="/CreacionUsuarios" element={<CreacionUsuarios/>}/>
         </Routes>
       </>
   )
