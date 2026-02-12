@@ -51,10 +51,10 @@ class AuthController extends Controller
 
         return response()->json($input);
 
-        
+
     }
 
-    public function profile(Request $request){  
+    public function profile(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
@@ -62,9 +62,9 @@ class AuthController extends Controller
 
         if($validator->fails()){
             return response()->json(['errors' => $validator->errors()->all()]);
-        } 
+        }
 
-        
+
         $user = Auth::user();
 
         $user->name = $request->name;
@@ -75,7 +75,7 @@ class AuthController extends Controller
         }
 
         $user->save();
-        
+
         $input['name'] = $user->name;
         $input['email'] = $user->email;
 
