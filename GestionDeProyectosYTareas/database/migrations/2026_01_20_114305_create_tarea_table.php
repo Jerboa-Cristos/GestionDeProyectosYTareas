@@ -22,8 +22,9 @@ return new class extends Migration
 
             //Foreign Key
             $table->foreignId('id_sprint')->constrained('sprint')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('id_proyecto')->constrained('proyecto')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_desarrollador')->constrained('desarrollador')->cascadeOnDelete()->cascadeOnUpdate();
+            
+            //$table->foreignId('id_proyecto')->constrained('proyecto')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

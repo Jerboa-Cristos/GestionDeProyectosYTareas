@@ -1,10 +1,22 @@
-import { StrictMode } from 'react'
+//import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+import {BrowserRouter} from 'react-router-dom';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  //combierte la app en SAP single page aplication
+  <BrowserRouter>
     <App />
-  </StrictMode>,
+  
+  </BrowserRouter>
+
+
+  /** 
+   <StrictMode>
+    <App />
+  </StrictMode>, 
+  
+  */
+  
 )

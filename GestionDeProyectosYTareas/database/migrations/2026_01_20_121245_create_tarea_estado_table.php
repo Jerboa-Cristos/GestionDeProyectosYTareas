@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('fecha_fin')->nullable();
             $table->foreignId('id_tarea')->constrained('tarea')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('id_estado')->constrained('estado')->cascadeOnUpdate()->cascadeOnDelete();
+            
             $table->timestamps();
         });
     }
