@@ -4,13 +4,17 @@ import { useEffect } from 'react';
 
 
 //Cris
-//import DashboardAdmin from './pages/Admin/DashboardAdmin';
-//import GestionUsuarios from './pages/Admin/GestionUsuarios';
-//import PerfilUsuario from './pages/Admin/PerfilUsuario';
-//import CreacionUsuarios from './pages/Admin/CreacionUsuarios';
+//import DashboardAdmin from './pages/Administrador/DashboardAdmin';
+//import GestionUsuarios from './pages/Administrador/GestionUsuarios';
+//import PerfilUsuario from './pages/Administrador/PerfilUsuario';
+//import CreacionUsuarios from './pages/Administrador/CreacionUsuarios';
 //import Login from './pages/Login/login'; //Modificar y adaptarlo al que ya tenemos
+import DashboardDesarrollador from './pages/Desarrollador/DashboardDesarrollador';
+import TableroKanbanDesarrollador from './pages/Desarrollador/TableroKanbanDesarrollador';
+import MisTareasDesarrollador from './pages/Desarrollador/MisTareasDesarrollador';
 
 //<Route path="/base" element={<><div className="bg-blueDark h-screen w-screen"></div><Base /></>}/>
+
 
 //melissa
 import {Routes, Route, Navigate, useLocation} from 'react-router-dom'
@@ -48,8 +52,14 @@ function App() {
             </>
           )}
 
+          {/*Melissa
           <Route path="/proyecto" element={<Crear_Proyecto/>}/>
+          */}
+          
 
+          <Route path="/DashboardDesarrollador" element={<DashboardDesarrollador/>}/>
+          <Route path="/TableroKanbanDesarrollador" element={<TableroKanbanDesarrollador/>}/>
+          <Route path="/MisTareasDesarrollador" element={<MisTareasDesarrollador/>}/>
         
            {/**CRIS
             
