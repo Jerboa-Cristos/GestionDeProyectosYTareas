@@ -3,15 +3,15 @@ import './App.css'
 import axios from 'axios';
 import React, { useEffect } from 'react';
 
-import Base from './Components/Base';
-
 //Cris
-import DashboardAdmin from './pages/Admin/DashboardAdmin';
-import GestionUsuarios from './pages/Admin/GestionUsuarios';
-import PerfilUsuario from './pages/Admin/PerfilUsuario';
-import CreacionUsuarios from './pages/Admin/CreacionUsuarios';
-import Login from './pages/Login/login'; //Modificar y adaptarlo al que ya tenemos
+import DashboardAdmin from './pages/Administrador/dashboardAdmin';
+import GestionUsuarios from './pages/Administrador/gestionUsuarios';
+import PerfilUsuario from './pages/PerfilUsuario';
+import CreacionUsuarios from './pages/Administrador/CreacionUsuarios';
+import LoginVisual from './pages/Login/login'; //Modificar y adaptarlo al que ya tenemos
 
+
+//<Route path="/base" element={<><div className="bg-blueDark h-screen w-screen"></div><Base /></>}/>
 
 //melissa
 import {Routes, Route, Navigate, useLocation} from 'react-router-dom'
@@ -22,7 +22,7 @@ import Profile from './pages/Auth/Profile'
 import {useState} from 'react'
 
 function rutaApi(){
-   return 'http://localhost:8000';
+   return 'http://localhost';
 }
 
 function App() {
@@ -50,14 +50,13 @@ function App() {
             
             </>
           )}
-
-          <Route path="/base" element={<><div className="bg-blueDark h-screen w-screen"></div><Base /></>}/>
           
 
             <Route path="/DashboardAdmin" element={<DashboardAdmin/>}/>
             <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>
             <Route path="/PerfilUsuario" element={<PerfilUsuario/>}/>
             <Route path="/CreacionUsuarios" element={<CreacionUsuarios/>}/>
+            <Route path="/LoginVisual" element={<LoginVisual/>}/>
         </Routes>
       </>
   )
