@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nombre', 100);
             $table->string('email', 40)->unique();
             $table->string('password');//Que tipo debe ser la contraseña
-            $table->dateTime('fecha_alta');
-
+            $table->dateTime('fecha_alta')->nullable();
+            $table->image('foto_perfil')->nullable();
             //Para actualizar la tabla
             $table->timestamps();
 
