@@ -79,7 +79,10 @@ class AdministradorController extends Controller
             'id_proyecto'=>'required|exists:proyecto,id',
             'fecha_alta'=>'required|date',
         ]);
-        Desarrollador::create([
+
+        $administrador = Administrador::findOrFail($request->get('id'));
+
+        $desarrollador = new Desarrollador([
             'nombre'=>$usuarios('nombre'),
             'email'=>$usuarios('email'),
             'password'=>$usuarios('password'),
@@ -89,6 +92,9 @@ class AdministradorController extends Controller
             'created_at'=>date('Y-m-d'),
             'updated_at'=>date('Y-m-d'),
         ]);
+
+        $administrador->desarrollador()->save($desarrollador);
+        return redirect()->back();
     }
 
     public function showDesarrollador($id) {//Muestra solo UNA cosa específica
@@ -111,6 +117,7 @@ class AdministradorController extends Controller
             'id_administrador'=>'required|exists:administrador,id',
             'fecha_alta'=>'required|date',
         ]);
+
         Desarrollador::find($id)->firstOrFail()->update([
             'nombre'=>$usuarios('nombre'),
             'email'=>$usuarios('email'),
@@ -120,11 +127,13 @@ class AdministradorController extends Controller
             'created_at'=>date('Y-m-d'),
             'updated_at'=>date('Y-m-d'),
         ]);
+        return redirect()->back();
+
     }
 
     //Borrar usuarios
     public function eliminarDesarrollador($id) {
-        Desarrollador::findOrFail($id)->firstOrFail()->delete();
+        Desarrollador::findOrFail($id)->delete();
         return redirect()->back()->with('success','Eliminado con exito');
     }
 #endregion
@@ -145,7 +154,10 @@ class AdministradorController extends Controller
             'id_administrador'=>'required|exists:administrador,id',
             'fecha_alta'=>'required|date',
         ]);
-        ProductOwner::create([
+
+        $administrador = Administrador::findOrFail($request->get('id'));
+
+        $productOwner = new ProductOwner([
             'nombre'=>$usuarios('nombre'),
             'email'=>$usuarios('email'),
             'password'=>$usuarios('password'),
@@ -154,6 +166,9 @@ class AdministradorController extends Controller
             'created_at'=>date('Y-m-d'),
             'updated_at'=>date('Y-m-d'),
         ]);
+
+        $administrador->product_owner()->save($productOwner);
+        return redirect()->back();
     }
 
     public function showProductOwner($id) {//Muestra solo UNA cosa específica
@@ -185,11 +200,12 @@ class AdministradorController extends Controller
             'created_at'=>date('Y-m-d'),
             'updated_at'=>date('Y-m-d'),
         ]);
+        return redirect()->back();
     }
 
     //Borrar usuarios
     public function eliminarProductOwner($id) {
-        ProductOwner::findOrFail($id)->firstOrFail()->delete();
+        ProductOwner::findOrFail($id)->delete();
         return redirect()->back()->with('success','Eliminado con exito');
     }
 #endregion

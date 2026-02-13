@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Desarrollador extends Model
 {
+    use HasApiTokens, HasFactory;
+    protected $guard = 'desarrollador';
+
     protected $table = 'desarrollador';
     protected $fillable = ['nombre', 'email', 'password', 'id_administrador', 'id_proyecto'];
 
