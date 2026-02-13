@@ -1,3 +1,5 @@
+import MenuTop from "../../Components/MenuTop";
+
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { profile } from "../../services/authService"
@@ -36,7 +38,9 @@ function Profile () {
 
     return (
         <>
-          <div className="flex h-screen bg-gray-100">
+          <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
+            <MenuTop/>
+
             <aside className="w-64 bg-white shadow-md p-5">
                 <h2 className="text-xl font-bold mb-6">My app</h2>
                 <nav className="flex flex-col space-y-3">

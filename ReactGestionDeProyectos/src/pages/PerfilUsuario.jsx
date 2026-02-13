@@ -1,6 +1,3 @@
-import axios from 'axios';
-import rutaApi from '../api/rutaApi';
-import React, { useEffect } from 'react';
 import { User, Mail, Briefcase, Folder, RotateCcw, Edit3, Trash2 } from 'lucide-react';
 import MenuTop from '../Components/MenuTop';
 
