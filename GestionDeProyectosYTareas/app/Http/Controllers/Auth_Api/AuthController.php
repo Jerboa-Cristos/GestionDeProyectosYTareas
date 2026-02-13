@@ -9,10 +9,12 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ProductOwner;
+use App\Models\Administrador;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
+    // EJEMPLO DEL VIDEO, solo lo tengo de ejemplo luego esto se borrara porque no usamos tabla users 
+    public function register_user(Request $request){
         //Validator::make() para validar los datos recibidos en la petición
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -47,7 +49,7 @@ class AuthController extends Controller
             'nombre' => 'required|string|max:40',
             'email' => 'required|email|unique:product_owner',
             'password' => 'required|same:confirmed_password',
-            
+
         ]);
 
         if($validator->fails()){
@@ -99,7 +101,6 @@ class AuthController extends Controller
             return response()->json(['errors' => $validator->errors()->all()]);
         }
 
-
         $user = Auth::user();
 
         $user->name = $request->name;
@@ -116,4 +117,23 @@ class AuthController extends Controller
 
         return response()->json($input);
     }
+
+    public function profile_product_owner(Request $request){
+        $validar_product_owner = Validator::make($request->all(), [
+            'nombre' => 'required',
+            'email' => 'required|email'
+        ]);
+
+        if($validar_product_owner->fails()){
+            return response()->json(['errors' => $validar_product_owner->errors()->all()]);
+        }
+
+        $product_owner = Auth::productOwners();
+
+
+
+
+    }
+
+
 }
