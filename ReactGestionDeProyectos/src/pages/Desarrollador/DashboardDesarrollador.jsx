@@ -1,10 +1,16 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ClipboardList, Calendar, AlertCircle } from 'lucide-react';
 
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
 
 function DashboardDesarrollador() {
+    const navigate = useNavigate();
+
+    function gotoTareas() {
+        navigate('/MisTareasDesarrollador');
+    }
+
     return(
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop/>
@@ -19,23 +25,27 @@ function DashboardDesarrollador() {
                         {/* Tarjetas de Tareas */}
                         <div className="grid grid-cols-1 gap-4">
                             {/* Tareas Asignadas */}
-                            <div className="bg-blueblue rounded-xl p-6 flex items-center justify-between text-white">
-                            <div className="flex items-center gap-4">
-                                <ClipboardList size={80} />
-                                <span className="text-xl font-semibold leading-tight">Tareas Asignadas</span>
-                            </div>
-                            <span className="text-4xl font-bold">Tareas asignadas</span>
-                            </div>
+                            <button 
+                            onClick={gotoTareas} 
+                            className="bg-blueDashboard rounded-xl p-6 flex items-center justify-between text-white hover:shadow-lg hover:bg-blueblue transition-all" 
+                            >
+                                <div className="flex items-center gap-4">
+                                    <ClipboardList size={80} />
+                                    <span className="text-xl font-semibold leading-tight">Tareas Asignadas</span>
+                                </div>
+                                <span className="text-4xl font-bold">Tareas asignadas</span>
+                            </button>
 
                             {/* Tareas Deadline */}
-                            <div className="bg-warning rounded-xl p-6 flex items-center justify-between text-white relative">
+                            <button onClick={gotoTareas} 
+                            className={"bg-warning rounded-xl p-6 flex items-center justify-between text-white relative hover:shadow-lg hover:bg-warningDark transition-all"}>
                             <div className="flex items-center gap-4">
                                 <Calendar size={60} />
                                 <span className="text-xl font-semibold leading-tight">Tareas Asignadas Deadline</span>
                             </div>
                             <span className="text-4xl font-bold mr-4">Deadline</span>
                             <AlertCircle className="absolute bottom-4 right-4 text-warningDark bg-white rounded-full" size={30} />
-                            </div>
+                            </button>
                         </div>
 
                         {/* Tipo de Trabajo MONTARLO TODO */}

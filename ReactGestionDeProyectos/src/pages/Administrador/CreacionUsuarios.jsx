@@ -1,4 +1,6 @@
-import { User, Mail, Lock, Briefcase, Folder, RotateCcw, Upload, Plus } from 'lucide-react';
+import { useNavigate } from "react-router-dom"
+
+import { User, Mail, Briefcase, Folder, RotateCcw, Upload, Plus } from 'lucide-react';
 import MenuTop from '../../Components/MenuTop';
 
 //Para input de la imagen
@@ -6,6 +8,12 @@ import MenuTop from '../../Components/MenuTop';
 //onChange={handleFileChange} 
 
 function CreacionUsuarios() {
+    const navigate = useNavigate();
+
+    function goBack() {
+        navigate('/GestionUsuarios')
+    }
+
     return (
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop/>
@@ -96,6 +104,7 @@ function CreacionUsuarios() {
             </div>
                 <div className="mt-auto flex justify-between items-center w-full">
                     <button 
+                        onClick={goBack}
                         className="text-blueDark hover:scale-110 transition-transform p-2"
                         title="Volver atrás"
                         >

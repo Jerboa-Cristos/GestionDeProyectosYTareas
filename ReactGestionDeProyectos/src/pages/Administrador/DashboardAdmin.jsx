@@ -1,17 +1,15 @@
-import axios from 'axios';
-import rutaApi from '../../api/rutaApi';
-import React, { useEffect } from 'react';
+import { useNavigate } from "react-router-dom"
+
 import { Users, AlertCircle} from 'lucide-react';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralAdmin from '../../Components/Com_Admin/MenuLateralAdmin';
 
-    function handleSubmit(e){
-        e.preventDefault();
-        console.log("Formulario enviado");
-    }
-
 function DashboardAdmin() {
-axios.get(rutaApi()+'/dashboard')
+const navigate = useNavigate();
+
+    const goGestionUsuarios = () => {
+        navigate('/GestionUsuarios')
+    }
 
     return(
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
@@ -27,7 +25,7 @@ axios.get(rutaApi()+'/dashboard')
                     </h1>
                     <div className="flex flex-col gap-4">
                        <button 
-                        onClick={handleSubmit}
+                        onClick={goGestionUsuarios}
                         className="w-full bg-blueDashboard rounded-xl h-62 flex items-center 
                         justify-between px-8 text-white hover:shadow-lg hover:bg-blueblue transition-all"
                         >
@@ -40,7 +38,7 @@ axios.get(rutaApi()+'/dashboard')
                             </div>
                         </button>
                         <button 
-                        onClick={handleSubmit}
+                        onClick={goGestionUsuarios}
                         className="w-full bg-warning rounded-xl h-62 flex items-center justify-between
                         px-8 text-white relative hover:shadow-lg hover:bg-warningDark transition-all"
                         >

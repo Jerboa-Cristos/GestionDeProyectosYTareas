@@ -3,14 +3,18 @@ import MenuTop from '../../Components/MenuTop';
 import MenuLateralAdmin from '../../Components/Com_Admin/MenuLateralAdmin';
 import ListadoUsuarios from '../../Components/Com_Admin/ListadoUsuarios';
 
-function handleSubmit(e){
-        e.preventDefault();
-        console.log("Formulario enviado");
-}
+import { useNavigate } from 'react-router-dom';
 
 //Se deben añadir funciones y se debe páginar la información
 
 function GestionUsuarios() {
+
+    const navigate = useNavigate();
+
+    const goCreacionUsuarios = () => {
+        navigate('/CreacionUsuarios')
+    }
+
     return (
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop/>
@@ -61,7 +65,7 @@ function GestionUsuarios() {
                     </div>
                     <div className="mt-6 flex justify-start">
                         <button 
-                        onClick={handleSubmit}
+                        onClick={goCreacionUsuarios}
                         className="flex items-center gap-2 bg-blueBase text-blueDark px-6 py-2 
                         rounded-lg font-bold hover:bg-BlueBaseDark transition-colors shadow-sm"
                         >
