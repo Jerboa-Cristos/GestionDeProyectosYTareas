@@ -1,5 +1,6 @@
 import { Search, Plus, Layout, Users, UserCheck, Home, User } from 'lucide-react';
 import MenuTop from '../../Components/MenuTop';
+import MenuLateralAdmin from '../../Components/Com_Admin/MenuLateralAdmin';
 import ListadoUsuarios from '../../Components/Com_Admin/ListadoUsuarios';
 
 function handleSubmit(e){
@@ -14,26 +15,7 @@ function GestionUsuarios() {
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop/>
             <div className="flex flex-1 gap-4 overflow-hidden h-full">
-                <aside className="w-64 bg-blueBase rounded-xl flex flex-col p-2">
-                    <nav className="flex flex-col w-full">
-                        <button 
-                        onClick={handleSubmit}
-                        className="w-full flex items-center gap-4 px-6 py-4 text-blueDark 
-                        hover:bg-BlueBaseDark hover:text-BlueDarkDark transition-all text-left group"
-                        >
-                            <Home size={22} className="text-blueDark group-hover:text-BlueDarkDark" />
-                            <span className="text-base font-medium">Panel</span>
-                        </button>
-                        <button 
-                        onClick={handleSubmit}
-                        className="w-full flex items-center gap-4 px-6 py-4 text-blueDark
-                        hover:bg-BlueBaseDark hover:text-BlueDarkDark transition-all text-left group"
-                        >
-                            <User size={22} className="text-blueDark group-hover:text-BlueDarkDark"/>
-                            <span className="text-base font-medium">Usuarios</span>
-                        </button>
-                    </nav>
-                </aside>
+                <MenuLateralAdmin/>
                 <main className="flex-1 bg-white rounded-xl shadow-lg p-8 flex flex-col overflow-hidden m-4">
                     <h1 className="text-3xl font-bold text-blueDark mb-6 text-left">
                         Gestión de usuarios

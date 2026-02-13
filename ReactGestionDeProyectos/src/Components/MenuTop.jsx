@@ -1,4 +1,4 @@
-import { Bell, UserCircle, Menu } from 'lucide-react';
+import { Bell, UserCircle, LogOut } from 'lucide-react';
 
 
 //Para responsibe design, hay que añadir md: a las variables, ya que cambia las cosas si la pantalla es menos que la mitad
@@ -13,7 +13,7 @@ const MenuTop = () => (
             <div className="flex items-center gap-6 text-slate-600">
                 <button className="hover:text-slate-800 transition-colors"><UserCircle size={24} /></button>
                 <button className="hover:text-slate-800 transition-colors"><Bell size={24} /></button>
-                <button className="hover:text-slate-800 transition-colors"><Menu size={24} /></button>
+                <button className="hover:text-slate-800 transition-colors"><LogOut size={24} /></button>
             </div>
     </header>
 )
