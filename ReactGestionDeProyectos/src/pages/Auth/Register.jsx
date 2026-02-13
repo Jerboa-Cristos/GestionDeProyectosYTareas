@@ -1,10 +1,11 @@
 import { useState } from "react"
 import { register } from "../../services/authService"
 import { useNavigate } from "react-router-dom"
+import { register_product_owner } from "../../services/authService"
 
 
 function Register () {
-    const [name, setName] = useState('')
+    const [nombre, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmed_password, setConfirmed_password] = useState('')
@@ -13,17 +14,19 @@ function Register () {
 
     const submit = (e) => {
         e.preventDefault()
-        register({name: name, email: email, password: password, confirmed_password: confirmed_password}).then(res => {
-            if(res.data.errors){
-                setErrors(res.data.errors)
-            }else{
-                console.log(res.data)
-                localStorage.setItem("user", JSON.stringify(res.data))
-                localStorage.setItem('isAuthenticated', true)
-                
-                navigate('/dashboard')
-            }
-        })
+        register_product_owner({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password})
+            .then(res => {
+                    if(res.data.errors){
+                        setErrors(res.data.errors)
+                    }else{
+                        console.log(res.data)
+                        localStorage.setItem("user", JSON.stringify(res.data))
+                        localStorage.setItem('isAuthenticated', true)
+                        
+                        navigate('/dashboard')
+                    }
+                })
+            .catch(err => console.log(err))
 
         
     }
@@ -45,14 +48,13 @@ function Register () {
 
 
             <div className="grid gap-2">
-                <label className="text-sm leading-none font-medium select-none peer-disabled:cursor">Name: </label>
-                
+                <label className="text-sm leading-none font-medium select-none peer-disabled:cursor">Name: </label>  
                 <input 
-                value={name}
+                value={nombre}
                 onChange={(e) => setName(e.target.value)}
                 type="text" 
-                id="name" 
-                name="name" 
+                id="nombre" 
+                name="nombre" 
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-2x2" 
                 placeholder="Enter your name"/>
 
@@ -89,15 +91,12 @@ function Register () {
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-2x2" 
                 placeholder="Enter to Confirm your password"/>
 
-
             </div>
             <button type="submit" className="bg-green-400 hover:bg-green-700  font-medium py-2 px-4 rounded-lg  mx-auto block">Submit</button>
 
         </form>
 
-        
     )
 }
-
 
 export default Register

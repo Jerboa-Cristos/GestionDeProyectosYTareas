@@ -18,6 +18,7 @@ return [
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -40,6 +41,22 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'administrador' => [
+            'driver' => 'sanctum',
+            'provider' => 'administradores',
+        ],
+
+        'product_owner' => [
+            'driver' => 'sanctum',
+            'provider' => 'product_owners',
+        ],
+
+        'desarrollador' => [
+            'driver' => 'sanctum',
+            'provider' => 'desarrolladores',
+        ],
+
     ],
 
     /*
@@ -69,6 +86,21 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        'administradores' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Administrador::class,
+        ],
+
+        'product_owners' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\ProductOwner::class,
+        ],
+
+        'desarrolladores' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Desarrollador::class,
+        ]
     ],
 
     /*
