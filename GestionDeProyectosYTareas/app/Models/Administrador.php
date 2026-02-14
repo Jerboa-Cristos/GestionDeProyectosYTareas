@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Administrador extends Model
+class Administrador extends Authenticatable
 {
     use HasApiTokens, HasFactory;
     protected $guard = 'administrador';

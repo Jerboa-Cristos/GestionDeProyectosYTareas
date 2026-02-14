@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Auth_Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\Desarrollador;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
+
 class DesarrolladorAuthController extends Controller
 {
     public function registerDesarrollador(Request $request ){
@@ -24,7 +30,8 @@ class DesarrolladorAuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'fecha_alta' => now(),
-            'id_administrador' => 1
+            'id_administrador' => 1,
+            'id_proyecto' => 1
         ]);
 
         $input['nombre'] = $desarrollador->nombre;
@@ -35,11 +42,13 @@ class DesarrolladorAuthController extends Controller
     }
 
     public function loginDesarrollador(Request $request){
-        if(!Auth::attempt($request->only('email', 'password'))){
+        if(
+            !Desarrollador::where('email', $request->email)->first() ||
+            !Hash::check($request->password,Desarrollador::where('email', $request->email)->first()->password)){
             return response()->json(['errors' => ['Invalid credentials']]);
         }
 
-        $desarrollador = Auth::user();
+        $desarrollador = Desarrollador::where('email', $request->email)->first();
         $input['nombre'] = $desarrollador->nombre;
         $input['email'] = $desarrollador->email;
         $input['token'] = $desarrollador->createToken('Desarrollador')->plainTextToken;

@@ -9,7 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Desarrollador extends Model
+class Desarrollador extends Authenticatable
 {
     use HasApiTokens, HasFactory;
     protected $guard = 'desarrollador';

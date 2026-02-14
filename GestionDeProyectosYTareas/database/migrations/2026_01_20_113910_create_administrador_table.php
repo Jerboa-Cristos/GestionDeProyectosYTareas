@@ -16,8 +16,7 @@ return new class extends Migration
             $table->string('nombre', 100);
             $table->string('email', 40)->unique();
             $table->string('password');
-            $table->dateTime('fecha_alta')->nullable();
-            $table->binary('foto_perfil')->nullable();
+            
 
             //Para actualizar las tablas
             $table->timestamps();
