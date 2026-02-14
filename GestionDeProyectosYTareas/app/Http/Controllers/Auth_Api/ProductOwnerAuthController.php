@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\ProductOwner;
 use App\Models\Administrador;
 
-class AuthController extends Controller
+class ProductOwnerAuthController extends Controller
 {
     // EJEMPLO DEL VIDEO, solo lo tengo de ejemplo luego esto se borrara porque no usamos tabla users 
     public function register_user(Request $request){

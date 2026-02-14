@@ -72,6 +72,4 @@ class AdministradorAuthController extends Controller
 
         return response()->json($input);
     }
-
-    
 }

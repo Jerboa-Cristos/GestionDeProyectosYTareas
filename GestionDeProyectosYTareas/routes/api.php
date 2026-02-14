@@ -3,14 +3,18 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth_Api\AuthController;
-use App\Http\Controllers\ProductOwnerController;
+
+
+use App\Http\Controllers\Auth_Api\AdministradorAuthController;
+use App\Http\Controllers\Auth_Api\ProductOwnerAuthController;
+use App\Http\Controllers\Auth_Api\DesarrolladorAuthController;
 
 Route::get('user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
 //Rutas para autenticación ejemplo del tutorial yotube , eliminar despues
-Route::post('register', [AuthController::class, 'register_user']);
+//Route::post('register', [AuthController::class, 'register_user']);
 
 //RUTAS AUTENTICACION ADMINISTRADOR
 Route::post('register_administrador', [AdministradorAuthController::class, 'registerAdministrador']);
