@@ -40,11 +40,13 @@ class AdministradorAuthController extends Controller
     }
 
     public function loginAdministrador(Request $request){
-        if(!Auth::attempt($request->only('email', 'password'))){
+        if(!Administrador::where('email', $request->email)->first() ||
+            !Hash::check($request->password, Administrador::where('email', $request->email)->first()->password)){
             return response()->json(['errors' => ['Invalid credentials']]);
         }
 
-        $administrador = Auth::user();
+        $administrador = Administrador::where('email', $request->email)->first();
+
         $input['nombre'] = $administrador->nombre;
         $input['email'] = $administrador->email;
         $input['token'] = $administrador->createToken('Administrador')->plainTextToken;
