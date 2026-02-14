@@ -27,7 +27,7 @@ function ListadoUsuarios(...props) {
 
     return(
     <button 
-    key={props.id}
+    key={users.id}
     onClick={navigate('/PerfilUsuario')}
         className="w-full bg-blueBase rounded-lg h-14 flex items-center 
         justify-between px-6 hover:bg-blueBaseDark transition-all text-white"

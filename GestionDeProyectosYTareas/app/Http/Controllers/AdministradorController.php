@@ -14,11 +14,6 @@ class AdministradorController extends Controller
 //ADMINISTRADOR
 #region
 
-    public function indexAdministrador(){ //Mostrar datos sobre desarrolladores solo
-        $administradores=Administrador::all();
-        return view('administrador.index_Admin',['administradores'=>$administradores]);
-    }
-
     public function show($id) {
         //$user = Auth::user();//Obtenemos el usuario que esta logeado actualmente 
         $admin = Administrador::findOrFail($id);
@@ -40,7 +35,6 @@ class AdministradorController extends Controller
             'nombre'=>$admin_info('nombre'),
             'email'=>$admin_info('email'),
             'password'=>$admin_info('password'),
-            'fecha_alta'=>date('Y-m-d'),
             'created_at'=>date('Y-m-d'),
             'updated_at'=>date('Y-m-d'),
         ]);
@@ -55,19 +49,28 @@ class AdministradorController extends Controller
     }
 
     public function indexUsuarios(){ //Mostrar datos sobre usuarios
-        $desarrolladores=Desarrollador::all();
-        $productOwners=ProductOwner::all();
-        $administradores=Administrador::all();
-        $proyectos=Proyecto::all();
-        return view('administrador.index_Admin',['desarrolladores'=>$desarrolladores, 'product_owners'=>$productOwners, 'administradores'=>$administradores, 'proyectos'=>$proyectos]);
+        $desarrolladores=Desarrollador::all()->map(function($desarrollador){
+            $desarrollador->rol='Desarrollador';
+            return $desarrollador;
+        });
+        
+        $productOwners=ProductOwner::all()->map(function($productOwner){
+            $productOwner->rol='Product Owner';
+            return $productOwner;
+        });
+        
+        $administradores=Administrador::all()->map(function($administrador){
+            $administrador->rol='Administrador';
+            return $administrador;
+        });
+
+        $todos=$desarrolladores->concat($productOwners)->concat($administradores);
+        $todos=$todos->sortBy('nombre')->values()->all();
+        return response()->json($todos, 200);
     }
 
 //DESARROLLADOR
 #region
-    public function indexDesarrolladores(){ //Mostrar datos sobre desarrolladores solo
-        $desarrolladores=Desarrollador::all();
-        return view('administrador.index_Admin',['desarrollador'=>$desarrolladores]);
-    }
 
     //Crear desarrolladores
     public function guardarDesarrollador(Request $request) {
@@ -77,7 +80,6 @@ class AdministradorController extends Controller
             'password'=>'required|confirmed',
             'id_administrador'=>'required|exists:administrador,id',
             'id_proyecto'=>'required|exists:proyecto,id',
-            'fecha_alta'=>'required|date',
         ]);
 
         $administrador = Administrador::findOrFail($request->get('id'));
@@ -88,7 +90,6 @@ class AdministradorController extends Controller
             'password'=>$usuarios('password'),
             'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
             'id_proyecto'=> 1, //Proyecto::get('id'), por ahora esta hardcodeado
-            'fecha_alta'=>date('Y-m-d'),
             'created_at'=>date('Y-m-d'),
             'updated_at'=>date('Y-m-d'),
         ]);
@@ -99,7 +100,7 @@ class AdministradorController extends Controller
 
     public function showDesarrollador($id) {//Muestra solo UNA cosa específica
         $desarrollador = Desarrollador::findOrFail($id);
-        return view('administrador.show_Admin')->with('desarrollador', $desarrollador);
+        return response()->json($desarrollador, 200);
     }
 
     public function editDesarrollador($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
@@ -115,15 +116,13 @@ class AdministradorController extends Controller
             'email'=>'required|unique:users|email',
             'password'=>'required|confirmed',
             'id_administrador'=>'required|exists:administrador,id',
-            'fecha_alta'=>'required|date',
         ]);
 
         Desarrollador::find($id)->firstOrFail()->update([
             'nombre'=>$usuarios('nombre'),
             'email'=>$usuarios('email'),
             'password'=>$usuarios('password'),
-            'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
-            'fecha_alta'=>date('Y-m-d'),
+            'id_administrador'=> Auth()->id(), //Administrador::Auth()->id(), por ahora esta hardcodeado
             'created_at'=>date('Y-m-d'),
             'updated_at'=>date('Y-m-d'),
         ]);
@@ -140,10 +139,6 @@ class AdministradorController extends Controller
 
 //PRODUCT OWNER
 #region
-    public function indexProductOwner(){ //Mostrar datos sobre usuarios
-        $productOwners=ProductOwner::all();
-        return view('administrador.index_Admin',['product_owner'=>$productOwners]);
-    }
 
             //Crear usuarios
     public function guardarProductOwner(Request $request) {
@@ -173,7 +168,7 @@ class AdministradorController extends Controller
 
     public function showProductOwner($id) {//Muestra solo UNA cosa específica
         $productOwner=ProductOwner::findOrFail($id);
-        return view('administrador.show_Admin')->with('productOwner', $productOwner);
+        return response()->json($productOwner, 200);
     }
 
     public function editProductOwner($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario

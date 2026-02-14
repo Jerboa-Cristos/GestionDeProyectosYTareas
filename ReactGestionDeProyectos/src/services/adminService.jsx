@@ -3,8 +3,8 @@ import rutaApi from '../api/rutaApi';
 
 //export const funcion = (data) => axios.post(APP_URL + '/ruta_del_backend', data)
 //FUNCIONES PARA MOSTRAR A LOS DESARROLLADORES Y PRODUCT OWNERS
-export const mostrarDesarrolladores = (data) => axios.get(rutaApi() + '/index_Admin_Desarrollador', data)
-export const mostrarProductOwners = (data) => axios.get(rutaApi() + '/index_Admin_ProductOwner', data)
+export const mostrarUsuarios = (data) => axios.get(rutaApi() + '/indexUsuarios', data)
+
 
 //Funciones para mostrar el perfil de los usuarios
 export const mostrarPerfilDesarrollador = (id) => axios.get(rutaApi() + '/show_Admin_Desarrollador/' + id)

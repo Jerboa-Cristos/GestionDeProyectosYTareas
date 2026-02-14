@@ -26,7 +26,7 @@ class DesarrolladorSeeder extends Seeder
                 'fecha_alta' => date('Y-m-d'),
                 'created_at' => date('Y-m-d'),
                 'updated_at' =>date('Y-m-d'),
-                'id_administrador' => random_int(1,5),
+                'id_administrador' => 1,
                 'id_proyecto' => 1
             ]);
         }

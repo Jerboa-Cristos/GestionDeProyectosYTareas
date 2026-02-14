@@ -9,6 +9,8 @@ use App\Http\Controllers\Auth_Api\AdministradorAuthController;
 use App\Http\Controllers\Auth_Api\ProductOwnerAuthController;
 use App\Http\Controllers\Auth_Api\DesarrolladorAuthController;
 
+use App\Http\Controllers\AdministradorController;
+
 Route::get('user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -42,3 +44,8 @@ Route::get('profile_desarrollador', [DesarrolladorAuthController::class, 'profil
 //Rutas para proyecto
 //Route::post('ruta', [Controlador::class, 'metodo']);
 Route::post('proyecto', [ProductOwnerController::class, 'store']);
+
+Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
+Route::get('indexAdmin', [AdministradorController::class, 'indexAdministrador']);
+Route::get('indexDesarrollador', [AdministradorController::class, 'indexDesarrolladores']);
+Route::get('indexProductOwner', [AdministradorController::class, 'indexProductOwner']);

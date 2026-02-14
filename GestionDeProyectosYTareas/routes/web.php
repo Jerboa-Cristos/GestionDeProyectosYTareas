@@ -38,8 +38,10 @@ Route::delete('destroy_sprint/{id}', [ProyectoController::class], 'destroy')->na
 //TAREA
 
 //Administrador. Pensar como se podría hacer de una mejor manera
-Route::get('index_Admin_Desarrollador', [AdministradorController::class, 'indexDesarrollador'])->name('Index_Desarrollador');
-Route::get('index_Admin_ProductOwner', [AdministradorController::class, 'indexProductOwner'])->name('Index_Product_Owner');
+Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
+Route::get('indexAdmin', [AdministradorController::class, 'indexAdministrador']);
+Route::get('indexDesarrollador', [AdministradorController::class, 'indexDesarrolladores']);
+Route::get('indexProductOwner', [AdministradorController::class, 'indexProductOwner']);
 
 Route::get('create_Admin',[AdministradorController::class, 'create'])->name('crear_users');//ESTO DEBE SER UN FORMULARIO
 

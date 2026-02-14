@@ -14,7 +14,6 @@ class Administrador extends Model
 {
     use HasApiTokens, HasFactory;
     protected $guard = 'administrador';
-
     
     protected $table = 'administrador';
     protected $fillable = ['nombre', 'email', 'password'];
