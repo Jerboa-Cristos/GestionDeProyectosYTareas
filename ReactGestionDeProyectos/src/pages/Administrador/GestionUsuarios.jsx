@@ -4,10 +4,12 @@ import MenuLateralAdmin from '../../Components/Com_Admin/MenuLateralAdmin';
 import ListadoUsuarios from '../../Components/Com_Admin/ListadoUsuarios';
 
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 //Se deben añadir funciones y se debe páginar la información
 
 function GestionUsuarios() {
+
 
     const navigate = useNavigate();
 
@@ -60,7 +62,9 @@ function GestionUsuarios() {
                         </div>
                     </div>
                     <div className="flex-1 flex flex-col gap-2 overflow-y-auto">
-                        <ListadoUsuarios/>
+                       {user.map((post) => (
+                        <ListadoUsuarios key={post.id} />
+                       ))}
 
                     </div>
                     <div className="mt-6 flex justify-start">

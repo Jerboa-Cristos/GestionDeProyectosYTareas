@@ -1,8 +1,6 @@
 import './App.css'
 import { useEffect } from 'react';
 
-
-
 //Cris
 import DashboardAdmin from './pages/Administrador/DashboardAdmin';
 import GestionUsuarios from './pages/Administrador/GestionUsuarios';
