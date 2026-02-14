@@ -23,7 +23,7 @@ class DesarrolladorSeeder extends Seeder
                 'nombre' => $faker->name(),
                 'email' => $faker->email(),
                 'password' => $faker->password(5, 10),
-                'fecha_alta' => date('Y-m-d'),
+                
                 'created_at' => date('Y-m-d'),
                 'updated_at' =>date('Y-m-d'),
                 'id_administrador' => random_int(1,5),

@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Auth_Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\Desarrollador;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 class DesarrolladorAuthController extends Controller
 {
     public function registerDesarrollador(Request $request ){
@@ -24,7 +29,8 @@ class DesarrolladorAuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'fecha_alta' => now(),
-            'id_administrador' => 1
+            'id_administrador' => 1,
+            'id_proyecto' => 1
         ]);
 
         $input['nombre'] = $desarrollador->nombre;

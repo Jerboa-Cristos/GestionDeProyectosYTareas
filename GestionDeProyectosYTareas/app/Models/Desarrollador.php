@@ -15,7 +15,7 @@ class Desarrollador extends Model
     protected $guard = 'desarrollador';
     
     protected $table = 'desarrollador';
-    protected $fillable = ['nombre', 'email', 'password', 'fecha_alta', 'id_administrador', 'id_proyecto'];
+    protected $fillable = ['nombre', 'email', 'password', 'id_administrador', 'id_proyecto'];
 
     public function administrador() {
         

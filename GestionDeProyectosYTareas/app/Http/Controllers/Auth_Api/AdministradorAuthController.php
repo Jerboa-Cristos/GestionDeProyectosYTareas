@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Auth_Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\Administrador;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
+
 class AdministradorAuthController extends Controller
 {
     public function registerAdministrador(Request $request ){

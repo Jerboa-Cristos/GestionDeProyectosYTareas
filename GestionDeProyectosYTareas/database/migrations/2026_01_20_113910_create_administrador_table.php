@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre', 100);
             $table->string('email', 40)->unique();
             $table->string('password');
-            $table->dateTime('fecha_alta');
+            
 
             //Para actualizar las tablas
             $table->timestamps();
