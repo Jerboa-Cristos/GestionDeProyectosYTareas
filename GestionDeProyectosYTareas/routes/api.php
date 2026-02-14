@@ -9,15 +9,31 @@ Route::get('user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-//Rutas para autenticación
-//Route::post('ruta del navegador', [Controlador::class, 'metodo']);
+//Rutas para autenticación ejemplo del tutorial yotube , eliminar despues
 Route::post('register', [AuthController::class, 'register_user']);
 
-//Ruta para registrar un nuevo Product Owner
-Route::post('register_product_owner', [AuthController::class, 'registerProduct_Owner']);
-Route::post('login', [AuthController::class,'login']);
-Route::post('profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
+//RUTAS AUTENTICACION ADMINISTRADOR
+Route::post('register_administrador', [AdministradorAuthController::class, 'registerAdministrador']);
+Route::post('login_administrador', [AdministradorAuthController::class,'loginAdministrador']);
+Route::post('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador']);
+//Middleware
+//Route::get('ruta del navegador', [Controlador::class, 'metodo backend'])->middleware('auth:GUARD_DEL_USUARIO'); //carpeta config/auth.php
+Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware('auth:administrador');
 
+//RUTAS AUTENTICACIÓN PARA PRODUCT OWNER
+//Route::post('ruta del navegador', [Controlador::class, 'metodo backend']);
+Route::post('register_product_owner', [ProductOwnerAuthController::class, 'registerProductOwner']);
+Route::post('login_product_owner', [ProductOwnerAuthController::class,'loginProductOwner']);
+Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner']);
+//Middleware
+Route::get('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner'])->middleware('auth:product_owner');
+
+//RUTAS AUTENTICACION DESARROLLADOR
+Route::post('register_desarrollador', [DesarrolladorAuthController::class, 'registerDesarrollador']);
+Route::post('login_desarrollador', [DesarrolladorAuthController::class,'loginDesarrollador']);
+Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador']);
+//Middleware
+Route::get('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:desarrollador');
 
 //Rutas para proyecto
 //Route::post('ruta', [Controlador::class, 'metodo']);

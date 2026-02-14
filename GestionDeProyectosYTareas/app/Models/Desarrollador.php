@@ -3,10 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+
+//estas dos lineas son para la Autenticacion
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Desarrollador extends Model
 {
+    use HasApiTokens, HasFactory;
+    protected $guard = 'desarrollador';
+    
     protected $table = 'desarrollador';
     protected $fillable = ['nombre', 'email', 'password', 'fecha_alta', 'id_administrador', 'id_proyecto'];
 

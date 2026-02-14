@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Support\Facades\Auth;
 use App\Models\ProductOwner;
 use App\Models\Administrador;
@@ -44,7 +45,8 @@ class AuthController extends Controller
     }
 
 
-    public function registerProduct_Owner(Request $request ){
+    public function registerProductOwner(Request $request ){
+        //en unique se pone el nombre de la tabla 
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:40',
             'email' => 'required|email|unique:product_owner',
@@ -72,9 +74,6 @@ class AuthController extends Controller
     }
 
 
-
-
-
     public function login(Request $request) {
         //Auth::attempt() verifica las credenciales y si son correctas, el user inicia sesión
         if(!Auth::attempt($request->only('email', 'password'))){
@@ -87,9 +86,23 @@ class AuthController extends Controller
         $input['token'] = $user->createToken('App')->plainTextToken;
 
         return response()->json($input);
-
-
     }
+
+
+    public function loginProductOwner(Request $request){
+        if(!Auth::attempt($request->only('email', 'password'))){
+            return response()->json(['errors' => ['Invalid credentials']]);
+        }
+
+        $product_owner = Auth::user();
+        $input['nombre'] = $product_owner->nombre;
+        $input['email'] = $product_owner->email;
+        $input['token'] = $product_owner->createToken('Product_Owner')->plainTextToken;
+
+        return response()->json($input);
+    }
+
+
 
     public function profile(Request $request){
         $validator = Validator::make($request->all(), [
@@ -102,7 +115,6 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-
         $user->name = $request->name;
         $user->email = $request->email;
 
@@ -111,14 +123,13 @@ class AuthController extends Controller
         }
 
         $user->save();
-
         $input['name'] = $user->name;
         $input['email'] = $user->email;
 
         return response()->json($input);
     }
 
-    public function profile_product_owner(Request $request){
+    public function profileProductOwner(Request $request){
         $validar_product_owner = Validator::make($request->all(), [
             'nombre' => 'required',
             'email' => 'required|email'
@@ -128,12 +139,20 @@ class AuthController extends Controller
             return response()->json(['errors' => $validar_product_owner->errors()->all()]);
         }
 
-        $product_owner = Auth::productOwners();
+        //Auth::user() llama al guard product_owner definido en config/auth.php para obtener el usuario autenticado
+        $product_owner = Auth::user();
 
+        $product_owner->name = $request->nombre;
+        $product_owner->email = $request->email;
 
+        if($request->password){
+            $product_owner-> Hash::make($request->password);
+        }
 
+        $product_owner->save();
+        $input['nombre'] = $product_owner->nobmre;
+        $input['email'] = $product_owner->email;
 
+        return response()->json($input);
     }
-
-
 }
