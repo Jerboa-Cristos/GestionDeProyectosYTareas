@@ -5,11 +5,9 @@ import rutaApi from '../api/rutaApi';
 //FUNCIONES PARA MOSTRAR A LOS DESARROLLADORES Y PRODUCT OWNERS
 export const mostrarUsuarios = (data) => axios.get(rutaApi() + '/indexUsuarios', data)
 
-
 //Funciones para mostrar el perfil de los usuarios
 export const mostrarPerfilDesarrollador = (id) => axios.get(rutaApi() + '/show_Admin_Desarrollador/' + id)
 export const mostrarPerfilProductOwner = (id) => axios.get(rutaApi() + '/show_Admin_ProductOwner/' + id)
 
 //FUNCIONES PARA ELIMINAR A LOS USUARIOS
-export const eliminarDesarrollador = (id) => axios.delete(rutaApi() + '/delete_Admin_Desarrolladors/' + id)
-export const eliminarProductOwner = (id) => axios.delete(rutaApi() + '/delete_Admin_ProductOwner/' + id)
+export const eliminarUsuario = (id, rol) => axios.delete(rutaApi() + '/eliminarUsuarios/' + id, { data: { rol: rol } })

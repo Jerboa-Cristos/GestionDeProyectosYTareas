@@ -39,29 +39,13 @@ Route::delete('destroy_sprint/{id}', [ProyectoController::class], 'destroy')->na
 
 //Administrador. Pensar como se podría hacer de una mejor manera
 Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
-Route::get('indexAdmin', [AdministradorController::class, 'indexAdministrador']);
-Route::get('indexDesarrollador', [AdministradorController::class, 'indexDesarrolladores']);
-Route::get('indexProductOwner', [AdministradorController::class, 'indexProductOwner']);
+Route::get('showUsuarios/{id}', [AdministradorController::class, 'show']);
+Route::delete('eliminarUsuarios/{id}', [AdministradorController::class, 'eliminarUsuario']);
+Route::post('storeUsuarios',[AdministradorController::class, 'store']);
+Route::get('editUsarios/{id}',[AdministradorController::class, 'edit']);
+Route::put('updateUsuarios/{id}', [AdministradorController::class, 'update']);
 
-Route::get('create_Admin',[AdministradorController::class, 'create'])->name('crear_users');//ESTO DEBE SER UN FORMULARIO
 
-Route::post('store_Admin',[AdministradorController::class, 'guardarDesarrollador'])->name('Store_Desarrollador');
-Route::post('store_Admin',[AdministradorController::class, 'guardarProductOwner'])->name('Store_Product_Owner');
-
-Route::get('edit_Admin/{id}', [AdministradorController::class, 'editDesarrollador'])->name('Edit_Desarrollador');//ESTO DEBE SER UN FORMULARIO
-Route::get('edit_Admin/{id}', [AdministradorController::class, 'editProductOwner'])->name('Edit_Product_Owner');
-Route::get('edit_Admin/{id}',[AdministradorController::class, 'edit'])->name('Edit_Admin');
-
-Route::get('show_Admin_Desarrollador/{id}', [AdministradorController::class, 'showDesarrollador'])->name('show_Desarrollador');
-Route::get('show_Admin_ProductOwner/{id}', [AdministradorController::class, 'showProductOwner'])->name('show_Product_Owner');
-Route::get('show_Admin/{id}', [AdministradorController::class, 'show'])->name('show_Admin');
-
-Route::put('update_Admin/{id}', [AdministradorController::class, 'updateDesarrollador'])->name('update_Desarrollador');
-Route::put('update_Admin/{id}', [AdministradorController::class, 'updateProductOwner'])->name('update_Product_Owner');
-Route::put('update_Admin/{id}', [AdministradorController::class, 'update'])->name('update_Admin');
-
-Route::delete('delete_Admin_Desarrollador/{id}', [AdministradorController::class, 'eliminarDesarrollador'])->name('delete_Desarrollador');
-Route::delete('delete_Admin_ProductOwner/{id}', [AdministradorController::class, 'eliminarProductOwner'])->name('delete_Product_Owner');
 
 //Desarrollador
 Route::get('show_Des', [DesarrolladorController::class, 'show'])->name('show');

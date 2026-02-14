@@ -11,43 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class AdministradorController extends Controller
 {
 
-//ADMINISTRADOR
-#region
 
-    public function show($id) {
-        //$user = Auth::user();//Obtenemos el usuario que esta logeado actualmente 
-        $admin = Administrador::findOrFail($id);
-        return view('administrador.show_Admin')->with('administrador', $admin);
-    }
-
-    public function edit($id) {
-        $admin=Administrador::findOrFail($id);
-        return view('administrador.edit_Admin')->with('administrador', $admin);
-    }
-
-    public function update(Request $request, $id) {
-        $admin_info = $request->validate([
-            'nombre'=>'required|max:100',
-            'email'=>'required|unique|email',
-            'password'=>'required|confirmed',
-        ]);
-        Administrador::find($id)->firstOrFail()->update([
-            'nombre'=>$admin_info('nombre'),
-            'email'=>$admin_info('email'),
-            'password'=>$admin_info('password'),
-            'created_at'=>date('Y-m-d'),
-            'updated_at'=>date('Y-m-d'),
-        ]);
-    }
-#endregion
-
-    public function create() {//FORMULARIO para crear la entidad. Solo devuelve la vista al formulario
-        //Le tenemos que mandar toda la información que necesitará para crear a los usuarios ya de base
-        //La información de administradores, su id. 
-        //$administradores=Administrador::get('id'); //Para el administrador no es necesario, puedo usar su Auth. 
-        return view('administrador.create_Admin');
-    }
-
+#region FUNCIONES PRINCIPALES
     public function indexUsuarios(){ //Mostrar datos sobre usuarios
         $desarrolladores=Desarrollador::all()->map(function($desarrollador){
             $desarrollador->rol='Desarrollador';
@@ -69,12 +34,96 @@ class AdministradorController extends Controller
         return response()->json($todos, 200);
     }
 
-//DESARROLLADOR
-#region
+    public function showUsuarios($id, Request $request) {//Muestra solo UNA cosa específica
+        //$user = Auth::user();//Obtenemos el usuario que esta logeado actualmente 
+        if($request->rol=='administrador'){
+            $admin = Administrador::findOrFail($id);
+            return response()->json($admin, 200);
+        } else if ($request->rol=='desarrollador') {
+            $desarrollador = Desarrollador::findOrFail($id);
+            return response()->json($desarrollador, 200);
+        } else if($request->rol=='product_owner') {
+            $productOwner = ProductOwner::findOrFail($id);
+            return response()->json($productOwner, 200);
+        }
+    }
 
-    //Crear desarrolladores
-    public function guardarDesarrollador(Request $request) {
-        $usuarios = $request->validate([
+    public function eliminarUsuario($id, Request $request) {
+        if($request->rol=='administrador'){
+        Desarrollador::findOrFail($id)->delete();
+        } else if($request->rol=='desarrollador') {
+            Desarrollador::findOrFail($id)->delete();
+        } else if($request->rol=='product_owner') {
+            Desarrollador::findOrFail($id)->delete();
+        }
+        return redirect()->back()->with('success','Eliminado con exito');
+    }
+
+    public function updateUsuarios(Request $request, $id) {
+        if($request->rol=='administrador'){
+
+            $admin_info = $request->validate([
+                'nombre'=>'required|max:100',
+                'email'=>'required|unique:administrador|email',
+                'password'=>'required|confirmed',
+            ]);
+            Administrador::findOrFail($id)->update([
+                'nombre'=>$admin_info['nombre'],
+                'email'=>$admin_info['email'],
+                'password'=>$admin_info['password'],
+            ]);
+
+
+            //Necesito que me busque al mismo usuario en otras tablas para eliminarlo en el caso de si cambio de rol.
+            Desarrollador::where('email', $request->email)->delete();
+            ProductOwner::where('email', $request->email)->delete();
+
+        } else if ($request->rol=='desarrollador') {
+
+            $desarrollador_info = $request->validate([
+                'nombre'=>'required|max:100',
+                'email'=>'required|unique:desarrollador|email',
+                'password'=>'required|confirmed',
+                'id_administrador'=>'required|exists:administrador,id',
+                'id_proyecto'=>'required|exists:proyecto,id',
+            ]);
+            Desarrollador::findOrFail($id)->update([
+                'nombre'=>$desarrollador_info['nombre'],
+                'email'=>$desarrollador_info['email'],
+                'password'=>$desarrollador_info['password'],
+                'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
+                'id_proyecto'=> 1, //Proyecto::get('id'), por ahora esta hardcodeado
+            ]);
+
+            Administrador::where('email', $request->email)->delete();
+            ProductOwner::where('email', $request->email)->delete();
+
+        } else if($request->rol=='product_owner') {
+
+            $productOwner_info = $request->validate([
+                'nombre'=>'required|max:100',
+                'email'=>'required|unique:product_owner|email',
+                'password'=>'required|confirmed',
+                'id_administrador'=>'required|exists:administrador,id',
+                'fecha_alta'=>'required|date',
+            ]);
+            ProductOwner::findOrFail($id)->update([
+                'nombre'=>$productOwner_info['nombre'],
+                'email'=>$productOwner_info['email'],
+                'password'=>$productOwner_info['password'],
+                'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
+            ]);
+
+            Desarrollador::where('email', $request->email)->delete();
+            Administrador::where('email', $request->email)->delete();
+
+        }
+        return response()->json(['message'=>'Usuario actualizado con exito'], 200);
+    }
+
+    public function storeUsuarios(Request $request) {
+         if($request->user()->rol=='Desarrollador'){
+                    $usuarios = $request->validate([
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|confirmed',
@@ -95,53 +144,10 @@ class AdministradorController extends Controller
         ]);
 
         $administrador->desarrollador()->save($desarrollador);
-        return redirect()->back();
-    }
+        return response()->json(['message'=>'Usuario registrado'], 200);
 
-    public function showDesarrollador($id) {//Muestra solo UNA cosa específica
-        $desarrollador = Desarrollador::findOrFail($id);
-        return response()->json($desarrollador, 200);
-    }
+         } else if($request->user()->rol=='Product Owner') {
 
-    public function editDesarrollador($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
-        $desarrollador=Desarrollador::findOrFail($id);
-        $administradores=Administrador::get('id');
-        return view('administrador.edit_Admin', ['desarrollador'=>$desarrollador, 'administradores'=>$administradores]);
-    }
-
-    //Editar usuarios
-    public function updateDesarrollador(Request $request, $id) {
-            $usuarios = $request->validate([
-            'nombre'=>'required|max:100',
-            'email'=>'required|unique:users|email',
-            'password'=>'required|confirmed',
-            'id_administrador'=>'required|exists:administrador,id',
-        ]);
-
-        Desarrollador::find($id)->firstOrFail()->update([
-            'nombre'=>$usuarios('nombre'),
-            'email'=>$usuarios('email'),
-            'password'=>$usuarios('password'),
-            'id_administrador'=> Auth()->id(), //Administrador::Auth()->id(), por ahora esta hardcodeado
-            'created_at'=>date('Y-m-d'),
-            'updated_at'=>date('Y-m-d'),
-        ]);
-        return redirect()->back();
-
-    }
-
-    //Borrar usuarios
-    public function eliminarDesarrollador($id) {
-        Desarrollador::findOrFail($id)->delete();
-        return redirect()->back()->with('success','Eliminado con exito');
-    }
-#endregion
-
-//PRODUCT OWNER
-#region
-
-            //Crear usuarios
-    public function guardarProductOwner(Request $request) {
         $usuarios = $request->validate([
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
@@ -163,45 +169,22 @@ class AdministradorController extends Controller
         ]);
 
         $administrador->product_owner()->save($productOwner);
-        return redirect()->back();
+        return response()->json(['message'=>'Usuario registrado'], 200);
+         }
+    }
+    #endregion
+
+    public function editUsuarios($id, Request $request) {
+        if($request->user()->rol=='administrador'){
+            $admin = Administrador::findOrFail($id);
+            return response()->json($admin, 200);
+        } else if ($request->user()->rol=='desarrollador') {
+            $desarrollador = Desarrollador::findOrFail($id);
+            return response()->json($desarrollador, 200);
+        } else if($request->user()->rol=='product_owner') {
+            $productOwner = ProductOwner::findOrFail($id);
+            return response()->json($productOwner, 200);
+        }
     }
 
-    public function showProductOwner($id) {//Muestra solo UNA cosa específica
-        $productOwner=ProductOwner::findOrFail($id);
-        return response()->json($productOwner, 200);
-    }
-
-    public function editProductOwner($id) {//Formulario para editar usuarios. SOlo devuelve la vista al formulario
-        $productOwner=ProductOwner::findOrFail($id);
-        $administradores=Administrador::get('id');
-        return view('administrador.edit_Admin', ['product_owners'=>$productOwner, 'administradores'=>$administradores]);
-    }
-
-    //Editar usuarios
-    public function updateProductOwner(Request $request, $id) {
-            $usuarios = $request->validate([
-            'nombre'=>'required|max:100',
-            'email'=>'required|unique:users|email',
-            'password'=>'required|confirmed',
-            'id_administrador'=>'required|exists:administrador,id',
-            'fecha_alta'=>'required|date',
-        ]);
-        ProductOwner::find($id)->firstOrFail()->update([
-            'nombre'=>$usuarios('nombre'),
-            'email'=>$usuarios('email'),
-            'password'=>$usuarios('password'),
-            'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
-            'fecha_alta'=>date('Y-m-d'),
-            'created_at'=>date('Y-m-d'),
-            'updated_at'=>date('Y-m-d'),
-        ]);
-        return redirect()->back();
-    }
-
-    //Borrar usuarios
-    public function eliminarProductOwner($id) {
-        ProductOwner::findOrFail($id)->delete();
-        return redirect()->back()->with('success','Eliminado con exito');
-    }
-#endregion
 }

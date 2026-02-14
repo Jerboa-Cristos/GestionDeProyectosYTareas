@@ -1,7 +1,7 @@
 import { Search, Plus, Users, UserCheck, Trash2, UserCog} from 'lucide-react';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralAdmin from '../../Components/Com_Admin/MenuLateralAdmin';
-import { mostrarUsuarios} from '../../services/adminService';
+import { mostrarUsuarios, eliminarUsuario} from '../../services/adminService';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
@@ -31,7 +31,7 @@ function GestionUsuarios() {
         navigate('/CreacionUsuarios')
     }
     const goPerfilUsuario = (id) => {
-        navigate('/PerfilUsuario')
+        navigate('/PerfilUsuario/'+id)
     }
 //#endregion
 
@@ -55,6 +55,17 @@ function GestionUsuarios() {
     }
 //#endregion
 
+//#region Función para eliminar un usuario
+    const eliminarDesarrollador = (id, rol) => {
+        eliminarUsuario(id, rol).then(res => {
+            console.log('Usuario eliminado con éxito');
+            // Actualizar la lista de usuarios después de eliminar uno
+            setUsers(users.filter(user => user.id !== id || user.rol !== rol));
+        }).catch(err => {
+            console.error("Error al eliminar el usuario:", err);
+        });
+    }
+//#endregion
 
     return (
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
@@ -118,10 +129,10 @@ function GestionUsuarios() {
                                 <div className="flex items-center gap-4 w-1/4">
                                     <span className="font-bold text-blueDark">{user.nombre}</span>
                                 </div>
-                                <span className="w-1/4 text-blueDark">{user.proyecto}</span>
+                                <span className="w-1/4 text-blueDark font-medium">{user.email}</span>
                                 <span className="w-1/4 text-blueDark font-medium">{user.rol}</span>
                                 <Trash2 
-                                    onClick={()=>eliminarDesarrollador(user.id)}
+                                    onClick={(e)=>{eliminarDesarrollador(user.id, user.rol); e.stopPropagation();}}
                                     className="text-warning hover:text-warningDark hover:scale-110 transition-all cursor-pointer" 
                                     size={24} 
                                 />

@@ -45,7 +45,11 @@ Route::get('profile_desarrollador', [DesarrolladorAuthController::class, 'profil
 //Route::post('ruta', [Controlador::class, 'metodo']);
 Route::post('proyecto', [ProductOwnerController::class, 'store']);
 
+//RUTAS PARA EL ADMINISTRADOR
 Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
-Route::get('indexAdmin', [AdministradorController::class, 'indexAdministrador']);
-Route::get('indexDesarrollador', [AdministradorController::class, 'indexDesarrolladores']);
-Route::get('indexProductOwner', [AdministradorController::class, 'indexProductOwner']);
+Route::get('showUsuarios/{id}', [AdministradorController::class, 'showUsuarios']);
+Route::delete('eliminarUsuarios/{id}', [AdministradorController::class, 'eliminarUsuario']);
+Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios']);
+Route::put('updateUsuarios/{id}', [AdministradorController::class, 'updateUsuarios']);
+
+Route::get('editUsarios/{id}',[AdministradorController::class, 'editUsuarios']);
