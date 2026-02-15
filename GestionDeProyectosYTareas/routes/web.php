@@ -37,12 +37,11 @@ Route::delete('destroy_sprint/{id}', [ProyectoController::class], 'destroy')->na
 
 //TAREA
 
-//Administrador. Pensar como se podría hacer de una mejor manera
+//ADMINISTRADOR
 Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
 Route::get('showUsuarios/{id}', [AdministradorController::class, 'show']);
 Route::delete('eliminarUsuarios/{id}', [AdministradorController::class, 'eliminarUsuario']);
 Route::post('storeUsuarios',[AdministradorController::class, 'store']);
-Route::get('editUsarios/{id}',[AdministradorController::class, 'edit']);
 Route::put('updateUsuarios/{id}', [AdministradorController::class, 'update']);
 
 
