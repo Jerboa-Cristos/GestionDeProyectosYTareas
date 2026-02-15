@@ -7,10 +7,13 @@ import rutaApi from '../api/rutaApi';
 export const mostrarUsuarios = (data) => axios.get(rutaApi() + '/indexUsuarios', data)
 
 //FUNCIÓN PARA GUARDAR A LOS NUEVOS USUARIOS
+export const guardarUsuarios = (data) => axios.post(rutaApi() +'/storeUsuarios', data)
 
 //FUNCIÓN PARA MOSTRAR A UN USUARIO ESPECIFICO
+export const showUsuarios = (id, rol) => axios.get(rutaApi() + '/showUsuarios/' + rol + '/' +  id)
 
 //FUNCIÓN PARA HACER UPDATE DE UN USUARIO
+export const updateUsuarios = (id, rol) => axios.put(rutaApi() + '/updateUsuarios/' + id , data)
 
 //FUNCIÓN PARA ELIMINAR A LOS USUARIOS
-export const eliminarUsuario = (id, rol) => axios.delete(rutaApi() + '/eliminarUsuarios/' + id, { data: { rol: rol } })
+export const eliminarUsuario = (id, rol) => axios.delete(rutaApi() + '/eliminarUsuarios/' + rol + '/' + id)

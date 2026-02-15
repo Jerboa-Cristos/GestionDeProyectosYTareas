@@ -35,7 +35,7 @@ class AdministradorController extends Controller
     }
 
     public function storeUsuarios(Request $request) {
-         if($request->user()->rol=='Desarrollador'){
+         if($request->rol=='Desarrollador'){
                     $usuarios = $request->validate([
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
@@ -59,7 +59,7 @@ class AdministradorController extends Controller
         $administrador->desarrollador()->save($desarrollador);
         return response()->json(['message'=>'Usuario registrado'], 200);
 
-         } else if($request->user()->rol=='Product Owner') {
+         } else if($request->rol=='Product Owner') {
 
         $usuarios = $request->validate([
             'nombre'=>'required|max:100',
@@ -86,18 +86,19 @@ class AdministradorController extends Controller
          }
     }
 
-    public function showUsuarios($id, Request $request) {//Muestra solo UNA cosa específica
+    public function showUsuarios($id, $rol) {//Muestra solo UNA cosa específica
         //$user = Auth::user();//Obtenemos el usuario que esta logeado actualmente 
-        if($request->rol=='administrador'){
+        if($rol=='Administrador'){
             $admin = Administrador::findOrFail($id);
             return response()->json($admin, 200);
-        } else if ($request->rol=='desarrollador') {
+        } else if ($rol=='Desarrollador') {
             $desarrollador = Desarrollador::findOrFail($id);
             return response()->json($desarrollador, 200);
-        } else if($request->rol=='product_owner') {
+        } else if($rol=='ProductOwner') {
             $productOwner = ProductOwner::findOrFail($id);
             return response()->json($productOwner, 200);
         }
+        return response()->json(['error' => 'Rol no encontrado'], 404);
     }
 
     public function updateUsuarios(Request $request, $id) {
@@ -162,15 +163,18 @@ class AdministradorController extends Controller
         return response()->json(['message'=>'Usuario actualizado con exito'], 200);
     }
 
-    public function eliminarUsuario($id, Request $request) {
-        if($request->rol=='administrador'){
-        Desarrollador::findOrFail($id)->delete();
-        } else if($request->rol=='desarrollador') {
+    public function eliminarUsuario($rol, $id) {
+        if($rol=='Administrador'){
+            Administrador::findOrFail($id)->delete();
+            return response()->json(['message'=>'Usuario eliminado con exito'], 200);
+        } else if($rol=='Desarrollador') {
             Desarrollador::findOrFail($id)->delete();
-        } else if($request->rol=='product_owner') {
-            Desarrollador::findOrFail($id)->delete();
+            return response()->json(['message'=>'Usuario eliminado con exito'], 200);
+        } else if($rol=='ProductOwner') {
+            ProductOwner::findOrFail($id)->delete();
+            return response()->json(['message'=>'Usuario eliminado con exito'], 200);
         }
-        return response()->json(['message'=>'Usuario actualizado con exito'], 200);
+        return response()->json(['message'=>'Error al eliminar el usuario'], 404);
     }
     #endregion
 }

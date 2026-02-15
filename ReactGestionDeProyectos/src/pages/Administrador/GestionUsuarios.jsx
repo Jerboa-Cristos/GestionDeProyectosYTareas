@@ -30,8 +30,9 @@ function GestionUsuarios() {
     const goCreacionUsuarios = () => {
         navigate('/CreacionUsuarios')
     }
-    const goPerfilUsuario = (id) => {
-        navigate('/PerfilUsuario/'+id)
+    const goPerfilUsuario = (id, rol) => {
+        console.log('redirigiendo al perfil')
+        navigate(`/PerfilUsuario/${rol}/${id}`)
     }
 //#endregion
 
@@ -56,7 +57,7 @@ function GestionUsuarios() {
 //#endregion
 
 //#region Función para eliminar un usuario
-    const eliminarDesarrollador = (id, rol) => {
+    const eliminarPersona = (id, rol) => {
         eliminarUsuario(id, rol).then(res => {
             console.log('Usuario eliminado con éxito');
             // Actualizar la lista de usuarios después de eliminar uno
@@ -98,7 +99,7 @@ function GestionUsuarios() {
                             </button>
 
                             <button 
-                            onClick={(e)=>filtrarPorRol(e, 'Product Owner')}
+                            onClick={(e)=>filtrarPorRol(e, 'ProductOwner')}
                             className="flex items-center gap-2 bg-blueBase text-blueDark px-4 py-2 rounded-lg font-medium hover:bg-BlueBaseDark transition-colors"
                             >
                             <UserCheck size={20} />
@@ -122,7 +123,7 @@ function GestionUsuarios() {
                        {filteredUsers.map((user) => (
                             <button 
                                 key={`${user.rol}-${user.id}`}
-                                onClick={(e)=>{goPerfilUsuario(user.id); e.stopPropagation()}}
+                                onClick={(e)=>{goPerfilUsuario(user.id, user.rol); e.stopPropagation()}}
                                 className="w-full bg-blueBase rounded-lg h-14 flex items-center 
                                 justify-between px-6 hover:bg-blueBaseDark transition-all text-white"
                             >
@@ -132,7 +133,7 @@ function GestionUsuarios() {
                                 <span className="w-1/4 text-blueDark font-medium">{user.email}</span>
                                 <span className="w-1/4 text-blueDark font-medium">{user.rol}</span>
                                 <Trash2 
-                                    onClick={(e)=>{eliminarDesarrollador(user.id, user.rol); e.stopPropagation();}}
+                                    onClick={(e)=>{eliminarPersona(user.id, user.rol); e.stopPropagation();}}
                                     className="text-warning hover:text-warningDark hover:scale-110 transition-all cursor-pointer" 
                                     size={24} 
                                 />
