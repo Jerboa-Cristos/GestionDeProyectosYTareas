@@ -59,15 +59,16 @@ class DesarrolladorAuthController extends Controller
     public function profileDesarrollador(Request $request){
         $validar_desarrollador = Validator::make($request->all(), [
             'nombre' => 'required',
-            'email' => 'required|email'
+            //en unique se pone la tabla
+            'email' => 'required|email|unique:desarrollador,email,' . $request->user()->id
         ]);
 
         if($validar_desarrollador->fails()){
             return response()->json(['errors' => $validar_desarrollador->errors()->all()]);
         }
 
-        //Auth::user() llama al guard desarrollador definido en config/auth.php para obtener el usuario autenticado
-        $desarrollador = Auth::user();
+        
+        $desarrollador = $request->user();
 
         $desarrollador->nombre = $request->nombre;
         $desarrollador->email = $request->email;

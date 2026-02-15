@@ -57,7 +57,7 @@ class AdministradorAuthController extends Controller
     public function profileAdministrador(Request $request){
         $validar_administrador = Validator::make($request->all(), [
             'nombre' => 'required',
-            'email' => 'required|email'
+            'email' => 'required|email|unique:administrador,email,' . $request->user()->id
         ]);
 
         if($validar_administrador->fails()){
@@ -65,7 +65,7 @@ class AdministradorAuthController extends Controller
         }
 
         //Auth::user() llama al guard administrador definido en config/auth.php para obtener el usuario autenticado
-        $administrador = Auth::user();
+        $administrador = $request->user();
 
         $administrador->nombre = $request->nombre;
         $administrador->email = $request->email;

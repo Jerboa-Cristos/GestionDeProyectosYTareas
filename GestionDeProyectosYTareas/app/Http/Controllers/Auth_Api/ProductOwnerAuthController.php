@@ -110,7 +110,7 @@ class ProductOwnerAuthController extends Controller
     public function profile(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email'
         ]);
 
         if($validator->fails()){
@@ -134,26 +134,28 @@ class ProductOwnerAuthController extends Controller
 
     public function profileProductOwner(Request $request){
         $validar_product_owner = Validator::make($request->all(), [
+            //email en la parte de unique debe escribir asi, sin espacios y coma al final
             'nombre' => 'required',
-            'email' => 'required|email'
+            
+            'email' => 'required|email|unique:product_owner,email,' . $request->user()->id
         ]);
 
         if($validar_product_owner->fails()){
             return response()->json(['errors' => $validar_product_owner->errors()->all()]);
         }
 
-        //Auth::user() llama al guard product_owner definido en config/auth.php para obtener el usuario autenticado
-        $product_owner = Auth::user();
+        
+        $product_owner = $request->user();
 
-        $product_owner->name = $request->nombre;
+        $product_owner->nombre = $request->nombre;
         $product_owner->email = $request->email;
 
         if($request->password){
-            $product_owner-> Hash::make($request->password);
+            $product_owner->password = Hash::make($request->password);
         }
 
         $product_owner->save();
-        $input['nombre'] = $product_owner->nobmre;
+        $input['nombre'] = $product_owner->nombre;
         $input['email'] = $product_owner->email;
 
         return response()->json($input);

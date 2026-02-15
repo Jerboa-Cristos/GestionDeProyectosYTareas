@@ -24,7 +24,7 @@ Route::post('login_administrador', [AdministradorAuthController::class,'loginAdm
 Route::post('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador']);
 //Middleware
 //Route::get('ruta del navegador', [Controlador::class, 'metodo backend'])->middleware('auth:GUARD_DEL_USUARIO'); //carpeta config/auth.php
-Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware('auth:administrador');
+Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware('auth:sanctum');
 
 //RUTAS AUTENTICACIÓN PARA PRODUCT OWNER
 //Route::post('ruta del navegador', [Controlador::class, 'metodo backend']);
@@ -32,14 +32,14 @@ Route::post('register_product_owner', [ProductOwnerAuthController::class, 'regis
 Route::post('login_product_owner', [ProductOwnerAuthController::class,'loginProductOwner']);
 Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner']);
 //Middleware
-Route::get('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner'])->middleware('auth:product_owner');
+Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner'])->middleware('auth:sanctum');
 
 //RUTAS AUTENTICACION DESARROLLADOR
 Route::post('register_desarrollador', [DesarrolladorAuthController::class, 'registerDesarrollador']);
 Route::post('login_desarrollador', [DesarrolladorAuthController::class,'loginDesarrollador']);
 Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador']);
 //Middleware
-Route::get('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:desarrollador');
+Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:sanctum');
 
 //Rutas para proyecto
 //Route::post('ruta', [Controlador::class, 'metodo']);
