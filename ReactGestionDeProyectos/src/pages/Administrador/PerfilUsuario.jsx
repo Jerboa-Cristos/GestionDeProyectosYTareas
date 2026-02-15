@@ -1,4 +1,4 @@
-import { User, Mail, Briefcase, Folder, RotateCcw, Edit3, Trash2 } from 'lucide-react';
+import { User, Mail, Briefcase, Folder, RotateCcw, Edit3, Trash2, LockIcon } from 'lucide-react';
 import {useParams, useNavigate} from 'react-router-dom';
 import {eliminarUsuario, showUsuarios, updateUsuarios} from '../../services/adminService';
 import { useEffect, useState } from 'react';
@@ -7,18 +7,24 @@ import MenuTop from '../../Components/MenuTop';
 function PerfilUsuario() {
     const navigate = useNavigate();
     const {rol, id} = useParams();
-    const [user, setUser] = useState([]);
-    const [name, setName] = useState(user.name)
-    const [email, setEmail] = useState(user.email)
-    const [password, setPassword] = useState(user.password)
-    const [confirmed_password, setConfirmed_password] = useState('')
-    const [errors, setErrors] = useState([])
+    const [formData, setFormData] = useState({
+        nombre: '', 
+        email: '',
+        password: '',
+        confirmed_password:'',
+        rol: rol
+    })
 
     useEffect(() => {
         //Cargamos la información del usuario solo
         const fetchUser = async () => {
             showUsuarios(rol, id).then(res => {
-                setUser(res.data);
+                setFormData({
+                    ...formData,
+                    nombre: res.data.nombre || '',
+                    email: res.data.email || '',
+                    rol: rol
+                })
                 console.log('Datos: ', res.data)
             }).catch(err => {
                 console.error("Error al cargar los usuarios:", err);
@@ -28,9 +34,21 @@ function PerfilUsuario() {
      }, [rol, id])
 
 //#region Función para hacer UPDATE del usuario
+const handleChange = (e) => {
+    const {name, value} = e.target;
+    setFormData({
+        ...formData,
+        [name]: value
+    })
+}
+
 const UpdateUsuario = (e) => {
     e.preventDefault()
-    console.log('UPDATE DE USUARIO')
+    updateUsuarios(formData, rol, id).then(res => {
+        console.log('Usuario actualizado')
+    }).catch(err=>{
+        console.err('Error al hacer Update del usuario: ', err)
+    })
 }
 //#endregion
 
@@ -60,32 +78,97 @@ const volverAtras = () => {
 
         <div className='flex flex-col'>
             <h1 className="text-3xl font-bold text-blueDark mb-12">
-                Perfil del usuario: {user.nombre} - {rol}
+                Perfil del usuario: {formData.nombre} - {rol}
             </h1>
 
             <form onSubmit={UpdateUsuario} className="flex-1 w-full max-w-3xl flex flex-col gap-3">
                 
                 <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
                     <User className="text-blueDark" size={22} />
-                    <span className="text-blueDark text-lg font-medium">{user.nombre}</span>
+                    <input 
+                        value={formData.nombre}
+                        onChange={handleChange}
+                        type="text" 
+                        id="nombre" 
+                        name="nombre" 
+                        className="bg-white h-12 w-full flex px-4 gap-4 focus:outline-none focus:ring-none
+                        text-blueDark text-center font-medium text-lg" 
+                        placeholder="Nombre del usuario">
+                            
+                    </input>
                 </div>
-
 
                 <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
                     <Mail className="text-blueDark" size={22} />
-                    <span className="text-blueDark text-lg font-medium">{user.email}</span>
+                    <input 
+                        value={formData.email}
+                        onChange={handleChange}
+                        type="text" 
+                        id="email" 
+                        name="email" 
+                        className="bg-white h-12 w-full flex px-4 gap-4 focus:outline-none focus:ring-none
+                        text-blueDark text-center font-medium text-lg" 
+                        placeholder="Email del usuario">
+                            
+                    </input>
                 </div>
 
+                <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
+                    <LockIcon className="text-blueDark" size={22} />
+                    <input 
+                    name='password'
+                    value={formData.password} 
+                    onChange={handleChange}
+                    type="password" 
+                    placeholder="Contraseña nueva..." 
+                    className="w-full h-12 bg-white px-4 focus:outline-none focus:ring-none italic text-center"
+                    />
+                </div>
+
+                <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
+                    <LockIcon className="text-blueDark" size={22} />
+                    <input 
+                    name='password_confirmed'
+                    value={formData.confirmed_password}
+                    onChange={handleChange}
+                    type="password_confirmed" 
+                    placeholder="Repetir contraseña nueva..." 
+                    className="w-full h-12 bg-white px-4 focus:outline-none focus:ring-none italic text-center"
+                    />
+                </div>
 
                 <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
                     <Briefcase className="text-blueDark" size={22} />
-                    <span className="text-blueDark text-lg font-medium">{rol}</span>
+                    <select 
+                    name='rol'
+                    value={formData.rol}
+                    onChange={handleChange}
+                    className="w-full h-12 bg-white pl-12 pr-10 rounded-none focus:outline-none focus:ring-none
+                        appearance-none text-center text-blueDark font-medium text-lg">
+                        <option value="">Rol...</option>
+                        <option value="Administrador">Admin</option>
+                        <option value="Desarrollador">Desarrollador</option>
+                        <option value="ProductOwner">Product Owner</option>
+                    </select>
+                    <div className="absolute right-4 top-3 pointer-events-none text-blueDark">
+                    <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+                    </div>
                 </div>
 
 
                 <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
                     <Folder className="text-blueDark" size={22} />
-                    <span className="text-blueDark text-lg font-medium"></span>
+                    <select 
+                    name='proyecto'
+                    value={formData.proyecto}
+                    onChange={handleChange}
+                    className="w-full h-12 bg-white pl-12 pr-10 rounded-none focus:outline-none focus:ring-none
+                        appearance-none text-center text-blueDark font-medium text-lg">
+                        <option value="">Proyecto</option>
+                    </select>
+                    <div className="absolute right-4 top-3 pointer-events-none text-blueDark">
+                    <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+                    </div>
                 </div>
 
                 <button 

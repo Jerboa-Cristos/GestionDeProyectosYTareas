@@ -13,7 +13,7 @@ export const guardarUsuarios = (data) => axios.post(rutaApi() +'/storeUsuarios',
 export const showUsuarios = (id, rol) => axios.get(rutaApi() + '/showUsuarios/' + rol + '/' +  id)
 
 //FUNCIÓN PARA HACER UPDATE DE UN USUARIO
-export const updateUsuarios = (id, rol) => axios.put(rutaApi() + '/updateUsuarios/' + id , data)
+export const updateUsuarios = (data, rol, id) => axios.put(rutaApi() + '/updateUsuarios/' + rol + '/' + id , data)
 
 //FUNCIÓN PARA ELIMINAR A LOS USUARIOS
 export const eliminarUsuario = (id, rol) => axios.delete(rutaApi() + '/eliminarUsuarios/' + rol + '/' + id)

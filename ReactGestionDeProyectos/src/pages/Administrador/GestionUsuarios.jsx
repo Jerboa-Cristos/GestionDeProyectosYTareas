@@ -1,6 +1,5 @@
 import { Search, Plus, Users, UserCheck, Trash2, UserCog} from 'lucide-react';
 import MenuTop from '../../Components/MenuTop';
-import MenuLateralAdmin from '../../Components/Com_Admin/MenuLateralAdmin';
 import { mostrarUsuarios, eliminarUsuario} from '../../services/adminService';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -72,7 +71,6 @@ function GestionUsuarios() {
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop/>
             <div className="flex flex-1 gap-4 overflow-hidden h-full">
-                <MenuLateralAdmin/>
                 <main 
                 onClick={()=> {setRolFilter(null); setSearchTerm('');}}
                 className="flex-1 bg-white rounded-xl shadow-lg p-8 flex flex-col overflow-hidden m-4">

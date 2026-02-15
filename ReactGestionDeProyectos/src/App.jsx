@@ -2,7 +2,6 @@ import './App.css'
 import { useEffect } from 'react';
 
 //Cris
-import DashboardAdmin from './pages/Administrador/DashboardAdmin';
 import GestionUsuarios from './pages/Administrador/GestionUsuarios';
 import PerfilUsuario from './pages/Administrador/PerfilUsuario';
 import CreacionUsuarios from './pages/Administrador/CreacionUsuarios';
@@ -57,7 +56,6 @@ function App() {
           */}
 
           {/*RUTAS ADMINISTRADOR*/}
-            <Route path="/DashboardAdmin" element={<DashboardAdmin/>}/>
             <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>
             <Route path="/PerfilUsuario/:rol/:id" element={<PerfilUsuario/>}/>
             <Route path="/CreacionUsuarios" element={<CreacionUsuarios/>}/>

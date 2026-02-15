@@ -6,6 +6,7 @@ use App\Models\ProductOwner;
 use App\Models\Administrador;
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth; 
 
 class AdministradorController extends Controller
@@ -35,11 +36,27 @@ class AdministradorController extends Controller
     }
 
     public function storeUsuarios(Request $request) {
-         if($request->rol=='Desarrollador'){
-                    $usuarios = $request->validate([
+
+        if($request->rol=='Administrador'){
+            $administrador_info = $request->validate([
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
-            'password'=>'required|confirmed',
+            'password'=>'required|same:confirmed_password',
+        ]);
+
+        $administrador = new Administrador([
+            'nombre'=>$administrador_info['nombre'],
+            'email'=>$administrador_info['email'],
+            'password'=>Hash::make($administrador_info['password']),
+        ]);
+
+        return response()->json(['message'=>'Usuario registrado'], 200);
+
+        } else if($request->rol=='Desarrollador'){
+            $desarrollador_info = $request->validate([
+            'nombre'=>'required|max:100',
+            'email'=>'required|unique:users|email',
+            'password'=>'required|same:confirmed_password',
             'id_administrador'=>'required|exists:administrador,id',
             'id_proyecto'=>'required|exists:proyecto,id',
         ]);
@@ -47,38 +64,32 @@ class AdministradorController extends Controller
         $administrador = Administrador::findOrFail($request->get('id'));
 
         $desarrollador = new Desarrollador([
-            'nombre'=>$usuarios('nombre'),
-            'email'=>$usuarios('email'),
-            'password'=>$usuarios('password'),
+            'nombre'=>$desarrollador_info['nombre'],
+            'email'=>$desarrollador_info['email'],
+            'password'=>Hash::make($desarrollador_info['password']),
             'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
             'id_proyecto'=> 1, //Proyecto::get('id'), por ahora esta hardcodeado
-            'created_at'=>date('Y-m-d'),
-            'updated_at'=>date('Y-m-d'),
         ]);
 
         $administrador->desarrollador()->save($desarrollador);
         return response()->json(['message'=>'Usuario registrado'], 200);
 
-         } else if($request->rol=='Product Owner') {
+        } else if($request->rol=='ProductOwner') {
 
-        $usuarios = $request->validate([
+        $productOwner_info = $request->validate([
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
-            'password'=>'required|confirmed',
+            'password'=>'required|same:confirmed_password',
             'id_administrador'=>'required|exists:administrador,id',
-            'fecha_alta'=>'required|date',
         ]);
 
         $administrador = Administrador::findOrFail($request->get('id'));
 
         $productOwner = new ProductOwner([
-            'nombre'=>$usuarios('nombre'),
-            'email'=>$usuarios('email'),
-            'password'=>$usuarios('password'),
+            'nombre'=>$productOwner_info['nombre'],
+            'email'=>$productOwner_info['email'],
+            'password'=>Hash::make($productOwner_info['password']),
             'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
-            'fecha_alta'=>date('Y-m-d'),
-            'created_at'=>date('Y-m-d'),
-            'updated_at'=>date('Y-m-d'),
         ]);
 
         $administrador->product_owner()->save($productOwner);
@@ -101,8 +112,8 @@ class AdministradorController extends Controller
         return response()->json(['error' => 'Rol no encontrado'], 404);
     }
 
-    public function updateUsuarios(Request $request, $id) {
-        if($request->rol=='administrador'){
+    public function updateUsuarios(Request $request, $rol, $id) {
+        if($rol=='administrador'){
 
             $admin_info = $request->validate([
                 'nombre'=>'required|max:100',
@@ -112,7 +123,7 @@ class AdministradorController extends Controller
             Administrador::findOrFail($id)->update([
                 'nombre'=>$admin_info['nombre'],
                 'email'=>$admin_info['email'],
-                'password'=>$admin_info['password'],
+                'password'=>Hash::make($admin_info['password']),
             ]);
 
 
@@ -120,7 +131,7 @@ class AdministradorController extends Controller
             Desarrollador::where('email', $request->email)->delete();
             ProductOwner::where('email', $request->email)->delete();
 
-        } else if ($request->rol=='desarrollador') {
+        } else if ($rol=='desarrollador') {
 
             $desarrollador_info = $request->validate([
                 'nombre'=>'required|max:100',
@@ -132,7 +143,7 @@ class AdministradorController extends Controller
             Desarrollador::findOrFail($id)->update([
                 'nombre'=>$desarrollador_info['nombre'],
                 'email'=>$desarrollador_info['email'],
-                'password'=>$desarrollador_info['password'],
+                'password'=>Hash::make($desarrollador_info['password']),
                 'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
                 'id_proyecto'=> 1, //Proyecto::get('id'), por ahora esta hardcodeado
             ]);
@@ -140,7 +151,7 @@ class AdministradorController extends Controller
             Administrador::where('email', $request->email)->delete();
             ProductOwner::where('email', $request->email)->delete();
 
-        } else if($request->rol=='product_owner') {
+        } else if($rol=='product_owner') {
 
             $productOwner_info = $request->validate([
                 'nombre'=>'required|max:100',
@@ -152,7 +163,7 @@ class AdministradorController extends Controller
             ProductOwner::findOrFail($id)->update([
                 'nombre'=>$productOwner_info['nombre'],
                 'email'=>$productOwner_info['email'],
-                'password'=>$productOwner_info['password'],
+                'password'=>Hash::make($productOwner_info['password']),
                 'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
             ]);
 
