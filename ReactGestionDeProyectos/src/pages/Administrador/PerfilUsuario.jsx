@@ -23,7 +23,8 @@ function PerfilUsuario() {
                     ...formData,
                     nombre: res.data.nombre || '',
                     email: res.data.email || '',
-                    rol: rol
+                    rol: rol,
+                    proyecto: res.data.proyecto || ''
                 })
                 console.log('Datos: ', res.data)
             }).catch(err => {
@@ -137,7 +138,7 @@ const volverAtras = () => {
                     />
                 </div>
 
-                <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
+                <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
                     <Briefcase className="text-blueDark" size={22} />
                     <select 
                     name='rol'
@@ -156,20 +157,23 @@ const volverAtras = () => {
                 </div>
 
 
-                <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
-                    <Folder className="text-blueDark" size={22} />
-                    <select 
-                    name='proyecto'
-                    value={formData.proyecto}
-                    onChange={handleChange}
-                    className="w-full h-12 bg-white pl-12 pr-10 rounded-none focus:outline-none focus:ring-none
-                        appearance-none text-center text-blueDark font-medium text-lg">
-                        <option value="">Proyecto</option>
-                    </select>
-                    <div className="absolute right-4 top-3 pointer-events-none text-blueDark">
-                    <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+
+                {formData.rol == 'Desarrollador' && (
+                    <div className="relative">
+                        <Folder className="absolute left-4 top-3 text-blueDark" size={20} />
+                        <select 
+                        value={formData.proyecto}
+                        onChange={handleChange}
+                        name='proyecto'
+                        className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic appearance-none text-center text-gray-500">
+                        <option value="">Elegir proyecto</option>
+                        <option value="1">Proyecto N1</option>
+                        </select>
+                        <div className="absolute right-4 top-3 pointer-events-none text-blueDark">
+                        <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+                        </div>
                     </div>
-                </div>
+                )}
 
                 <button 
                 type='submit'
