@@ -4,10 +4,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth_Api\AuthController;
 
-
+//AUTH
 use App\Http\Controllers\Auth_Api\AdministradorAuthController;
 use App\Http\Controllers\Auth_Api\ProductOwnerAuthController;
 use App\Http\Controllers\Auth_Api\DesarrolladorAuthController;
+//API CRUD
+use App\Http\Controllers\Api\ProductOwnerApiController;
 
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\ProductOwnerController;
@@ -34,6 +36,12 @@ Route::post('login_product_owner', [ProductOwnerAuthController::class,'loginProd
 Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner']);
 //Middleware
 Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner'])->middleware('auth:sanctum');
+//RUTAS CRUD API PRODUCT OWNER
+Route::get('listado_proyectos', [ProductOwnerApiController::class, 'index']);
+Route::post('crear_proyecto', [ProductOwnerApiController::class, 'store']);
+Route::get('mostrar_proyectos/{id}', [ProductOwnerApiController::class, 'show']);
+Route::put('actualizar_proyectos/{id}', [ProductOwnerApiController::class, 'update']);
+Route::delete('eliminar_proyectos/{id}', [ProductOwnerApiController::class, 'destroy']);
 
 //RUTAS AUTENTICACION DESARROLLADOR
 Route::post('register_desarrollador', [DesarrolladorAuthController::class, 'registerDesarrollador']);
@@ -45,7 +53,7 @@ Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profi
 //Rutas para proyecto
 //Route::post('ruta', [Controlador::class, 'metodo']);
 Route::post('proyecto', [ProductOwnerController::class, 'store']);
-
+Route::get('mostrar_proyecto', [ProductOwnerController::class, 'show']);
 
 //RUTAS PARA EL ADMINISTRADOR
 Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);

@@ -1,9 +1,9 @@
-import MenuTop from "../../../Components/MenuTop"
+import MenuTop from "../../Components/MenuTop"
 
 import { useState } from "react"
-import { useNavigate, Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 //import { profile } from "../../services/authService"
-import { funcion_product_owner_profile } from "../../../services/authService"
+import { funcion_product_owner_profile } from "../../services/authService"
 
 function ProductOwnerProfile () {
     const user = JSON.parse(localStorage.getItem('user'))

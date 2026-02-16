@@ -28,7 +28,6 @@ export const funcion_desarrollador_profile = (data, token) => axios.post(APP_URL
 
 
 
-// Funciones para Crear el proyecto
-export const crear_proyecto = (data) => axios.post(APP_URL + '/proyecto', data)
+
 
 
