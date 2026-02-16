@@ -19,18 +19,18 @@ class Desarrollador extends Authenticatable
 
     public function administrador() {
         
-        return $this->belongsTo(Administrador::class);
+        return $this->belongsTo(Administrador::class, 'id_administrador');
     }
 
     public function tarea() {
-        return $this->hasMany(Tarea::class);
+        return $this->hasMany(Tarea::class, 'id_tarea');
     }
 
     public function proyecto() {
-        return $this->belongsTo(Proyecto::class);
+        return $this->belongsTo(Proyecto::class, 'id_proyecto');
     }
 
     public function comentario() {
-        return $this->hasMany(Comentario::class);
+        return $this->hasMany(Comentario::class, 'id_comentario');
     }
 }

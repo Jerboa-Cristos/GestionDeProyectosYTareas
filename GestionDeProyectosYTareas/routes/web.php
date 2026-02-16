@@ -39,10 +39,10 @@ Route::delete('destroy_sprint/{id}', [ProyectoController::class], 'destroy')->na
 
 //ADMINISTRADOR
 Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
-Route::get('showUsuarios/{id}', [AdministradorController::class, 'show']);
-Route::delete('eliminarUsuarios/{id}', [AdministradorController::class, 'eliminarUsuario']);
+Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'show']);
+Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuario']);
 Route::post('storeUsuarios',[AdministradorController::class, 'store']);
-Route::put('updateUsuarios/{id}', [AdministradorController::class, 'update']);
+Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'update']);
 
 
 

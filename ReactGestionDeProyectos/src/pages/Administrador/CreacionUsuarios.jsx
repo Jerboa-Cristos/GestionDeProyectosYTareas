@@ -1,14 +1,51 @@
 import { useNavigate } from "react-router-dom"
-
-import { User, Mail, Briefcase, Folder, RotateCcw, Upload, Plus } from 'lucide-react';
+import { guardarUsuarios } from '../../services/adminService';
+import { useState, useEffect } from 'react';
+import { User, Mail, Briefcase, Folder, RotateCcw, Plus } from 'lucide-react';
 import MenuTop from '../../Components/MenuTop';
-
-//Para input de la imagen
-//ref={fileInputRef} 
-//onChange={handleFileChange} 
 
 function CreacionUsuarios() {
     const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        nombre: '', 
+        email: '',
+        password: '',
+        confirmed_password:'',
+        proyecto: '',
+        rol: ''
+    })
+
+    //FALTA LA PARTE DE LISTAR LOS PROYECTOS DISPONIBLES.
+    //TAMBIÉN FALTA LA PARTE DE PASAR LA ID DEL ADMINISTRADOR AL BACKEND
+    const [proyecto, setProyecto] = useState()
+
+//#region CREACIÓN DEL NUEVO USUARIO
+const handleChange = (e) => {
+    const {name, value} = e.target;
+    setFormData(prev => {
+        const newData = {...prev, [name]: value }
+
+        if(name ==='rol' && value === 'Administrador' || value === 'ProductOwner'){
+            newData.proyecto='';
+        }
+
+        return newData
+    })
+}
+
+const GuardarUsuario = async (e) => {
+    e.preventDefault()
+    try{
+        await guardarUsuarios(formData)
+        console.log('Usuario creado')
+        navigate('/GestionUsuarios')
+    }catch(err){
+        console.error('Error al crear del usuario: ', err)
+        alert('No se pudo crear el usuario.')
+    }
+}
+
+//#endregion
 
     function goBack() {
         navigate('/GestionUsuarios')
@@ -23,31 +60,15 @@ function CreacionUsuarios() {
                     Creación de Usuario
                 </h1>
             <div className="flex m-5 gap-10">
-                <div className="shrink-0 flex flex-col gap-4 text-center">
-                    <button 
-                        className="w-48 h-48 bg-white rounded-full border-4 border-white 
-                        shadow-md flex items-center justify-center overflow-hidden hover:bg-gray-50 
-                        transition-colors group relative"
-                    >
-                        <User size={80} className="text-blueblue group-hover:text-gray-400" />
-                        
-                        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                        <Upload className="text-blueDark" size={32} />
-                        </div>
-                    </button>    
-                    <input 
-                        type="file" 
-                        className="hidden" 
-                        accept="image/*"
-                    />
-                    <span className="text-blueDark text-sm font-semibold">Subir foto</span>
-                </div>
 
-                <form className="flex-1 w-full max-w-2xl flex flex-col gap-4">
+                <form onSubmit={GuardarUsuario} className="flex-1 w-full max-w-2xl flex flex-col gap-4">
           
                     <div className="relative">
                         <User className="absolute left-4 top-3 text-BlueDark" size={20} />
                         <input 
+                        name='nombre'
+                        value={formData.nombre}
+                        onChange={handleChange}
                         type="text" 
                         placeholder="Nombre apellidos..." 
                         className="w-full h-12 bg-white pl-12 pr-4 rounded-none shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic"
@@ -56,11 +77,17 @@ function CreacionUsuarios() {
 
                     <div className="mt-2 flex flex-col gap-2">
                         <input 
+                        name='password'
+                        value={formData.password} 
+                        onChange={handleChange}
                         type="password" 
                         placeholder="Contraseña..." 
                         className="w-full h-12 bg-white px-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic text-center"
                         />
                         <input 
+                        name='confirmed_password'
+                        value={formData.confirmed_password}
+                        onChange={handleChange}
                         type="password" 
                         placeholder="Repetir contraseña..." 
                         className="w-full h-12 bg-white px-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic text-center"
@@ -70,36 +97,59 @@ function CreacionUsuarios() {
                     <div className="relative mt-2">
                         <Mail className="absolute left-4 top-3 text-blueDark" size={20} />
                         <input 
+                        name='email'
+                        value={formData.email}
+                        onChange={handleChange}
                         type="email" 
                         placeholder="Correo..." 
                         className="w-full h-12 bg-white pl-12 pr-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic text-center"
                         />
                     </div>
 
-                    <div className="relative mt-4">
-                        <Folder className="absolute left-4 top-3 text-blueDark" size={20} />
-                        <select className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic appearance-none text-center text-gray-500">
-                        <option value="">Proyecto</option>
-                        <option value="medclin">MedClin</option>
-                        <option value="beta">Proyecto Beta</option>
+                    <div className="relative">
+                        <Briefcase className="absolute left-4 top-3 text-blueDark" size={20} />
+                        <select 
+                        name='rol'
+                        value={formData.rol}
+                        onChange={handleChange}
+                        className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none 
+                        focus:ring-none italic appearance-none text-center text-gray-500">
+                        <option value="">Rol...</option>
+                        <option value="Desarrollador">Desarrollador</option>
+                        <option value="Administrador">Admin</option>
+                        <option value="ProductOwner">Product Owner</option>
                         </select>
                         <div className="absolute right-4 top-3 pointer-events-none text-blueDark">
                         <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
                         </div>
                     </div>
 
+                    {formData.rol == 'Desarrollador' && (
                     <div className="relative">
-                        <Briefcase className="absolute left-4 top-3 text-blueDark" size={20} />
-                        <select className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic appearance-none text-center text-gray-500">
-                        <option value="">Rol...</option>
-                        <option value="admin">Admin</option>
-                        <option value="dev">Desarrollador</option>
-                        <option value="po">Product Owner</option>
+                        <Folder className="absolute left-4 top-3 text-blueDark" size={20} />
+                        <select 
+                        value={formData.proyecto}
+                        onChange={handleChange}
+                        name='proyecto'
+                        className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic appearance-none text-center text-gray-500">
+                        <option value="">Elegir proyecto</option>
+                        <option value="1">Proyecto N1</option>
                         </select>
                         <div className="absolute right-4 top-3 pointer-events-none text-blueDark">
                         <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
                         </div>
                     </div>
+                    )}
+
+                    <button 
+                    type="submit"
+                    className="bg-blueDark text-white px-6 py-2 rounded-lg flex items-center 
+                    gap-2 font-medium hover:bg-BlueDarkDark transition-colors shadow-md"
+                    >
+                        <Plus size={20} />
+                        Crear Usuario
+                    </button>
+
                 </form>
             </div>
                 <div className="mt-auto flex justify-between items-center w-full">
@@ -109,13 +159,6 @@ function CreacionUsuarios() {
                         title="Volver atrás"
                         >
                         <RotateCcw size={40} strokeWidth={2.5} />
-                    </button>
-                    <button 
-                        className="bg-blueDark text-white px-6 py-2 rounded-lg flex items-center 
-                        gap-2 font-medium hover:bg-BlueDarkDark transition-colors shadow-md"
-                    >
-                        <Plus size={20} />
-                        Crear Usuario
                     </button>
                 </div>
             </main>
