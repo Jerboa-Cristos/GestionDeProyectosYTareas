@@ -1,16 +1,17 @@
-import MenuTop from "../../Components/MenuTop";
+import MenuTop from "../../../Components/MenuTop"
 
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
-import { profile } from "../../services/authService"
+//import { profile } from "../../services/authService"
+import { funcion_product_owner_profile } from "../../../services/authService"
 
-function Profile () {
+function ProductOwnerProfile () {
     const user = JSON.parse(localStorage.getItem('user'))
     console.log(user)
 
-    const [name, setName] = useState(user.name)
+    const [nombre, setName] = useState(user.nombre)
     const [email, setEmail] = useState(user.email)
-    const [password, setPassword] = useState(user.password)
+    const [password, setPassword] = useState('')
     const [confirmed_password, setConfirmed_password] = useState('')
     const [errors, setErrors] = useState([])
     const navigate = useNavigate()
@@ -19,19 +20,20 @@ function Profile () {
         e.preventDefault()
         setErrors([])
         
-        profile({name: name, email: email, password: password, confirmed_password: confirmed_password}, user.token).then(res => {
+        funcion_product_owner_profile({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password}, user.token)
+        .then(res => {
             if(res.data.errors){
                 setErrors(res.data.errors)
             }else{
                 console.log(res.data)
                 localStorage.setItem("user", JSON.stringify({
                     ...user,
-                    name: res.data.name,
+                    nombre: res.data.nombre,
                     email: res.data.email
                 }))
                 
                 
-                navigate('/dashboard')
+                navigate('/product_owner_dashboard')
             }
         })
     }
@@ -44,8 +46,8 @@ function Profile () {
             <aside className="w-64 bg-white shadow-md p-5">
                 <h2 className="text-xl font-bold mb-6">My app</h2>
                 <nav className="flex flex-col space-y-3">
-                    <Link to="/dashboard" className="text-gray-700 hover:text-blue-600">Dashboard</Link>
-                    <Link to="/profile" className="text-gray-700 hover:text-blue-600">Profile</Link>
+                    <Link to="/product_owner_dashboard" className="text-gray-700 hover:text-blue-600">Dashboard</Link>
+                    <Link to="/product_owner_profile" className="text-gray-700 hover:text-blue-600">Profile</Link>
                 </nav>
             </aside>
 
@@ -75,7 +77,7 @@ function Profile () {
                         <label className="text-sm leading-none font-medium select-none peer-disabled:cursor">Name: </label>
                         
                         <input 
-                        value={name}
+                        value={nombre}
                         onChange={(e) => setName(e.target.value)}
                         type="text" 
                         id="nombre" 
@@ -131,4 +133,4 @@ function Profile () {
 }
 
 
-export default Profile
+export default ProductOwnerProfile

@@ -1,10 +1,8 @@
 import { useState } from "react"
-import { register } from "../../services/authService"
 import { useNavigate } from "react-router-dom"
-import { register_product_owner } from "../../services/authService"
+import { funcion_administrador_register } from "../../../services/authService"
 
-
-function Register () {
+function AdministradorRegister () {
     const PantallaAzul = "flex bg-blueDark items-center justify-center min-h-screen";
 
     const [nombre, setName] = useState('')
@@ -16,7 +14,7 @@ function Register () {
 
     const submit = (e) => {
         e.preventDefault()
-        register_product_owner({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password})
+        funcion_administrador_register({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password})
             .then(res => {
                     if(res.data.errors){
                         setErrors(res.data.errors)
@@ -25,7 +23,7 @@ function Register () {
                         localStorage.setItem("user", JSON.stringify(res.data))
                         localStorage.setItem('isAuthenticated', true)
                         
-                        navigate('/dashboard')
+                        navigate('/administrador_dashboard')
                     }
                 })
             .catch(err => console.log(err))
@@ -114,4 +112,4 @@ function Register () {
     )
 }
 
-export default Register
+export default AdministradorRegister

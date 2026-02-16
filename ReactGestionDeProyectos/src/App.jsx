@@ -14,13 +14,20 @@ import MisTareasDesarrollador from './pages/Desarrollador/MisTareasDesarrollador
 
 //melissa
 import {Routes, Route, Navigate, useLocation} from 'react-router-dom'
-import Register from './pages/Auth/Register'
-import Login from './pages/Auth/Login'
-import Dashboard from './pages/Auth/Dashboard'
-import Profile from './pages/Auth/Profile'
 import {useState} from 'react'
 import Crear_Proyecto from './pages/Product_Owner/Crear_Proyecto'
-
+//AUTH
+//Administrador
+import AdministradorRegister from './pages/Auth/Administrador/AdministradorRegister';
+import AdministradorLogin from './pages/Auth/Administrador/AdministradorLogin';
+import AdministradorProfile from './pages/Auth/Administrador/AdministradorProfile';
+import AdministradorDashboard from './pages/Auth/Administrador/AdministradorDashboard';
+//Product Owner
+import ProductOwnerRegister from './pages/Auth/ProductOwner/ProductOwnerRegister'
+import ProductOwnerLogin from './pages/Auth/ProductOwner/ProductOwnerLogin'
+import ProductOwnerProfile from './pages/Auth/ProductOwner/ProductOwnerProfile'
+import ProductOwnerDashboard from './pages/Auth/ProductOwner/ProductOwnerDashboard';
+//Desarrollador
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -38,19 +45,35 @@ function App() {
     
       <>
         <Routes>
-          {/*<Route path='/' element={<Navigate to='/register' />} />*/}
-
-          {/*<Route path='ruta' element={<Componente/>}/> EJEMPLO DE RUTA*/}
-          <Route path="/register" element={<Register/>} />
-          <Route path='/register_product_owner' element={<Register/>}/>
-          <Route path='/login' element={<Login/>} /> 
+        
+          {/*RUTAS Administrador */}
+          <Route path='/administrador_register' element={<AdministradorRegister/>}/>
+          <Route path='/administrador_login' element={<AdministradorLogin/>}/>
+          <Route path='/administrador_profile' element={<AdministradorProfile/>}/>
+          <Route path='/administrador_dashboard' element={<AdministradorDashboard/>}/>
           
           {isAuthenticated && (
             <>
-            <Route path='/dashboard' element={<Dashboard/>} />
-            <Route path="/profile" element={<Profile/>}/>   
+            <Route path='/administrador_dashboard' element={<ProductOwnerDashboard/>} />
+            <Route path="/administrador_profile" element={<ProductOwnerProfile/>}/>   
             </>
           )}
+
+          {/*RUTAS PRODUCT OWNER */}
+          {/*<Route path='ruta del navegador del frontend' element={<Componente/>}/> EJEMPLO DE RUTA*/}
+          <Route path='/product_owner_register' element={<ProductOwnerRegister/>}/>
+          <Route path='/product_owner_login' element={<ProductOwnerLogin/>}/>
+          <Route path='/product_owner_profile' element={<ProductOwnerProfile/>}/>
+          <Route path='/product_owner_dashboard' element={<ProductOwnerDashboard/>}/>
+          
+          {isAuthenticated && (
+            <>
+            <Route path='/product_owner_dashboard' element={<ProductOwnerDashboard/>} />
+            <Route path="/product_owner_profile" element={<ProductOwnerProfile/>}/>   
+            </>
+          )}
+
+
 
           {/*Melissa
           <Route path="/proyecto" element={<Crear_Proyecto/>}/>

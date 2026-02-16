@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth_Api\ProductOwnerAuthController;
 use App\Http\Controllers\Auth_Api\DesarrolladorAuthController;
 
 use App\Http\Controllers\AdministradorController;
+use App\Http\Controllers\ProductOwnerController;
 
 Route::get('user', function (Request $request) {
     return $request->user();
@@ -27,7 +28,7 @@ Route::post('profile_administrador', [AdministradorAuthController::class, 'profi
 Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware('auth:sanctum');
 
 //RUTAS AUTENTICACIÓN PARA PRODUCT OWNER
-//Route::post('ruta del navegador', [Controlador::class, 'metodo backend']);
+//Route::post('ruta de la api con axios', [Controlador::class, 'metodo backend']);
 Route::post('register_product_owner', [ProductOwnerAuthController::class, 'registerProductOwner']);
 Route::post('login_product_owner', [ProductOwnerAuthController::class,'loginProductOwner']);
 Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner']);
