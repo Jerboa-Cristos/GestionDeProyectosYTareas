@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { login } from "../../services/authService"
 import { useNavigate } from "react-router-dom"
+import { funcion_product_owner_login } from "../../../services/authService"
 
-function Login () {
+function ProductOwnerLogin () {
     const PantallaAzul = "flex bg-blueDark items-center justify-center min-h-screen";
 
     const [email, setEmail] = useState('')
@@ -12,7 +12,7 @@ function Login () {
 
     const submit = (e) => {
         e.preventDefault()
-        login({email: email, password: password}).then(res => {
+        funcion_product_owner_login({email: email, password: password}).then(res => {
             if(res.data.errors){
                 setErrors(res.data.errors)
             }else{
@@ -20,7 +20,7 @@ function Login () {
                 localStorage.setItem("user", JSON.stringify(res.data))
                 localStorage.setItem('isAuthenticated', true)
                 
-                navigate('/dashboard')
+                navigate('/product_owner_dashboard')
             }
         })
     }
@@ -81,5 +81,4 @@ function Login () {
     )
 }
 
-
-export default Login
+export default ProductOwnerLogin

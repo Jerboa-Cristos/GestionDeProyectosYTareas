@@ -29,7 +29,6 @@ class DesarrolladorAuthController extends Controller
             'nombre' => $request->nombre,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'fecha_alta' => now(),
             'id_administrador' => 1,
             'id_proyecto' => 1
         ]);
@@ -67,7 +66,7 @@ class DesarrolladorAuthController extends Controller
             return response()->json(['errors' => $validar_desarrollador->errors()->all()]);
         }
 
-        
+
         $desarrollador = $request->user();
 
         $desarrollador->nombre = $request->nombre;

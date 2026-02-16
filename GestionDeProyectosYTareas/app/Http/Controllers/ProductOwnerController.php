@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\ProductOwner;
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 
 
@@ -15,10 +14,12 @@ class ProductOwnerController extends Controller
     public function index()
     {
         $listado_proyectos = Proyecto::all();
+
+       
         return view('product_owner_proyecto.index', compact('listado_proyectos'));
     }
 
-    //2.Carga el formulario de creación de proyecto
+    //2.Carga el formulario de creación de proyecto SOLO PARA BLADE
     public function create(){
         return view('product_owner_proyecto.create');
     }
@@ -28,7 +29,6 @@ class ProductOwnerController extends Controller
         $validar_datos = $request->validate([
             'nombre' => 'required|string|max:40',
             'descripcion' => 'required|string|max:300',
-            'fecha_inicio' => 'required|date',
             'fecha_fin' => 'nullable|date',
 
         ]);
@@ -43,7 +43,6 @@ class ProductOwnerController extends Controller
         $proyecto = new Proyecto([
             'nombre' => $validar_datos['nombre'],
             'descripcion' => $validar_datos['descripcion'],
-            'fecha_inicio' => $validar_datos['fecha_inicio'],
             'fecha_fin' => $validar_datos['fecha_fin'],
             'id_product_owner' => 1
         ]);
@@ -59,7 +58,9 @@ class ProductOwnerController extends Controller
     //4.Muestra la información de un proyecto
     public function show($id){
         $proyecto = Proyecto::findOrFail($id);
-        return view('product_owner_proyecto.show', compact('proyecto'));
+        return response()->json($proyecto);
+
+        //return view('product_owner_proyecto.show', compact('proyecto'));
     }
 
 
@@ -75,7 +76,6 @@ class ProductOwnerController extends Controller
         $validar_datos = $request->validate([
             'nombre' => 'required|string|max:40',
             'descripcion' => 'required|string|max:300',
-            'fecha_inicio' => 'required|date',
             'fecha_fin' => 'nullable|date'
         ]);
 
@@ -112,7 +112,7 @@ class ProductOwnerController extends Controller
             'password'=>$request->get('password')
         ]);
 
-        
+
     }
 
 }
