@@ -18,12 +18,12 @@ class Desarrollador extends Authenticatable
     protected $fillable = ['nombre', 'email', 'password', 'id_administrador', 'id_proyecto'];
 
     public function administrador() {
-        
+
         return $this->belongsTo(Administrador::class, 'id_administrador');
     }
 
     public function tarea() {
-        return $this->hasMany(Tarea::class, 'id_tarea');
+        return $this->hasMany(Tarea::class, 'id_desarrollador');
     }
 
     public function proyecto() {
@@ -31,6 +31,6 @@ class Desarrollador extends Authenticatable
     }
 
     public function comentario() {
-        return $this->hasMany(Comentario::class, 'id_comentario');
+        return $this->hasMany(Comentario::class, 'id_desarrollador');
     }
 }

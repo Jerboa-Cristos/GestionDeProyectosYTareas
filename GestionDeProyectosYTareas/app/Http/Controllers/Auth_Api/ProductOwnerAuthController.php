@@ -15,7 +15,7 @@ use App\Models\ProductOwner;
 
 class ProductOwnerAuthController extends Controller
 {
-    // EJEMPLO DEL VIDEO, solo lo tengo de ejemplo luego esto se borrara porque no usamos tabla users 
+    // EJEMPLO DEL VIDEO, solo lo tengo de ejemplo luego esto se borrara porque no usamos tabla users
     public function register_user(Request $request){
         //Validator::make() para validar los datos recibidos en la petición
         $validator = Validator::make($request->all(), [
@@ -47,7 +47,7 @@ class ProductOwnerAuthController extends Controller
 
 
     public function registerProductOwner(Request $request ){
-        //en unique se pone el nombre de la tabla 
+        //en unique se pone el nombre de la tabla
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:40',
             'email' => 'required|email|unique:product_owner',
@@ -63,7 +63,6 @@ class ProductOwnerAuthController extends Controller
             'nombre' => $request->nombre,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'fecha_alta' => now(),
             'id_administrador' => 1
         ]);
 
@@ -92,7 +91,7 @@ class ProductOwnerAuthController extends Controller
 
     public function loginProductOwner(Request $request){
         if(
-            !ProductOwner::where('email', $request->email)->first() || 
+            !ProductOwner::where('email', $request->email)->first() ||
             !Hash::check($request->password, ProductOwner::where('email', $request->email)->first()->password)){
             return response()->json(['errors' => ['Invalid credentials']]);
         }
@@ -136,7 +135,7 @@ class ProductOwnerAuthController extends Controller
         $validar_product_owner = Validator::make($request->all(), [
             //email en la parte de unique debe escribir asi, sin espacios y coma al final
             'nombre' => 'required',
-            
+
             'email' => 'required|email|unique:product_owner,email,' . $request->user()->id
         ]);
 
@@ -144,7 +143,7 @@ class ProductOwnerAuthController extends Controller
             return response()->json(['errors' => $validar_product_owner->errors()->all()]);
         }
 
-        
+
         $product_owner = $request->user();
 
         $product_owner->nombre = $request->nombre;

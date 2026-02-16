@@ -27,6 +27,11 @@ import ProductOwnerLogin from './pages/Auth/ProductOwner/ProductOwnerLogin'
 import ProductOwnerProfile from './pages/Auth/ProductOwner/ProductOwnerProfile'
 import ProductOwnerDashboard from './pages/Auth/ProductOwner/ProductOwnerDashboard';
 //Desarrollador
+import DesarrolladorRegister from './pages/Auth/Desarrollador/DesarrolladorRegister';
+import DesarrolladorLogin from './pages/Auth/Desarrollador/DesarrolladorLogin';
+import DesarrolladorProfile from './pages/Auth/Desarrollador/DesarrolladorProfile';
+import DesarrolladorDashboard from './pages/Auth/Desarrollador/DesarrolladorDashboard';
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -45,7 +50,7 @@ function App() {
       <>
         <Routes>
         
-          {/*RUTAS Administrador */}
+          {/*RUTAS AUTH ADMINISTRADOR */}
           <Route path='/administrador_register' element={<AdministradorRegister/>}/>
           <Route path='/administrador_login' element={<AdministradorLogin/>}/>
           <Route path='/administrador_profile' element={<AdministradorProfile/>}/>
@@ -58,7 +63,7 @@ function App() {
             </>
           )}
 
-          {/*RUTAS PRODUCT OWNER */}
+          {/*RUTAS AUTH PRODUCT OWNER */}
           {/*<Route path='ruta del navegador del frontend' element={<Componente/>}/> EJEMPLO DE RUTA*/}
           <Route path='/product_owner_register' element={<ProductOwnerRegister/>}/>
           <Route path='/product_owner_login' element={<ProductOwnerLogin/>}/>
@@ -71,6 +76,12 @@ function App() {
             <Route path="/product_owner_profile" element={<ProductOwnerProfile/>}/>   
             </>
           )}
+
+          {/*RUTAS AUTH DESARROLLADOR */}
+          <Route path='/desarrollador_register' element={<DesarrolladorRegister/>}/>
+          <Route path='/desarrollador_login' element={<DesarrolladorLogin/>}/>
+          <Route path='/desarrollador_profile' element={<DesarrolladorProfile/>}/>
+          <Route path='/desarrollador_dashboard' element={<DesarrolladorDashboard/>}/>
 
 
 

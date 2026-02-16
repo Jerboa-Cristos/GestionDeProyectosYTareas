@@ -21,7 +21,6 @@ class SprintController extends Controller
         $validar_datos = $request->validate([
             'tipo' => 'required|in:Backend, Frontend, Diseño, Despliegue, Testing',
             'descripcion' => 'nullable|string|max:300',
-            'fecha_inicio' => 'required|date',
             'fecha_fin' => 'nullable|date'
         ]);
 
@@ -31,7 +30,6 @@ class SprintController extends Controller
         $tarea = new Tarea([
             'tipo' => $validar_datos['tipo'],
             'descripcion' => $validar_datos['descripcion'],
-            'fecha_inicio' => $validar_datos['fecha_inicio'],
             'fecha_fin' => $validar_datos['fecha_fin'],
             ''
         ]);
@@ -76,7 +74,6 @@ class SprintController extends Controller
     public function update_sprint(Request $request, $id){
         $validar_datos = $request->validate([
             'nombre' => 'required|string|max:40',
-            'fecha_inicio' => 'required|date',
             'fecha_fin' => 'nullable|date'
         ]);
 

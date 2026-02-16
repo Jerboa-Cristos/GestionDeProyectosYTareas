@@ -29,7 +29,6 @@ class AdministradorAuthController extends Controller
             'nombre' => $request->nombre,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'fecha_alta' => now(),
         ]);
 
         $input['nombre'] = $administrador->nombre;

@@ -19,6 +19,15 @@ export const funcion_product_owner_profile = (data, token) => axios.post(APP_URL
 })
 
 
+//Desarrollador
+export const funcion_desarrollador_register = (data) => axios.post(APP_URL + '/register_desarrollador', data)
+export const funcion_desarrollador_login = (data) => axios.post(APP_URL + '/login_desarrollador', data)
+export const funcion_desarrollador_profile = (data, token) => axios.post(APP_URL + '/profile_desarrollador', data, {
+    headers: { Authorization: `Bearer ${token}`}
+})
+
+
+
 // Funciones para Crear el proyecto
 export const crear_proyecto = (data) => axios.post(APP_URL + '/proyecto', data)
 

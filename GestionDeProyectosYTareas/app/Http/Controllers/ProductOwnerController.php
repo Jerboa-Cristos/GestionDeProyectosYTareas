@@ -28,7 +28,6 @@ class ProductOwnerController extends Controller
         $validar_datos = $request->validate([
             'nombre' => 'required|string|max:40',
             'descripcion' => 'required|string|max:300',
-            'fecha_inicio' => 'required|date',
             'fecha_fin' => 'nullable|date',
 
         ]);
@@ -43,7 +42,6 @@ class ProductOwnerController extends Controller
         $proyecto = new Proyecto([
             'nombre' => $validar_datos['nombre'],
             'descripcion' => $validar_datos['descripcion'],
-            'fecha_inicio' => $validar_datos['fecha_inicio'],
             'fecha_fin' => $validar_datos['fecha_fin'],
             'id_product_owner' => 1
         ]);
@@ -75,7 +73,6 @@ class ProductOwnerController extends Controller
         $validar_datos = $request->validate([
             'nombre' => 'required|string|max:40',
             'descripcion' => 'required|string|max:300',
-            'fecha_inicio' => 'required|date',
             'fecha_fin' => 'nullable|date'
         ]);
 
@@ -112,7 +109,7 @@ class ProductOwnerController extends Controller
             'password'=>$request->get('password')
         ]);
 
-        
+
     }
 
 }
