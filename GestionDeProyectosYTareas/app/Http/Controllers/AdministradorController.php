@@ -50,6 +50,7 @@ class AdministradorController extends Controller
             'password'=>Hash::make($administrador_info['password']),
         ]);
 
+        $administrador->save();
         return response()->json(['message'=>'Usuario registrado'], 200);
 
         } else if($request->rol=='Desarrollador'){
@@ -57,11 +58,9 @@ class AdministradorController extends Controller
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|same:confirmed_password',
-            'id_administrador'=>'required|exists:administrador,id',
-            'id_proyecto'=>'required|exists:proyecto,id',
         ]);
 
-        $administrador = Administrador::findOrFail($request->get('id'));
+        $administrador = Administrador::findOrFail(1);
 
         $desarrollador = new Desarrollador([
             'nombre'=>$desarrollador_info['nombre'],
@@ -71,7 +70,7 @@ class AdministradorController extends Controller
             'id_proyecto'=> 1, //Proyecto::get('id'), por ahora esta hardcodeado
         ]);
 
-        $administrador->desarrollador()->save($desarrollador);
+        $administrador->desarrolladores()->save($desarrollador);
         return response()->json(['message'=>'Usuario registrado'], 200);
 
         } else if($request->rol=='ProductOwner') {
@@ -80,10 +79,9 @@ class AdministradorController extends Controller
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|same:confirmed_password',
-            'id_administrador'=>'required|exists:administrador,id',
         ]);
 
-        $administrador = Administrador::findOrFail($request->get('id'));
+        $administrador = Administrador::findOrFail(1);
 
         $productOwner = new ProductOwner([
             'nombre'=>$productOwner_info['nombre'],
@@ -92,7 +90,7 @@ class AdministradorController extends Controller
             'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
         ]);
 
-        $administrador->product_owner()->save($productOwner);
+        $administrador->productOwners()->save($productOwner);
         return response()->json(['message'=>'Usuario registrado'], 200);
          }
     }

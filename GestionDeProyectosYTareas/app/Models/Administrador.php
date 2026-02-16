@@ -19,10 +19,10 @@ class Administrador extends Authenticatable
     protected $fillable = ['nombre', 'email', 'password'];
 
     public function desarrolladores() {
-        return $this->hasMany(Desarrollador::class);
+        return $this->hasMany(Desarrollador::class, 'id_administrador');
     }
 
     public function productOwners() {
-        return $this->hasMany(ProductOwner::class);
+        return $this->hasMany(ProductOwner::class, 'id_administrador');
     }
 }

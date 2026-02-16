@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { guardarUsuarios } from '../../services/adminService';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { User, Mail, Briefcase, Folder, RotateCcw, Plus } from 'lucide-react';
 import MenuTop from '../../Components/MenuTop';
 
@@ -15,13 +15,17 @@ function CreacionUsuarios() {
         rol: ''
     })
 
+    //FALTA LA PARTE DE LISTAR LOS PROYECTOS DISPONIBLES.
+    //TAMBIÉN FALTA LA PARTE DE PASAR LA ID DEL ADMINISTRADOR AL BACKEND
+    const [proyecto, setProyecto] = useState()
+
 //#region CREACIÓN DEL NUEVO USUARIO
 const handleChange = (e) => {
     const {name, value} = e.target;
     setFormData(prev => {
         const newData = {...prev, [name]: value }
 
-        if(name ==='rol' && value === 'Administrador'){
+        if(name ==='rol' && value === 'Administrador' || value === 'ProductOwner'){
             newData.proyecto='';
         }
 
@@ -29,14 +33,16 @@ const handleChange = (e) => {
     })
 }
 
-const GuardarUsuario = (e) => {
+const GuardarUsuario = async (e) => {
     e.preventDefault()
-    guardarUsuarios(formData).then(res => {
+    try{
+        await guardarUsuarios(formData)
         console.log('Usuario creado')
         navigate('/GestionUsuarios')
-    }).catch(err=>{
+    }catch(err){
         console.error('Error al crear del usuario: ', err)
-    })
+        alert('No se pudo crear el usuario.')
+    }
 }
 
 //#endregion
@@ -108,6 +114,7 @@ const GuardarUsuario = (e) => {
                         onChange={handleChange}
                         className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none 
                         focus:ring-none italic appearance-none text-center text-gray-500">
+                        <option value="">Rol...</option>
                         <option value="Desarrollador">Desarrollador</option>
                         <option value="Administrador">Admin</option>
                         <option value="ProductOwner">Product Owner</option>
@@ -117,7 +124,7 @@ const GuardarUsuario = (e) => {
                         </div>
                     </div>
 
-                    {formData.rol !== 'Administrador' && (
+                    {formData.rol == 'Desarrollador' && (
                     <div className="relative">
                         <Folder className="absolute left-4 top-3 text-blueDark" size={20} />
                         <select 
@@ -125,7 +132,8 @@ const GuardarUsuario = (e) => {
                         onChange={handleChange}
                         name='proyecto'
                         className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic appearance-none text-center text-gray-500">
-                        <option value="">Proyecto</option>
+                        <option value="">Elegir proyecto</option>
+                        <option value="1">Proyecto N1</option>
                         </select>
                         <div className="absolute right-4 top-3 pointer-events-none text-blueDark">
                         <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
