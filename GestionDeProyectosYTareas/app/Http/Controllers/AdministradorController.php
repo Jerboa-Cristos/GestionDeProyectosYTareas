@@ -112,75 +112,126 @@ class AdministradorController extends Controller
     }
 
     public function updateUsuarios(Request $request, $rol, $id) {
+        $passwordAntiguo = null;
+
         if($rol=='Administrador'){
 
-            Desarrollador::where(['email', $request->email])->delete();
-            ProductOwner::where('email', $request->email)->delete();
+        switch($request->oldRol) {
+            case 'Desarrollador':
+                $usuarioAntiguo = Desarrollador::where('email', $request->oldEmail)->first();
+                $passwordAntiguo = $usuarioAntiguo->password;
+                break;
+            case 'ProductOwner':
+                $usuarioAntiguo = ProductOwner::where('email', $request->oldEmail)->first();
+                $passwordAntiguo = $usuarioAntiguo->password;
+                break;
+            default:
+                console.log('El usuario no existe en estas tablas.');
+        }
 
             $admin_info = $request->validate([
-                'nombre'=>'required|sometimes|max:100',
-                //PUEDE CAUSAR PROBLEMA SI POR EJEMPLO NO SE CAMBIA
-                'email'=>'required|sometimes|unique:administrador|email',
-                'password'=>'required|sometimes|confirmed',
-            ]);
-            Administrador::findOrFail($id)->update([
-                'nombre'=>$admin_info['nombre'],
-                'email'=>$admin_info['email'],
+                'nombre'=>'sometimes|max:100',
+                'email'=>'sometimes|unique:administrador,email,'.$id,
+                'password'=>'nullable|confirmed',
             ]);
 
+            $updateData = collect($admin_info)->only(['nombre', 'email'])->toArray();
+
             if($request->filled('password')){
-                Administrador::findOrFail($id)->update([
-                    'password'=>Hash::make($admin_info['password']),
-                ]);
+                $updateData['password']=Hash::make($admin_info['password']);
+            } else {
+                $updateData['password']=$passwordAntiguo;
             }
+
+            Administrador::updateOrCreate(['id' => $id], $updateData);
+
+            Desarrollador::where('email', $request->oldEmail)->delete();
+            ProductOwner::where('email', $request->oldEmail)->delete();
+
             return response()->json(['message'=>'Usuario actualizado con exito'], 200);
 
         } else if ($rol=='Desarrollador') {
 
-            Administrador::where('email', $request->email)->delete();
-            ProductOwner::where('email', $request->email)->delete();
+            switch($request->oldRol) {
+            case 'Administrador':
+                $usuarioAntiguo = Administrador::where('email', $request->oldEmail)->first();
+                $passwordAntiguo = $usuarioAntiguo->password;
+                break;
+            case 'ProductOwner':
+                $usuarioAntiguo = ProductOwner::where('email', $request->oldEmail)->first();
+                $passwordAntiguo = $usuarioAntiguo->password;
+                break;
+            default:
+                console.log('El usuario no existe en estas tablas.');
+            }
 
             $desarrollador_info = $request->validate([
-                'nombre'=>'required|sometimes|max:100',
-                'email'=>'required|sometimes|unique:desarrollador|email',
-                'password'=>'required|sometimes|confirmed',
-            ]);
-            Desarrollador::findOrFail($id)->update([
-                'nombre'=>$desarrollador_info['nombre'],
-                'email'=>$desarrollador_info['email'],
-                'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
-                'id_proyecto'=> 1, //Proyecto::get('id'), por ahora esta hardcodeado
+                'nombre'=>'sometimes|max:100',
+                'email'=>'sometimes|unique:desarrollador,email,'.$id,
+                'password'=>'nullable|confirmed',
             ]);
 
+            $updateData = collect($desarrollador_info)->only(['nombre', 'email'])->toArray();
+
             if($request->filled('password')){
-                 Desarrollador::findOrFail($id)->update([
-                    'password'=>Hash::make($desarrollador_info['password']),
-                 ]);
+                    $updateData['password']=Hash::make($desarrollador_info['password']);
+            } else {
+                $updateData['password']=$passwordAntiguo;
             }
+
+            $updateData['id_administrador']=1;
+            $updateData['id_proyecto']=2;
+
+            Desarrollador::updateOrCreate(
+                ['id'=>$id],
+                $updateData,
+            );
+
+            Administrador::where('email', $request->oldEmail)->delete();
+            ProductOwner::where('email', $request->oldEmail)->delete();
+
             return response()->json(['message'=>'Usuario actualizado con exito'], 200);
 
         } else if($rol=='ProductOwner') {
 
-            Desarrollador::where('email', $request->email)->delete();
-            Administrador::where('email', $request->email)->delete();
+            switch($request->oldRol) {
+            case 'Desarrollador':
+                $usuarioAntiguo = Desarrollador::where('email', $request->oldEmail)->first();
+                $passwordAntiguo = $usuarioAntiguo->password;
+                break;
+            case 'Administrador':
+                $usuarioAntiguo = Administrador::where('email', $request->oldEmail)->first();
+                $passwordAntiguo = $usuarioAntiguo->password;
+                break;
+            default:
+                console.log('El usuario no existe en estas tablas.');
+            }
 
             $productOwner_info = $request->validate([
-                'nombre'=>'required|sometimes|max:100',
-                'email'=>'required|sometimes|unique:product_owner|email',
-                'password'=>'required|sometimes|confirmed',
+                'nombre'=>'sometimes|max:100',
+                'email'=>'sometimes|unique:product_owner,email,'.$id,
+                'password'=>'nullable|confirmed',
             ]);
-            ProductOwner::findOrFail($id)->update([
-                'nombre'=>$productOwner_info['nombre'],
-                'email'=>$productOwner_info['email'],
-                'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
-            ]);
-            if($request->filled('password')) {
-                ProductOwner::findOrFail($id)->update([
-                    'password'=>Hash::make($productOwner_info['password']),
-                ]);
-            }
-            return response()->json(['message'=>'Usuario actualizado con exito'], 200);
 
+            $updateData = collect($productOwner_info)->only(['nombre', 'email'])->toArray();
+
+            if($request->filled('password')){
+                    $updateData['password']=Hash::make($productOwner_info['password']);
+            } else {
+                $updateData['password']=$passwordAntiguo;
+            }
+
+            $updateData['id_administrador']=1;
+
+            ProductOwner::updateOrCreate(
+                ['id'=>$id],
+                $updateData,
+            );
+
+            Desarrollador::where('email', $request->oldEmail)->delete();
+            Administrador::where('email', $request->oldEmail)->delete();
+
+            return response()->json(['message'=>'Usuario actualizado con exito'], 200);
         }
         return response()->json(['error' => 'No se pudo actualizar el usuario'], 404);
     }
