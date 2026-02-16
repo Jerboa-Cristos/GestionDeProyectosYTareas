@@ -4,8 +4,6 @@ import { mostrarUsuarios, eliminarUsuario} from '../../services/adminService';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-//Se deben añadir funciones y se debe páginar la información
-
 function GestionUsuarios() {
     const [rolFilter, setRolFilter] = useState(null); // Estado para el filtro de rol
     const [users, setUsers] = useState([]);
@@ -53,6 +51,18 @@ function GestionUsuarios() {
             setSearchTerm('');
         }
     }
+//#endregion
+
+//#region COSAS PARA PÁGINAR DATOS
+    const [currentPage, setCurrentPage] = useState(1)
+    const usersPerPage = 10
+    const totalPages = Math.max(1, Math.ceil(filteredUsers.length/usersPerPage))
+    const currentUsers = filteredUsers.slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage)
+
+    useEffect(()=> {
+        setCurrentPage(1)
+    },[searchTerm, rolFilter])
+
 //#endregion
 
 //#region Función para eliminar un usuario
@@ -118,7 +128,7 @@ function GestionUsuarios() {
                         </div>
                     </div>
                     <div className="flex-1 flex flex-col gap-2 overflow-y-auto">
-                       {filteredUsers.map((user) => (
+                       {currentUsers.map((user) => (
                             <button 
                                 key={`${user.rol}-${user.id}`}
                                 onClick={(e)=>{goPerfilUsuario(user.id, user.rol); e.stopPropagation()}}
@@ -137,17 +147,33 @@ function GestionUsuarios() {
                                 />
                             </button>
                        ))}
-
                     </div>
-                    <div className="mt-6 flex justify-start">
+                    <div className="mt-4 flex flex-row justify-between items-center w-full">
                         <button 
                         onClick={goCreacionUsuarios}
-                        className="flex items-center gap-2 bg-blueBase text-blueDark px-6 py-2 
+                        className="flex items-center bg-blueBase text-blueDark px-6 py-2 
                         rounded-lg font-bold hover:bg-BlueBaseDark transition-colors shadow-sm"
                         >
                         <Plus size={24} strokeWidth={3} />
                         Crear
                         </button>
+                        <div className='flex gap-4'>
+                            <button disabled={currentPage===1} 
+                            onClick={(e)=> {setCurrentPage(prev => prev-1); e.stopPropagation()}}
+                            className="flex items-center bg-blueBase text-blueDark px-6 py-2 
+                            rounded-lg font-bold hover:bg-BlueBaseDark transition-colors shadow-sm">
+                                Previous
+                            </button>
+
+                            <span className='text-blueDark font-bold flex items-center gap-4'>Page {currentPage} of {totalPages}</span>
+
+                            <button disabled={currentPage===totalPages}
+                            onClick={(e)=> {setCurrentPage(prev=>prev+1); e.stopPropagation()}}
+                            className="flex items-center bg-blueBase text-blueDark px-6 py-2 
+                            rounded-lg font-bold hover:bg-BlueBaseDark transition-colors shadow-sm">
+                                Next
+                            </button>
+                        </div>
                     </div>
                 </main>
             </div>

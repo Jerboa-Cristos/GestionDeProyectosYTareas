@@ -21,7 +21,7 @@ class AdministradorController extends Controller
         });
         
         $productOwners=ProductOwner::all()->map(function($productOwner){
-            $productOwner->rol='Product Owner';
+            $productOwner->rol='ProductOwner';
             return $productOwner;
         });
         
