@@ -29,6 +29,15 @@ Route::post('profile_administrador', [AdministradorAuthController::class, 'profi
 //Route::get('ruta del navegador', [Controlador::class, 'metodo backend'])->middleware('auth:GUARD_DEL_USUARIO'); //carpeta config/auth.php
 Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware('auth:sanctum');
 
+//RUTAS PARA EL ADMINISTRADOR
+Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
+Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsuarios']);
+Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios']);
+Route::post('storeUsuarios',[AdministradorController::class, 'storeUusarios']);
+Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsarios']);
+
+
+
 //RUTAS AUTENTICACIÓN PARA PRODUCT OWNER
 //Route::post('ruta de la api con axios', [Controlador::class, 'metodo backend']);
 Route::post('register_product_owner', [ProductOwnerAuthController::class, 'registerProductOwner']);
@@ -54,10 +63,3 @@ Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profi
 //Route::post('ruta', [Controlador::class, 'metodo']);
 Route::post('proyecto', [ProductOwnerController::class, 'store']);
 Route::get('mostrar_proyecto', [ProductOwnerController::class, 'show']);
-
-//RUTAS PARA EL ADMINISTRADOR
-Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
-Route::get('showUsuarios/{id}', [AdministradorController::class, 'showUsuarios']);
-Route::delete('eliminarUsuarios/{id}', [AdministradorController::class, 'eliminarUsuario']);
-Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios']);
-Route::put('updateUsuarios/{id}', [AdministradorController::class, 'updateUsuarios']);

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 function GestionUsuarios() {
+    
     const [rolFilter, setRolFilter] = useState(null); // Estado para el filtro de rol
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -79,7 +80,7 @@ function GestionUsuarios() {
 
     return (
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
-            <MenuTop/>
+            <MenuTop rutaLogin='/administrador_login' rutaPerfil='/administrador_profile'/>
             <div className="flex flex-1 gap-4 overflow-hidden h-full">
                 <main 
                 onClick={()=> {setRolFilter(null); setSearchTerm('');}}

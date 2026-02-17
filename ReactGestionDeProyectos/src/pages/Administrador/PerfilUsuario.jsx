@@ -79,7 +79,7 @@ const volverAtras = () => {
 
     return (
     <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
-        <MenuTop/>
+        <MenuTop rutaLogin='/administrador_login' rutaPerfil='/administrador_profile'/>
         <main className="flex-1 bg-blueBase rounded-xl shadow-lg p-10 flex flex-col gap-10 relative m-4 overflow-hidden">
 
         <div className='flex flex-col'>

@@ -1,23 +1,21 @@
 import { useNavigate } from "react-router-dom"
-
-
 import { UserCircle, LogOut } from 'lucide-react';
 
 
 
 //Para responsibe design, hay que añadir md: a las variables, ya que cambia las cosas si la pantalla es menos que la mitad
-function MenuTop() {
-    const user = JSON.parse(localStorage.getItem('user'))
+function MenuTop({rutaPerfil, rutaLogin}) {
     const navigate = useNavigate()
 
-    const logout = () => {
-        /*localStorage.removeItem('user')
-        localStorage.removeItem('isAuthenticated')*/
-        navigate('/login')
+    const logout = (rutaLogin) => {
+        localStorage.removeItem('user')
+        localStorage.removeItem('isAuthenticated')
+        navigate(rutaLogin);
+
     }
 
-    const goToProfile = () => {
-        navigate('/PerfilUsuario')
+    const goToProfile = (rutaPerfil) => {
+        navigate(rutaPerfil);
     }
 
     return (
@@ -29,8 +27,8 @@ function MenuTop() {
                 </div>
             </div>
             <div className="flex items-center gap-6 text-slate-600">
-                <button onClick={goToProfile} className="hover:text-slate-800 transition-colors"><UserCircle size={24} /></button>
-                <button onClick={logout} className="hover:text-slate-800 transition-colors"><LogOut size={24} /></button>
+                <button onClick={(e) => {goToProfile(rutaPerfil); e.stopPropagation()}} className="hover:text-slate-800 transition-colors"><UserCircle size={24} /></button>
+                <button onClick={(e)=> {logout(rutaLogin); e.stopPropagation()}} className="hover:text-slate-800 transition-colors"><LogOut size={24} /></button>
             </div>
     </header>
     )

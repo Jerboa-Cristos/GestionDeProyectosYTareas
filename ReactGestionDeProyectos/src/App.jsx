@@ -16,7 +16,6 @@ import { useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 //AUTH
 //Administrador
-import AdministradorDashboard from './pages/Auth/Administrador/AdministradorDashboard';
 import AdministradorLogin from './pages/Auth/Administrador/AdministradorLogin';
 import AdministradorProfile from './pages/Auth/Administrador/AdministradorProfile';
 import AdministradorRegister from './pages/Auth/Administrador/AdministradorRegister';
@@ -62,13 +61,12 @@ function App() {
           {/*RUTAS AUTH ADMINISTRADOR */}
           <Route path='/administrador_register' element={<AdministradorRegister/>}/>
           <Route path='/administrador_login' element={<AdministradorLogin/>}/>
-          <Route path='/administrador_profile' element={<AdministradorProfile/>}/>
-          <Route path='/administrador_dashboard' element={<AdministradorDashboard/>}/>
-          
           {isAuthenticated && (
             <>
-            <Route path='/administrador_dashboard' element={<ProductOwnerDashboard/>} />
-            <Route path="/administrador_profile" element={<ProductOwnerProfile/>}/>   
+            <Route path="/administrador_profile" element={<AdministradorProfile/>}/>   
+            <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>
+            <Route path="/PerfilUsuario/:rol/:id" element={<PerfilUsuario/>}/>
+            <Route path="/CreacionUsuarios" element={<CreacionUsuarios/>}/>
             </>
           )}
 
@@ -97,11 +95,6 @@ function App() {
           {/*PROYECTO */}
           <Route path='/crear_proyecto' element={<Crear_Proyecto/>}/>
 
-
-          {/*RUTAS ADMINISTRADOR*/}
-            <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>
-            <Route path="/PerfilUsuario/:rol/:id" element={<PerfilUsuario/>}/>
-            <Route path="/CreacionUsuarios" element={<CreacionUsuarios/>}/>
           
           {/*RUTAS DESARROLLADOR*/}
             <Route path="/DashboardDesarrollador" element={<DashboardDesarrollador/>}/>
