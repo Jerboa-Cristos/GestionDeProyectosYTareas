@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom"
+//AQUÍ DEBE ESTAR EL IMPORT PARA EL DOCUMENTO QUE TIENE CONEXIÓN A LA PARTE DE LOS PROYECTOS
 import { guardarUsuarios } from '../../services/adminService';
 import { useState, useEffect } from 'react';
 import { User, Mail, Briefcase, Folder, RotateCcw, Plus } from 'lucide-react';
 import MenuTop from '../../Components/MenuTop';
 
 function CreacionUsuarios() {
+    const adminUser = JSON.parse(localStorage.getItem('user'))
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         nombre: '', 
@@ -12,12 +14,26 @@ function CreacionUsuarios() {
         password: '',
         confirmed_password:'',
         proyecto: '',
-        rol: ''
+        rol: '',
+        id_administrador: adminUser.id,
+        //id_proyecto: proyecto.id
     })
 
-    //FALTA LA PARTE DE LISTAR LOS PROYECTOS DISPONIBLES.
     //TAMBIÉN FALTA LA PARTE DE PASAR LA ID DEL ADMINISTRADOR AL BACKEND
-    const [proyecto, setProyecto] = useState()
+    /*const [proyecto, setProyecto] = useState()
+    useEffect(() => {
+        //Aquí se deben cargar los usuarios desde el backend
+        const fetchProjects = async () => {
+            NOMBRE FUNCIÓN PARA PROYECTOS().then(res => {
+                setProyecto(res.data);
+            }).catch(err => {
+                console.error("Error al cargar los proyectos:", err);
+            });
+        }
+        fetchProjects();
+    }, [])
+    */
+
 
 //#region CREACIÓN DEL NUEVO USUARIO
 const handleChange = (e) => {
@@ -128,7 +144,7 @@ const GuardarUsuario = async (e) => {
                     <div className="relative">
                         <Folder className="absolute left-4 top-3 text-blueDark" size={20} />
                         <select 
-                        value={formData.proyecto}
+                        value={formData.proyecto} //ESTO SE CAMBIARÍA POR proyecto.id
                         onChange={handleChange}
                         name='proyecto'
                         className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic appearance-none text-center text-gray-500">
