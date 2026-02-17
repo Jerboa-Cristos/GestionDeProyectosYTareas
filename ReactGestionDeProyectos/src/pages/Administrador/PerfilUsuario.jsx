@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import MenuTop from '../../Components/MenuTop';
 
 function PerfilUsuario() {
+    const userAdmin = JSON.parse(localStorage.getItem('user'))
     const navigate = useNavigate();
     const {rol, id} = useParams();
     const [formData, setFormData] = useState({
@@ -14,7 +15,8 @@ function PerfilUsuario() {
         password: '',
         password_confirmation:'',
         rol: '',
-        oldRol:''
+        oldRol:'',
+        adminEmail: userAdmin.email
     })
 
     useEffect(() => {

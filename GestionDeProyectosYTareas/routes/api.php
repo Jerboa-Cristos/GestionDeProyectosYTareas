@@ -33,8 +33,8 @@ Route::get('profile_administrador', [AdministradorAuthController::class, 'profil
 Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
 Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsuarios']);
 Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios']);
-Route::post('storeUsuarios',[AdministradorController::class, 'storeUusarios']);
-Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsarios']);
+Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios']);
+Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsuarios']);
 
 
 

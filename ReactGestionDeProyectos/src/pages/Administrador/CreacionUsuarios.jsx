@@ -6,7 +6,7 @@ import { User, Mail, Briefcase, Folder, RotateCcw, Plus } from 'lucide-react';
 import MenuTop from '../../Components/MenuTop';
 
 function CreacionUsuarios() {
-    const adminUser = JSON.parse(localStorage.getItem('user'))
+    const userAdmin = JSON.parse(localStorage.getItem('user'))
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         nombre: '', 
@@ -15,7 +15,7 @@ function CreacionUsuarios() {
         confirmed_password:'',
         proyecto: '',
         rol: '',
-        id_administrador: adminUser.id,
+        adminEmail: userAdmin.email
         //id_proyecto: proyecto.id
     })
 

@@ -60,13 +60,13 @@ class AdministradorController extends Controller
             'password'=>'required|same:confirmed_password',
         ]);
 
-        $administrador = Administrador::findOrFail(1);
+        $administrador = Administrador::where('email', $request->adminEmail)->first();
 
         $desarrollador = new Desarrollador([
             'nombre'=>$desarrollador_info['nombre'],
             'email'=>$desarrollador_info['email'],
             'password'=>Hash::make($desarrollador_info['password']),
-            'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
+            'id_administrador'=> $administrador->id, //Administrador::Auth()->id(), por ahora esta hardcodeado
             'id_proyecto'=> 1, //Proyecto::get('id'), por ahora esta hardcodeado
         ]);
 
@@ -81,13 +81,13 @@ class AdministradorController extends Controller
             'password'=>'required|same:confirmed_password',
         ]);
 
-        $administrador = Administrador::findOrFail(1);
+        $administrador = Administrador::where('email', $request->adminEmail)->first();
 
         $productOwner = new ProductOwner([
             'nombre'=>$productOwner_info['nombre'],
             'email'=>$productOwner_info['email'],
             'password'=>Hash::make($productOwner_info['password']),
-            'id_administrador'=> 1, //Administrador::Auth()->id(), por ahora esta hardcodeado
+            'id_administrador'=> $administrador->id,
         ]);
 
         $administrador->productOwners()->save($productOwner);
@@ -120,13 +120,13 @@ class AdministradorController extends Controller
             case 'Desarrollador':
                 $usuarioAntiguo = Desarrollador::where('email', $request->oldEmail)->first();
                 $passwordAntiguo = $usuarioAntiguo->password;
+                $usuarioAntiguo->delete();
                 break;
             case 'ProductOwner':
                 $usuarioAntiguo = ProductOwner::where('email', $request->oldEmail)->first();
                 $passwordAntiguo = $usuarioAntiguo->password;
+                $usuarioAntiguo->delete();
                 break;
-            default:
-                console.log('El usuario no existe en estas tablas.');
         }
 
             $admin_info = $request->validate([
@@ -145,9 +145,6 @@ class AdministradorController extends Controller
 
             Administrador::updateOrCreate(['id' => $id], $updateData);
 
-            Desarrollador::where('email', $request->oldEmail)->delete();
-            ProductOwner::where('email', $request->oldEmail)->delete();
-
             return response()->json(['message'=>'Usuario actualizado con exito'], 200);
 
         } else if ($rol=='Desarrollador') {
@@ -156,13 +153,13 @@ class AdministradorController extends Controller
             case 'Administrador':
                 $usuarioAntiguo = Administrador::where('email', $request->oldEmail)->first();
                 $passwordAntiguo = $usuarioAntiguo->password;
+                $usuarioAntiguo->delete();
                 break;
             case 'ProductOwner':
                 $usuarioAntiguo = ProductOwner::where('email', $request->oldEmail)->first();
                 $passwordAntiguo = $usuarioAntiguo->password;
+                $usuarioAntiguo->delete();
                 break;
-            default:
-                console.log('El usuario no existe en estas tablas.');
             }
 
             $desarrollador_info = $request->validate([
@@ -179,16 +176,14 @@ class AdministradorController extends Controller
                 $updateData['password']=$passwordAntiguo;
             }
 
-            $updateData['id_administrador']=1;
+            $administrador = Administrador::where('email', $request->adminEmail)->first();
+            $updateData['id_administrador']=$administrador->id;
             $updateData['id_proyecto']=2;
 
             Desarrollador::updateOrCreate(
                 ['id'=>$id],
                 $updateData,
             );
-
-            Administrador::where('email', $request->oldEmail)->delete();
-            ProductOwner::where('email', $request->oldEmail)->delete();
 
             return response()->json(['message'=>'Usuario actualizado con exito'], 200);
 
@@ -198,13 +193,13 @@ class AdministradorController extends Controller
             case 'Desarrollador':
                 $usuarioAntiguo = Desarrollador::where('email', $request->oldEmail)->first();
                 $passwordAntiguo = $usuarioAntiguo->password;
+                $usuarioAntiguo->delete();
                 break;
             case 'Administrador':
                 $usuarioAntiguo = Administrador::where('email', $request->oldEmail)->first();
                 $passwordAntiguo = $usuarioAntiguo->password;
+                $usuarioAntiguo->delete();
                 break;
-            default:
-                console.log('El usuario no existe en estas tablas.');
             }
 
             $productOwner_info = $request->validate([
@@ -221,15 +216,13 @@ class AdministradorController extends Controller
                 $updateData['password']=$passwordAntiguo;
             }
 
-            $updateData['id_administrador']=1;
+            $administrador = Administrador::where('email', $request->adminEmail)->first();
+            $updateData['id_administrador']=$administrador->id;
 
             ProductOwner::updateOrCreate(
                 ['id'=>$id],
                 $updateData,
             );
-
-            Desarrollador::where('email', $request->oldEmail)->delete();
-            Administrador::where('email', $request->oldEmail)->delete();
 
             return response()->json(['message'=>'Usuario actualizado con exito'], 200);
         }
