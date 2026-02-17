@@ -16,7 +16,7 @@ class AdministradorAuthController extends Controller
     public function registerAdministrador(Request $request ){
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:40',
-            'email' => 'required|email|unique:administrador',
+            'email' => 'required|email|unique:administrador,email',
             'password' => 'required|same:confirmed_password',
 
         ]);
@@ -29,7 +29,6 @@ class AdministradorAuthController extends Controller
             'nombre' => $request->nombre,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'fecha_alta' => now(),
         ]);
 
         $input['nombre'] = $administrador->nombre;

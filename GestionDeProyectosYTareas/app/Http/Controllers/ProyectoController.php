@@ -21,7 +21,6 @@ class ProyectoController extends Controller
     public function store(Request $request, $id_proyecto){
         $validar_datos = $request->validate([
             'nombre' => 'required|string|max:40',
-            'fecha_inicio' => 'required|date',
             'fecha_fin' => 'nullable|date'
         ]);
 
@@ -29,7 +28,6 @@ class ProyectoController extends Controller
 
         $sprint = new Sprint([
             'nombre' => $validar_datos['nombre'],
-            'fecha_inicio' => $validar_datos['fecha_inicio'],
             'fecha_fin' => $validar_datos['fecha_fin'],
             'id_proyecto' => $id_proyecto
         ]);
@@ -52,7 +50,6 @@ class ProyectoController extends Controller
     public function update(Request $request, $id){
         $validar_datos = $request->validate([
             'nombre' => 'required|string|max:40',
-            'fecha_inicio' => 'required|date',
             'fecha_fin' => 'nullable|date'
         ]);
 

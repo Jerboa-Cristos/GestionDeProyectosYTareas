@@ -22,7 +22,6 @@ class ProyectoSeeder extends Seeder
             DB::table('proyecto')->insert([
                 'nombre'=> $faker->name(),
                 'descripcion'=> $faker->text(),
-                'fecha_inicio'=>date('Y-m-d'),
                 'fecha_fin'=>$faker->date(),
                 'created_at'=>date('Y-m-d'),
                 'updated_at'=>date('Y-m-d'),

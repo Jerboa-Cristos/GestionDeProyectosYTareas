@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->enum('tipo', ['Backend', 'Frontend', 'Diseño','Despliegue', 'Testing']);
             $table->text('descripcion', 300)->nullable();
-            $table->date('fecha_inicio');
             $table->date('fecha_fin')->nullable();
 
             $table->timestamps();
@@ -23,7 +22,7 @@ return new class extends Migration
             //Foreign Key
             $table->foreignId('id_sprint')->constrained('sprint')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_desarrollador')->constrained('desarrollador')->cascadeOnDelete()->cascadeOnUpdate();
-            
+
             //$table->foreignId('id_proyecto')->constrained('proyecto')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
