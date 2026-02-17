@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Proyecto;
+use App\Models\ProductOwner;
 
 class ProductOwnerApiController extends Controller
 {
@@ -13,7 +14,7 @@ class ProductOwnerApiController extends Controller
         return Proyecto::all();
     }
 
-    public function store($id) {
+    public function store(Request $request) {
         $validar = $request->validate([
             'nombre' => 'required|string|max:40',
             'descripcion' => 'required|string|max:300',
@@ -26,13 +27,13 @@ class ProductOwnerApiController extends Controller
 
         return response()->json($proyecto);
     }
-        
+
     public function show($id) {
         return Proyecto::findOrFail($id);
 
     }
 
-    public function update(Request $request) {
+    public function update(Request $request, $id) {
         $proyecto = Proyecto::findOrFail($id);
         $proyecto->update($request->all());
         return response()->json($proyecto);
