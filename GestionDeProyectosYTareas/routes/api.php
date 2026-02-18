@@ -36,6 +36,7 @@ Route::post('login_product_owner', [ProductOwnerAuthController::class,'loginProd
 Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner']);
 //Middleware
 Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner'])->middleware('auth:sanctum');
+
 //RUTAS CRUD API PRODUCT OWNER
 Route::get('listado_proyectos', [ProductOwnerApiController::class, 'index']);
 Route::post('crear_proyecto', [ProductOwnerApiController::class, 'store']);
@@ -50,10 +51,7 @@ Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profi
 //Middleware
 Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:sanctum');
 
-//Rutas para proyecto
-//Route::post('ruta', [Controlador::class, 'metodo']);
-Route::post('proyecto', [ProductOwnerController::class, 'store']);
-Route::get('mostrar_proyecto', [ProductOwnerController::class, 'show']);
+
 
 //RUTAS PARA EL ADMINISTRADOR
 Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
@@ -61,3 +59,9 @@ Route::get('showUsuarios/{id}', [AdministradorController::class, 'showUsuarios']
 Route::delete('eliminarUsuarios/{id}', [AdministradorController::class, 'eliminarUsuario']);
 Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios']);
 Route::put('updateUsuarios/{id}', [AdministradorController::class, 'updateUsuarios']);
+
+
+//Rutas para proyecto
+//Route::post('ruta', [Controlador::class, 'metodo']);
+Route::post('crear_proyecto', [ProductOwnerController::class, 'store']);
+Route::get('mostrar_proyecto', [ProductOwnerController::class, 'show']);

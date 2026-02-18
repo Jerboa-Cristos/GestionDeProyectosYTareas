@@ -35,10 +35,9 @@ function ProductOwnerRegister () {
                             */}
                     }
                 })
-            .catch(err => console.log(err))
-
-        
+            .catch(err => console.log(err))    
     }
+
 
     return (
         <div className={PantallaAzul}>
@@ -110,7 +109,9 @@ function ProductOwnerRegister () {
                     placeholder="Enter to Confirm your password"/>
 
                     </div>
-                    <button type="submit" className="w-full flex justify-center py-2 px-4
+                    <button 
+                    type="submit" 
+                    className="w-full flex justify-center py-2 px-4
                     rounded-md text-sm font-medium text-white bg-blueDark hover:bg-blueblue
                     transition-colors">Submit</button>
 

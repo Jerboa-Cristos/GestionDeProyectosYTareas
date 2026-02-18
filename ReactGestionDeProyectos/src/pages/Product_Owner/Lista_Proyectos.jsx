@@ -12,36 +12,47 @@ function Lista_Proyectos() {
       .catch((err) => console.error("Error cargando proyectos", err));
   }, []);
 
+console.log(proyectos)
+
   return (
       <>
       <MenuTop />
 
-      <div className=" flex border border-BlueDarkDark min-h-screen p-4">
-        <Menu_Izquierdo />
+      
+      <Menu_Izquierdo />
 
+     
 
-        <div className="">
+      <div className="flex flex-col gap-4 border border-BlueDarkDark  ml-57 mr-3 p-6  bg-white">
+
+        <div className="flex flex-1">
           <h1 className="p-1 font-bold text-4xl text-BlueDarkDark">
             Mis Proyectos
           </h1>
-        </div>
-        
-        <div name="boton" className="">
+
           <Link
             to="/crear_proyecto"
-            className="px-3 py-2 bg-primary text-blue-700 rounded-md border mr-3 inline-block hover:text-green-400"
+            className="mx-200 px-3 py-2 bg-primary text-blueDashboard font-bold rounded-md border mr-3  hover:text-green-400 bg-blueBase"
           >
             + Nuevo Proyecto
           </Link>
         </div>
+        
+        
 
-        <div className="">
+       
+       <div className="grid grid-cols-3 gap-6">
           {proyectos.length === 0 ? (<p>No hay proyectos</p>) : 
           (proyectos.map((proyecto) => 
             (
-                <div key={proyecto.id}>
-                    <h2 className="font-bold">{proyecto.nombre}</h2>
-                    <p className="">{proyecto.descripcion}</p>
+                <div key={proyecto.id} className=" bg-blueDashboard w-full rounded-2xl  mr-3 mt-5 mb-5 p-3">
+                    <h2 className="font-bold text-white text-[1.5em]">{proyecto.nombre}</h2>
+                    <hr className="text-white border-[1.6px] w-full mb-5"/>
+                    <p className="text-white text-justify">{proyecto.descripcion}</p>
+
+                    <Link to={`${proyecto.id}`}>
+                    <button >Ver Proyecto</button>
+                    </Link>
 
                 </div>
 
@@ -54,6 +65,9 @@ function Lista_Proyectos() {
 
         
       </div>
+
+
+
     </>
   );
 }
