@@ -29,7 +29,7 @@ class TareaController extends Controller
     }
 
     public function showTarea($id) {
-        $tarea = Administrador::findOrFail($id);
+        $tarea = Tarea::findOrFail($id);
         return response()->json($tarea, 200);
     }
 
