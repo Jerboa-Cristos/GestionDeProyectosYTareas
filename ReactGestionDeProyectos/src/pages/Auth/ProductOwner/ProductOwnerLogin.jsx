@@ -19,7 +19,15 @@ function ProductOwnerLogin () {
                 console.log(res.data)
                 localStorage.setItem("user", JSON.stringify(res.data))
                 localStorage.setItem('isAuthenticated', true)
-                
+
+                //cambiar else por 
+                {/*
+                    const {user, token} = res.data
+                    localStorage.setItem("token", token) 
+                    localStorage.setItem("user", JSON.stringfy(user))
+                    navigate('/product_owner_dashboard')
+                    */}
+                    
                 navigate('/product_owner_dashboard')
             }
         })
