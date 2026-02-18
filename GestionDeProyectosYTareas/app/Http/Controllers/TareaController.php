@@ -8,26 +8,29 @@ use Illuminate\Http\Request;
 
 class TareaController extends Controller
 {
-    //Request - devuelve todo de la página, incluyendo el id
-    public function indexTarea() { //Para poder listar las tareas
+    public function indexTarea() {
         $tareas = Tarea::all();
-        $nombre="1";
-        return view('tareas.tablero', ['tareas'=>$tareas, 'nombre'=>$nombre]);
+        return response()->json($tareas, 200);
     }
 
-    public function showTarea(Request $request) {
-        $tarea = Tarea::findOrFail($request->get('id'));
-        return view('tareas.detalles_tarea')->with('tarea', $tarea);
-    }
+    public function updateTarea(Request $request, $id) {
+        $tareaUpdate = Tarea::findOrFail($id);
 
-    public function updateTarea(Request $request) {
-
-        Tarea::find($request->get('id'))->firstOrFail()->update([
-            'tipo'=>$request->get('tipo'),
-            'descripcion'=>$request->get('descripcion'),
-            'fecha_fin'=>$request->get('fecha_fin'),
+        $tarea=$request->validate([
+            'nombre'=>'required|max:255',
+            'tipo'=>'required|in:Backend,Frontend,Diseño,Despliegue,Testing',
+            'descripcion'=>'nullable|min:3|max:1000',
+            'fecha_fin'=>'nullable|date|after:'.$tareaUpdate->created_at->toDateTimeString(),
         ]);
+
+
+
         //Preguntar sobre como cambiar el estado en la tabla de muchos a muchos
+    }
+
+    public function showTarea($id) {
+        $tarea = Administrador::findOrFail($id);
+        return response()->json($tarea, 200);
     }
 
 //ESTADO
@@ -35,7 +38,7 @@ class TareaController extends Controller
     //Mostrar todos los Estados
     public function indexEstado(){
         $estados = Estado::all();
-        return view('tareas.detalles_tarea')->with('estados', $estados);
+        return response()->json($estados, 200);
     }
 
     //Guardar el estado actual de la tarea

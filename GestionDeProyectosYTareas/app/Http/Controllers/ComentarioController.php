@@ -11,7 +11,8 @@ class ComentarioController extends Controller
 
     public function index() { //Obtiene toda la información de la tabla
         $comentarios=Comentario::all();
-        return view('dashboard', ['comentarios'=>$comentarios]);
+        $comentarios->sortBy('fecha')->values()->all();
+        return response()->json($comentarios, 200);
     }
 
     public function create() {//FORMULARIO para crear la entidad

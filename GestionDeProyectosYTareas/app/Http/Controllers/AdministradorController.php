@@ -31,7 +31,7 @@ class AdministradorController extends Controller
         });
 
         $todos=$desarrolladores->concat($productOwners)->concat($administradores);
-        $todos=$todos->sortBy('nombre')->values()->all();
+        $todos->sortBy('nombre')->values()->all();
         return response()->json($todos, 200);
     }
 
