@@ -23,24 +23,17 @@ class ComentarioController extends Controller
         try{
             $comentarioNuevo = $request->validate([
                 'texto'=>'required|max:300',
-                'id_desarrollador'=>[
-                    'required_without:id_productOwner',
-                    'prohibits:id_productOwner',
-                    'nullable',
-                ],
-                'id_productOwner'=>[
-                    'required_without:id_desarrollador',
-                    'prohibits:id_desarrollador',
-                    'nullable',
-                ],
+                'id_tarea'=>'required|exists:tareas,id',
+                'autor_id'=>'requiered|integer',
+                'autor_type'=>'requiered|in:use App\Models\Desarrollador,use App\Models\ProductOwner'
             ]);
 
-            $comentario = new Comentario([
-                ...$comentarioNuevo,
-                'id_tarea'=>$request->id_tarea
+            Comentario::create([
+                'texto'=>$comentarioNuevo['texto'],
+                'id_tarea'=>$comentarioNuevo['id_tarea'],
+                'autor_id'=>$comentarioNuevo['autor_id'],
+                'autor_type'=>$comentarioNuevo['autor_type'],
             ]);
-
-            $comentario->save();
 
         }catch(\Exception $e) {
             return response()->json(['error' => 'No se pudo guardar el comentario'], 404);
@@ -59,15 +52,15 @@ class ComentarioController extends Controller
 
     public function updateComentario(Request $request, $id) { 
         try{
-
-        //Y SI POR EJEMPLO LA PERSONA QUE PUSO EL COMENTARIO CAMBIÓ DE ROL?
-        //SE TENDRA QUE CAMBIAR EN LA TABLA O?
-
             $comentarioNuevo = $request->validate([
                 'texto'=>'required|max:300',
+                'autor_id'=>'requiered|integer',
+                'autor_type'=>'requiered|in:use App\Models\Desarrollador,use App\Models\ProductOwner',
             ]);
             Comentario::findOrFail($id)->update([
                 'texto'=>$comentarioNuevo['texto'],
+                'autor_id'=>$comentarioNuevo['autor_id'],
+                'autor_type'=>$comentarioNuevo['autor_type'],
             ]);
         }catch (\Exception $e) {
             return response()->json(['error' => 'No se pudo actualizar el comentario'], 404);
