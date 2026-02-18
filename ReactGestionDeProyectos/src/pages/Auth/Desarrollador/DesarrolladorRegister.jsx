@@ -23,7 +23,7 @@ function DesarrolladorRegister () {
                         localStorage.setItem("user", JSON.stringify(res.data))
                         localStorage.setItem('isAuthenticated', true)
                         
-                        navigate('/desarrollador_dashboard')
+                        navigate('/DashboardDesarrollador')
                     }
                 })
             .catch(err => console.log(err))

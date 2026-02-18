@@ -25,11 +25,9 @@ import ProductOwnerRegister from './pages/Auth/ProductOwner/ProductOwnerRegister
 import ProductOwnerDashboard from './pages/Product_Owner/ProductOwnerDashboard';
 import ProductOwnerProfile from './pages/Product_Owner/ProductOwnerProfile';
 //Desarrollador
-import DesarrolladorDashboard from './pages/Auth/Desarrollador/DesarrolladorDashboard';
 import DesarrolladorLogin from './pages/Auth/Desarrollador/DesarrolladorLogin';
 import DesarrolladorProfile from './pages/Auth/Desarrollador/DesarrolladorProfile';
 import DesarrolladorRegister from './pages/Auth/Desarrollador/DesarrolladorRegister';
-
 
 //PROYECTO
 import Crear_Proyecto from './pages/Product_Owner/Crear_Proyecto';
@@ -90,7 +88,6 @@ function App() {
           <Route path='/desarrollador_register' element={<DesarrolladorRegister/>}/>
           <Route path='/desarrollador_login' element={<DesarrolladorLogin/>}/>
           <Route path='/desarrollador_profile' element={<DesarrolladorProfile/>}/>
-          <Route path='/desarrollador_dashboard' element={<DesarrolladorDashboard/>}/>
 
           {/*PROYECTO */}
           <Route path='/crear_proyecto' element={<Crear_Proyecto/>}/>
