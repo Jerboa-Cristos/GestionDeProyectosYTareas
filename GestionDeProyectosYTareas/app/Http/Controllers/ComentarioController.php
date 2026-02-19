@@ -57,6 +57,7 @@ class ComentarioController extends Controller
                 'autor_id'=>'requiered|integer',
                 'autor_type'=>'requiered|in:use App\Models\Desarrollador,use App\Models\ProductOwner',
             ]);
+            
             Comentario::findOrFail($id)->update([
                 'texto'=>$comentarioNuevo['texto'],
                 'autor_id'=>$comentarioNuevo['autor_id'],

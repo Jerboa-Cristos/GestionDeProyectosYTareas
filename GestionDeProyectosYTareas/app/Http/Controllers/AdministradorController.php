@@ -58,6 +58,7 @@ class AdministradorController extends Controller
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|same:confirmed_password',
+            'id_administrador'=>'requiered|exists:administrador,id',
         ]);
 
         $administrador = Administrador::where('email', $request->adminEmail)->first();
@@ -66,8 +67,7 @@ class AdministradorController extends Controller
             'nombre'=>$desarrollador_info['nombre'],
             'email'=>$desarrollador_info['email'],
             'password'=>Hash::make($desarrollador_info['password']),
-            'id_administrador'=> $administrador->id, //Administrador::Auth()->id(), por ahora esta hardcodeado
-            'id_proyecto'=> 1, //Proyecto::get('id'), por ahora esta hardcodeado
+            'id_administrador'=> $administrador->id,
         ]);
 
         $administrador->desarrolladores()->save($desarrollador);

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class DesarrolladorAuthController extends Controller
 {
-    public function registerDesarrollador(Request $request ){
+    /*public function registerDesarrollador(Request $request ){
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:40',
             'email' => 'required|email|unique:desarrollador',
@@ -38,7 +38,7 @@ class DesarrolladorAuthController extends Controller
         $input['token'] = $desarrollador->createToken('Desarrollador')->plainTextToken;
 
         return response()->json($input);
-    }
+    }*/
 
     public function loginDesarrollador(Request $request){
         if(

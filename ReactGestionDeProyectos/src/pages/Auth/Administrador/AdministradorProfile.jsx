@@ -1,5 +1,5 @@
 import MenuTop from "../../../Components/MenuTop"
-import { User, Mail, Briefcase, Folder, RotateCcw, Trash2, LockIcon, Edit3 } from 'lucide-react';
+import { User, Mail, Briefcase, RotateCcw, LockIcon, Edit3 } from 'lucide-react';
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { funcion_administrador_profile } from "../../../services/authService"
@@ -46,10 +46,10 @@ const volverAtras = () => {
     return (
         <>
           <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
-            <MenuTop rol={'Administrador'}/>
+            <MenuTop rutaLogin='/administrador_login' rutaPerfil='/administrador_profile'/>
 
             <main className="flex-1 bg-blueBase rounded-xl shadow-lg p-10 flex flex-col relative m-4 overflow-hidden">
-                <h1 className="text-2xl font-semibold text-gray-800">Profile</h1>
+                <h1 className="text-2xl font-bold text-blueDark">Profile</h1>
 
                 <form onSubmit={submit} className="space-y-6 mt-4 max-w-md mx-auto rounded-lg p-3" method="post">
 
@@ -119,6 +119,11 @@ const volverAtras = () => {
                             placeholder="Enter to Confirm your password"/>
                         </div>
 
+                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
+                                <Briefcase className="text-blueDark" size={22}/>
+                                <p className="bg-white w-full px-4 gap-4 flex-1
+                                text-blueDark text-center font-medium text-lg" >Administrador</p>
+                            </div>
                     
                         <button type="submit" 
                         className="bg-blueDashboard text-white px-6 py-2 rounded-lg flex items-center gap-2 font-medium 
