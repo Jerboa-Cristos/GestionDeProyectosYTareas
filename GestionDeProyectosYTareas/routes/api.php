@@ -49,6 +49,7 @@ Route::post('login_product_owner', [ProductOwnerAuthController::class,'loginProd
 Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner']);
 //Middleware
 Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner'])->middleware('auth:sanctum');
+
 //RUTAS CRUD API PRODUCT OWNER
 Route::get('listado_proyectos', [ProductOwnerApiController::class, 'index']);
 Route::post('crear_proyecto', [ProductOwnerApiController::class, 'store']);

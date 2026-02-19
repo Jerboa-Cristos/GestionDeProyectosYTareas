@@ -33,7 +33,7 @@ function ProductOwnerDashboard () {
                     <h1 className="text-2xl font-semibold text-gray-800">Dashboard</h1>
                 </header>
 
-                <main className="flex-1 p-6">Hi {user.name}
+                <main className="flex-1 p-6">Hi {user.nombre}
                     <p className="text-gray-700 text-lg"></p>
                 </main>
             </div>
