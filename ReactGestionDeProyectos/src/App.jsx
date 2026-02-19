@@ -27,7 +27,6 @@ import ProductOwnerProfile from './pages/Product_Owner/ProductOwnerProfile';
 //Desarrollador
 import DesarrolladorLogin from './pages/Auth/Desarrollador/DesarrolladorLogin';
 import DesarrolladorProfile from './pages/Auth/Desarrollador/DesarrolladorProfile';
-import DesarrolladorRegister from './pages/Auth/Desarrollador/DesarrolladorRegister';
 
 //PROYECTO
 import Crear_Proyecto from './pages/Product_Owner/Crear_Proyecto';
@@ -85,7 +84,6 @@ function App() {
           )}
 
           {/*RUTAS AUTH DESARROLLADOR */}
-          <Route path='/desarrollador_register' element={<DesarrolladorRegister/>}/>
           <Route path='/desarrollador_login' element={<DesarrolladorLogin/>}/>
           <Route path='/desarrollador_profile' element={<DesarrolladorProfile/>}/>
 
