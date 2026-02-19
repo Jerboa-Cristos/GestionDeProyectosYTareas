@@ -20,48 +20,55 @@ function Lista_Proyectos() {
   return (
     <>
       <MenuTop />
-      <Menu_Izquierdo />
 
-      <div className="flex flex-col gap-4 border border-BlueDarkDark  ml-57 mr-3 p-6  bg-white">
-        <div className="flex flex-1">
-          <h1 className="p-1 font-bold text-4xl text-BlueDarkDark">
-            Mis Proyectos
-          </h1>
-
-          <Link
-            to="/crear_proyecto"
-            className="mx-200 px-3 py-2 bg-primary text-blueDashboard font-bold rounded-md border mr-3  hover:text-green-400 bg-blueBase"
-          >
-            + Nuevo Proyecto
-          </Link>
+      <div className="flex">
+        <div className="w-56">
+        <Menu_Izquierdo />
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
-          {proyectos.length === 0 ? (
-            <p>No hay proyectos</p>
-          ) : (
-            proyectos.map((proyecto) => (
-              <div
-                key={proyecto.id}
-                className=" bg-blueDashboard w-full rounded-2xl  mr-3 mt-5 mb-5 p-3"
-              >
-                <h2 className="font-bold text-white text-[1.5em]">
-                  {proyecto.nombre}
-                </h2>
+          <div className="flex-1 p-6">
+            <div className="bg-white rounded-xl shadow-sm p-6">
 
-                <hr className="text-white border-[1.6px] w-full mb-5" />
-                
-                <p className="text-white text-justify">
-                  {proyecto.descripcion}
-                </p>
+              <div className="flex justify-between items-center mb-6">
+                <h1 className="text-3xl font-bold text-BlueDarkDark">
+                  Mis Proyectos
+                </h1>
 
-                <Link to={`/mostrar_proyecto/${proyecto.id}`}>
-                  <button>Ver Proyecto</button>
+                <Link
+                  to="/crear_proyecto"
+                  className="bg-blueBase hover:bg-blue-300 transition px-4 py-2 rounded-lg font-semibold text-BlueDarkDark shadow"
+                >
+                  + Nuevo Proyecto
                 </Link>
               </div>
-            ))
-          )}
-        </div>
+
+              {proyectos.length === 0 ? (
+                <p className="text-warning italic">No hay proyectos creados aún</p>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    {proyectos.map((proyecto) => (
+                      <div
+                        key={proyecto.id}
+                        className=" bg-BlueDarkDark
+                         rounded-xl p-5 shadow hover:shadow-md hover:-translate-y-1 transition"
+                      >
+                        <h2 className="font-bold text-white text-xl mb-2">
+                          {proyecto.nombre}
+                        </h2>
+
+                        <p className="text-white text-sm mb-4 line-clamp-3">
+                          {proyecto.descripcion}
+                        </p>
+
+                        <Link to={`/mostrar_proyecto/${proyecto.id}`}>
+                          <button className="bg-white text-BlueDarkDark font-semibold px-3 py-2 rounded-md shadow hover:bg-gray-100 trnasition">Ver Proyecto</button>
+                        </Link>
+                      </div>
+                    ))}
+                </div>
+              )}
+            </div>
+          </div>
       </div>
     </>
   );
