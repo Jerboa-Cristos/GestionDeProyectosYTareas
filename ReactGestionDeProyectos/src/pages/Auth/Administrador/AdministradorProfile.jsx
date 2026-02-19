@@ -1,8 +1,7 @@
 import MenuTop from "../../../Components/MenuTop"
-
+import { User, Mail, Briefcase, RotateCcw, LockIcon, Edit3 } from 'lucide-react';
 import { useState } from "react"
-import { useNavigate, Link } from "react-router-dom"
-//import { profile } from "../../services/authService"
+import { useNavigate } from "react-router-dom"
 import { funcion_administrador_profile } from "../../../services/authService"
 
 function AdministradorProfile () {
@@ -33,36 +32,29 @@ function AdministradorProfile () {
                 }))
                 
                 
-                navigate('/administrador_dashboard')
+                navigate('/GestionUsuarios')
             }
         })
     }
 
+    //#region Función para volver al listado de antes
+const volverAtras = () => {
+        navigate('/GestionUsuarios');
+}
+//#endregion
+
     return (
         <>
           <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
-            <MenuTop/>
+            <MenuTop rutaLogin='/administrador_login' rutaPerfil='/administrador_profile'/>
 
-            <aside className="w-64 bg-white shadow-md p-5">
-                <h2 className="text-xl font-bold mb-6">My app</h2>
-                <nav className="flex flex-col space-y-3">
-                    <Link to="/administrador_dashboard" className="text-gray-700 hover:text-blue-600">Dashboard</Link>
-                    <Link to="/administrador_profile" className="text-gray-700 hover:text-blue-600">Profile</Link>
-                </nav>
-            </aside>
+            <main className="flex-1 bg-blueBase rounded-xl shadow-lg p-10 flex flex-col relative m-4 overflow-hidden">
+                <h1 className="text-2xl font-bold text-blueDark">Profile</h1>
 
-            <div className="flex-1 flex-col">
-                <header className="bg-white shadow px-6 py-4">
-                    <h1 className="text-2xl font-semibold text-gray-800">Profile</h1>
-                </header>
-
-                <main className="flex-1 p-6">
-
-                    <form onSubmit={submit} className="space-y-6 mt-4 max-w-md mx-auto border border-blue-300 rounded-lg p-3"   method="post">
-                    <h1 className="font-black text-center text-2x1">Profile</h1>
+                <form onSubmit={submit} className="space-y-6 mt-4 max-w-md mx-auto rounded-lg p-3" method="post">
 
                     {
-                    errors.length > 0 && <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                    errors.length > 0 && <div className="mb-4 p-3 bg-red-100 border border-warning text-warningDark rounded">
                         <ul className="list-disc pl-5 space-y-1 text-sm">
                             {errors.map((error, index) => 
                             <li key={index}>{error}</li>
@@ -74,57 +66,84 @@ function AdministradorProfile () {
 
 
                     <div className="grid gap-2">
-                        <label className="text-sm leading-none font-medium select-none peer-disabled:cursor">Name: </label>
                         
-                        <input 
-                        value={nombre}
-                        onChange={(e) => setName(e.target.value)}
-                        type="text" 
-                        id="nombre" 
-                        name="nombre" 
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-2x2" 
-                        placeholder="Enter your name"/>
+                        <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
+                            <User className="text-blueDark" size={22} />
+                            <input 
+                            value={nombre}
+                            onChange={(e) => setName(e.target.value)}
+                            type="text" 
+                            id="nombre" 
+                            name="nombre" 
+                            className="bg-white h-12 w-full flex px-4 gap-4 focus:outline-none focus:ring-none
+                            text-blueDark text-center font-medium text-lg" 
+                            placeholder="Enter your name"/>
+                        </div>
 
+                        <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
+                            <Mail className="text-blueDark" size={22} />
+                            <input 
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            id="email" 
+                            type="email"
+                            name="email" 
+                            className="bg-white h-12 w-full flex px-4 gap-4 focus:outline-none focus:ring-none
+                            text-blueDark text-center font-medium text-lg" 
+                            placeholder="Enter your email"/>
+                        </div>
+                       
+                        <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
+                            <LockIcon className="text-blueDark" size={22} />
+                            <input
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)}
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            autoComplete="password"
+                            className="w-full h-12 bg-white px-4 focus:outline-none focus:ring-none italic text-center" 
+                            placeholder="Enter your password"/>
+                        </div>
 
-                        <label className="text-sm leading-none font-medium select-none peer-disabled:cursor">Email: </label>
-                        <input 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        id="email" 
-                        type="email"
-                        name="email" 
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-2x2" 
-                        placeholder="Enter your email"/>
+                        <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
+                            <LockIcon className="text-blueDark" size={22} />
+                            <input 
+                            value={confirmed_password}
+                            onChange={(e) => setConfirmed_password(e.target.value)}
+                            type="password" 
+                            id="confirmed_password" 
+                            name="confirmed_password"
+                            autoComplete="confirmed_password" 
+                            className="w-full h-12 bg-white px-4 focus:outline-none focus:ring-none italic text-center" 
+                            placeholder="Enter to Confirm your password"/>
+                        </div>
 
-                        <label className="text-sm leading-none font-medium select-none peer-disabled:cursor">Password: </label>
-                        <input
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)}
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        autoComplete="password"
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-2x2" 
-                        placeholder="Enter your password"/>
-
-                        <label className="text-sm leading-none font-medium select-none peer-disabled:cursor">Confirm Password: </label>
-                        <input 
-                        value={confirmed_password}
-                        onChange={(e) => setConfirmed_password(e.target.value)}
-                        type="password" 
-                        id="confirmed_password" 
-                        name="confirmed_password"
-                        autoComplete="confirmed_password" 
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-2x2" 
-                        placeholder="Enter to Confirm your password"/>
-
-
+                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
+                                <Briefcase className="text-blueDark" size={22}/>
+                                <p className="bg-white w-full px-4 gap-4 flex-1
+                                text-blueDark text-center font-medium text-lg" >Administrador</p>
+                            </div>
+                    
+                        <button type="submit" 
+                        className="bg-blueDashboard text-white px-6 py-2 rounded-lg flex items-center gap-2 font-medium 
+                        hover:bg-blueblue transition-colors shadow-md">
+                            <Edit3 size={20} />
+                            Guardar cambios
+                        </button>
                     </div>
-                    <button type="submit" className="bg-green-400 hover:bg-green-700  font-medium py-2 px-4 rounded-lg  mx-auto block">Submit</button>
+                </form>
 
-                    </form>
-                </main>
-            </div>
+                    <div className="mt-auto flex flex-row justify-between items-center w-full">
+                        <button 
+                        onClick={(e)=>{volverAtras(); e.stopPropagation}}
+                        className="text-blueDark hover:scale-110 transition-transform p-2"
+                        title="Volver atrás"
+                        >
+                        <RotateCcw size={40} strokeWidth={2.5} />
+                        </button>
+                    </div>
+            </main>
           </div>
         </>
 

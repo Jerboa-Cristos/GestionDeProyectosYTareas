@@ -20,5 +20,7 @@
 
   --color-GreenLite: #B5E48C; 
 
+  /*BREAKPOINTS PARA LOS TAMAÑOS DE PANTALLA*/
+  --breakpoint-xs: 20rem;
 
 }

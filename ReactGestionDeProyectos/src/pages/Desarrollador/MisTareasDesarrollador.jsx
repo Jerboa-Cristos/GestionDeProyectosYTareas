@@ -6,7 +6,7 @@ import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLat
 function MisTareasDesarrollador() {
     return (
          <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
-            <MenuTop/>
+            <MenuTop rutaLogin='/desarrollador_login' rutaPerfil='/desarrollador_profile'/>
             <div className="flex flex-1 gap-4 overflow-hidden h-full">
                 <MenuLateralDesarrollador/>
                 <main className="flex-1 bg-white rounded-xl shadow-lg p-8 overflow-auto flex flex-col gap-6">

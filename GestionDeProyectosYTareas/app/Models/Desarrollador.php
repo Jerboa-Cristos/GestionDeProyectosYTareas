@@ -30,7 +30,7 @@ class Desarrollador extends Authenticatable
         return $this->belongsTo(Proyecto::class, 'id_proyecto');
     }
 
-    public function comentario() {
-        return $this->hasMany(Comentario::class, 'id_desarrollador');
+    public function comentarios(){
+        return $this->morphMany(Comentario::class, 'autor');
     }
 }

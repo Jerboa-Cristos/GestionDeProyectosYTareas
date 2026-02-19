@@ -31,6 +31,6 @@ class ProductOwner extends Authenticatable
     }
 
     public function comentarios(){
-        return $this->hasMany(Comentario::class, 'id_product_owner');
+        return $this->morphMany(Comentario::class, 'autor');
     }
 }

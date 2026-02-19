@@ -7,18 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Comentario extends Model
 {
     protected $table = 'comentario';
-    protected $fillable = ['texto', 'fecha', 'id_desarrollador', 'id_productOwner', 'id_tarea'];
+    protected $fillable = ['texto', 'autor_id', 'autor_type', 'id_tarea'];
 
-    
-    public function desarrollador() {
-        return $this->belongsTo(Desarrollador::class);
-    }
-
-    public function productowner() {
-        return $this->belongsTo(ProductOwner::class);
+    public function autor() {
+        return $this->morphTo();
     }
 
     public function tarea() {
-        return $this->belongsTo(Tarea::class);
+        return $this->belongsTo(Tarea::class, 'id_tarea');
     }
 }

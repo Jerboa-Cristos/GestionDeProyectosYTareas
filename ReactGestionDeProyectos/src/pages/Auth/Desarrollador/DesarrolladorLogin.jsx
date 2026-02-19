@@ -20,7 +20,7 @@ function DesarrolladorLogin () {
                 localStorage.setItem("user", JSON.stringify(res.data))
                 localStorage.setItem('isAuthenticated', true)
                 
-                navigate('/desarrollador_dashboard')
+                navigate('/DashboardDesarrollador')
             }
         })
     }

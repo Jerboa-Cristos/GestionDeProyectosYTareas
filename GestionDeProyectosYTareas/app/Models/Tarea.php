@@ -7,22 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Tarea extends Model
 {
     protected $table = 'tarea';
-    protected $fillable = ['tipo', 'descripcion', 'fecha_inicio', 'fecha_fin'];
+    protected $fillable = ['nombre', 'tipo', 'estado', 'descripcion', 'fecha_fin', 'id_sprint', 'id_desarrollador'];
 
     public function desarrollador() {
-        return $this->belongsTo(Desarrollador::class);
+        return $this->belongsTo(Desarrollador::class, 'id_desarrollador');
     }
-
 
     public function sprint() {
-        return $this->belongsTo(Sprint::class);
-    }
-
-    public function estado() {
-        return $this->belongsToMany(Estado::class);
+        return $this->belongsTo(Sprint::class, 'id_sprint');
     }
 
     public function comentario() {
-        return $this->hasMany(Comentario::class);
+        return $this->hasMany(Comentario::class, 'id_tarea');
     }
 }

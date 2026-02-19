@@ -9,55 +9,72 @@ use Illuminate\Http\Request;
 class ComentarioController extends Controller
 {
 
-    public function index() { //Obtiene toda la información de la tabla
-        $comentarios=Comentario::all();
-        return view('dashboard', ['comentarios'=>$comentarios]);
+    public function indexComentario() {
+        try{
+            $comentarios=Comentario::all();
+            $comentarios->sortBy('created_at')->values()->all();
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'No se pudo pasar el listado de comentarios'], 404);
+        }
+        return response()->json($comentarios, 200);
     }
 
-    public function create() {//FORMULARIO para crear la entidad
-        return view('tarea.infromacion');
+    public function guardarComentario(Request $request) {
+        try{
+            $comentarioNuevo = $request->validate([
+                'texto'=>'required|max:300',
+                'id_tarea'=>'required|exists:tareas,id',
+                'autor_id'=>'requiered|integer',
+                'autor_type'=>'requiered|in:use App\Models\Desarrollador,use App\Models\ProductOwner'
+            ]);
+
+            Comentario::create([
+                'texto'=>$comentarioNuevo['texto'],
+                'id_tarea'=>$comentarioNuevo['id_tarea'],
+                'autor_id'=>$comentarioNuevo['autor_id'],
+                'autor_type'=>$comentarioNuevo['autor_type'],
+            ]);
+
+        }catch(\Exception $e) {
+            return response()->json(['error' => 'No se pudo guardar el comentario'], 404);
+        }
+        return response()->json(['message'=>'Comentario guardado con exito'], 200);
     }
 
-    public function guardar(Request $request) {//Guarda la infromación del formulario ya validado en el 
-        $comentarioNuevo = $request->validate([
-            'texto'=>'required|max:300',
-            'fecha'=>'required|date',
-            'id_desarrollador'=>'required|exists:desarrollador,id',
-            'id_productOwner'=>'required|exists:product_owner,id',
-            'id_tarea'=>'required|exists:tarea,id',
-        ]);
-        Comentario::create([
-            'texto'=>$comentarioNuevo('texto'),
-            'fecha'=>$comentarioNuevo('fecha'),
-            'id_desarrollador'=>$comentarioNuevo('id_desarrollador'),
-            'id_productOwner'=>$comentarioNuevo('id_productOwner'),
-            'id_tarea'=>$comentarioNuevo('id_tarea'),
-            'created_at'=>date('Y-m-d'),
-            'updated_at'=>date('Y-m-d'),
-        ]);
+    public function showComentario($id) {
+        try{
+            $comentario = Comentario::findOrFail($id);
+        }catch(\Exception $e) {          
+            return response()->json(['error' => 'No se puede mostrar el comentario'], 404);
+        }
+        return response()->json($comentario, 200);
     }
 
-    public function show($id) {
-        $comentario =Comentario::findOrFail($id);
-        return view('tarea.informacion', ['comentario'=>$comentario]);
+    public function updateComentario(Request $request, $id) { 
+        try{
+            $comentarioNuevo = $request->validate([
+                'texto'=>'required|max:300',
+                'autor_id'=>'requiered|integer',
+                'autor_type'=>'requiered|in:use App\Models\Desarrollador,use App\Models\ProductOwner',
+            ]);
+            
+            Comentario::findOrFail($id)->update([
+                'texto'=>$comentarioNuevo['texto'],
+                'autor_id'=>$comentarioNuevo['autor_id'],
+                'autor_type'=>$comentarioNuevo['autor_type'],
+            ]);
+        }catch (\Exception $e) {
+            return response()->json(['error' => 'No se pudo actualizar el comentario'], 404);
+        }
+        return response()->json(['message'=>'Comentario actualizado con exito'], 200);
     }
 
-    public function edit($id) {//FORMULARIO para editar comentarios
-        $comentario =Comentario::findOrFail($id);
-        return view('tarea.informacion', ['comentario'=>$comentario]);
-    }
-
-    public function update(Request $request, $id) { //Guarda la versión corregida
-        $comentarioNuevo = $request->validate([
-            'texto'=>'required|max:300',
-        ]);
-        Comentario::findOrFail($id)->firstOrFail()->update([
-            'texto'=>$comentarioNuevo('texto'),
-        ]);
-    }
-
-    public function eliminar($id) {
-        Comentario::findOrFail($id)->firstOrFail()->delete();
-        return redirect()->back()->with('success','Eliminado con exito');
+    public function eliminarComentario($id) {
+        try{
+            Comentario::findOrFail($id)->delete();
+        }catch(\Exception $e) {
+            return response()->json(['error' => 'No se pudo eliminar el comentario'], 404);
+        }
+        return response()->json(['message'=>'Comentario eliminado con exito'], 200);
     }
 }
