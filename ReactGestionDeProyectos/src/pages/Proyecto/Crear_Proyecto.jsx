@@ -1,6 +1,6 @@
-import {useState} from "react";
-import Menu_Izquierdo from "./Menu_Izquierdo";
-import {funcion_crear_proyecto} from "../../services/ruta_api_proyecto"
+import { useState } from "react";
+import { funcion_crear_proyecto } from "../../services/ruta_api_proyecto";
+import Menu_Izquierdo from "../Menus/Menu_Izquierdo";
 
 function Crear_Proyecto() {
     const [datosForm, setDatosForm] = useState({
@@ -14,10 +14,15 @@ function Crear_Proyecto() {
 
     const botonGuardarProyecto = (e) => {
         e.preventDefault()
-        funcion_crear_proyecto(datosForm)
+
+        const token = localStorage.getItem('token')
+        funcion_crear_proyecto(datosForm, token)
         .then( respuesta => {
             console.log('proyecto creado', respuesta.data)
-            console.log('data enviarda', datosForm)
+            console.log('data enviada', datosForm)
+
+            console.log('funcion', funcion_crear_proyecto)
+            console.log('token en crear proyecto', token)
         })
     }
 
@@ -29,6 +34,7 @@ function Crear_Proyecto() {
         
             <form method="post" className="border border-blue-500 p-4 rounded-lg px-8 pt-6 pb-8 mb-4 max-w-lg mx-auto">
                 <div className="">
+                    
                     <label className="font-bold">Nombre del Proyecto*</label>
                     <input
                     onChange={e => setDatosForm({
@@ -69,7 +75,7 @@ function Crear_Proyecto() {
 
                 <button
                 onClick={botonGuardarProyecto}
-                type="submit" 
+                type="button" 
                 className="bg-green-400 hover:bg-green-600 block font-bold mx-auto my-10 py-2 px-4 rounded-lg ">Guardar Proyecto</button>
             
 

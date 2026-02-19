@@ -6,7 +6,7 @@ const APP_URL = "http://localhost/api";
 //Administrador
 export const funcion_administrador_register = (data) => axios.post(APP_URL + '/register_administrador', data)
 export const funcion_administrador_login = (data) => axios.post(APP_URL + '/login_administrador', data)
-export const funcion_administrador_profile = (data, token) => axios.post(APP_URL + '/profile_administrador', data, {
+export const funcion_administrador_profile = (data, token) => axios.get(APP_URL + '/profile_administrador', data, {
     headers: { Authorization: `Bearer ${token}`}
 })
 
@@ -14,7 +14,7 @@ export const funcion_administrador_profile = (data, token) => axios.post(APP_URL
 //Product Owner
 export const funcion_product_owner_register = (data) => axios.post(APP_URL + '/register_product_owner', data)
 export const funcion_product_owner_login = (data) => axios.post(APP_URL + '/login_product_owner', data)
-export const funcion_product_owner_profile = (data, token) => axios.post(APP_URL + '/profile_product_owner', data, {
+export const funcion_product_owner_profile = (token) => axios.get(APP_URL + '/profile_product_owner', {
     headers: { Authorization: `Bearer ${token}`}
 })
 
@@ -25,6 +25,14 @@ export const funcion_desarrollador_login = (data) => axios.post(APP_URL + '/logi
 export const funcion_desarrollador_profile = (data, token) => axios.post(APP_URL + '/profile_desarrollador', data, {
     headers: { Authorization: `Bearer ${token}`}
 })
+
+
+
+
+
+
+
+
 
 
 

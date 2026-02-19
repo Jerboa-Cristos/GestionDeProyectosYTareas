@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('sprint', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 40);
+            $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin')->nullable();
+            $table->text('meta_sprint')->nullable();
             $table->timestamps();
 
             //relaciones

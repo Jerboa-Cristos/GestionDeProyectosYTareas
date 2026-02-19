@@ -33,14 +33,15 @@ import DesarrolladorRegister from './pages/Auth/Desarrollador/DesarrolladorRegis
 
 
 //PROYECTO
-import Crear_Proyecto from './pages/Product_Owner/Crear_Proyecto';
-import Lista_Proyectos from './pages/Product_Owner/Lista_Proyectos'
+import Crear_Proyecto from './pages/Proyecto/Crear_Proyecto';
+import Lista_Proyectos from './pages/Proyecto/Lista_Proyectos';
+import Sprints_Proyecto from './pages/Sprint/Lista_Sprints_Proyecto'
 
-
-
+//SPRINT
+import Crear_Sprint from './pages/Sprint/Crear_Sprint'
 
 //COMPONENTES QUE REUTILIZAREMOS
-import Menu_Izquierdo from './pages/Product_Owner/Menu_Izquierdo';
+import Menu_Izquierdo from './pages/Menus/Menu_Izquierdo';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -81,12 +82,7 @@ function App() {
           <Route path='/lista_proyectos' element={<Lista_Proyectos/>}/>
           <Route path='/menu_izquierdo' element={<Menu_Izquierdo/>}/>
           
-          {isAuthenticated && (
-            <>
-            <Route path='/product_owner_dashboard' element={<ProductOwnerDashboard/>} />
-            <Route path="/product_owner_profile" element={<ProductOwnerProfile/>}/>   
-            </>
-          )}
+          
 
           {/*RUTAS AUTH DESARROLLADOR */}
           <Route path='/desarrollador_register' element={<DesarrolladorRegister/>}/>
@@ -96,7 +92,10 @@ function App() {
 
           {/*PROYECTO */}
           <Route path='/crear_proyecto' element={<Crear_Proyecto/>}/>
+          <Route path='/mostrar_proyecto/:id_proyecto' element={<Sprints_Proyecto/>}/>
 
+          {/*SPRINT */}
+          <Route path='/crear_sprint/:id_proyecto' element={<Crear_Sprint/>}/>
 
           {/*RUTAS ADMINISTRADOR*/}
             <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>
