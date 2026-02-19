@@ -3,57 +3,49 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tarea;
-use App\Models\Estado;
 use Illuminate\Http\Request;
 
 class TareaController extends Controller
 {
-    //Request - devuelve todo de la página, incluyendo el id
-    public function indexTarea() { //Para poder listar las tareas
-        $tareas = Tarea::all();
-        $nombre="1";
-        return view('tareas.tablero', ['tareas'=>$tareas, 'nombre'=>$nombre]);
+    //EL CONTROLADDOR DE TAREAS SOLO PARA UN DESAROLLADOR
+    public function indexTareaParaUsuario($idUs) {
+        $tareas = Tarea::all()->where("id_desarrollador", $idUs);
+        return response()->json($tareas, 200);
     }
 
-    public function showTarea(Request $request) {
-        $tarea = Tarea::findOrFail($request->get('id'));
-        return view('tareas.detalles_tarea')->with('tarea', $tarea);
+    public function indexTareaParaSprint($idSp) {
+        $tareas = Tarea::all()->where("id_sprint", $idSp);
+        return response()->json($tareas, 200);
     }
 
-    public function updateTarea(Request $request) {
+    public function updateTarea(Request $request, $id) {
+        try{
+            $tareaUpdate = Tarea::findOrFail($id);
 
-        Tarea::find($request->get('id'))->firstOrFail()->update([
-            'tipo'=>$request->get('tipo'),
-            'descripcion'=>$request->get('descripcion'),
-            'fecha_fin'=>$request->get('fecha_fin'),
-        ]);
-        //Preguntar sobre como cambiar el estado en la tabla de muchos a muchos
+            $tarea=$request->validate([
+            'nombre'=>'required|max:255',
+            'tipo'=>'required|in:Backend,Frontend,Diseño,Despliegue,Testing',
+            'estado'=> 'requiered|in:Por Hacer,En Curso,En Revision,Finalizado',
+            'descripcion'=>'nullable|min:3|max:1000',
+            'fecha_fin'=>'nullable|date|after:'.$tareaUpdate->created_at->toDateTimeString(),
+            ]);
+
+            Tarea::findOrFail($id)->update([
+                'nombre'=>$tarea['nombre'],
+                'tipo'=>$tarea['tipo'],
+                'estado'=>$tarea['estado'],
+                'descripcion'=>$tarea['descripcion'],
+                'fecha_fin'=>$tarea['fecha_fin'],
+            ]);
+
+        } catch(\Exception $e) {
+            return response()->json(['message'=>'NO se pudo hacer Update de tarea'], 404);
+        }
+        return response()->json(['message'=>'Tarea Actualizada'], 200);
     }
 
-//ESTADO
-#region
-    //Mostrar todos los Estados
-    public function indexEstado(){
-        $estados = Estado::all();
-        return view('tareas.detalles_tarea')->with('estados', $estados);
+    public function showTarea($id) {
+        $tarea = Tarea::findOrFail($id);
+        return response()->json($tarea, 200);
     }
-
-    //Guardar el estado actual de la tarea
-    public function storeEstado(Request $request) {
-        Estado::create($request);
-    }
-
-    //Mostrar el estado de la tarea
-    public function showEstado($id_tarea) {
-        $estados = Estado::findOrFail($id_tarea);
-        return view('tareas.detalles_tarea')->with('estados', $estados);
-    }
-
-    //
-    public function updateEstado(Request $request){
-        Estado::find($request->get('id'))->update([
-            'tipo'=>$request->get('tipo'),
-        ]);
-    }
-#endregion
 }

@@ -23,7 +23,7 @@ function AdministradorRegister () {
                         localStorage.setItem("user", JSON.stringify(res.data))
                         localStorage.setItem('isAuthenticated', true)
                         
-                        navigate('/administrador_dashboard')
+                        navigate('/GestionUsuarios')
                     }
                 })
             .catch(err => console.log(err))

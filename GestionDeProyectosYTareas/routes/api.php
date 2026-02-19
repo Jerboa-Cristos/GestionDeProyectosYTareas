@@ -15,6 +15,10 @@ use App\Http\Controllers\Api\ProyectoApiController;
 
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\ProductOwnerController;
+use App\Http\Controllers\DesarrolladorController;
+
+use App\Http\Controllers\TareaController;
+use App\Http\Controllers\ComentarioController;
 
 Route::get('user', function (Request $request) {
     return $request->user();
@@ -30,6 +34,15 @@ Route::post('profile_administrador', [AdministradorAuthController::class, 'profi
 //Middleware
 //Route::get('ruta del navegador', [Controlador::class, 'metodo backend'])->middleware('auth:GUARD_DEL_USUARIO'); //carpeta config/auth.php
 Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware('auth:sanctum');
+
+//RUTAS PARA EL ADMINISTRADOR
+Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
+Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsuarios']);
+Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios']);
+Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios']);
+Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsuarios']);
+
+
 
 //RUTAS AUTENTICACIÓN PARA PRODUCT OWNER
 //Route::post('ruta de la api con axios', [Controlador::class, 'metodo backend']);
@@ -59,21 +72,14 @@ Route::delete('eliminar_sprint/{id}', [ProyectoApiController::class, 'destroy'])
 
 
 //RUTAS AUTENTICACION DESARROLLADOR
-Route::post('register_desarrollador', [DesarrolladorAuthController::class, 'registerDesarrollador']);
 Route::post('login_desarrollador', [DesarrolladorAuthController::class,'loginDesarrollador']);
 Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador']);
 //Middleware
 Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:sanctum');
 
-
-
-//RUTAS PARA EL ADMINISTRADOR
-Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
-Route::get('showUsuarios/{id}', [AdministradorController::class, 'showUsuarios']);
-Route::delete('eliminarUsuarios/{id}', [AdministradorController::class, 'eliminarUsuario']);
-Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios']);
-Route::put('updateUsuarios/{id}', [AdministradorController::class, 'updateUsuarios']);
-
+//RUTAS PARA EL DESAROLLADOR PARA EL PRODUCT OWNER
+Route::get('indexUsuarios', [DesarrolladorController::class, 'indexUsuarios']);
+Route::put('asignarProyecto/{id}',[DesarrolladorController::class, 'asignarProyecto']);
 
 
 

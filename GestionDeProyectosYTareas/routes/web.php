@@ -5,6 +5,7 @@ use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\ProductOwnerController;
 use App\Http\Controllers\DesarrolladorController;
 use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\TareaController;
 
 
 Route::get('/', function () {
@@ -12,9 +13,6 @@ Route::get('/', function () {
 });
 
 require __DIR__.'/auth.php';
-
-
-
 
 
 //  Product Owner Rutas para crear el proyecto
@@ -35,7 +33,12 @@ Route::get('edit_sprint/{id}', [ProyectoController::class, 'edit'])->name('edita
 Route::put('update_sprint/{id}', [ProyectoController::class, 'update'])->name('actualizar');
 Route::delete('destroy_sprint/{id}', [ProyectoController::class], 'destroy')->name('eliminar');
 
-//TAREA
+
+//RUTAS PARA TAREAS DE PARTE DEL DESAROLLADOR
+Route::get('indexTareaParaUsuario',[TareaController::class, 'indexTareaParaUsuario']);
+Route::get('indexTareaParaSprint',[TareaController::class, 'indexTareaParaSprint']);
+Route::get('showTarea/{id}',[TareaController::class, 'showTarea']);
+Route::put('updateTarea/{id}',[DesarrolladorController::class, 'updateTarea']);
 
 //ADMINISTRADOR
 Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
@@ -44,12 +47,10 @@ Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'e
 Route::post('storeUsuarios',[AdministradorController::class, 'store']);
 Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'update']);
 
+//DESAROLLADOR
+Route::get('indexUsuarios', [DesarrolladorController::class, 'indexUsuarios']);
+Route::put('asignarProyecto/{id}',[DesarrolladorController::class, 'asignarProyecto']);
 
-
-//Desarrollador
-Route::get('show_Des', [DesarrolladorController::class, 'show'])->name('show');
-Route::get('edit_Des/{id}',[DesarrolladorController::class, 'edit'])->name('Edit');
-Route::put('update_Des/{id}', [DesarrolladorController::class, 'update'])->name('update');
 
 
 //AUTH

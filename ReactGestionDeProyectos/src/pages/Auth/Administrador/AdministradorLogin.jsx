@@ -20,7 +20,7 @@ function AdministradorLogin () {
                 localStorage.setItem("user", JSON.stringify(res.data))
                 localStorage.setItem('isAuthenticated', true)
                 
-                navigate('/administrador_dashboard')
+                navigate('/GestionUsuarios')
             }
         })
     }

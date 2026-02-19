@@ -5,14 +5,18 @@ import { useEffect, useState } from 'react';
 import MenuTop from '../../Components/MenuTop';
 
 function PerfilUsuario() {
+    const userAdmin = JSON.parse(localStorage.getItem('user'))
     const navigate = useNavigate();
     const {rol, id} = useParams();
     const [formData, setFormData] = useState({
         nombre: '', 
         email: '',
+        oldEmail: '',
         password: '',
-        confirmed_password:'',
-        rol: rol
+        password_confirmation:'',
+        rol: '',
+        oldRol:'',
+        adminEmail: userAdmin.email
     })
 
     useEffect(() => {
@@ -23,6 +27,8 @@ function PerfilUsuario() {
                     ...formData,
                     nombre: res.data.nombre || '',
                     email: res.data.email || '',
+                    oldEmail: res.data.email || '',
+                    oldRol: rol,
                     rol: rol,
                     proyecto: res.data.proyecto || ''
                 })
@@ -45,10 +51,11 @@ const handleChange = (e) => {
 
 const UpdateUsuario = (e) => {
     e.preventDefault()
-    updateUsuarios(formData, rol, id).then(res => {
+    updateUsuarios(formData, formData.rol, id).then(res => {
         console.log('Usuario actualizado')
+        alert('Usuario Actualizado con exito.');
     }).catch(err=>{
-        console.err('Error al hacer Update del usuario: ', err)
+        console.error('Error al hacer Update del usuario: ', err)
     })
 }
 //#endregion
@@ -74,7 +81,7 @@ const volverAtras = () => {
 
     return (
     <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
-        <MenuTop/>
+        <MenuTop rutaLogin='/administrador_login' rutaPerfil='/administrador_profile'/>
         <main className="flex-1 bg-blueBase rounded-xl shadow-lg p-10 flex flex-col gap-10 relative m-4 overflow-hidden">
 
         <div className='flex flex-col'>
@@ -129,10 +136,10 @@ const volverAtras = () => {
                 <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
                     <LockIcon className="text-blueDark" size={22} />
                     <input 
-                    name='password_confirmed'
-                    value={formData.confirmed_password}
+                    name='password_confirmation'
+                    value={formData.password_confirmation}
                     onChange={handleChange}
-                    type="password_confirmed" 
+                    type="password" 
                     placeholder="Repetir contraseña nueva..." 
                     className="w-full h-12 bg-white px-4 focus:outline-none focus:ring-none italic text-center"
                     />
