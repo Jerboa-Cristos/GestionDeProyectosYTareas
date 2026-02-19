@@ -13,6 +13,10 @@ use App\Http\Controllers\Api\ProductOwnerApiController;
 
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\ProductOwnerController;
+use App\Http\Controllers\DesarrolladorController;
+
+use App\Http\Controllers\TareaController;
+use App\Http\Controllers\ComentarioController;
 
 Route::get('user', function (Request $request) {
     return $request->user();
@@ -53,13 +57,29 @@ Route::put('actualizar_proyectos/{id}', [ProductOwnerApiController::class, 'upda
 Route::delete('eliminar_proyectos/{id}', [ProductOwnerApiController::class, 'destroy']);
 
 //RUTAS AUTENTICACION DESARROLLADOR
-Route::post('register_desarrollador', [DesarrolladorAuthController::class, 'registerDesarrollador']);
 Route::post('login_desarrollador', [DesarrolladorAuthController::class,'loginDesarrollador']);
 Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador']);
 //Middleware
 Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:sanctum');
 
+//RUTAS PARA EL DESAROLLADOR PARA EL PRODUCT OWNER
+Route::get('indexUsuarios', [DesarrolladorController::class, 'indexUsuarios']);
+Route::put('asignarProyecto/{id}',[DesarrolladorController::class, 'asignarProyecto']);
+
 //Rutas para proyecto
 //Route::post('ruta', [Controlador::class, 'metodo']);
 Route::post('proyecto', [ProductOwnerController::class, 'store']);
 Route::get('mostrar_proyecto', [ProductOwnerController::class, 'show']);
+
+//RUTAS PARA TAREAS DE PARTE DEL DESAROLLADOR
+Route::get('indexTareaParaUsuario',[TareaController::class, 'indexTareaParaUsuario']);
+Route::get('indexTareaParaSprint',[TareaController::class, 'indexTareaParaSprint']);
+Route::get('showTarea/{id}',[TareaController::class, 'showTarea']);
+Route::put('updateTarea/{id}',[DesarrolladorController::class, 'updateTarea']);
+
+//RUTAS COMENTARIOS
+Route::get('indexComentario', [ComentarioController::class, 'indexComentario']);
+Route::get('showComentario/{id}', [ComentarioController::class, 'showComentario']);
+Route::delete('eliminarComentario/{id}', [ComentarioController::class, 'eliminarComentario']);
+Route::post('guardarComentario',[ComentarioController::class, 'guardarComentario']);
+Route::put('updateComentario/{id}', [ComentarioController::class, 'updateComentario']);
