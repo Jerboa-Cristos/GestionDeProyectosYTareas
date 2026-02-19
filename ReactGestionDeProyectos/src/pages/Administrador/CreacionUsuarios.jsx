@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 //AQUÍ DEBE ESTAR EL IMPORT PARA EL DOCUMENTO QUE TIENE CONEXIÓN A LA PARTE DE LOS PROYECTOS
 import { guardarUsuarios } from '../../services/adminService';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { User, Mail, Briefcase, Folder, RotateCcw, Plus } from 'lucide-react';
 import MenuTop from '../../Components/MenuTop';
 
@@ -19,7 +19,7 @@ function CreacionUsuarios() {
         //id_proyecto: proyecto.id
     })
 
-    //TAMBIÉN FALTA LA PARTE DE PASAR LA ID DEL ADMINISTRADOR AL BACKEND
+    //TAMBIÉN FALTA LA PARTE DE PASAR
     /*const [proyecto, setProyecto] = useState()
     useEffect(() => {
         //Aquí se deben cargar los usuarios desde el backend

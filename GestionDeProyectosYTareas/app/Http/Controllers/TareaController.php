@@ -9,12 +9,12 @@ class TareaController extends Controller
 {
     //EL CONTROLADDOR DE TAREAS SOLO PARA UN DESAROLLADOR
     public function indexTareaParaUsuario($idUs) {
-        $tareas = Tarea::all()->where("is_desarrollador", $idUs);
+        $tareas = Tarea::all()->where("id_desarrollador", $idUs);
         return response()->json($tareas, 200);
     }
 
     public function indexTareaParaSprint($idSp) {
-        $tareas = Tarea::all()->where("is_sprint", $idSp);
+        $tareas = Tarea::all()->where("id_sprint", $idSp);
         return response()->json($tareas, 200);
     }
 

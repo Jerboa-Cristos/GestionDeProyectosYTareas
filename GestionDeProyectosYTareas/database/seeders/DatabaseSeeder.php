@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Sprint;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,7 +22,9 @@ class DatabaseSeeder extends Seeder
             AdministradorSeeder::class,
             ProductOwnerSeeder::class,
             ProyectoSeeder::class,
-            DesarrolladorSeeder::class
+            DesarrolladorSeeder::class,
+            SprintSeeder::class,
+            TareaSeeder::class
         ]);
 
         User::factory()->create([

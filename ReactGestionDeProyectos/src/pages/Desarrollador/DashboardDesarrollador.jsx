@@ -1,15 +1,63 @@
 import { useNavigate } from 'react-router-dom';
+import { mostrarMisTareas } from '../../services/desarolladorService'
 import { ClipboardList, Calendar, AlertCircle } from 'lucide-react';
-
+import { useEffect, useState } from 'react';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
 
 function DashboardDesarrollador() {
+    const user = JSON.parse(localStorage.getItem('user'))
     const navigate = useNavigate();
+    const [tareas, setTareas] = useState([]);
 
+    //Pillo todas las tareas para la página
+    useEffect(() => {
+        const fetchTarea = async () => {
+            mostrarMisTareas(1).then(res=> {
+                setTareas(res.data);
+            }).catch(err=>{
+                console.error('Error al cargar las tareas:', err)
+            });
+        }
+        fetchTarea();
+    }, [])
+
+    //#region NAVIGACIÓN A OTRAS PÁGINAS
     function gotoTareas() {
         navigate('/MisTareasDesarrollador');
     }
+    //#endregion
+
+//#region FUNCIONES DEL DASHBOARD
+
+    //#region TAREAS ASIGNADAS Y DEADLINE
+    const tareasDeadline = () => {
+        if(tareas.fecha_fin <= now()) {
+            return tareas.length;
+        }
+    }
+    //#endregion
+
+    //#region ULTIMOS CAMBIOS
+    const UltCambios = tareas.filter((tarea) => {
+        
+    })
+    //#endregion
+
+    //#region GRÁFICOS RESUMEN ESTADO
+    const grfResumenEstado = () => {
+
+    }
+    //#endregion
+
+    //#region GRÁFICOS TIPO TRABAJO
+    const grfTipoTrabajo = () => {
+
+    }
+    //#endregion
+
+//#endregion
+
 
     return(
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
@@ -33,7 +81,7 @@ function DashboardDesarrollador() {
                                     <ClipboardList size={80} />
                                     <span className="text-xl font-semibold leading-tight">Tareas Asignadas</span>
                                 </div>
-                                <span className="text-4xl font-bold">Tareas asignadas</span>
+                                <span className="text-4xl font-bold">{tareas.length}</span>
                             </button>
 
                             {/* Tareas Deadline */}
@@ -75,14 +123,14 @@ function DashboardDesarrollador() {
                         <div className="bg-blueBase rounded-xl p-6 shadow-sm">
                             <h3 className="text-center text-xl font-semibold text-blueDark mb-6">Últimos Cambios</h3>
                             <div className="space-y-3">
-                            {[1, 2, 3].map((_, i) => (
-                                <div key={i} className="bg-turquesa rounded-lg p-3 flex items-center gap-4 text-white text-sm">
+                            {tareas.slice(0, 3).map((tarea) => (
+                                <div key={tarea.id} className="bg-turquesa rounded-lg p-3 flex items-center gap-4 text-white text-sm">
                                 {/*Aquí debe estar la imagen del usuario*/}
                                     <div className="grid grid-cols-3 w-full text-center">
-                                        {/*Modificarlo para que salga la última información en el proyecto donde se participa*/}
-                                        <span>Nombre</span>
-                                        <span>Tarea</span>
-                                        <span>Proyecto</span>
+                                        <span>Nombre Usuario</span>
+                                        <span>{tarea.nombre}</span>
+                                        <span>{tarea.estado}</span>
+                                        <span>{tarea.fecha_fin}</span>
                                     </div>
                                 </div>
                             ))}

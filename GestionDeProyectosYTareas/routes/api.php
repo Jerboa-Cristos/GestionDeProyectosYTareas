@@ -72,8 +72,8 @@ Route::post('proyecto', [ProductOwnerController::class, 'store']);
 Route::get('mostrar_proyecto', [ProductOwnerController::class, 'show']);
 
 //RUTAS PARA TAREAS DE PARTE DEL DESAROLLADOR
-Route::get('indexTareaParaUsuario',[TareaController::class, 'indexTareaParaUsuario']);
-Route::get('indexTareaParaSprint',[TareaController::class, 'indexTareaParaSprint']);
+Route::get('indexTareaParaUsuario/{id}',[TareaController::class, 'indexTareaParaUsuario']);
+Route::get('indexTareaParaSprint/{id}',[TareaController::class, 'indexTareaParaSprint']);
 Route::get('showTarea/{id}',[TareaController::class, 'showTarea']);
 Route::put('updateTarea/{id}',[DesarrolladorController::class, 'updateTarea']);
 
