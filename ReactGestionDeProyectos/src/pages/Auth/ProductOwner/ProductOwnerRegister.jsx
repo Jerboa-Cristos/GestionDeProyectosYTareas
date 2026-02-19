@@ -20,10 +20,11 @@ function ProductOwnerRegister () {
                         setErrors(res.data.errors)
                     }else{
                         console.log(res.data)
-                        localStorage.setItem("user", JSON.stringify(res.data))
-                        localStorage.setItem('isAuthenticated', true)
-                        
+                        const {nombre, email, token} = res.data
+                        localStorage.setItem("token", token) 
+                        localStorage.setItem("user", JSON.stringify({nombre, email}))
                         navigate('/product_owner_dashboard')
+                            
                     }
                 })
             .catch(err => console.log(err))    

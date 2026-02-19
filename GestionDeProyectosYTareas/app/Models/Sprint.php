@@ -8,7 +8,7 @@ class Sprint extends Model
 {
     protected $table = 'sprint';
 
-    protected $fillable = ['nombre', 'descripcion'];
+    protected $fillable = ['nombre', 'fecha_inicio', 'fecha_fin','meta_sprint'];
 
     public function proyecto(){
         return $this->belongsTo(Proyecto::class, 'id_proyecto');

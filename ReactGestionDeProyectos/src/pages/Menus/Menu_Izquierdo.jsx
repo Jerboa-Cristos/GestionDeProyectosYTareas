@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 function Menu_Izquierdo() {
   return (
     <>
-    <aside className="w-56 h-8/11 bg-blue border-r shadow-sm fixed">
-        <nav className="h-full w-full flex flex-col bg-blueBase ">
+    <aside className="w-56 h-150 bg-blue border-r shadow-sm ">
+        <nav className="h-full w-full flex flex-col bg-blueBase">
             <div className="">
                 <ul className="m-4 menu p-0">
                     

@@ -11,7 +11,8 @@ class ProductOwnerApiController extends Controller
 {
 
     public function index() {
-        return Proyecto::all();
+        $product_owner = auth('product_owner')->user();
+        return $product_owner->proyectos;
     }
 
     public function store(Request $request) {
@@ -19,9 +20,10 @@ class ProductOwnerApiController extends Controller
             'nombre' => 'required|string|max:40',
             'descripcion' => 'required|string|max:300',
             'fecha_fin' => 'nullable|date',
+             
         ]);
 
-        $product_owner = ProductOwner::findOrFail(1);
+        $product_owner = auth('product_owner')->user();
 
         $proyecto = $product_owner->proyectos()->create($validar);
 
@@ -29,18 +31,31 @@ class ProductOwnerApiController extends Controller
     }
 
     public function show($id) {
-        return Proyecto::findOrFail($id);
+        $product_owner = auth('product_owner')->user();
+        $proyecto = $product_owner->proyectos()->findOrFail($id);
 
+        return response()->json($proyecto);
     }
 
     public function update(Request $request, $id) {
-        $proyecto = Proyecto::findOrFail($id);
-        $proyecto->update($request->all());
+        $product_owner = auth('product_owner')->user();
+
+        $proyecto = $product_owner->proyectos()->findOrFail($id);
+
+        $proyecto->update($request->validate([
+            'nombre' => 'required|string|max:40',
+            'descripcion' => 'required|string|max:300',
+            'fecha_fin' => 'nullable|date'
+        ]));
+
         return response()->json($proyecto);
     }
 
     public function destroy($id) {
-        Proyecto::destroy($id);
+        $product_owner = auth('product_owner')->user();
+        $proyecto = $product_owner->proyectos()->findOrFail($id);
+
+        $proyecto->delete();
 
         return response()->json(['mensaje' => 'Proyecto eliminado']);
     }

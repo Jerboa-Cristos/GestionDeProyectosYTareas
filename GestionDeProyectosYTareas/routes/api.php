@@ -10,6 +10,8 @@ use App\Http\Controllers\Auth_Api\ProductOwnerAuthController;
 use App\Http\Controllers\Auth_Api\DesarrolladorAuthController;
 //API CRUD
 use App\Http\Controllers\Api\ProductOwnerApiController;
+use App\Http\Controllers\Api\ProyectoApiController;
+
 
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\ProductOwnerController;
@@ -46,16 +48,28 @@ Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'update
 //Route::post('ruta de la api con axios', [Controlador::class, 'metodo backend']);
 Route::post('register_product_owner', [ProductOwnerAuthController::class, 'registerProductOwner']);
 Route::post('login_product_owner', [ProductOwnerAuthController::class,'loginProductOwner']);
-Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner']);
-//Middleware
-Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner'])->middleware('auth:sanctum');
+//Route::get('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner']);
+//MIDDLEWARE
+Route::get('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner'])->middleware('auth:product_owner');
 
-//RUTAS CRUD API PRODUCT OWNER
-Route::get('listado_proyectos', [ProductOwnerApiController::class, 'index']);
-Route::post('crear_proyecto', [ProductOwnerApiController::class, 'store']);
-Route::get('mostrar_proyectos/{id}', [ProductOwnerApiController::class, 'show']);
-Route::put('actualizar_proyectos/{id}', [ProductOwnerApiController::class, 'update']);
-Route::delete('eliminar_proyectos/{id}', [ProductOwnerApiController::class, 'destroy']);
+
+
+//RUTAS CRUD API PRODUCT OWNER , ya que el es el que crea proyectos
+Route::get('listado_proyectos', [ProductOwnerApiController::class, 'index'])->middleware('auth:product_owner');
+Route::post('crear_proyecto', [ProductOwnerApiController::class, 'store'])->middleware('auth:product_owner');
+Route::get('mostrar_proyecto/{id}', [ProductOwnerApiController::class, 'show'])->middleware('auth:product_owner');
+Route::put('actualizar_proyecto/{id}', [ProductOwnerApiController::class, 'update'])->middleware('auth:product_owner');
+Route::delete('eliminar_proyecto/{id}', [ProductOwnerApiController::class, 'destroy'])->middleware('auth:product_owner');
+
+
+//RUTAS CRUD PROYECTO PARA CREAR/MOSTRAR/ELIMINAR/ACTUALIZAR SPRINT
+Route::get('listado_sprint', [ProyectoApiController::class, 'index'])->middleware('auth:product_owner');
+Route::post('crear_sprint/{proyecto}', [ProyectoApiController::class, 'store'])->middleware('auth:product_owner');
+Route::get('mostrar_sprint/{id}', [ProyectoApiController::class, 'show'])->middleware('auth:product_owner');
+Route::put('actualizar_sprint/{id}', [ProyectoApiController::class, 'update'])->middleware('auth:product_owner');
+Route::delete('eliminar_sprint/{id}', [ProyectoApiController::class, 'destroy'])->middleware('auth:product_owner');
+
+
 
 //RUTAS AUTENTICACION DESARROLLADOR
 Route::post('login_desarrollador', [DesarrolladorAuthController::class,'loginDesarrollador']);
@@ -67,20 +81,5 @@ Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profi
 Route::get('indexUsuarios', [DesarrolladorController::class, 'indexUsuarios']);
 Route::put('asignarProyecto/{id}',[DesarrolladorController::class, 'asignarProyecto']);
 
-//Rutas para proyecto
-//Route::post('ruta', [Controlador::class, 'metodo']);
-Route::post('proyecto', [ProductOwnerController::class, 'store']);
-Route::get('mostrar_proyecto', [ProductOwnerController::class, 'show']);
 
-//RUTAS PARA TAREAS DE PARTE DEL DESAROLLADOR
-Route::get('indexTareaParaUsuario/{id}',[TareaController::class, 'indexTareaParaUsuario']);
-Route::get('indexTareaParaSprint/{id}',[TareaController::class, 'indexTareaParaSprint']);
-Route::get('showTarea/{id}',[TareaController::class, 'showTarea']);
-Route::put('updateTarea/{id}',[DesarrolladorController::class, 'updateTarea']);
 
-//RUTAS COMENTARIOS
-Route::get('indexComentario', [ComentarioController::class, 'indexComentario']);
-Route::get('showComentario/{id}', [ComentarioController::class, 'showComentario']);
-Route::delete('eliminarComentario/{id}', [ComentarioController::class, 'eliminarComentario']);
-Route::post('guardarComentario',[ComentarioController::class, 'guardarComentario']);
-Route::put('updateComentario/{id}', [ComentarioController::class, 'updateComentario']);
