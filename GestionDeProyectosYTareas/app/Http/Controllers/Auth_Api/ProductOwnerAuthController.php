@@ -52,7 +52,8 @@ class ProductOwnerAuthController extends Controller
         $product_owner = ProductOwner::where('email', $request->email)->first();
         $input['nombre'] = $product_owner->nombre;
         $input['email'] = $product_owner->email;
-        $input['token'] = $product_owner->createToken('Product_Owner')->plainTextToken;
+        //el * sirve para darle permisos al token para hacer todo
+        $input['token'] = $product_owner->createToken('Product_Owner', ['*'] ,'product_owner')->plainTextToken;
 
         return response()->json($input);
     }
