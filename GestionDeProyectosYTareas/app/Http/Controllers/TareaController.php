@@ -8,13 +8,8 @@ use Illuminate\Http\Request;
 class TareaController extends Controller
 {
     //EL CONTROLADDOR DE TAREAS SOLO PARA UN DESAROLLADOR
-    public function indexTareaParaUsuario($idUs) {
-        $tareas = Tarea::all()->where("id_desarrollador", $idUs);
-        return response()->json($tareas, 200);
-    }
-
-    public function indexTareaParaSprint($idSp) {
-        $tareas = Tarea::all()->where("id_sprint", $idSp);
+    public function indexTareasEspecificas($nomCol, $id) { //Hacer index de cosas específicas de la tabla tarea. Se tiene que pasar el nombre d ela columna y el id
+        $tareas = Tarea::all()->where($nomCol, $id);
         return response()->json($tareas, 200);
     }
 
@@ -23,11 +18,11 @@ class TareaController extends Controller
             $tareaUpdate = Tarea::findOrFail($id);
 
             $tarea=$request->validate([
-            'nombre'=>'required|max:255',
-            'tipo'=>'required|in:Backend,Frontend,Diseño,Despliegue,Testing',
-            'estado'=> 'requiered|in:Por Hacer,En Curso,En Revision,Finalizado',
-            'descripcion'=>'nullable|min:3|max:1000',
-            'fecha_fin'=>'nullable|date|after:'.$tareaUpdate->created_at->toDateTimeString(),
+                'nombre'=>'required|max:255',
+                'tipo'=>'required|in:Backend,Frontend,Diseño,Despliegue,Testing',
+                'estado'=> 'requiered|in:Por Hacer,En Curso,En Revision,Finalizado',
+                'descripcion'=>'nullable|min:3|max:1000',
+                'fecha_fin'=>'nullable|date|after:'.$tareaUpdate->created_at->toDateTimeString(),
             ]);
 
             Tarea::findOrFail($id)->update([
