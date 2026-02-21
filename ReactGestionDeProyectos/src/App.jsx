@@ -36,8 +36,13 @@ import Sprints_Proyecto from './pages/Sprint/Lista_Sprints_Proyecto'
 //SPRINT
 import Crear_Sprint from './pages/Sprint/Crear_Sprint'
 
+//TAREA
+import Crear_Tarea from './pages/Tarea/Crear_Tarea';
+
 //COMPONENTES QUE REUTILIZAREMOS
 import Menu_Izquierdo from './pages/Menus/Menu_Izquierdo';
+import Mis_Tareas_Product_Owner from './pages/Product_Owner/Mis_Tareas_Product_Owner';
+import Tablero_Kanban_Product_Owner from './pages/Product_Owner/Tablero_Kanban_Product_Owner';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -76,6 +81,8 @@ function App() {
           <Route path='/product_owner_dashboard' element={<ProductOwnerDashboard/>}/>
           <Route path='/lista_proyectos' element={<Lista_Proyectos/>}/>
           <Route path='/menu_izquierdo' element={<Menu_Izquierdo/>}/>
+          <Route path='/mis_tareas_product_owner' element={<Mis_Tareas_Product_Owner/>}/>
+          <Route path='/tablero_kanban_product_owner/:id_sprint' element={<Tablero_Kanban_Product_Owner/>}/>
           
           
 
@@ -89,6 +96,11 @@ function App() {
 
           {/*SPRINT */}
           <Route path='/crear_sprint/:id_proyecto' element={<Crear_Sprint/>}/>
+
+
+          {/*TAREA */}
+          <Route path='/crear_tarea/:id_sprint' element={<Crear_Tarea/>}/>
+
 
           {/*RUTAS ADMINISTRADOR*/}
             <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>

@@ -1,48 +1,215 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import MenuTop  from '../../Components/MenuTop'
+import MenuIZquierdo from '../Menus/Menu_Izquierdo'
+import {  ClipboardList ,Calendar, AlertCircle } from "lucide-react"
+import { useEffect, useState } from "react"
+import { funcion_listado_tarea, funcion_listado_tareas_product_owner } from "../../services/ruta_api_tarea"
 
 function ProductOwnerDashboard () {
     const user = JSON.parse(localStorage.getItem('user'))
     const navigate = useNavigate()
 
-    const logout = () => {
-        localStorage.removeItem('user')
-        localStorage.removeItem('isAuthenticated')
-        navigate('/product_owner_login')
+    const [tareas, setTareas] = useState([])
+
+    const tareasPorHacer = tareas.filter(tarea => tarea.estado === 'Por Hacer').length;
+    const tareasEnCurso = tareas.filter(tarea => tarea.estado === 'En Curso').length;
+    const tareasEnRevision = tareas.filter(tarea => tarea.estado === 'En Revision').length;
+    const tareasFinalizada = tareas.filter(tarea => tarea.estado === 'Finalizada').length;
+
+    const hoy = new Date();
+    const tareasDeadline = tareas.filter(tarea => {
+        const fechaFin = new Date(tarea.fecha_fin)
+        const diferenciaFecha = fechaFin -hoy;
+        return diferenciaFecha > 0 && diferenciaFecha < 3 * 24 * 60 * 60 * 1000;
+    })
+
+    const porcentajeTareasFinalizadas = tareas.length > 0 ? (tareasFinalizada / tareas.length) * 100 : 0
+
+
+    const tipoDeTarea = {
+        Backend: tareas.filter(tarea => tarea.tipo === 'Backend').length,
+        Frontend: tareas.filter(tarea => tarea.tipo === 'Frontend').length,
+        Diseño: tareas.filter(tarea => tarea.tipo === 'Diseño').length,
+        Despligue: tareas.filter(tarea => tarea.tipo === 'Despligue').length,
+        Testing: tareas.filter(tarea => tarea.tipo === 'Testing').length
     }
+    
+    const backend = tipoDeTarea.Backend;
+    const frontend = tipoDeTarea.Frontend;
+    const diseño = tipoDeTarea.Diseño;
+    const despliegue = tipoDeTarea.Despliegue;
+    const testing = tipoDeTarea.Testing;
+
+    const totalTipoDeTarea = tareas.length > 0 ? tareas.length : 1
+
+    const porcentajeBackend = (backend / totalTipoDeTarea) * 100
+    const porcentajeFrontend = (frontend / totalTipoDeTarea) * 100
+    const porcentajeDiseño = (diseño / totalTipoDeTarea) * 100
+    const porcentajeDespliegue = (despliegue / totalTipoDeTarea) * 100
+    const porcentajeTesting = (testing / totalTipoDeTarea) * 100
+
+    
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+
+        funcion_listado_tareas_product_owner( token)
+        .then(res => {
+            setTareas(res.data)
+        })
+        .catch(error => {
+            console.log('Error al cargar tareas', error)
+        })
+
+
+    }, [])
 
     return (
-        <>
-        
-            <MenuTop/>
-            <div className="flex h-screen bg-gray-100">
-            <aside className="w-64 bg-white shadow-md p-5">
-                <h2 className="text-xl font-bold mb-6">My app</h2>
-                <nav className="flex flex-col space-y-3">
-                    <Link to="/product_owner_dashboard" className="text-gray-700 hover:text-blue-600">Dashboard</Link>
-                    <Link to="/product_owner_profile" className="text-gray-700 hover:text-blue-600">Profile</Link>
-                    <Link to="/lista_proyectos">Proyectos</Link>
+        <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
+            <MenuTop rutaLogin='/product_owner_login' rutaPerfil='/product_owner_profile'/>
+            <div className="flex flex-1 gap-4 overflow-hidden h-full">
+                <MenuIZquierdo/>
+                <main className="flex-1 bg-white rounded-xl shadow-lg p-8 overflow-auto flex flex-col gap-6">
+                    <h1 className="text-3xl font-bold text-blueDark mb-6">Dashboard</h1>
 
-                    <a onClick={logout} className="text-gray-700 hover:text-blue-600">Logout</a>
+                    {/* Grid Principal */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div className="space-y-6">
+                        {/* Tarjetas de Tareas */}
+                        <div className="grid grid-cols-1 gap-4">
+                            {/* Tareas Asignadas */}
+                            <button 
+                            
+                            className="bg-blueDashboard rounded-xl p-6 flex items-center justify-between text-white hover:shadow-lg hover:bg-blueblue transition-all" 
+                            >
+                                <div className="flex items-center gap-4">
+                                    <ClipboardList size={80} />
+                                    <span className="text-xl font-semibold leading-tight">Tareas </span>
+                                </div>
+                                <span className="text-4xl font-bold">{tareas.length}</span>
+                            </button>
 
-                </nav>
-            </aside>
+                            {/* Tareas Deadline */}
+                            <button  
+                            className={"bg-warning rounded-xl p-6 flex items-center justify-between text-white relative hover:shadow-lg hover:bg-warningDark transition-all"}>
+                            <div className="flex items-center gap-4">
+                                <Calendar size={60} />
+                                <span className="text-xl font-semibold leading-tight">Tareas Deadline</span>
+                            </div>
+                            <span className="text-4xl font-bold mr-4">{tareasDeadline.length}</span>
+                            <AlertCircle className="absolute bottom-4 right-4 text-warningDark bg-white rounded-full" size={30} />
+                            </button>
+                        </div>
 
-            <div className="flex-1 flex-col">
-                <header className="bg-white shadow px-6 py-4">
-                    <h1 className="text-2xl font-semibold text-gray-800">Dashboard</h1>
-                </header>
+                        {/* Tipo de Trabajo MONTARLO TODO */}
+                        <div className="bg-blueBase rounded-xl p-6">
+                            <h3 className="text-center text-xl font-semibold text-blueDark mb-4">Tipo de trabajo</h3>
+                            <div className="space-y-1">
+                                <div>
+                                    <p className="text-sm text-blueDark mb-1">Backend - {backend} tareas</p>
+                                    <div className="w-full bg-transparent border-l-2 h-6">
+                                        <div className="bg-blueBase h-full" style={{width:`${porcentajeBackend}`}}></div>
+                                    </div>
 
-                <main className="flex-1 p-6">Hi {user.nombre}
-                    <p className="text-gray-700 text-lg"></p>
-                </main>
+                                </div>
+
+                                <div>
+                                    <p className="text-sm text-blueDark mb-1">Frontend - {frontend} tareas</p>
+                                    <div className="w-full bg-transparent border-l-2 h-6">
+                                        <div className="bg-blueBase h-full" style={{width:`${porcentajeFrontend}`}}></div>
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    <p className="text-sm text-blueDark mb-1">Diseño - {diseño} tareas</p>
+                                    <div className="w-full bg-transparent border-l-2 h-6">
+                                        <div className="bg-blueBase h-full" style={{width:`${porcentajeDiseño}`}}></div>
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    <p className="text-sm text-blueDark mb-1">Despligue - {despliegue} tareas</p>
+                                    <div className="w-full bg-transparent border-l-2 h-6">
+                                        <div className="bg-blueBase h-full" style={{width:`${porcentajeDespliegue}`}}></div>
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    <p className="text-sm text-blueDark mb-1">Testing - {testing} tareas</p>
+                                    <div className="w-full bg-transparent border-l-2 h-6">
+                                        <div className="bg-blueBase h-full" style={{width:`${porcentajeTesting}`}}></div>
+                                    </div>
+
+                                </div>
+
+
+
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="space-y-6">
+                        {/* Últimos Cambios */}
+                        <div className="bg-blueBase rounded-xl p-6 shadow-sm">
+                            <h3 className="text-center text-xl font-semibold text-blueDark mb-6">Últimos Cambios</h3>
+                            <div className="space-y-3">
+                            {tareas.slice(0, 3).map((tarea) => (
+                                <div key={tarea.id} className="bg-turquesa rounded-lg p-3 flex items-center gap-4 text-white text-sm">
+                                {/*Aquí debe estar la imagen del usuario*/}
+                                    <div className="grid grid-cols-3 w-full text-center">
+                                        <span>Nombre Usuario</span>
+                                        <span>{tarea.desarrollador.nombre}</span>
+                                        <span>{tarea.estado}</span>
+                                        <span>{tarea.fecha_fin}</span>
+                                    </div>
+                                </div>
+                            ))}
+                            </div>
+                        </div>
+
+                        {/* Resumen del Estado (Gráfico Circular) */}
+                        <div className="bg-blueBase rounded-xl p-6 shadow-sm flex flex-col items-center">
+                            <h3 className="text-xl font-semibold text-blueDark mb-6">Resumen del Estado</h3>
+                            <div className="relative w-48 h-48">
+                            {/* Representación visual simple del gráfico de pay */}
+                                <svg viewBox="0 0 32 32" className="w-full h-full rotate-[-90deg]">
+                                    <circle 
+                                    r="16" 
+                                    cx="16" 
+                                    cy="16" 
+                                    fill="#184E77" 
+                                    strokeWidth='32'
+                                    strokeDasharray={`porcentajeCompletadas 100`}
+                                    />
+                                </svg>
+                            </div>
+
+                            {/* Leyenda */}
+                            <div className="flex gap-4 mt-8 text-xs font-semibold text-blueDark">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 bg-blueblue rounded-full"></div> Tareas Completadas
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 bg-[#0f6a85] rounded-full"></div> Tareas sin completar
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </main>
             </div>
-            </div>
-        </>
+        </div>    
 
         
     )
+
 }
+
+    
+
 
 
 export default ProductOwnerDashboard

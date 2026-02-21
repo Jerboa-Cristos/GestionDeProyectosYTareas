@@ -1,0 +1,40 @@
+import axios from 'axios';
+const APP_URL = "http://localhost/api"
+
+export const funcion_listado_tarea = (id_sprint, token) => axios.get(APP_URL + `/listado_tarea/${id_sprint}`, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+
+export const funcion_crear_tarea = (data, id_sprint, token) => axios.post(APP_URL + `/crear_tarea/${id_sprint}`, data, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+
+export const funcion_mostrar_tarea = (id_sprint, id_tarea ,data, token) => axios.get(APP_URL + `/mostrar_tarea/${id_sprint}/${id_tarea}`, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+
+export const funcion_actualizar_tarea = (id_sprint , id_tarea,  data, token) => axios.put(APP_URL + `/actualizar_tarea/${id_sprint}/${id_tarea}`, data, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+
+export const funcion_eliminar_tarea = (id_sprint, id_tarea, token) => axios.delete(APP_URL + `/eliminar_tarea/${id_sprint}/${id_tarea}`, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+
+
+//para mostrar todas las tareas de todos los proyectos
+export const funcion_listado_tareas_product_owner = (token) => axios.get(APP_URL + `/tareas_product_owner`, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})

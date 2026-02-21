@@ -12,7 +12,7 @@ class ProductOwnerApiController extends Controller
 
     public function index() {
         $product_owner = auth('product_owner')->user();
-        return $product_owner->proyectos;
+        return response()->json($product_owner->proyectos);
     }
 
     public function store(Request $request) {
