@@ -95,5 +95,5 @@ Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profi
 
 //RUTAS PARA TAREAS DE PARTE DEL DESAROLLADOR
 //Mostrar tareas específicas. Se debe pasar el nombre de la columna y el id 
-Route::get('indexTareasDesarrollador',[TareaController::class, 'indexTareasDesarrollador']);
+Route::get('indexTareasDesarrollador/{id}',[TareaController::class, 'indexTareasDesarrollador']);
 #endregion

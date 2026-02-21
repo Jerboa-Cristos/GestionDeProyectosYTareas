@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { mostrarMisTareas } from '../../services/desarolladorService'
 import { ClipboardList, Calendar, AlertCircle } from 'lucide-react';
-import { useEffect, useState } from 'react';
+//Para instalar este modulo se debe hacer npm install recharts
+import { BarChart, Bar, ResponsiveContainer, Pie, PieChart, Legend } from 'recharts';
+import { useEffect, useState, useMemo } from 'react';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
 
@@ -31,29 +33,54 @@ function DashboardDesarrollador() {
 //#region FUNCIONES DEL DASHBOARD
 
     //#region TAREAS ASIGNADAS Y DEADLINE
-    const tareasDeadline = () => {
-        if(tareas.fecha_fin <= now()) {
-            return tareas.length;
-        }
-    }
+    const tareasDeadline = tareas.filter(tarea=> {
+        const fechaLimiteTarea = new Date(tarea.fecha_fin)
+        const fechaActual = new Date()
+        const diasRestantes = Math.abs((fechaLimiteTarea - fechaActual) / 86400000)
+        return diasRestantes > 0 && diasRestantes <= 4
+    }).length
     //#endregion
 
     //#region ULTIMOS CAMBIOS
-    const UltCambios = tareas.filter((tarea) => {
-        
+    const UltCambios = tareas.filter(tarea => {
+        const updatesTarea = new Date(tarea.updated_at)
+        const fechaActual = new Date()
+        const diasDeLosCambios = Math.abs((updatesTarea - fechaActual) / 86400000)
+        return diasDeLosCambios <= 2
     })
     //#endregion
 
     //#region GRÁFICOS RESUMEN ESTADO
-    const grfResumenEstado = () => {
+    const grfResumenEstado = useMemo(() => {
+        const arrEstados = {}
 
-    }
+        tareas.forEach(tarea => {
+            const estados = tarea.estado
+            arrEstados[estados] = (arrEstados[estados] || 0) + 1
+        })
+
+        return Object.keys(arrEstados).map(key=> ({
+            tipo: key,
+            cantidad: arrEstados[key]
+        }))
+    }, [tareas])
+
     //#endregion
 
     //#region GRÁFICOS TIPO TRABAJO
-    const grfTipoTrabajo = () => {
+    const grfTipoTrabajo = useMemo(() => {
+        const arrtipo = {}
 
-    }
+        tareas.forEach(tarea => {
+            const tipo = tarea.tipo
+            arrtipo[tipo] = (arrtipo[tipo] || 0) + 1
+        })
+
+        return Object.keys(arrtipo).map(key=> ({
+            tipo: key,
+            cantidad: arrtipo[key]
+        }))
+    }, [tareas])
     //#endregion
 
 //#endregion
@@ -91,7 +118,7 @@ function DashboardDesarrollador() {
                                 <Calendar size={60} />
                                 <span className="text-xl font-semibold leading-tight">Tareas Asignadas Deadline</span>
                             </div>
-                            <span className="text-4xl font-bold mr-4">Deadline</span>
+                            <span className="text-4xl font-bold mr-4">{tareasDeadline}</span>
                             <AlertCircle className="absolute bottom-4 right-4 text-warningDark bg-white rounded-full" size={30} />
                             </button>
                         </div>
@@ -99,21 +126,18 @@ function DashboardDesarrollador() {
                         {/* Tipo de Trabajo MONTARLO TODO */}
                         <div className="bg-blueBase rounded-xl p-6">
                             <h3 className="text-center text-xl font-semibold text-blueDark mb-4">Tipo de trabajo</h3>
-                            <div className="space-y-1">
-                            {[
-                                { label: 'Desarrollo Frontend', width: '90%' },
-                                { label: 'Desarrollo Backend', width: '85%' },
-                                { label: 'Diseño UI/UX', width: '15%' },
-                                { label: 'Calidad', width: '20%' },
-                                { label: 'Gestión proyecto', width: '5%' },
-                            ].map((item) => (
-                                <div key={item.label}>
-                                <p className="text-sm text-blueDark mb-1">{item.label}</p>
-                                    <div className="w-full bg-transparent border-l-2 h-6">
-                                        <div className="bg-blueblue h-full" style={{ width: item.width }}></div>
-                                    </div>
-                                </div>
-                            ))}
+                            <div className="space-y-1 size-20">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={grfTipoTrabajo} layout='horizontal'>
+                                        <Bar dataKey='cantidad' fill='#184E77'/>
+                                        <legend payload={
+                                            grfTipoTrabajo.map((tarea, index) => ({
+                                                value: tarea.tipo,
+                                                type: 'circle',
+                                            }))
+                                        }/>
+                                    </BarChart>
+                                </ResponsiveContainer>
                             </div>
                         </div>
                     </div>
@@ -123,7 +147,7 @@ function DashboardDesarrollador() {
                         <div className="bg-blueBase rounded-xl p-6 shadow-sm">
                             <h3 className="text-center text-xl font-semibold text-blueDark mb-6">Últimos Cambios</h3>
                             <div className="space-y-3">
-                            {tareas.slice(0, 3).map((tarea) => (
+                            {UltCambios.slice(0, 3).map((tarea) => (
                                 <div key={tarea.id} className="bg-turquesa rounded-lg p-3 flex items-center gap-4 text-white text-sm">
                                 {/*Aquí debe estar la imagen del usuario*/}
                                     <div className="grid grid-cols-3 w-full text-center">
@@ -141,20 +165,17 @@ function DashboardDesarrollador() {
                         <div className="bg-blueBase rounded-xl p-6 shadow-sm flex flex-col items-center">
                             <h3 className="text-xl font-semibold text-blueDark mb-6">Resumen del Estado</h3>
                             <div className="relative w-48 h-48">
-                            {/* Representación visual simple del gráfico de pay */}
-                                <svg viewBox="0 0 32 32" className="w-full h-full rotate-[-90deg]">
-                                    <circle r="16" cx="16" cy="16" fill="#184E77" />
-                                </svg>
-                            </div>
-
-                            {/* Leyenda */}
-                            <div className="flex gap-4 mt-8 text-xs font-semibold text-blueDark">
-                                <div className="flex items-center gap-2">
-                                    <div className="w-3 h-3 bg-blueblue rounded-full"></div> Tareas Completadas
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-3 h-3 bg-[#0f6a85] rounded-full"></div> Tareas sin completar
-                                </div>
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <PieChart>
+                                        <Pie data={grfResumenEstado} dataKey='cantidad' fill='#184E77'/>
+                                        <legend payload={
+                                            grfResumenEstado.map((tarea, index) => ({
+                                                value: tarea.estado,
+                                                type: 'circle',
+                                            }))
+                                        }/>
+                                    </PieChart>
+                                </ResponsiveContainer>
                             </div>
                         </div>
                     </div>
