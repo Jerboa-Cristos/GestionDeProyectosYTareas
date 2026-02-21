@@ -30,5 +30,4 @@ class DesarrolladorController extends Controller
         return response()->json(['message'=>'Proyecto Asignado'], 200); 
 
     }
-
 }

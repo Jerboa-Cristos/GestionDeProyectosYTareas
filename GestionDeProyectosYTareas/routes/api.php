@@ -76,12 +76,21 @@ Route::post('login_desarrollador', [DesarrolladorAuthController::class,'loginDes
 Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador']);
 //Middleware
 Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:sanctum');
+//RUTAS PARA TAREAS DE PARTE DEL DESAROLLADOR
+//Mostrar tareas específicas. Se debe pasar el nombre de la columna y el id 
+Route::get('indexTareasEspecificas',[TareaController::class, 'indexTareasEspecificas']);
+//Muestra una tarea específica, por el id de la tarea
+Route::get('showTarea/{id}',[TareaController::class, 'showTarea']);
+//Hace un update completo de la tarea
+Route::put('updateTarea/{id}',[DesarrolladorController::class, 'updateTarea']);
+
 
 //RUTAS PARA EL DESAROLLADOR PARA EL PRODUCT OWNER
 //Ruta para mostrar el listado de desarolladores a la hora de elegir quién hace la tarea
 Route::get('indexUsuarios', [DesarrolladorController::class, 'indexUsuarios']); 
 //Ruta para asignar un proyecto al Desarrollador
 Route::put('asignarProyecto/{id}',[DesarrolladorController::class, 'asignarProyecto']);
+#endregion
 
 
 
