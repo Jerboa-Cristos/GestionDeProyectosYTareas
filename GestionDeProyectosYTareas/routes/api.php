@@ -27,6 +27,7 @@ Route::get('user', function (Request $request) {
 //Rutas para autenticación ejemplo del tutorial yotube , eliminar despues
 //Route::post('register', [AuthController::class, 'register_user']);
 
+#region ADMINISTRADOR
 //RUTAS AUTENTICACION ADMINISTRADOR
 Route::post('register_administrador', [AdministradorAuthController::class, 'registerAdministrador']);
 Route::post('login_administrador', [AdministradorAuthController::class,'loginAdministrador']);
@@ -41,9 +42,10 @@ Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsua
 Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios']);
 Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios']);
 Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsuarios']);
+#endregion
 
 
-
+#region PRODUCT OWNER
 //RUTAS AUTENTICACIÓN PARA PRODUCT OWNER
 //Route::post('ruta de la api con axios', [Controlador::class, 'metodo backend']);
 Route::post('register_product_owner', [ProductOwnerAuthController::class, 'registerProductOwner']);
@@ -52,8 +54,6 @@ Route::post('login_product_owner', [ProductOwnerAuthController::class,'loginProd
 //MIDDLEWARE
 Route::get('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner'])->middleware('auth:product_owner');
 
-
-
 //RUTAS CRUD API PRODUCT OWNER , ya que el es el que crea proyectos
 Route::get('listado_proyectos', [ProductOwnerApiController::class, 'index'])->middleware('auth:product_owner');
 Route::post('crear_proyecto', [ProductOwnerApiController::class, 'store'])->middleware('auth:product_owner');
@@ -61,16 +61,16 @@ Route::get('mostrar_proyecto/{id}', [ProductOwnerApiController::class, 'show'])-
 Route::put('actualizar_proyecto/{id}', [ProductOwnerApiController::class, 'update'])->middleware('auth:product_owner');
 Route::delete('eliminar_proyecto/{id}', [ProductOwnerApiController::class, 'destroy'])->middleware('auth:product_owner');
 
-
 //RUTAS CRUD PROYECTO PARA CREAR/MOSTRAR/ELIMINAR/ACTUALIZAR SPRINT
 Route::get('listado_sprint', [ProyectoApiController::class, 'index'])->middleware('auth:product_owner');
 Route::post('crear_sprint/{proyecto}', [ProyectoApiController::class, 'store'])->middleware('auth:product_owner');
 Route::get('mostrar_sprint/{id}', [ProyectoApiController::class, 'show'])->middleware('auth:product_owner');
 Route::put('actualizar_sprint/{id}', [ProyectoApiController::class, 'update'])->middleware('auth:product_owner');
 Route::delete('eliminar_sprint/{id}', [ProyectoApiController::class, 'destroy'])->middleware('auth:product_owner');
+#endregion
 
 
-
+#region DESAROLLADOR
 //RUTAS AUTENTICACION DESARROLLADOR
 Route::post('login_desarrollador', [DesarrolladorAuthController::class,'loginDesarrollador']);
 Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador']);
@@ -78,7 +78,9 @@ Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profi
 Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:sanctum');
 
 //RUTAS PARA EL DESAROLLADOR PARA EL PRODUCT OWNER
-Route::get('indexUsuarios', [DesarrolladorController::class, 'indexUsuarios']);
+//Ruta para mostrar el listado de desarolladores a la hora de elegir quién hace la tarea
+Route::get('indexUsuarios', [DesarrolladorController::class, 'indexUsuarios']); 
+//Ruta para asignar un proyecto al Desarrollador
 Route::put('asignarProyecto/{id}',[DesarrolladorController::class, 'asignarProyecto']);
 
 
