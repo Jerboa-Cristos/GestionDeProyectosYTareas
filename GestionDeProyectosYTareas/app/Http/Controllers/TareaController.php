@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 class TareaController extends Controller
 {
     //EL CONTROLADDOR DE TAREAS SOLO PARA UN DESAROLLADOR
-    public function indexTareasEspecificas($nomCol, $id) { //Hacer index de cosas específicas de la tabla tarea. Se tiene que pasar el nombre d ela columna y el id
-        $tareas = Tarea::all()->where($nomCol, $id);
+    public function indexTareasDesarrollador($id) { //Hacer index de cosas específicas de la tabla tarea. Se tiene que pasar el nombre d ela columna y el id
+        $tareas = Tarea::all()->where('id_desarrollador', $id);
         return response()->json($tareas, 200);
     }
 
