@@ -35,14 +35,12 @@ Route::post('register_administrador', [AdministradorAuthController::class, 'regi
 Route::post('login_administrador', [AdministradorAuthController::class,'loginAdministrador']);
 //Middleware
 //Route::get('ruta del navegador', [Controlador::class, 'metodo backend'])->middleware('auth:GUARD_DEL_USUARIO'); //carpeta config/auth.php
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador']);
-    Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
-    Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsuarios']);
-    Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios']);
-    Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios']);
-    Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsuarios']);
-});
+Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware('auth:administrador');
+Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
+Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsuarios'])->middleware('auth:administrador');
+Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios'])->middleware('auth:administrador');
+Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios'])->middleware('auth:administrador');
+Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsuarios'])->middleware('auth:administrador');
 #endregion
 
 #region PRODUCT OWNER

@@ -16,13 +16,12 @@ function PerfilUsuario() {
         password_confirmation:'',
         rol: '',
         oldRol:'',
-        adminEmail: userAdmin.email
     })
 
     useEffect(() => {
         //Cargamos la información del usuario solo
         const fetchUser = async () => {
-            showUsuarios(rol, id).then(res => {
+            showUsuarios(rol, id, userAdmin.token).then(res => {
                 setFormData({
                     ...formData,
                     nombre: res.data.nombre || '',
@@ -51,7 +50,7 @@ const handleChange = (e) => {
 
 const UpdateUsuario = (e) => {
     e.preventDefault()
-    updateUsuarios(formData, formData.rol, id).then(res => {
+    updateUsuarios(formData, formData.rol, id, token).then(res => {
         console.log('Usuario actualizado')
         alert('Usuario Actualizado con exito.');
     }).catch(err=>{
@@ -67,9 +66,9 @@ const volverAtras = () => {
 //#endregion
 
 //#region Función para eliminar un usuario
-    const eliminarPersona = async (id, rol) => {
+    const eliminarPersona = async (id, rol, token) => {
         try {
-            await eliminarUsuario(id, rol)
+            await eliminarUsuario(id, rol, token)
             console.log('Usuario eliminado con éxito');
             navigate('/GestionUsuarios', { replace: true });
         }catch(err) {
@@ -209,7 +208,7 @@ const volverAtras = () => {
             <div className="flex gap-4">
 
             <button 
-                onClick={(e)=>{eliminarPersona(id, rol); e.stopPropagation();}}
+                onClick={(e)=>{eliminarPersona(id, rol, token); e.stopPropagation();}}
                 className="bg-warningDark text-white p-3 rounded-full hover:bg-warning transition-colors 
                 shadow-md hover:scale-105"
                 title="Eliminar perfil"

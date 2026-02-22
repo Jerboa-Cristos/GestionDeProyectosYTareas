@@ -5,24 +5,25 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 function GestionUsuarios() {
-    
     const [rolFilter, setRolFilter] = useState(null); // Estado para el filtro de rol
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
 
     //Cargar los usuarios al cargar la página
-    useEffect(() => {
-        //Aquí se deben cargar los usuarios desde el backend
-        const fetchUsers = async () => {
-            mostrarUsuarios().then(res => {
-                setUsers(res.data);
-            }).catch(err => {
-                console.error("Error al cargar los usuarios:", err);
-            });
-        }
-        fetchUsers();
-    }, [])
+    
+        useEffect(() => {
+            //Aquí se deben cargar los usuarios desde el backend
+                const fetchUsers = async () => {
+                    mostrarUsuarios().then(res => {
+                        setUsers(res.data);
+                        console.log(res.data);
+                    }).catch(err => {
+                        console.error("Error al cargar los usuarios:", err);
+                    });
+                }
+                fetchUsers();
+        }, [])
 
 //#region Funciones para navegar a otras páginas
     const goCreacionUsuarios = () => {
@@ -67,8 +68,8 @@ function GestionUsuarios() {
 //#endregion
 
 //#region Función para eliminar un usuario
-    const eliminarPersona = (id, rol) => {
-        eliminarUsuario(id, rol).then(res => {
+    const eliminarPersona = (id, rol, token) => {
+        eliminarUsuario(id, rol, token).then(res => {
             console.log('Usuario eliminado con éxito');
             // Actualizar la lista de usuarios después de eliminar uno
             setUsers(users.filter(user => user.id !== id || user.rol !== rol));
@@ -143,10 +144,10 @@ function GestionUsuarios() {
                                 <div className="flex items-center gap-4 w-1/4 xs:w-40">
                                     <span className="font-bold text-blueDark xs:text-left">{user.nombre}</span>
                                 </div>
-                                <span className="w-1/4 text-blueDark font-medium xs:hidden">{user.email}</span>
-                                <span className="w-1/4 text-blueDark font-medium xs:hidden">{user.rol}</span>
+                                <span className="w-1/4 text-blueDark font-medium">{user.email}</span>
+                                <span className="w-1/4 text-blueDark font-medium">{user.rol}</span>
                                 <Trash2 
-                                    onClick={(e)=>{eliminarPersona(user.id, user.rol); e.stopPropagation();}}
+                                    onClick={(e)=>{eliminarPersona(user.id, user.rol, userAdmin.token); e.stopPropagation();}}
                                     className="text-warning hover:text-warningDark hover:scale-110 transition-all cursor-pointer xs:size-10" 
                                     size={24} 
                                 />

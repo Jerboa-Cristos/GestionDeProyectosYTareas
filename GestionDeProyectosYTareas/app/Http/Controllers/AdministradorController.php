@@ -175,7 +175,7 @@ class AdministradorController extends Controller
                 $updateData['password']=$passwordAntiguo;
             }
 
-            $administrador = Administrador::where('email', $request->adminEmail)->first();
+            $administrador = auth('administrador')->user();
             $updateData['id_administrador']=$administrador->id;
             $updateData['id_proyecto']=2;
 
@@ -215,7 +215,7 @@ class AdministradorController extends Controller
                 $updateData['password']=$passwordAntiguo;
             }
 
-            $administrador = Administrador::where('email', $request->adminEmail)->first();
+            $administrador = auth('administrador')->user();
             $updateData['id_administrador']=$administrador->id;
 
             ProductOwner::updateOrCreate(
