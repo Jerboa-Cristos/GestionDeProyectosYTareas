@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { funcion_mostrar_proyecto } from "../../services/ruta_api_proyecto"
-import { funcion_mostrar_sprint} from '../../services/ruta_api_sprint'
+import { funcion_listado_sprint} from '../../services/ruta_api_sprint'
 import { useParams, Link } from "react-router-dom"
 import Menu_Izquierdo from '../Menus/Menu_Izquierdo'
 import MenuTop from '../../Components/MenuTop'
@@ -10,7 +10,7 @@ function Sprints_Proyecto() {
     const [sprints, setSprint] = useState([])
     //se usa useParams porque el id viene de la URL
     const {id_proyecto} = useParams() //obtener id de la url
-    
+   
     useEffect(() => {
         const token = localStorage.getItem('token')
         funcion_mostrar_proyecto(id_proyecto, token)
@@ -20,7 +20,7 @@ function Sprints_Proyecto() {
         })
         .catch(error => console.log('Error al cargar proyecto', error))
 
-        funcion_mostrar_sprint(id_proyecto, token)
+        funcion_listado_sprint(id_proyecto, token)
         .then(res => {
             console.log('Respuesta sprint', res.data)
             setSprint(res.data)
@@ -45,7 +45,7 @@ function Sprints_Proyecto() {
 
             <div className="flex-1 min-w-0 p-4">
                 
-                <div className="border border-BlueBaseDark rounded bg-white p-5 shadow-sm">
+                <div className="border border-BlueBaseDark rounded bg-white p-5 ml-5 mt-2.5">
                 
                 <h1 className="text-3xl text-BlueDarkDark font-bold mb-2">
                     {proyectos.nombre}
