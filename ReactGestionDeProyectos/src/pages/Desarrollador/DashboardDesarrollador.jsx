@@ -1,28 +1,17 @@
+//Código
 import { useNavigate } from 'react-router-dom';
-import { mostrarMisTareas } from '../../services/desarolladorService'
+import { useContext, useMemo } from 'react';
+import { TareaContext } from '../../Context/TareaContext';
+//Componentes visuales
 import { ClipboardList, Calendar, AlertCircle } from 'lucide-react';
 //Para instalar este modulo se debe hacer npm install recharts
 import { BarChart, Bar, ResponsiveContainer, Pie, PieChart, Legend } from 'recharts';
-import { useEffect, useState, useMemo } from 'react';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
 
 function DashboardDesarrollador() {
-    const user = JSON.parse(localStorage.getItem('user'))
     const navigate = useNavigate();
-    const [tareas, setTareas] = useState([]);
-
-    //Pillo todas las tareas para la página
-    useEffect(() => {
-        const fetchTarea = async () => {
-            mostrarMisTareas(1).then(res=> {
-                setTareas(res.data);
-            }).catch(err=>{
-                console.error('Error al cargar las tareas:', err)
-            });
-        }
-        fetchTarea();
-    }, [])
+    const {tareas} = useContext(TareaContext);
 
     //#region NAVIGACIÓN A OTRAS PÁGINAS
     function gotoTareas() {

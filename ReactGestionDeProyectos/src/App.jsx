@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import './App.css';
 
 //Cris
+import { TareaProvider } from './Context/TareaContext'; //CONTEXTO DE TAREAS PARA CADA USUARIO
+
 import CreacionUsuarios from './pages/Administrador/CreacionUsuarios';
 import GestionUsuarios from './pages/Administrador/GestionUsuarios';
 import PerfilUsuario from './pages/Administrador/PerfilUsuario';
@@ -83,12 +85,6 @@ function App() {
           <Route path='/menu_izquierdo' element={<Menu_Izquierdo/>}/>
           <Route path='/mis_tareas_product_owner' element={<Mis_Tareas_Product_Owner/>}/>
           <Route path='/tablero_kanban_product_owner/:id_sprint' element={<Tablero_Kanban_Product_Owner/>}/>
-          
-          
-
-          {/*RUTAS AUTH DESARROLLADOR */}
-          <Route path='/desarrollador_login' element={<DesarrolladorLogin/>}/>
-          <Route path='/desarrollador_profile' element={<DesarrolladorProfile/>}/>
 
           {/*PROYECTO */}
           <Route path='/crear_proyecto' element={<Crear_Proyecto/>}/>
@@ -97,22 +93,23 @@ function App() {
           {/*SPRINT */}
           <Route path='/crear_sprint/:id_proyecto' element={<Crear_Sprint/>}/>
 
-
           {/*TAREA */}
           <Route path='/crear_tarea/:id_sprint' element={<Crear_Tarea/>}/>
 
 
-          {/*RUTAS ADMINISTRADOR*/}
-            <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>
-            <Route path="/PerfilUsuario/:rol/:id" element={<PerfilUsuario/>}/>
-            <Route path="/CreacionUsuarios" element={<CreacionUsuarios/>}/>
-          
-          {/*RUTAS DESARROLLADOR*/}
-            <Route path="/DashboardDesarrollador" element={<DashboardDesarrollador/>}/>
-            <Route path="/TableroKanbanDesarrollador" element={<TableroKanbanDesarrollador/>}/>
-            <Route path="/MisTareasDesarrollador" element={<MisTareasDesarrollador/>}/>
-
+          {/*RUTAS AUTH DESARROLLADOR */}
+          <Route path='/desarrollador_login' element={<DesarrolladorLogin/>}/>
+          <Route path='/desarrollador_profile' element={<DesarrolladorProfile/>}/>
+          {/*AQUÍ PONGO EL CONTEXT DE TAREA PARA NO TENER QUE DECLARARLO CADA VEZ */}
         </Routes>
+          <TareaProvider>
+            {/*RUTAS DESARROLLADOR*/}
+            <Routes>
+              <Route path="/DashboardDesarrollador" element={<DashboardDesarrollador/>}/>
+              <Route path="/TableroKanbanDesarrollador" element={<TableroKanbanDesarrollador/>}/>
+              <Route path="/MisTareasDesarrollador" element={<MisTareasDesarrollador/>}/>
+            </Routes>
+          </TareaProvider>
       </>
   )
 }
