@@ -149,7 +149,7 @@ function GestionUsuarios() {
                                 <span className="w-1/4 text-blueDark font-medium">{user.email}</span>
                                 <span className="w-1/4 text-blueDark font-medium">{user.rol}</span>
                                 <Trash2 
-                                    onClick={(e)=>{eliminarPersona(user.id, user.rol, userAdmin.token); e.stopPropagation();}}
+                                    onClick={(e)=>{eliminarPersona(user.id, user.rol, token); e.stopPropagation();}}
                                     className="text-warning hover:text-warningDark hover:scale-110 transition-all cursor-pointer xs:size-10" 
                                     size={24} 
                                 />

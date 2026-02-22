@@ -227,7 +227,7 @@ class AdministradorController extends Controller
         return response()->json(['error' => 'No se pudo actualizar el usuario'], 404);
     }
 
-    public function eliminarUsuario($rol, $id) {
+    public function eliminarUsuarios($rol, $id) {
         if($rol=='Administrador'){
             Administrador::findOrFail($id)->delete();
             return response()->json(['message'=>'Usuario eliminado con exito'], 200);
