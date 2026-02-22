@@ -30,9 +30,11 @@ Route::get('user', function (Request $request) {
 //Route::post('register', [AuthController::class, 'register_user']);
 
 //RUTAS AUTENTICACION ADMINISTRADOR
-Route::post('register_administrador', [AdministradorAuthController::class, 'registerAdministrador']);
+Route::post('register_administrador', [AdministradorAuthController::class, 'registerAdministrador'])->middleware('auth:sanctum');
+Route::post('register_product_owner', [AdministradorAuthController::class, 'registerProductOwner'])->middleware('auth:sanctum');
+Route::post('register_desarrollador', [AdministradorAuthController::class, 'registerDesarrollador'])->middleware('auth:sanctum');
+
 Route::post('login_administrador', [AdministradorAuthController::class,'loginAdministrador']);
-Route::post('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador']);
 //Middleware
 //Route::get('ruta del navegador', [Controlador::class, 'metodo backend'])->middleware('auth:GUARD_DEL_USUARIO'); //carpeta config/auth.php
 Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware('auth:sanctum');
@@ -48,7 +50,6 @@ Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'update
 
 //RUTAS AUTENTICACIÓN PARA PRODUCT OWNER
 //Route::post('ruta de la api con axios', [Controlador::class, 'metodo backend']);
-Route::post('register_product_owner', [ProductOwnerAuthController::class, 'registerProductOwner']);
 Route::post('login_product_owner', [ProductOwnerAuthController::class,'loginProductOwner']);
 //Route::get('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner']);
 //MIDDLEWARE
@@ -84,7 +85,6 @@ Route::delete('eliminar_tarea/{sprint}/{id}', [SprintApiController::class, 'dest
 
 //RUTAS AUTENTICACION DESARROLLADOR
 Route::post('login_desarrollador', [DesarrolladorAuthController::class,'loginDesarrollador']);
-Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador']);
 //Middleware
 Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:sanctum');
 

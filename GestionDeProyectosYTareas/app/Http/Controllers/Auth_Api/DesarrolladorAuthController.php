@@ -13,47 +13,26 @@ use Illuminate\Support\Facades\Auth;
 
 class DesarrolladorAuthController extends Controller
 {
-    /*public function registerDesarrollador(Request $request ){
-        $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:40',
-            'email' => 'required|email|unique:desarrollador',
-            'password' => 'required|same:confirmed_password',
-
-        ]);
-
-        if($validator->fails()){
-            return response()->json(['errors' => $validator->errors()->all()]);
-        }
-
-        $desarrollador = Desarrollador::create([
-            'nombre' => $request->nombre,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'id_administrador' => 1,
-            'id_proyecto' => 1
-        ]);
-
-        $input['nombre'] = $desarrollador->nombre;
-        $input['email'] = $desarrollador->email;
-        $input['token'] = $desarrollador->createToken('Desarrollador')->plainTextToken;
-
-        return response()->json($input);
-    }*/
-
     public function loginDesarrollador(Request $request){
-        if(
-            !Desarrollador::where('email', $request->email)->first() ||
-            !Hash::check($request->password,Desarrollador::where('email', $request->email)->first()->password)){
-            return response()->json(['errors' => ['Invalid credentials']]);
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        $desarrollador = Desarrollador::where('email', $request->email)->firstOrFail();
+
+        if(!Hash::check($request->password, $desarrollador->password)){
+            return response()->json(['error' => 'Email y password incorrectas'], 401);
         }
 
-        $desarrollador = Desarrollador::where('email', $request->email)->first();
         $input['nombre'] = $desarrollador->nombre;
-        $input['email'] = $desarrollador->email;
+        $input['id'] = $desarrollador->id;
+        $input['rol'] = 'desarrollador';
         $input['token'] = $desarrollador->createToken('Desarrollador')->plainTextToken;
-
-        return response()->json($input);
+        
+        return response()->json($input);   
     }
+    
 
     public function profileDesarrollador(Request $request){
         $validar_desarrollador = Validator::make($request->all(), [

@@ -45,7 +45,7 @@ function Sprints_Proyecto() {
 
             <div className="flex-1 min-w-0 p-4">
                 
-                <div className="border border-BlueBaseDark rounded bg-white p-5 shadow-sm">
+                <div className="border border-BlueBaseDark rounded bg-white p-5 ml-5 mt-2.5">
                 
                 <h1 className="text-3xl text-BlueDarkDark font-bold mb-2">
                     {proyectos.nombre}

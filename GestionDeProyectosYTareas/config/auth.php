@@ -43,17 +43,17 @@ return [
         ],
 
         'administrador' => [
-            'driver' => 'sanctum',
+            'driver' => 'session',
             'provider' => 'administradores',
         ],
 
         'product_owner' => [
-            'driver' => 'sanctum',
+            'driver' => 'session',
             'provider' => 'product_owners',
         ],
 
         'desarrollador' => [
-            'driver' => 'sanctum',
+            'driver' => 'session',
             'provider' => 'desarrolladores',
         ],
 

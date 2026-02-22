@@ -27,10 +27,10 @@ function Lista_Proyectos() {
         </div>
 
           <div className="flex-1 p-6">
-            <div className="bg-white rounded-xl shadow-sm p-6">
+            <div className="bg-white rounded-xl shadow-sm p-6 ml-3 mt-0.5">
 
               <div className="flex justify-between items-center mb-6">
-                <h1 className="text-3xl font-bold text-BlueDarkDark">
+                <h1 className="text-3xl font-bold text-blueDark">
                   Mis Proyectos
                 </h1>
 
@@ -49,7 +49,7 @@ function Lista_Proyectos() {
                     {proyectos.map((proyecto) => (
                       <div
                         key={proyecto.id}
-                        className=" bg-BlueDarkDark
+                        className=" bg-blueblue
                          rounded-xl p-5 shadow hover:shadow-md hover:-translate-y-1 transition"
                       >
                         <h2 className="font-bold text-white text-xl mb-2">

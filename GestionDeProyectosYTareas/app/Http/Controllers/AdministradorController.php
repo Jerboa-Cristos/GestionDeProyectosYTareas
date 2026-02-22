@@ -71,7 +71,15 @@ class AdministradorController extends Controller
         ]);
 
         $administrador->desarrolladores()->save($desarrollador);
-        return response()->json(['message'=>'Usuario registrado'], 200);
+        $token = $desarrollador->createToken('Desarrollador')->plainTextToken;
+        
+        return response()->json([
+            'message'=>'Usuario registrado',
+            'token' => $token,
+            'id' => $desarrollador->id,
+            'nombre' => $desarrollador->nombre,
+            'rol' => 'desarrollador'
+        ], 200);
 
         } else if($request->rol=='ProductOwner') {
 
@@ -91,7 +99,15 @@ class AdministradorController extends Controller
         ]);
 
         $administrador->productOwners()->save($productOwner);
-        return response()->json(['message'=>'Usuario registrado'], 200);
+        $token = $productOwner->createToken('ProductOwner')->plainTextToken;
+        
+        return response()->json([
+            'message'=>'Usuario registrado',
+            'token' => $token,
+            'id' => $productOwner->id,
+            'nombre' => $productOwner->nombre,
+            'rol' => 'product_owner'
+        ], 200);
         }
         return response()->json(['error' => 'No se pudo guardar el usuario nuevo'], 404);
     }

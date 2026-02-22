@@ -8,10 +8,12 @@ import { Link, useParams } from 'react-router-dom';
 
 function Tablero_Kanban_Product_Owner() {
 
-    const id_sprint = useParams()
+    const {id_sprint} = useParams()
     
 
     return(
+        <>
+    
          <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop rutaLogin='/product_owner_login' rutaPerfil='/product_owner_profile'/>
             <div className="flex flex-1 gap-4 overflow-hidden h-full">
@@ -59,6 +61,7 @@ function Tablero_Kanban_Product_Owner() {
                 </main>
             </div>
         </div>  
+        </>
     )
 }
 
