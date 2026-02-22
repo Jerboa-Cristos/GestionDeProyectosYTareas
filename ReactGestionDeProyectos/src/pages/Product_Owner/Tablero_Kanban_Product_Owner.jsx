@@ -52,10 +52,10 @@ function Tablero_Kanban_Product_Owner() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <div className="bg-[#4eb1ba] rounded-2xl p-4 min-h-[600px] flex flex-col gap-4">
                             <h3 className="text-white font-bold text-sm px-2 mb-2"></h3>
-                            <KanbanPanel title="Tareas Pendientes" code="TP-001" />
-                            <KanbanPanel title="En Progreso" code="EP-002" />
+                            <KanbanPanel title="Por Hacer" code="TP-001" />
+                            <KanbanPanel title="En Curso" code="EP-002" />
                             <KanbanPanel title="En Revisión" code="ER-003" />
-                            <KanbanPanel title="Completadas" code="C-004" />
+                            <KanbanPanel title="Finalizada" code="C-004" />
                         </div>
                     </div>
                 </main>

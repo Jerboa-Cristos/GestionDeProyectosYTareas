@@ -14,14 +14,15 @@ function AdministradorRegister () {
 
     const submit = (e) => {
         e.preventDefault()
-        funcion_administrador_register({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password})
+        const token = localStorage.getItem('token')
+        funcion_administrador_register({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password}, token)
             .then(res => {
                     if(res.data.errors){
                         setErrors(res.data.errors)
                     }else{
                         console.log(res.data)
                         localStorage.setItem("user", JSON.stringify(res.data))
-                        localStorage.setItem('isAuthenticated', true)
+                        
                         
                         navigate('/GestionUsuarios')
                     }

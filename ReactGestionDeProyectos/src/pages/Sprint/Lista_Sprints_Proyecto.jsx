@@ -70,7 +70,7 @@ function Sprints_Proyecto() {
 
                     {
                     sprints.length === 0 
-                    ? (<p className="text-white italic">No hay sprints creados aún</p>) 
+                    ? (<p className="text-blueDashboard italic">No hay sprints creados aún</p>) 
                     : (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {sprints.map((sprint) => (     
@@ -78,8 +78,11 @@ function Sprints_Proyecto() {
                             key={sprint.id}
                             className="bg-blueDashboard rounded p-4 text-center shadow"
                             >
+                                <Link to={`/tablero_kanban_product_owner/${sprint.id}`}>
                                 <p className="font-bold text-lg text-white">{sprint.nombre}</p>
                                 <p className="text-sm text-white">{sprint.fecha_inicio}</p>
+                                
+                                </Link>
                             </div>
                         ))}
                         </div>
