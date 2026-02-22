@@ -36,7 +36,7 @@ Route::post('login_administrador', [AdministradorAuthController::class,'loginAdm
 //Middleware
 //Route::get('ruta del navegador', [Controlador::class, 'metodo backend'])->middleware('auth:GUARD_DEL_USUARIO'); //carpeta config/auth.php
 Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware('auth:administrador');
-Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
+Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios'])->middleware('auth:administrador');
 Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsuarios'])->middleware('auth:administrador');
 Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios'])->middleware('auth:administrador');
 Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios'])->middleware('auth:administrador');
@@ -77,7 +77,7 @@ Route::delete('eliminar_tarea/{sprint}/{id}', [SprintApiController::class, 'dest
 
 //RUTAS PARA EL DESAROLLADOR PARA EL PRODUCT OWNER
 //Ruta para mostrar el listado de desarolladores a la hora de elegir quién hace la tarea
-Route::get('indexUsuarios', [DesarrolladorController::class, 'indexUsuarios']); 
+Route::get('indexDesarrolladores', [DesarrolladorController::class, 'indexDesarrolladores']); 
 //Ruta para asignar un proyecto al Desarrollador
 Route::put('asignarProyecto/{id}',[DesarrolladorController::class, 'asignarProyecto']);
 #endregion

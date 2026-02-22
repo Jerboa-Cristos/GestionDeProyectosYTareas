@@ -4,7 +4,11 @@ import rutaApi from '../api/rutaApi';
 //export const funcion = (data) => axios.post(APP_URL + '/ruta_del_backend', data)
 
 //FUNCIÓN PARA MOSTRAR A LOS DESARROLLADORES, PRODUCT OWNERS Y ADMINISTRADORES EN UN LISTADO
-export const mostrarUsuarios = (data) => axios.get(rutaApi() + '/indexUsuarios', data)
+export const mostrarUsuarios = (token) => axios.get(rutaApi() + '/indexUsuarios', {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
 
 //FUNCIÓN PARA GUARDAR A LOS NUEVOS USUARIOS
 export const guardarUsuarios = (data, token) => axios.post(rutaApi() +'/storeUsuarios', data, {

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class DesarrolladorController extends Controller
 {
-    public function indexUsuarios(){ //Mostrar datos sobre usuarios A MODO DE LISTA ORDENADOS POR NOMBRE
+    public function indexDesarrolladores(){ //Mostrar datos sobre usuarios A MODO DE LISTA ORDENADOS POR NOMBRE
         $desarrolladores=Desarrollador::all();
         $desarrolladores->sortBy('nombre')->values()->all();
         return response()->json($desarrolladores, 200);

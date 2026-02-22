@@ -15,15 +15,18 @@ class AdministradorController extends Controller
 #region FUNCIONES PRINCIPALES
     public function indexUsuarios(){ //Mostrar datos sobre usuarios
         $desarrolladores=Desarrollador::all()->map(function($desarrollador){
-            return array_merge($desarrollador->toArray(), ['rol'=>'Desarrollador']);
+            $desarrollador->rol='Desarrollador';
+            return $desarrollador;
         });
         
         $productOwners=ProductOwner::all()->map(function($productOwner){
-            return array_merge($productOwner->toArray(), ['rol'=>'ProductOwner']);
+            $productOwner->rol='ProductOwner';
+            return $productOwner;
         });
         
         $administradores=Administrador::all()->map(function($administrador){
-            return array_merge($administrador->toArray(), ['rol'=>'Administrador']);
+            $administrador->rol='Administrador';
+            return $administrador;
         });
 
         $todos=$desarrolladores->concat($productOwners)->concat($administradores)->sortBy('nombre')->values();
