@@ -7,30 +7,32 @@ use Illuminate\Http\Request;
 
 class TareaController extends Controller
 {
-    //EL CONTROLADDOR DE TAREAS SOLO PARA UN DESAROLLADOR
-    public function indexTareasDesarrollador($id) { //Hacer index de cosas específicas de la tabla tarea. Se tiene que pasar el nombre d ela columna y el id
-        $tareas = Tarea::all()->where('id_desarrollador', $id);
+    //EL CONTROLADOR DE TAREAS SOLO PARA UN DESAROLLADOR
+    public function indexTareasDesarrollador() {
+        $desarrollador = auth('desarrollador')->user();
+        //Es una función que debe pillar todas las tareas de un proyecto concreto. 
+        //Accede al modelo Tarea, busca mediante la relación con el Sprint
+        //query es la instancia de la consulta que apunta a la tabla Sprint
+        //Hace una busqueda en la base de datos: usa el id_proyecto que se le ha pasado. 
+        //Busca los sprints donde su id_proyecto conincida con el que se le ha pasado
+        //Devuelve los resultados + guarda los sprints para el futuro + los guarda
+        $tareas = Tarea::whereHas('sprint', function ($query) use ($desarrollador) {
+            $query->where('id_proyecto', $desarrollador->id_proyecto);
+        })->with('sprint')->get();
+
         return response()->json($tareas, 200);
     }
 
-    public function updateTarea(Request $request, $id) {
+    public function updateTareaDesarrollador(Request $request, $id) {
         try{
-            $tareaUpdate = Tarea::findOrFail($id);
+            $desarrollador = auth('desarrollador')->user();
 
             $tarea=$request->validate([
-                'nombre'=>'required|max:255',
-                'tipo'=>'required|in:Backend,Frontend,Diseño,Despliegue,Testing',
                 'estado'=> 'requiered|in:Por Hacer,En Curso,En Revision,Finalizado',
-                'descripcion'=>'nullable|min:3|max:1000',
-                'fecha_fin'=>'nullable|date|after:'.$tareaUpdate->created_at->toDateTimeString(),
             ]);
 
-            Tarea::findOrFail($id)->update([
-                'nombre'=>$tarea['nombre'],
-                'tipo'=>$tarea['tipo'],
+            $desarrollador->tarea()->findOrFail($id)->update([
                 'estado'=>$tarea['estado'],
-                'descripcion'=>$tarea['descripcion'],
-                'fecha_fin'=>$tarea['fecha_fin'],
             ]);
 
         } catch(\Exception $e) {
@@ -39,12 +41,13 @@ class TareaController extends Controller
         return response()->json(['message'=>'Tarea Actualizada'], 200);
     }
 
-    public function showTarea($id) {
-        $tarea = Tarea::findOrFail($id);
+    public function showTareaDesarrollador($id) {
+        $desarrollador = auth('desarrollador')->user();
+        $tarea = $desarrollador->tarea()->findOrFail($id);
         return response()->json($tarea, 200);
     }
 
-
+    //COSA DE PRODUCT OWNER
     public function tareasProductOwner(Request $request) {
         $product_owner = auth('product_owner')->user();
         

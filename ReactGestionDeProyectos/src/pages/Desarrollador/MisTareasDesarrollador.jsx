@@ -5,16 +5,21 @@ import { useContext, useMemo } from 'react';
 import ColumnaTareas from '../../Components/Com_Desarrollador/ColumnaTareas';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
+import { User } from 'lucide-react';
 
 function MisTareasDesarrollador() {
+    const user = JSON.parse(localStorage.getItem('user'))
+    console.log(user)
     const {tareas} = useContext(TareaContext);
+
+    const miTareas = tareas.filter(tarea => tarea.id_desarrollador === user.id)
 
     const tareasPorEstado = useMemo(() => {
         return {
-            PorHacer: tareas.filter(tarea => tarea.estado === 'Por Hacer'),
-            EnCurso: tareas.filter(tarea => tarea.estado === 'En Curso'),
-            EnRevision: tareas.filter(tarea => tarea.estado === 'En Revision'),
-            Finalizado: tareas.filter(tarea => tarea.estado === 'Finalizado'),
+            PorHacer: miTareas.filter(tarea => tarea.estado === 'Por Hacer'),
+            EnCurso: miTareas.filter(tarea => tarea.estado === 'En Curso'),
+            EnRevision: miTareas.filter(tarea => tarea.estado === 'En Revision'),
+            Finalizado: miTareas.filter(tarea => tarea.estado === 'Finalizado'),
         }
     }, [tareas])
 

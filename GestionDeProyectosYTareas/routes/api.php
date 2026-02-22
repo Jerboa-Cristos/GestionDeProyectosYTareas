@@ -33,19 +33,17 @@ Route::get('user', function (Request $request) {
 //RUTAS AUTENTICACION ADMINISTRADOR
 Route::post('register_administrador', [AdministradorAuthController::class, 'registerAdministrador']);
 Route::post('login_administrador', [AdministradorAuthController::class,'loginAdministrador']);
-Route::post('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador']);
 //Middleware
 //Route::get('ruta del navegador', [Controlador::class, 'metodo backend'])->middleware('auth:GUARD_DEL_USUARIO'); //carpeta config/auth.php
-Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware('auth:sanctum');
-
-//RUTAS PARA EL ADMINISTRADOR
-Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
-Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsuarios']);
-Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios']);
-Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios']);
-Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsuarios']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador']);
+    Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios']);
+    Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsuarios']);
+    Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios']);
+    Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios']);
+    Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsuarios']);
+});
 #endregion
-
 
 #region PRODUCT OWNER
 //RUTAS AUTENTICACIÓN PARA PRODUCT OWNER
@@ -78,22 +76,20 @@ Route::post('crear_tarea/{sprint}', [SprintApiController::class, 'store'])->midd
 Route::get('mostrar_tarea/{sprint}/{id}', [SprintApiController::class, 'show'])->middleware('auth:product_owner');
 Route::put('actualizar_tarea/{sprint}/{id}', [SprintApiController::class, 'update'])->middleware('auth:product_owner');
 Route::delete('eliminar_tarea/{sprint}/{id}', [SprintApiController::class, 'destroy'])->middleware('auth:product_owner');
-#endregion
 
 //RUTAS PARA EL DESAROLLADOR PARA EL PRODUCT OWNER
 //Ruta para mostrar el listado de desarolladores a la hora de elegir quién hace la tarea
 Route::get('indexUsuarios', [DesarrolladorController::class, 'indexUsuarios']); 
 //Ruta para asignar un proyecto al Desarrollador
 Route::put('asignarProyecto/{id}',[DesarrolladorController::class, 'asignarProyecto']);
+#endregion
 
 #region DESAROLLADOR
 //RUTAS AUTENTICACION DESARROLLADOR
 Route::post('login_desarrollador', [DesarrolladorAuthController::class,'loginDesarrollador']);
-Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador']);
 //Middleware
-Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:sanctum');
-
-//RUTAS PARA TAREAS DE PARTE DEL DESAROLLADOR
-//Mostrar tareas específicas. Se debe pasar el nombre de la columna y el id 
-Route::get('indexTareasDesarrollador/{id}',[TareaController::class, 'indexTareasDesarrollador']);
+Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:desarrollador');
+Route::get('indexTareasDesarrollador',[TareaController::class, 'indexTareasDesarrollador'])->middleware('auth:desarrollador');
+Route::get('showTareaDesarrollador/{id}', [TareaController::class, 'showTareaDesarrollador'])->middleware('auth:desarrollador');
+Route::put('updateTareaDesarrollador/{id}', [TareaController::class, 'updateTareaDesarrollador'])->middleware('auth:desarrollador');
 #endregion

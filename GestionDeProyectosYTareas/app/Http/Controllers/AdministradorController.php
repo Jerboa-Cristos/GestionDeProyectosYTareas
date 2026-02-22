@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 class AdministradorController extends Controller
 {
 
-
 #region FUNCIONES PRINCIPALES
     public function indexUsuarios(){ //Mostrar datos sobre usuarios
         $desarrolladores=Desarrollador::all()->map(function($desarrollador){
@@ -61,7 +60,7 @@ class AdministradorController extends Controller
             'id_administrador'=>'requiered|exists:administrador,id',
         ]);
 
-        $administrador = Administrador::where('email', $request->adminEmail)->first();
+        $administrador = auth('administrador')->user();
 
         $desarrollador = new Desarrollador([
             'nombre'=>$desarrollador_info['nombre'],
@@ -81,7 +80,7 @@ class AdministradorController extends Controller
             'password'=>'required|same:confirmed_password',
         ]);
 
-        $administrador = Administrador::where('email', $request->adminEmail)->first();
+        $administrador = auth('administrador')->user();
 
         $productOwner = new ProductOwner([
             'nombre'=>$productOwner_info['nombre'],

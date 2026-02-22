@@ -1,11 +1,16 @@
-import React from 'react';
+//Código
 import { Search } from 'lucide-react';
-
+import { useContext, useMemo } from 'react';
+import { TareaContext } from '../../Context/TareaContext';
+//Componentes
 import KanbanPanel from '../../Components/Com_Desarrollador/KanbanPanel';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
 
 function TableroKanbanDesarrollador() {
+    
+
+
     return(
          <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop rutaLogin='/desarrollador_login' rutaPerfil='/desarrollador_profile'/>
