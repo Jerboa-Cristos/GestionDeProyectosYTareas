@@ -5,7 +5,6 @@ import { useContext, useMemo } from 'react';
 import ColumnaTareas from '../../Components/Com_Desarrollador/ColumnaTareas';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
-import { User } from 'lucide-react';
 
 function MisTareasDesarrollador() {
     const user = JSON.parse(localStorage.getItem('user'))

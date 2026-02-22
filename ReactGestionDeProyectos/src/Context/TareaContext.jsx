@@ -7,11 +7,13 @@ export const TareaContext = createContext();
 export const TareaProvider = ({children}) => {
     const [tareas, setTareas] = useState([])
     const user = JSON.parse(localStorage.getItem('user'))
-    const token = user.token
+    const token = user?.token
     const location = useLocation();
 
-    if(token) {
+
         useEffect(() => {
+            if(!token) return;
+
             const rutasPermitidas = ["/DashboardDesarrollador", "/TableroKanbanDesarrollador", "/MisTareasDesarrollador"]
             const rutaDesarrollador = rutasPermitidas.some( ruta => 
                 location.pathname.startsWith(ruta)
@@ -24,7 +26,6 @@ export const TareaProvider = ({children}) => {
                 });
             }
         }, [location.pathname])
-    }
 
 return (
     <TareaContext.Provider value={{tareas, setTareas}}>
