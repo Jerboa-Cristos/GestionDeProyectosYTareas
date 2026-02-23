@@ -241,7 +241,7 @@ class AdministradorController extends Controller
     #endregion
 
     //FUNCIONES PARA LISTAR TODOS LOS PROYECTOS
-    public function indexProyectos() {
+    public function indexProyectosAdmin() {
         try {
             $proyectos = Proyecto::all();
             return response()->json($proyectos);

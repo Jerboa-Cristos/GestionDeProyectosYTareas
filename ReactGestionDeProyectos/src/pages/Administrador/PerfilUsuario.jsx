@@ -1,6 +1,6 @@
 import { User, Mail, Briefcase, Folder, RotateCcw, Edit3, Trash2, LockIcon } from 'lucide-react';
 import {useParams, useNavigate} from 'react-router-dom';
-import {eliminarUsuario, showUsuarios, updateUsuarios} from '../../services/adminService';
+import {eliminarUsuario, showUsuarios, updateUsuarios, mostrarProyectos } from '../../services/adminService';
 import { useEffect, useState } from 'react';
 import MenuTop from '../../Components/MenuTop';
 
@@ -16,12 +16,13 @@ function PerfilUsuario() {
         password_confirmation:'',
         rol: '',
         oldRol:'',
-        id_proyecto: ''
+        proyecto: ''
     })
 
     useEffect(() => {
         //Cargamos la información del usuario solo
         const fetchUser = async () => {
+            if (!token) return;
             showUsuarios(rol, id, token).then(res => {
                 setFormData({
                     ...formData,
@@ -30,7 +31,7 @@ function PerfilUsuario() {
                     oldEmail: res.data.email || '',
                     oldRol: rol,
                     rol: rol,
-                    id_proyecto: res.data.id_proyecto || ''
+                    proyecto: res.data.id_proyecto || ''
                 })
                 console.log('Datos: ', res.data)
             }).catch(err => {
@@ -39,6 +40,20 @@ function PerfilUsuario() {
         }
         fetchUser();
      }, [rol, id])
+
+    const [proyectos, setProyecto] = useState()
+    useEffect(() => {
+        if (!token) return;
+        //Aquí se deben cargar los usuarios desde el backend
+        const fetchProjects = async () => {
+            mostrarProyectos(token).then(res => {
+                setProyecto(res.data);
+            }).catch(err => {
+                console.error("Error al cargar los proyectos:", err);
+            });
+        }
+        fetchProjects();
+    }, [])
 
 //#region Función para hacer UPDATE del usuario
 const handleChange = (e) => {
@@ -171,10 +186,11 @@ const volverAtras = () => {
                         <select 
                         value={formData.proyecto}
                         onChange={handleChange}
-                        name='id_proyecto'
+                        name='proyecto'
                         className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic appearance-none text-center text-gray-500">
-                        <option value="">Elegir proyecto</option>
-                        <option value="1">Proyecto N1</option>
+                            {proyectos.map((proyecto) => (
+                                <option value={proyecto.id}>{proyecto.nombre}</option>
+                            ))}
                         </select>
                         <div className="absolute right-4 top-3 pointer-events-none text-blueDark">
                         <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>

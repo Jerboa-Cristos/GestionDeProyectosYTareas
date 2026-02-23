@@ -44,6 +44,7 @@ Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsua
 Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios'])->middleware('auth:sanctum');
 Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios'])->middleware('auth:sanctum');
 Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsuarios'])->middleware('auth:sanctum');
+Route::get('indexProyectosAdmin', [AdministradorController::class, 'indexProyectosAdmin'])->middleware('auth:sanctum');
 #endregion
 
 #region PRODUCT OWNER

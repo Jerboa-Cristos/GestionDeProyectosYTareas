@@ -38,3 +38,9 @@ export const eliminarUsuario = (id, rol, token) => axios.delete(rutaApi() + '/el
         Authorization: `Bearer ${token}`
     }
 })
+
+export const mostrarProyectos = (token) => axios.get(rutaApi() + '/indexProyectosAdmin', {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
