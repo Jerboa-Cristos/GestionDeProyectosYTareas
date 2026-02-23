@@ -50,6 +50,7 @@ class DesarrolladorAuthController extends Controller
         $desarrollador = Desarrollador::where('email', $request->email)->first();
         $input['nombre'] = $desarrollador->nombre;
         $input['email'] = $desarrollador->email;
+        $input['id'] = $desarrollador->id;
         $input['token'] = $desarrollador->createToken('Desarrollador')->plainTextToken;
 
         return response()->json($input);
@@ -79,6 +80,7 @@ class DesarrolladorAuthController extends Controller
         $desarrollador->save();
         $input['nombre'] = $desarrollador->nombre;
         $input['email'] = $desarrollador->email;
+        $input['id'] = $desarrollador->id;
 
         return response()->json($input);
     }

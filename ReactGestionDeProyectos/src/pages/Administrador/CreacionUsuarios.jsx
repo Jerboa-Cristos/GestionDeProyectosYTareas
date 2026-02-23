@@ -7,7 +7,7 @@ import MenuTop from '../../Components/MenuTop';
 
 function CreacionUsuarios() {
     const userAdmin = JSON.parse(localStorage.getItem('user'))
-    const token = userAdmin.token
+    const token = userAdmin?.token
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         nombre: '', 

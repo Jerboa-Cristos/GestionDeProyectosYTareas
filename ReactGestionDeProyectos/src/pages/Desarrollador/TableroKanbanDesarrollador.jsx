@@ -1,14 +1,29 @@
 //Código
 import { Search } from 'lucide-react';
-import { useContext, useMemo } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { TareaContext } from '../../Context/TareaContext';
 //Componentes
-import KanbanPanel from '../../Components/Com_Desarrollador/KanbanPanel';
+import KanbanColumn from '../../Components/Com_Desarrollador/KanbanColumn';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
 
 function TableroKanbanDesarrollador() {
-    
+    const {tareas} = useContext(TareaContext);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const filteredTareas = tareas.filter((tarea) => {
+        const fullName = tarea.nombre.toLowerCase().includes(searchTerm.toLowerCase()); 
+        return fullName;
+    })
+
+    const tareasPorEstado = useMemo(() => {
+    return {
+        PorHacer: tareas.filter(tarea => tarea.estado === 'Por Hacer'),
+        EnCurso: tareas.filter(tarea => tarea.estado === 'En Curso'),
+        EnRevision: tareas.filter(tarea => tarea.estado === 'En Revision'),
+        Finalizado: tareas.filter(tarea => tarea.estado === 'Finalizado'),
+    }
+    }, [tareas])
 
 
     return(
@@ -21,30 +36,25 @@ function TableroKanbanDesarrollador() {
                     
                     {/* Barra de búsqueda */}
                     <div className="mb-8">
-                        <div className="relative w-64 max-w-xs">
+                         <div className="relative w-full" onClick={(e)=>e.stopPropagation()}>
                             <input 
                                 type="text"
                                 placeholder="Buscar..."
-                                className="w-full bg-blueblue text-blueDark pl-10 pr-4 py-2 
-                                rounded-lg
-                                placeholder-white"
+                                value={searchTerm}
+                                onChange={(e)=>setSearchTerm(e.target.value)}
+                                className="w-full bg-blueBase text-blueDark pl-10 pr-4 py-2 
+                                rounded-lg xs:h-12
+                                placeholder-blueDark"
                             />
-                            <Search className="absolute left-3 top-2.5 text-white" size={20} />
+                            <Search className="absolute left-3 top-2.5 text-blueDark" size={20} />
                         </div>
                     </div>
 
-
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div className="bg-[#4eb1ba] rounded-2xl p-4 min-h-[600px] flex flex-col gap-4">
-                            <h3 className="text-white font-bold text-sm px-2 mb-2">
-                            OOOO
-                            </h3>
-                            <KanbanPanel title="Tareas Pendientes" code="TP-001" />
-                            <KanbanPanel title="En Progreso" code="EP-002" />
-                            <KanbanPanel title="En Revisión" code="ER-003" />
-                            <KanbanPanel title="Completadas" code="C-004" />
-                        </div>
+                    <div className="grid md:grid-cols-4 gap-2">
+                        <KanbanColumn titulo='Por Hacer' tipoEstado={tareasPorEstado.PorHacer}/>
+                        <KanbanColumn titulo='En Curso' tipoEstado={tareasPorEstado.EnCurso}/>
+                        <KanbanColumn titulo='En Revisión' tipoEstado={tareasPorEstado.EnRevision}/>
+                        <KanbanColumn titulo='Finalizado' tipoEstado={tareasPorEstado.Finalizado}/>
                     </div>
                 </main>
             </div>

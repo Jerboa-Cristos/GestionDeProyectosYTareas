@@ -6,6 +6,7 @@ import MenuTop from '../../Components/MenuTop';
 
 function PerfilUsuario() {
     const userAdmin = JSON.parse(localStorage.getItem('user'))
+    const token = userAdmin?.token
     const navigate = useNavigate();
     const {rol, id} = useParams();
     const [formData, setFormData] = useState({
@@ -16,12 +17,13 @@ function PerfilUsuario() {
         password_confirmation:'',
         rol: '',
         oldRol:'',
+        id_proyecto: ''
     })
 
     useEffect(() => {
         //Cargamos la información del usuario solo
         const fetchUser = async () => {
-            showUsuarios(rol, id, userAdmin.token).then(res => {
+            showUsuarios(rol, id, token).then(res => {
                 setFormData({
                     ...formData,
                     nombre: res.data.nombre || '',
@@ -29,7 +31,7 @@ function PerfilUsuario() {
                     oldEmail: res.data.email || '',
                     oldRol: rol,
                     rol: rol,
-                    proyecto: res.data.proyecto || ''
+                    id_proyecto: res.data.id_proyecto || ''
                 })
                 console.log('Datos: ', res.data)
             }).catch(err => {
@@ -170,7 +172,7 @@ const volverAtras = () => {
                         <select 
                         value={formData.proyecto}
                         onChange={handleChange}
-                        name='proyecto'
+                        name='id_proyecto'
                         className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic appearance-none text-center text-gray-500">
                         <option value="">Elegir proyecto</option>
                         <option value="1">Proyecto N1</option>
