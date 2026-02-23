@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MenuTop from "../../Components/MenuTop";
-import { funcion_listado_proyecto } from "../../services/ruta_api_proyecto";
+import { funcion_listado_proyecto, funcion_elimimar_proyecto } from "../../services/ruta_api_proyecto";
 import Menu_Izquierdo from "../Menus/Menu_Izquierdo";
 
 function Lista_Proyectos() {
@@ -13,6 +13,8 @@ function Lista_Proyectos() {
     funcion_listado_proyecto(token)
       .then((res) => setProyectos(res.data))
       .catch((err) => console.error("Error cargando proyectos", err));
+
+    
   }, []);
 
   console.log(proyectos);

@@ -4,7 +4,14 @@ const APP_URL = "http://localhost/api";
 // Funciones para interactuar con la API de autenticación
 //export const funcion = (data) => axios.post(APP_URL + '/ruta_del_backend', data)
 //Administrador
-export const funcion_administrador_register = (data) => axios.post(APP_URL + '/register_administrador', data)
+export const funcion_administrador_register = (data, token) => axios.post(APP_URL + '/register_administrador', data, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+
+
+
 export const funcion_administrador_login = (data) => axios.post(APP_URL + '/login_administrador', data)
 export const funcion_administrador_profile = (data, token) => axios.get(APP_URL + '/profile_administrador', data, {
     headers: { Authorization: `Bearer ${token}`}
