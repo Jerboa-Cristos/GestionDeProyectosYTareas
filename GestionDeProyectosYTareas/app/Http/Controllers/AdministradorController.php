@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 class AdministradorController extends Controller
 {
 
-
 #region FUNCIONES PRINCIPALES
     public function indexUsuarios(){ //Mostrar datos sobre usuarios
         $desarrolladores=Desarrollador::all()->map(function($desarrollador){
@@ -30,8 +29,7 @@ class AdministradorController extends Controller
             return $administrador;
         });
 
-        $todos=$desarrolladores->concat($productOwners)->concat($administradores);
-        $todos->sortBy('nombre')->values()->all();
+        $todos=$desarrolladores->concat($productOwners)->concat($administradores)->sortBy('nombre')->values();
         return response()->json($todos, 200);
     }
 
@@ -61,7 +59,7 @@ class AdministradorController extends Controller
             'id_administrador'=>'requiered|exists:administrador,id',
         ]);
 
-        $administrador = Administrador::where('email', $request->adminEmail)->first();
+        $administrador = auth('administrador')->user();
 
         $desarrollador = new Desarrollador([
             'nombre'=>$desarrollador_info['nombre'],
@@ -89,7 +87,7 @@ class AdministradorController extends Controller
             'password'=>'required|same:confirmed_password',
         ]);
 
-        $administrador = Administrador::where('email', $request->adminEmail)->first();
+        $administrador = auth('administrador')->user();
 
         $productOwner = new ProductOwner([
             'nombre'=>$productOwner_info['nombre'],
@@ -192,7 +190,7 @@ class AdministradorController extends Controller
                 $updateData['password']=$passwordAntiguo;
             }
 
-            $administrador = Administrador::where('email', $request->adminEmail)->first();
+            $administrador = auth('administrador')->user();
             $updateData['id_administrador']=$administrador->id;
             $updateData['id_proyecto']=2;
 
@@ -232,7 +230,7 @@ class AdministradorController extends Controller
                 $updateData['password']=$passwordAntiguo;
             }
 
-            $administrador = Administrador::where('email', $request->adminEmail)->first();
+            $administrador = auth('administrador')->user();
             $updateData['id_administrador']=$administrador->id;
 
             ProductOwner::updateOrCreate(
@@ -245,7 +243,7 @@ class AdministradorController extends Controller
         return response()->json(['error' => 'No se pudo actualizar el usuario'], 404);
     }
 
-    public function eliminarUsuario($rol, $id) {
+    public function eliminarUsuarios($rol, $id) {
         if($rol=='Administrador'){
             Administrador::findOrFail($id)->delete();
             return response()->json(['message'=>'Usuario eliminado con exito'], 200);

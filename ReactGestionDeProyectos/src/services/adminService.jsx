@@ -4,16 +4,36 @@ import rutaApi from '../api/rutaApi';
 //export const funcion = (data) => axios.post(APP_URL + '/ruta_del_backend', data)
 
 //FUNCIÓN PARA MOSTRAR A LOS DESARROLLADORES, PRODUCT OWNERS Y ADMINISTRADORES EN UN LISTADO
-export const mostrarUsuarios = (data) => axios.get(rutaApi() + '/indexUsuarios', data)
+export const mostrarUsuarios = (token) => axios.get(rutaApi() + '/indexUsuarios', {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
 
 //FUNCIÓN PARA GUARDAR A LOS NUEVOS USUARIOS
-export const guardarUsuarios = (data) => axios.post(rutaApi() +'/storeUsuarios', data)
+export const guardarUsuarios = (data, token) => axios.post(rutaApi() +'/storeUsuarios', data, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
 
 //FUNCIÓN PARA MOSTRAR A UN USUARIO ESPECIFICO
-export const showUsuarios = (id, rol) => axios.get(rutaApi() + '/showUsuarios/' + rol + '/' +  id)
+export const showUsuarios = (id, rol, token) => axios.get(rutaApi() + '/showUsuarios/' + rol + '/' +  id, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
 
 //FUNCIÓN PARA HACER UPDATE DE UN USUARIO
-export const updateUsuarios = (data, rol, id) => axios.put(rutaApi() + '/updateUsuarios/' + rol + '/' + id , data)
+export const updateUsuarios = (data, rol, id ,token) => axios.put(rutaApi() + '/updateUsuarios/' + rol + '/' + id , data, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
 
 //FUNCIÓN PARA ELIMINAR A LOS USUARIOS
-export const eliminarUsuario = (id, rol) => axios.delete(rutaApi() + '/eliminarUsuarios/' + rol + '/' + id)
+export const eliminarUsuario = (id, rol, token) => axios.delete(rutaApi() + '/eliminarUsuarios/' + rol + '/' + id, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})

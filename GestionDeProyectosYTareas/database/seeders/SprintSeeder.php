@@ -19,7 +19,7 @@ class SprintSeeder extends Seeder
         for($i=0; $i<=5; $i++) {
             DB::table('sprint')->insert([
                 'nombre'=> $faker->word(),
-                'fecha_inicio' => $faker->date(),
+                'fecha_inicio'=>$faker->date(),
                 'fecha_fin'=>$faker->date(),
                 'id_proyecto'=>1
             ]);
