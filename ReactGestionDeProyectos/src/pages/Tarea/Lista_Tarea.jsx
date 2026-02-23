@@ -9,7 +9,7 @@ function Lista_Tarea () {
 
     return (
         <>
-        <MenuTop/>
+        <MenuTop rutaPerfil='/product_owner_profile'/>
         <Menu_Izquierdo/>
         
         

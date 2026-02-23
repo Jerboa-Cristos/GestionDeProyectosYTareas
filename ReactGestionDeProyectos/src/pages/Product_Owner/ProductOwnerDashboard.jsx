@@ -65,7 +65,7 @@ function ProductOwnerDashboard () {
 
     return (
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
-            <MenuTop rutaLogin='/product_owner_login' rutaPerfil='/product_owner_profile'/>
+            <MenuTop rutaPerfil='/product_owner_profile'/>
             <div className="flex flex-1 gap-4 overflow-hidden h-full">
                 <MenuIZquierdo/>
                 <main className="flex-1 bg-white rounded-xl shadow-lg p-8 overflow-auto flex flex-col gap-6">

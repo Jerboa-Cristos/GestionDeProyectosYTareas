@@ -22,7 +22,6 @@ import Login from './pages/Auth/Login';
 import AdministradorProfile from './pages/Auth/Administrador/AdministradorProfile';
 import AdministradorRegister from './pages/Auth/Administrador/AdministradorRegister';
 //Product Owner
-import ProductOwnerLogin from './pages/Auth/ProductOwner/ProductOwnerLogin';
 import ProductOwnerDashboard from './pages/Product_Owner/ProductOwnerDashboard';
 import ProductOwnerProfile from './pages/Product_Owner/ProductOwnerProfile';
 //Desarrollador
@@ -65,7 +64,6 @@ function App() {
 
           {/*RUTAS AUTH PRODUCT OWNER */}
           {/*<Route path='ruta del navegador del frontend' element={<Componente/>}/> EJEMPLO DE RUTA*/}
-          <Route path='/product_owner_login' element={<ProductOwnerLogin/>}/>
           <Route path='/product_owner_profile' element={<ProductOwnerProfile/>}/>
           <Route path='/product_owner_dashboard' element={<ProductOwnerDashboard/>}/>
           <Route path='/lista_proyectos' element={<Lista_Proyectos/>}/>

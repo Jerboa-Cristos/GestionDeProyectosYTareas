@@ -47,7 +47,7 @@ function Crear_Tarea () {
 
     return (
     <>  
-    <MenuTop/>  
+    <MenuTop rutaPerfil='/product_owner_profile'/>  
     <div className="flex">
         <Menu_Izquierdo/>
 

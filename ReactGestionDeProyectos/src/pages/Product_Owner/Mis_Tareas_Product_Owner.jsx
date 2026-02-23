@@ -10,7 +10,7 @@ function Mis_Tareas_Product_Owner() {
 
     return (
          <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
-            <MenuTop rutaLogin='/desarrollador_login' rutaPerfil='/desarrollador_profile'/>
+            <MenuTop rutaPerfil='/product_owner_profile'/>
 
             
 

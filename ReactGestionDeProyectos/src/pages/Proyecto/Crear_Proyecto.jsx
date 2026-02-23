@@ -39,7 +39,7 @@ function Crear_Proyecto() {
 
     return ( 
         <>
-        <MenuTop/>
+        <MenuTop rutaPerfil='/product_owner_profile'/>
         <div className="flex ">
             <Menu_Izquierdo/>
             
