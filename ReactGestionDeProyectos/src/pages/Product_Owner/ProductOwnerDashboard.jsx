@@ -71,12 +71,12 @@ function ProductOwnerDashboard () {
                 <main className="flex-1 bg-white rounded-xl shadow-lg p-8 overflow-auto flex flex-col gap-6">
                     <h1 className="text-3xl font-bold text-blueDark mb-6">Dashboard</h1>
 
-                    {/* Grid Principal */}
+                    
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div className="space-y-6">
-                        {/* Tarjetas de Tareas */}
+                        
                         <div className="grid grid-cols-1 gap-4">
-                            {/* Tareas Asignadas */}
+                            
                             <button 
                             
                             className="bg-blueDashboard rounded-xl p-6 flex items-center justify-between text-white hover:shadow-lg hover:bg-blueblue transition-all" 
@@ -88,7 +88,7 @@ function ProductOwnerDashboard () {
                                 <span className="text-4xl font-bold">{tareas.length}</span>
                             </button>
 
-                            {/* Tareas Deadline */}
+                           
                             <button  
                             className={"bg-warning rounded-xl p-6 flex items-center justify-between text-white relative hover:shadow-lg hover:bg-warningDark transition-all"}>
                             <div className="flex items-center gap-4">
@@ -100,7 +100,7 @@ function ProductOwnerDashboard () {
                             </button>
                         </div>
 
-                        {/* Tipo de Trabajo MONTARLO TODO */}
+                        
                         <div className="bg-blueBase rounded-xl p-6">
                             <h3 className="text-center text-xl font-semibold text-blueDark mb-4">Tipo de trabajo</h3>
                             <div className="space-y-1">
@@ -152,16 +152,17 @@ function ProductOwnerDashboard () {
                     </div>
 
                     <div className="space-y-6">
-                        {/* Últimos Cambios */}
+                       
                         <div className="bg-blueBase rounded-xl p-6 shadow-sm">
                             <h3 className="text-center text-xl font-semibold text-blueDark mb-6">Últimos Cambios</h3>
                             <div className="space-y-3">
                             {tareas.slice(0, 3).map((tarea) => (
                                 <div key={tarea.id} className="bg-turquesa rounded-lg p-3 flex items-center gap-4 text-white text-sm">
-                                {/*Aquí debe estar la imagen del usuario*/}
+                                
                                     <div className="grid grid-cols-3 w-full text-center">
                                         <span>Nombre Usuario</span>
-                                        <span>{tarea.desarrollador.nombre}</span>
+                                        
+                                        <span>{tarea.desarrollador?.nombre || 'Sin asignar'}</span>
                                         <span>{tarea.estado}</span>
                                         <span>{tarea.fecha_fin}</span>
                                     </div>
@@ -170,11 +171,11 @@ function ProductOwnerDashboard () {
                             </div>
                         </div>
 
-                        {/* Resumen del Estado (Gráfico Circular) */}
+                       
                         <div className="bg-blueBase rounded-xl p-6 shadow-sm flex flex-col items-center">
                             <h3 className="text-xl font-semibold text-blueDark mb-6">Resumen del Estado</h3>
                             <div className="relative w-48 h-48">
-                            {/* Representación visual simple del gráfico de pay */}
+                            
                                 <svg viewBox="0 0 32 32" className="w-full h-full rotate-[-90deg]">
                                     <circle 
                                     r="16" 
@@ -187,7 +188,7 @@ function ProductOwnerDashboard () {
                                 </svg>
                             </div>
 
-                            {/* Leyenda */}
+                           
                             <div className="flex gap-4 mt-8 text-xs font-semibold text-blueDark">
                                 <div className="flex items-center gap-2">
                                     <div className="w-3 h-3 bg-blueblue rounded-full"></div> Tareas Completadas

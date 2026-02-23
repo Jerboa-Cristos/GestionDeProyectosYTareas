@@ -15,7 +15,7 @@ function Menu_Izquierdo() {
                     <hr />
                     <Menu_Items icono={<ListCheck size={20}/>} texto="Tablero Kanban" ruta=""/>
                     <hr />
-                    <Menu_Items icono={<ClipboardList size={20}/>} texto="Mis Tareas" ruta=""/>
+                    <Menu_Items icono={<ClipboardList size={20}/>} texto="Mis Tareas" ruta="/mis_tareas_product_owner/${id_sprint}"/>
                     <hr />
                 
 

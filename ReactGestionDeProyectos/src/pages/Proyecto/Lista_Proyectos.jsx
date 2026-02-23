@@ -11,13 +11,17 @@ function Lista_Proyectos() {
     const token = localStorage.getItem("token");
     console.log("token existe", token);
     funcion_listado_proyecto(token)
-      .then((res) => setProyectos(res.data))
+      .then((res) => {setProyectos(res.data )
+        console.log('lista p', res.data)
+      })
       .catch((err) => console.error("Error cargando proyectos", err));
 
     
   }, []);
 
+  
   console.log(proyectos);
+
 
   return (
     <>

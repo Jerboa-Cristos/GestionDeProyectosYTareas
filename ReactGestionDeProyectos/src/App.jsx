@@ -63,7 +63,7 @@ function App() {
           <Route path='/product_owner_dashboard' element={<ProductOwnerDashboard/>}/>
           <Route path='/lista_proyectos' element={<Lista_Proyectos/>}/>
           <Route path='/menu_izquierdo' element={<Menu_Izquierdo/>}/>
-          <Route path='/mis_tareas_product_owner' element={<Mis_Tareas_Product_Owner/>}/>
+          <Route path='/mis_tareas_product_owner/:id_sprint' element={<Mis_Tareas_Product_Owner/>}/>
           <Route path='/tablero_kanban_product_owner/:id_sprint' element={<Tablero_Kanban_Product_Owner/>}/>
 
           {/*PROYECTO */}
@@ -82,6 +82,8 @@ function App() {
           <Route path='/desarrollador_profile' element={<DesarrolladorProfile/>}/>
           {/*AQUÍ PONGO EL CONTEXT DE TAREA PARA NO TENER QUE DECLARARLO CADA VEZ */}
         </Routes>
+
+        
           <TareaProvider>
             {/*RUTAS DESARROLLADOR*/}
             <Routes>
