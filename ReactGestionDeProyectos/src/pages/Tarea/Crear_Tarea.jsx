@@ -36,7 +36,7 @@ function Crear_Tarea () {
                 console.log('tarea creada', respuesta.data)
                 navigate(`/mostrar_tarea/${id_sprint}`)
                 console.log('sprint',id_sprint)
-                console.log('tipo', typeof id_sprint)
+                
             })
             .catch(error => {
                 console.log('Error al crear tarea', error.respuesta.data)

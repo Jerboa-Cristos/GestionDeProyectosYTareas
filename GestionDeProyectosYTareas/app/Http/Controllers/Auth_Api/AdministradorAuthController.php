@@ -52,7 +52,7 @@ class AdministradorAuthController extends Controller
             'nombre' => $request->nombre,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'id_administrador' => auth()->id(),
+            'id_administrador' => auth()->id,
         ]);
 
         
@@ -72,7 +72,7 @@ class AdministradorAuthController extends Controller
             'nombre' => $request->nombre,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'id_administrador' => auth()->id(),
+            'id_administrador' => auth()->id,
             'id_proyecto' => $request->id_proyecto
         ]);
 

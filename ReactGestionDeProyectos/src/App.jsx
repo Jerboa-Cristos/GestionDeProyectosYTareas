@@ -22,7 +22,7 @@ import Login from './pages/Auth/Login';
 import AdministradorProfile from './pages/Auth/Administrador/AdministradorProfile';
 import AdministradorRegister from './pages/Auth/Administrador/AdministradorRegister';
 //Product Owner
-import ProductOwnerRegister from './pages/Auth/ProductOwner/ProductOwnerRegister';
+import ProductOwnerLogin from './pages/Auth/ProductOwner/ProductOwnerLogin';
 import ProductOwnerDashboard from './pages/Product_Owner/ProductOwnerDashboard';
 import ProductOwnerProfile from './pages/Product_Owner/ProductOwnerProfile';
 //Desarrollador
@@ -43,16 +43,9 @@ import Crear_Tarea from './pages/Tarea/Crear_Tarea';
 import Menu_Izquierdo from './pages/Menus/Menu_Izquierdo';
 import Mis_Tareas_Product_Owner from './pages/Product_Owner/Mis_Tareas_Product_Owner';
 import Tablero_Kanban_Product_Owner from './pages/Product_Owner/Tablero_Kanban_Product_Owner';
+import Editar_Tarea from './pages/Tarea/Editar_Tarea';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const location = useLocation()
-
-  useEffect(() => {
-    const auth = localStorage.getItem("isAuthenticated")
-    setIsAuthenticated(auth === "true")
-  }, [location])
-
 // <Route path="/" element={<Login/>}/> LOGIN NUESTRO
 
 
@@ -72,7 +65,7 @@ function App() {
 
           {/*RUTAS AUTH PRODUCT OWNER */}
           {/*<Route path='ruta del navegador del frontend' element={<Componente/>}/> EJEMPLO DE RUTA*/}
-          <Route path='/product_owner_register' element={<ProductOwnerRegister/>}/>
+          <Route path='/product_owner_login' element={<ProductOwnerLogin/>}/>
           <Route path='/product_owner_profile' element={<ProductOwnerProfile/>}/>
           <Route path='/product_owner_dashboard' element={<ProductOwnerDashboard/>}/>
           <Route path='/lista_proyectos' element={<Lista_Proyectos/>}/>
@@ -89,6 +82,7 @@ function App() {
 
           {/*TAREA */}
           <Route path='/crear_tarea/:id_sprint' element={<Crear_Tarea/>}/>
+          <Route path='/editar_tarea' element={<Editar_Tarea/>}/>
 
 
           {/*RUTAS AUTH DESARROLLADOR */}

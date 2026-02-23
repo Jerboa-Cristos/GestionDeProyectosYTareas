@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import MenuTop from '../../Components/MenuTop';
 import Menu_Izquierdo from '../Menus/Menu_Izquierdo';
-import {Link} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 
 function Mis_Tareas_Product_Owner() {
     const [nombre, setNombre] = useState()
-
+    const id_sprint = useParams()
+    
 
     return (
          <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
