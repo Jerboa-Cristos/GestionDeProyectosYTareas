@@ -94,3 +94,11 @@ Route::get('indexTareasDesarrollador',[TareaController::class, 'indexTareasDesar
 Route::get('showTareaDesarrollador/{id}', [TareaController::class, 'showTareaDesarrollador'])->middleware('auth:sanctum');
 Route::put('updateTareaDesarrollador/{id}', [TareaController::class, 'updateTareaDesarrollador'])->middleware('auth:sanctum');
 #endregion
+
+#region COMENTARIO
+Route::get('indexComentario', [ComentarioController::class, 'indexComentario'])->middleware('auth:sanctum');
+Route::get('showComentario/{$id}', [ComentarioController::class, 'showComentario'])->middleware('auth:sanctum');
+Route::delete('eliminarComentario/{id}', [ComentarioController::class, 'eliminarComentario'])->middleware('auth:sanctum');
+Route::post('guardarComentario',[ComentarioController::class, 'guardarComentario'])->middleware('auth:sanctum');
+Route::put('updateComentario/{id}', [ComentarioController::class, 'updateComentario'])->middleware('auth:sanctum');
+#endregion

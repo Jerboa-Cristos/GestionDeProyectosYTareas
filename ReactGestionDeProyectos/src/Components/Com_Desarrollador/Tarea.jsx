@@ -4,8 +4,10 @@ import { Calendar } from 'lucide-react';
 const Tarea = ({ id, title, description, fecha }) => {
   const navigate = useNavigate();
 
-  const gotoTarea = (id) => {
-    navigate('/ShowTarea/{id}')
+  const gotoTarea = (e) => {
+    e.stopPropagation()
+     if (!id) return;
+    navigate(`/MostrarTarea/${id}`)
   }
 
   const tareasDeadline = (fecha) => {
@@ -31,7 +33,7 @@ const Tarea = ({ id, title, description, fecha }) => {
     }
 
   return (
-    <button key={id} onClick={(e) => {gotoTarea(id); e.stopPropagation()}}
+    <button key={id} id={id} onClick={gotoTarea} type='button'
     className="w-full bg-blueBase hover:bg-BlueBaseDark transition-colors rounded-lg p-4 text-left group">
       <h4 className="text-blueDark font-bold text-lg text-center mb-2">{title}</h4>
       <p className="text-BlueDarkDark text-xs leading-tight mb-4">

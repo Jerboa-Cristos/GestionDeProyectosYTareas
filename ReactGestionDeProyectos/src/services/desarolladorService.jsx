@@ -18,7 +18,7 @@ export const showMiTarea = (id, token) => axios.get(rutaApi() + '/showTareaDesar
 })
 
 //FUNCIÓN PARA HACER UPDATE DE UNA TAREA DEL DESARROLLADOR
-export const updateTarea = (id, data, token) => axios.put(rutaApi() + '/updateTareaDesarrollador/' + id, data, {
+export const updateTarea = (id, data, token) => axios.put(rutaApi() + '/updateTareaDesarrollador/' + id, { estado: estado }, {
     headers: {
         Authorization: `Bearer ${token}`
     }

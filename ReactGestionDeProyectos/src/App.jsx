@@ -11,6 +11,7 @@ import PerfilUsuario from './pages/Administrador/PerfilUsuario';
 import DashboardDesarrollador from './pages/Desarrollador/DashboardDesarrollador';
 import MisTareasDesarrollador from './pages/Desarrollador/MisTareasDesarrollador';
 import TableroKanbanDesarrollador from './pages/Desarrollador/TableroKanbanDesarrollador';
+import MostrarTarea from './pages/Desarrollador/MostrarTarea';
 
 
 //melissa
@@ -93,6 +94,7 @@ function App() {
               <Route path="/DashboardDesarrollador" element={<DashboardDesarrollador/>}/>
               <Route path="/TableroKanbanDesarrollador" element={<TableroKanbanDesarrollador/>}/>
               <Route path="/MisTareasDesarrollador" element={<MisTareasDesarrollador/>}/>
+              <Route path="/MostrarTarea/:id" element={<MostrarTarea/>}/>
             </Routes>
           </TareaProvider>
       </>

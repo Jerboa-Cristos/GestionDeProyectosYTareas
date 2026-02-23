@@ -1,6 +1,6 @@
 import { User, Mail, Briefcase, Folder, RotateCcw, Edit3, Trash2, LockIcon } from 'lucide-react';
 import {useParams, useNavigate} from 'react-router-dom';
-import {eliminarUsuario, showUsuarios, updateUsuarios, mostrarProyectos } from '../../services/adminService';
+import {eliminarUsuario, showUsuarios, updateUsuarios, mostrarProyectos} from '../../services/adminService';
 import { useEffect, useState } from 'react';
 import MenuTop from '../../Components/MenuTop';
 

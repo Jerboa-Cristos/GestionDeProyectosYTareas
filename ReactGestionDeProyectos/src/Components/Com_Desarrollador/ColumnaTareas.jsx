@@ -9,7 +9,7 @@ const ColumnaTareas = ({titulo, tipoEstado}) => (
             <div className="flex flex-col gap-4">
                 {
                 tipoEstado.map((tarea) => (
-                    <Tarea key={tarea.id} title={tarea.nombre} description={tarea.descripcion} estado={tarea.estado} fecha={tarea.fecha_fin}/>
+                    <Tarea key={tarea.id} id={tarea.id} title={tarea.nombre} description={tarea.descripcion} fecha={tarea.fecha_fin}/>
                 )) 
                 }
             </div>
