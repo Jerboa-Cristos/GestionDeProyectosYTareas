@@ -6,6 +6,7 @@ export const TareaContext = createContext();
 
 export const TareaProvider = ({children}) => {
     const [tareas, setTareas] = useState([])
+    const userDesarrollador = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     const location = useLocation();
 

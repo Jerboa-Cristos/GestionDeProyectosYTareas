@@ -53,7 +53,7 @@ return [
         ],
 
         'desarrollador' => [
-            'driver' => 'session',
+            'driver' => 'sanctum',
             'provider' => 'desarrolladores',
         ],
 

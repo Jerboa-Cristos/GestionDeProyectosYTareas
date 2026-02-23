@@ -8,7 +8,6 @@ import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLat
 
 function MisTareasDesarrollador() {
     const user = JSON.parse(localStorage.getItem('user'))
-    console.log(user)
     const {tareas} = useContext(TareaContext);
 
     const miTareas = tareas.filter(tarea => tarea.id_desarrollador === user.id)

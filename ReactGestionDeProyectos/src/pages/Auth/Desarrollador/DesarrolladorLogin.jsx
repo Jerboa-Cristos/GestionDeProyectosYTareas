@@ -17,9 +17,9 @@ function DesarrolladorLogin () {
                 setErrors(res.data.errors)
             }else{
                 console.log(res.data)
-                const {nombre, email, token} = res.data
+                const {nombre, email, id, token} = res.data
                 localStorage.setItem("token", token) 
-                localStorage.setItem("user", JSON.stringify({nombre, email}))
+                localStorage.setItem("user", JSON.stringify({nombre, email, id}))
                 navigate('/DashboardDesarrollador')
             }
         })
