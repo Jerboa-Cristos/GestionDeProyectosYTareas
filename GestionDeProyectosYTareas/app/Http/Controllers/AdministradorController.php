@@ -239,4 +239,14 @@ class AdministradorController extends Controller
         return response()->json(['message'=>'Error al eliminar el usuario'], 404);
     }
     #endregion
+
+    //FUNCIONES PARA LISTAR TODOS LOS PROYECTOS
+    public function indexProyectos() {
+        try {
+            $proyectos = Proyecto::all();
+            return response()->json($proyectos);
+        } catch(\Exception $e) {
+            return response()->json(['message'=>'NO se pudo listar proyectos'], 404);
+        }
+    }
 }
