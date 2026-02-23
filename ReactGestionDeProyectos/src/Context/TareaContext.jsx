@@ -6,8 +6,7 @@ export const TareaContext = createContext();
 
 export const TareaProvider = ({children}) => {
     const [tareas, setTareas] = useState([])
-    const user = JSON.parse(localStorage.getItem('user'))
-    const token = user?.token
+    const token = localStorage.getItem('token');
     const location = useLocation();
 
 

@@ -29,8 +29,13 @@ class AdministradorAuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $input['nombre'] = $administrador->nombre;
+        $input['id'] = $administrador->id;
+        $input['rol'] = 'administrador';
+        $input['token'] = $administrador->createToken('Administrador')->plainTextToken;
+
         
-        return response()->json(['mensaje' => 'administrador creado']);
+        return response()->json($input);
     }
 
 
@@ -53,8 +58,6 @@ class AdministradorAuthController extends Controller
         
         return response()->json(['mensaje' => 'product_owner creado correctamente']);
     }
-
-
 
      public function registerDesarrollador(Request $request ){
         //en unique se pone el nombre de la tabla

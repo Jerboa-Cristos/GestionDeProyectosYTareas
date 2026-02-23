@@ -66,14 +66,11 @@ function App() {
           {/*RUTAS AUTH ADMINISTRADOR */}
           <Route path='/administrador_register' element={<AdministradorRegister/>}/>
           <Route path='/administrador_login' element={<AdministradorLogin/>}/>
-          {isAuthenticated && (
-            <>
-            <Route path="/administrador_profile" element={<AdministradorProfile/>}/>   
-            <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>
-            <Route path="/PerfilUsuario/:rol/:id" element={<PerfilUsuario/>}/>
-            <Route path="/CreacionUsuarios" element={<CreacionUsuarios/>}/>
-            </>
-          )}
+          <Route path="/administrador_profile" element={<AdministradorProfile/>}/>   
+          <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>
+          <Route path="/PerfilUsuario/:rol/:id" element={<PerfilUsuario/>}/>
+          <Route path="/CreacionUsuarios" element={<CreacionUsuarios/>}/>
+
 
           {/*RUTAS AUTH PRODUCT OWNER */}
           {/*<Route path='ruta del navegador del frontend' element={<Componente/>}/> EJEMPLO DE RUTA*/}

@@ -38,12 +38,12 @@ Route::post('register_desarrollador', [AdministradorAuthController::class, 'regi
 Route::post('login_administrador', [AdministradorAuthController::class,'loginAdministrador']);
 //Middleware
 //Route::get('ruta del navegador', [Controlador::class, 'metodo backend'])->middleware('auth:GUARD_DEL_USUARIO'); //carpeta config/auth.php
-Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware('auth:administrador');
-Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios'])->middleware('auth:administrador');
-Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsuarios'])->middleware('auth:administrador');
-Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios'])->middleware('auth:administrador');
-Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios'])->middleware('auth:administrador');
-Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsuarios'])->middleware('auth:administrador');
+Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware('auth:sanctum');
+Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios'])->middleware('auth:sanctum');
+Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsuarios'])->middleware('auth:sanctum');
+Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios'])->middleware('auth:sanctum');
+Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios'])->middleware('auth:sanctum');
+Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsuarios'])->middleware('auth:sanctum');
 #endregion
 
 #region PRODUCT OWNER
@@ -88,8 +88,8 @@ Route::put('asignarProyecto/{id}',[DesarrolladorController::class, 'asignarProye
 //RUTAS AUTENTICACION DESARROLLADOR
 Route::post('login_desarrollador', [DesarrolladorAuthController::class,'loginDesarrollador']);
 //Middleware
-Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:desarrollador');
-Route::get('indexTareasDesarrollador',[TareaController::class, 'indexTareasDesarrollador'])->middleware('auth:desarrollador');
-Route::get('showTareaDesarrollador/{id}', [TareaController::class, 'showTareaDesarrollador'])->middleware('auth:desarrollador');
-Route::put('updateTareaDesarrollador/{id}', [TareaController::class, 'updateTareaDesarrollador'])->middleware('auth:desarrollador');
+Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:sanctum');
+Route::get('indexTareasDesarrollador',[TareaController::class, 'indexTareasDesarrollador'])->middleware('auth:sanctum');
+Route::get('showTareaDesarrollador/{id}', [TareaController::class, 'showTareaDesarrollador'])->middleware('auth:sanctum');
+Route::put('updateTareaDesarrollador/{id}', [TareaController::class, 'updateTareaDesarrollador'])->middleware('auth:sanctum');
 #endregion

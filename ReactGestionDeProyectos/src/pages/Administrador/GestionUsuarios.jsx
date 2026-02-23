@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 function GestionUsuarios() {
-    const userAdmin = JSON.parse(localStorage.getItem('user'))
-    const token = userAdmin?.token
+    const token = localStorage.getItem('token');
     const [rolFilter, setRolFilter] = useState(null); // Estado para el filtro de rol
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');

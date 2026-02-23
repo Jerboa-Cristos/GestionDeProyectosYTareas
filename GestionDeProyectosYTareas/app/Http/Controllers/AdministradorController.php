@@ -56,7 +56,6 @@ class AdministradorController extends Controller
             'nombre'=>'required|max:100',
             'email'=>'required|unique:users|email',
             'password'=>'required|same:confirmed_password',
-            'id_administrador'=>'requiered|exists:administrador,id',
         ]);
 
         $administrador = auth('administrador')->user();
@@ -65,20 +64,12 @@ class AdministradorController extends Controller
             'nombre'=>$desarrollador_info['nombre'],
             'email'=>$desarrollador_info['email'],
             'password'=>Hash::make($desarrollador_info['password']),
-            'id_administrador'=> $administrador->id,
+            'id_administrador'=>$request->id_administrador,
         ]);
 
         $administrador->desarrolladores()->save($desarrollador);
-        $token = $desarrollador->createToken('Desarrollador')->plainTextToken;
-        
-        return response()->json([
-            'message'=>'Usuario registrado',
-            'token' => $token,
-            'id' => $desarrollador->id,
-            'nombre' => $desarrollador->nombre,
-            'rol' => 'desarrollador'
-        ], 200);
-
+        return response()->json(['message'=>'Usuario registrado'], 200);
+      
         } else if($request->rol=='ProductOwner') {
 
         $productOwner_info = $request->validate([
@@ -93,19 +84,10 @@ class AdministradorController extends Controller
             'nombre'=>$productOwner_info['nombre'],
             'email'=>$productOwner_info['email'],
             'password'=>Hash::make($productOwner_info['password']),
-            'id_administrador'=> $administrador->id,
         ]);
 
         $administrador->productOwners()->save($productOwner);
-        $token = $productOwner->createToken('ProductOwner')->plainTextToken;
-        
-        return response()->json([
-            'message'=>'Usuario registrado',
-            'token' => $token,
-            'id' => $productOwner->id,
-            'nombre' => $productOwner->nombre,
-            'rol' => 'product_owner'
-        ], 200);
+        return response()->json(['message'=>'Usuario registrado'], 200);
         }
         return response()->json(['error' => 'No se pudo guardar el usuario nuevo'], 404);
     }

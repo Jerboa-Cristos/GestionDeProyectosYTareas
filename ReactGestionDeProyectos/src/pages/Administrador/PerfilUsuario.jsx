@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react';
 import MenuTop from '../../Components/MenuTop';
 
 function PerfilUsuario() {
-    const userAdmin = JSON.parse(localStorage.getItem('user'))
-    const token = userAdmin?.token
+    const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const {rol, id} = useParams();
     const [formData, setFormData] = useState({
