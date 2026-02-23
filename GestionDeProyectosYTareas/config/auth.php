@@ -48,7 +48,7 @@ return [
         ],
 
         'product_owner' => [
-            'driver' => 'session',
+            'driver' => 'sanctum',
             'provider' => 'product_owners',
         ],
 

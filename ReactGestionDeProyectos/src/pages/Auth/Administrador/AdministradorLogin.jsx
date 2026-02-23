@@ -17,7 +17,7 @@ function AdministradorLogin () {
                 setErrors(res.data.errors)
             }else{
                 console.log(res.data)
-                const {nombre, email, token} = res.data
+                const {nombre, email, token, id} = res.data
                 localStorage.setItem("token", token) 
                 localStorage.setItem("user", JSON.stringify({nombre, email, id}))
                 navigate('/GestionUsuarios')

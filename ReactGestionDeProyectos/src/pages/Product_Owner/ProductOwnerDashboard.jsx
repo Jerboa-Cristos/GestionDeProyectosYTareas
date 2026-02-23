@@ -1,9 +1,9 @@
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import MenuTop  from '../../Components/MenuTop'
 import MenuIZquierdo from '../Menus/Menu_Izquierdo'
 import {  ClipboardList ,Calendar, AlertCircle } from "lucide-react"
 import { useEffect, useState } from "react"
-import { funcion_listado_tarea, funcion_listado_tareas_product_owner } from "../../services/ruta_api_tarea"
+import { funcion_listado_tareas_product_owner } from "../../services/ruta_api_tarea"
 
 function ProductOwnerDashboard () {
     const user = JSON.parse(localStorage.getItem('user'))
