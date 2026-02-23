@@ -14,24 +14,29 @@ use Illuminate\Support\Facades\Auth;
 class DesarrolladorAuthController extends Controller
 {
     public function loginDesarrollador(Request $request){
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+        try{
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required'
+            ]);
 
-        $desarrollador = Desarrollador::where('email', $request->email)->firstOrFail();
+            $desarrollador = Desarrollador::where('email', $request->email)->firstOrFail();
 
-        if(!Hash::check($request->password, $desarrollador->password)){
-            return response()->json(['error' => 'Email y password incorrectas'], 401);
-        }
+            if(!Hash::check($request->password, $desarrollador->password)){
+                return response()->json(['error' => 'Email y password incorrectas'], 401);
+            }
 
-        $input['nombre'] = $desarrollador->nombre;
-        $input['rol'] = 'desarrollador';
-        $input['email'] = $desarrollador->email;
-        $input['id'] = $desarrollador->id;
-        $input['token'] = $desarrollador->createToken('Desarrollador')->plainTextToken;
-        
-        return response()->json($input);   
+            $input['nombre'] = $desarrollador->nombre;
+            $input['rol'] = 'desarrollador';
+            $input['email'] = $desarrollador->email;
+            $input['id'] = $desarrollador->id;
+            $input['token'] = $desarrollador->createToken('Desarrollador')->plainTextToken;
+            
+            return response()->json($input);
+
+        } catch(\Exception $e) {
+            return response()->json(['message'=>'No tiene acceso'], 404);
+        }   
     }
     
 

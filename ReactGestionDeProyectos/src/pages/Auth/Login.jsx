@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { funcion_desarrollador_login } from "../../../services/authService"
+import { funcion_desarrollador_login, funcion_administrador_login, funcion_product_owner_login } from "../../services/authService"
 
 function DesarrolladorLogin () {
     const PantallaAzul = "flex bg-blueDark items-center justify-center min-h-screen";
@@ -8,21 +8,52 @@ function DesarrolladorLogin () {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState([])
+    const [rol, setRol] = useState('')
     const navigate = useNavigate()
 
     const submit = (e) => {
         e.preventDefault()
-        funcion_desarrollador_login({email: email, password: password}).then(res => {
-            if(res.data.errors){
-                setErrors(res.data.errors)
-            }else{
-                console.log(res.data)
-                const {nombre, email, id, token} = res.data
-                localStorage.setItem("token", token) 
-                localStorage.setItem("user", JSON.stringify({nombre, email, id}))
-                navigate('/DashboardDesarrollador')
-            }
-        })
+        switch(rol) {
+            case 'Desarrollador':
+                funcion_desarrollador_login({email: email, password: password}).then(res => {
+                if(res.data.errors){
+                    setErrors(res.data.errors)
+                }else{
+                    console.log(res.data)
+                    const {nombre, email, id, token} = res.data
+                    localStorage.setItem("token", token) 
+                    localStorage.setItem("user", JSON.stringify({nombre, email, id}))
+                    navigate('/DashboardDesarrollador')
+                }})
+                break;
+            case 'Administrador':
+                funcion_administrador_login({email: email, password: password}).then(res => {
+                if(res.data.errors){
+                    setErrors(res.data.errors)
+                }else{
+                    console.log(res.data)
+                    const {nombre, email, token, id} = res.data
+                    localStorage.setItem("token", token) 
+                    localStorage.setItem("user", JSON.stringify({nombre, email, id}))
+                    navigate('/GestionUsuarios')
+                }})
+                break;
+            case 'ProductOwner':
+                funcion_product_owner_login({email: email, password: password}).then(res => {
+                if(res.data.errors){
+                    setErrors(res.data.errors)
+                }else{
+                    console.log(res.data)
+                    const {nombre, email, token} = res.data
+                    localStorage.setItem("token", token) 
+                    localStorage.setItem("user", JSON.stringify({nombre, email}))
+                    navigate('/product_owner_dashboard')
+                }})
+                break;
+            case '':
+                console.error('Eliga el rol.')
+                break;
+        }
     }
 
     return (
@@ -70,6 +101,18 @@ function DesarrolladorLogin () {
                 autoComplete="password"
                 className="mt-1 block w-full rounded-md px-3 py-2 bg-blueBase text-2x2 focus:border-blueDark sm:text-sm placeholder-blueblue" 
                 placeholder="Enter your password"/>
+
+                <label className="text-blueDark text-sm leading-none font-bold select-none peer-disabled:cursor">Rol: </label>
+                <select 
+                value={rol}
+                onChange={(e) => setRol(e.target.value)}
+                className="mt-1 block w-full rounded-md px-3 py-2 bg-blueBase text-2x2
+                focus:border-blueDark sm:text-sm text-blueblue">
+                    <option value="">Rol...</option>
+                    <option value="Desarrollador">Desarrollador</option>
+                    <option value="Administrador">Admin</option>
+                    <option value="ProductOwner">Product Owner</option>
+                </select>
 
                 </div>
                 <button type="submit" className="w-full flex justify-center py-2 px-4

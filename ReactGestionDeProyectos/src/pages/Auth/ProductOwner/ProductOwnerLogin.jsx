@@ -12,6 +12,8 @@ function ProductOwnerLogin () {
 
     const submit = (e) => {
         e.preventDefault()
+        
+
         funcion_product_owner_login({email: email, password: password}).then(res => {
             if(res.data.errors){
                 setErrors(res.data.errors)
@@ -21,8 +23,6 @@ function ProductOwnerLogin () {
                 localStorage.setItem("token", token) 
                 localStorage.setItem("user", JSON.stringify({nombre, email}))
                 navigate('/product_owner_dashboard')
-                
-                
             }
         })
     }

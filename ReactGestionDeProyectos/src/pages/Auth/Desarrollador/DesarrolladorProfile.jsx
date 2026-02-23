@@ -40,7 +40,7 @@ function DesarrolladorProfile () {
     return (
         <>
           <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
-            <MenuTop rutaLogin='/desarrollador_login' rutaPerfil='/desarrollador_profile'/>
+            <MenuTop rutaPerfil='/desarrollador_profile'/>
 
             <div className="flex-1 flex-col">
 

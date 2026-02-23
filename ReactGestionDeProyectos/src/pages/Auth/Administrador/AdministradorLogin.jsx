@@ -17,7 +17,7 @@ function AdministradorLogin () {
                 setErrors(res.data.errors)
             }else{
                 console.log(res.data)
-                const {nombre, email, token} = res.data
+                const {nombre, email, token, id} = res.data
                 localStorage.setItem("token", token) 
                 localStorage.setItem("user", JSON.stringify({nombre, email, id}))
                 navigate('/GestionUsuarios')
@@ -70,6 +70,8 @@ function AdministradorLogin () {
                 autoComplete="password"
                 className="mt-1 block w-full rounded-md px-3 py-2 bg-blueBase text-2x2 focus:border-blueDark sm:text-sm placeholder-blueblue" 
                 placeholder="Enter your password"/>
+
+                
 
                 </div>
                 <button type="submit" className="w-full flex justify-center py-2 px-4
