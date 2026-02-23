@@ -7,6 +7,7 @@ import MenuTop from '../../Components/MenuTop';
 
 function CreacionUsuarios() {
     const userAdmin = JSON.parse(localStorage.getItem('user'))
+    const token = userAdmin?.token
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         nombre: '', 
@@ -15,7 +16,6 @@ function CreacionUsuarios() {
         confirmed_password:'',
         proyecto: '',
         rol: '',
-        adminEmail: userAdmin.email
         //id_proyecto: proyecto.id
     })
 
@@ -52,7 +52,7 @@ const handleChange = (e) => {
 const GuardarUsuario = async (e) => {
     e.preventDefault()
     try{
-        await guardarUsuarios(formData)
+        await guardarUsuarios(formData, token)
         console.log('Usuario creado')
         navigate('/GestionUsuarios')
     }catch(err){

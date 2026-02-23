@@ -35,8 +35,7 @@ Route::delete('destroy_sprint/{id}', [ProyectoController::class], 'destroy')->na
 
 
 //RUTAS PARA TAREAS DE PARTE DEL DESAROLLADOR
-Route::get('indexTareaParaUsuario',[TareaController::class, 'indexTareaParaUsuario']);
-Route::get('indexTareaParaSprint',[TareaController::class, 'indexTareaParaSprint']);
+Route::get('indexTareasEspecificas',[TareaController::class, 'indexTareasEspecificas']);
 Route::get('showTarea/{id}',[TareaController::class, 'showTarea']);
 Route::put('updateTarea/{id}',[DesarrolladorController::class, 'updateTarea']);
 

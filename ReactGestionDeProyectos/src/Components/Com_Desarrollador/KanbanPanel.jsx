@@ -1,18 +1,18 @@
 import { CheckSquare, User } from 'lucide-react';
 
-const KanbanTask = ({ title, code }) => {
+const KanbanTask = ({ titulo, key }) => {
   return (
-    <button className="w-full bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow text-left flex flex-col gap-8 group">
-      <h4 className="text-[#1a8fb1] font-semibold text-lg leading-tight">
-        {title}
+    <button key={key}
+    className="w-full bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow text-left flex flex-col gap-8 group">
+      <h4 className="text-blueDark font-bold text-lg text-center">
+        {titulo}
       </h4>
       
-      <div className="flex justify-between items-center text-[#1a8fb1]">
+      <div className="flex justify-between items-center text-blueDark">
         <div className="flex items-center gap-2">
-          <CheckSquare size={20} className="fill-current text-[#1a8fb1] bg-white" />
-          <span className="text-sm font-bold">{code}</span>
+          <CheckSquare size={20} className="fill-current text-blueDark bg-white" />
         </div>
-        <User size={20} className="text-[#1a8fb1]" />
+        <User size={22} className="text-blueDark" />
       </div>
     </button>
   );

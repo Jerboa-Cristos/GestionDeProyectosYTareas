@@ -26,8 +26,9 @@ class DesarrolladorAuthController extends Controller
         }
 
         $input['nombre'] = $desarrollador->nombre;
-        $input['id'] = $desarrollador->id;
         $input['rol'] = 'desarrollador';
+        $input['email'] = $desarrollador->email;
+        $input['id'] = $desarrollador->id;
         $input['token'] = $desarrollador->createToken('Desarrollador')->plainTextToken;
         
         return response()->json($input);   
@@ -58,6 +59,7 @@ class DesarrolladorAuthController extends Controller
         $desarrollador->save();
         $input['nombre'] = $desarrollador->nombre;
         $input['email'] = $desarrollador->email;
+        $input['id'] = $desarrollador->id;
 
         return response()->json($input);
     }
