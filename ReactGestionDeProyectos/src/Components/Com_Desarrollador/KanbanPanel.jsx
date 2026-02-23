@@ -1,8 +1,8 @@
 import { CheckSquare, User } from 'lucide-react';
 
-const KanbanTask = ({ titulo, key }) => {
+const KanbanTask = ({ titulo, id }) => {
   return (
-    <button key={key}
+    <button id={id}
     className="w-full bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow text-left flex flex-col gap-8 group">
       <h4 className="text-blueDark font-bold text-lg text-center">
         {titulo}
