@@ -70,47 +70,47 @@ const GuardarUsuario = async (e) => {
     return (
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/administrador_profile'/>
-            <main className="flex-1 bg-blueBase rounded-xl shadow-lg p-10 flex flex-col relative m-4 overflow-hidden">
+            <main className='flex-1 flex flex-col items-center justify-center bg-blueBase rounded-xl shadow-lg p-6 md:p-10 overflow-hidden'>
 
-                <h1 className="text-3xl font-bold text-blueDark mb-12">
-                    Creación de Usuario
+                <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-8 md:mb-12 text-center">
+                    <span className="block md:inline">Creación de Usuario</span>
                 </h1>
-            <div className="flex m-5 gap-10">
-
-                <form onSubmit={GuardarUsuario} className="flex-1 w-full max-w-2xl flex flex-col gap-4">
+                <form onSubmit={GuardarUsuario} className="w-full flex flex-col gap-4">
           
-                    <div className="relative">
-                        <User className="absolute left-4 top-3 text-BlueDark" size={20} />
+                    <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                        <User className="text-blueDark shrink-0" size={20} />
                         <input 
                         name='nombre'
                         value={formData.nombre}
                         onChange={handleChange}
                         type="text" 
                         placeholder="Nombre apellidos..." 
-                        className="w-full h-12 bg-white pl-12 pr-4 rounded-none shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic"
+                        className="w-full bg-transparent focus:outline-none text-center italic"
                         />
                     </div>
 
-                    <div className="mt-2 flex flex-col gap-2">
+                    <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
                         <input 
                         name='password'
                         value={formData.password} 
                         onChange={handleChange}
                         type="password" 
                         placeholder="Contraseña..." 
-                        className="w-full h-12 bg-white px-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic text-center"
+                        className="w-full bg-transparent focus:outline-none text-center italic"
                         />
+                    </div>
+                    <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
                         <input 
                         name='confirmed_password'
                         value={formData.confirmed_password}
                         onChange={handleChange}
                         type="password" 
                         placeholder="Repetir contraseña..." 
-                        className="w-full h-12 bg-white px-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic text-center"
+                        className="w-full bg-transparent focus:outline-none text-center italic"
                         />
                     </div>
 
-                    <div className="relative mt-2">
+                    <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
                         <Mail className="absolute left-4 top-3 text-blueDark" size={20} />
                         <input 
                         name='email'
@@ -118,18 +118,17 @@ const GuardarUsuario = async (e) => {
                         onChange={handleChange}
                         type="email" 
                         placeholder="Correo..." 
-                        className="w-full h-12 bg-white pl-12 pr-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic text-center"
+                        className="w-full bg-transparent focus:outline-none text-center italic"
                         />
                     </div>
 
-                    <div className="relative">
+                    <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
                         <Briefcase className="absolute left-4 top-3 text-blueDark" size={20} />
                         <select 
                         name='rol'
                         value={formData.rol}
                         onChange={handleChange}
-                        className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none 
-                        focus:ring-none italic appearance-none text-center text-gray-500">
+                        className="w-full bg-transparent appearance-none focus:outline-none italic text-center text-gray-500">
                         <option value="">Rol...</option>
                         <option value="Desarrollador">Desarrollador</option>
                         <option value="Administrador">Admin</option>
@@ -141,13 +140,13 @@ const GuardarUsuario = async (e) => {
                     </div>
 
                     {formData.rol == 'Desarrollador' && (
-                    <div className="relative">
+                    <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
                         <Folder className="absolute left-4 top-3 text-blueDark" size={20} />
                         <select 
                         value={formData.proyecto}
                         onChange={handleChange}
                         name='proyecto'
-                        className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic appearance-none text-center text-gray-500">
+                        className="w-full bg-transparent appearance-none focus:outline-none italic text-center text-gray-500">
                             {proyectos.map((proyecto) => (
                                 <option value={proyecto.id}>{proyecto.nombre}</option>
                             ))}
@@ -160,16 +159,15 @@ const GuardarUsuario = async (e) => {
 
                     <button 
                     type="submit"
-                    className="bg-blueDark text-white px-6 py-2 rounded-lg flex items-center 
-                    gap-2 font-medium hover:bg-BlueDarkDark transition-colors shadow-md"
+                    className="bg-blueDashboard text-white mt-4 px-8 py-3 rounded-lg flex items-center justify-center gap-2 
+                font-medium hover:bg-blueblue transition-all shadow-md active:scale-95"
                     >
                         <Plus size={20} />
                         Crear Usuario
                     </button>
 
                 </form>
-            </div>
-                <div className="mt-auto flex justify-between items-center w-full">
+                <div className="mt-8 flex flex-row justify-between items-center w-full max-w-2xl">
                     <button 
                         onClick={goBack}
                         className="text-blueDark hover:scale-110 transition-transform p-2"

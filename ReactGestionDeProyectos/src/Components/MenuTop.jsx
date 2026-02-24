@@ -18,16 +18,19 @@ function MenuTop({rutaPerfil}) {
     }
 
     return (
-    <header className="bg-white rounded-xl h-14 xs:h-18 flex items-center justify-between px-6 mb-4 shadow-sm
-    ">
-            <div className="flex items-center gap-2">
-                <div className="bg-blueDark rounded-md size-8 xs:size-12 flex 
-                items-center justify-center font-bold text-white xs:text-2xl"> M
-                </div>
+    <header className="bg-white rounded-xl h-14 md:h-20 flex items-center justify-between px-4 md:px-8 mb-4 shadow-sm">
+            <div className="flex items-center gap-3">
+                <div className="bg-blueDark rounded-lg size-10 md:size-12 flex items-center justify-center font-bold
+                 text-white text-xl md:text-2xl shadow-inner"> M </div>
             </div>
-            <div className="flex items-center gap-6 text-blueDark">
-                <button onClick={(e) => {goToProfile(rutaPerfil); e.stopPropagation()}} className="hover:text-BlueDarkDark transition-colors"><UserCircle size={24} /></button>
-                <button onClick={(e)=> {logout(); e.stopPropagation()}} className="hover:text-BlueDarkDark transition-colors"><LogOut size={24} /></button>
+            <div className="flex items-center gap-4 md:gap-8 text-blueDark">
+                <button onClick={(e) => {goToProfile(rutaPerfil); e.stopPropagation()}} 
+                className="flex items-center gap-2 p-2 hover:bg-blueBase rounded-full transition-all active:scale-90" title="Perfil">
+                    <UserCircle size={24} className="md:size-32" /></button>
+                <button onClick={(e)=> {logout(); e.stopPropagation()}} 
+                className="flex items-center gap-2 p-2 hover:text-warningDark hover:bg-red-50 rounded-full transition-all 
+                active:scale-90" title="Salir">
+                    <LogOut size={24} className="md:size-30"/></button>
             </div>
     </header>
     )
