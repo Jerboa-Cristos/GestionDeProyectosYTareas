@@ -21,8 +21,8 @@ class SprintApiController extends Controller
             'estado' => 'required|in:Por Hacer,En Curso,En Revision,Finalizado',
             'descripcion' => 'nullable|string',
             'fecha_fin' => 'nullable|date',
-            //'id_desarrollador' => 'required|exists:desarrollador,id'
-            'id_desarrollador' => '1'
+            'id_desarrollador' => 'required|exists:desarrollador,id'
+            
         ]);
 
         $tarea = $sprint->tareas()->create($validar);

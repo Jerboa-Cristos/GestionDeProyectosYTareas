@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Proyecto;
-use App\Models\ProductOwner;
 
 class ProductOwnerApiController extends Controller
 {
@@ -13,6 +11,7 @@ class ProductOwnerApiController extends Controller
     public function index() {
         $product_owner = auth('product_owner')->user();
         return response()->json($product_owner->proyectos);
+        
     }
 
     public function store(Request $request) {

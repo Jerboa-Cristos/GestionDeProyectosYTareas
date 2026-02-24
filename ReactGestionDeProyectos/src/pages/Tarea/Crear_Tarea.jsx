@@ -1,16 +1,17 @@
- import {useState } from "react"
-import { funcion_crear_tarea } from "../../services/ruta_api_tarea"
+ import { Save } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import MenuTop from "../../Components/MenuTop"
+import { mostrarUsuarios } from "../../services/adminService"
+import { funcion_crear_tarea } from "../../services/ruta_api_tarea"
 import Menu_Izquierdo from "../Menus/Menu_Izquierdo"
-import { Save } from "lucide-react"
 
 function Crear_Tarea () {
     const [nombre, setNombre] = useState('')
     const [tipo, setTipo] = useState('')
     const [estado, setEstado] = useState('')
     const [descripcion, setDescripcion] = useState('')
-    const [desarrolladores, SetDesarrollador] = useState([])
+    const [desarrolladores, setDesarrolladores] = useState([])
     const [idDesarrollador, setIdDesarrollador] = useState('')
     const [fechaFin, setFechaFin] = useState('')
 
@@ -34,8 +35,8 @@ function Crear_Tarea () {
             funcion_crear_tarea(data, id_sprint, token)
             .then(respuesta => {
                 console.log('tarea creada', respuesta.data)
-                navigate(`/mostrar_tarea/${id_sprint}`)
-                console.log('sprint',id_sprint)
+                navigate(`/mis_tareas_product_owner/${id_sprint}`)
+                console.log('ID sprint recibido',id_sprint)
                 
             })
             .catch(error => {
@@ -43,6 +44,25 @@ function Crear_Tarea () {
             })
 
         }
+
+        useEffect(() => {
+            const token = localStorage.getItem('token')
+
+            mostrarUsuarios(token)
+            .then(respuesta => {
+                const filtroUsuarios = respuesta.data.filter(
+                    desarrollador => desarrollador.rol === 'Desarrollador'
+                )
+
+                setDesarrolladores(filtroUsuarios)
+
+                console.log('Cargando desarrolador', respuesta.data)
+            })
+
+            .catch(error => {
+                console.log('Error al mostrar desarrolladores', error.respuesta.data)
+            })
+        }, [])
     
 
     return (
@@ -80,12 +100,29 @@ function Crear_Tarea () {
                         </textarea>
 
                         <label className="font-semibold text-white mt-4 block">Tipo de tarea</label>
-                        <select className="rounded-lg px-4 py-2 bg-blueBase mt-1 text-BlueDarkDark font-semibold">
-                            <option>Backend</option>
-                            <option>Frontend</option>
-                            <option>Diseño</option>
-                            <option>Despliegue</option>
-                            <option>Testing</option>
+                        <select 
+                        value={tipo}
+                        onChange={(e) => setTipo(e.target.value)}
+                        className="rounded-lg px-4 py-2 bg-blueBase mt-1 text-BlueDarkDark font-semibold">
+                            <option value="">Selecciona el tipo de tarea</option>
+                            <option value={"Backend"}>Backend</option>
+                            <option value={"Frontend"}>Frontend</option>
+                            <option value={"Diseño"}>Diseño</option>
+                            <option value={"Despliegue"}>Despliegue</option>
+                            <option value={"Testing"}>Testing</option>
+
+                        </select>
+
+                        <label className="font-semibold text-white mt-4 block">Estado de tarea</label>
+                        <select 
+                        value={estado}
+                        onChange={(e) => setEstado(e.target.value)}
+                        className="rounded-lg px-4 py-2 bg-blueBase mt-1 text-BlueDarkDark font-semibold">
+                            <option value="">Selecciona el estado de la tarea</option>
+                            <option value={"Por Hacer"}>Por Hacer</option>
+                            <option value={"En Curso"}>En Curso</option>
+                            <option value={"En Revisión"}>En Revisión</option>
+                            <option value={"Finalizada"}>Finalizada</option>
 
                         </select>
                     
