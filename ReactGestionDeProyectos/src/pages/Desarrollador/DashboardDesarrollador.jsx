@@ -5,7 +5,7 @@ import { TareaContext } from '../../Context/TareaContext';
 //Componentes visuales
 import { ClipboardList, Calendar, AlertCircle } from 'lucide-react';
 //Para instalar este modulo se debe hacer npm install recharts
-import { BarChart, Bar, ResponsiveContainer, Pie, PieChart, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Pie, PieChart, Legend } from 'recharts';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
 
@@ -40,6 +40,7 @@ function DashboardDesarrollador() {
     //#endregion
 
     //#region GRÁFICOS RESUMEN ESTADO
+    const COLORS_BAR = ['#34A0A4', '#184E77', '#1A759F', '#168AAD']
     const grfResumenEstado = useMemo(() => {
         const arrEstados = {}
 
@@ -48,9 +49,10 @@ function DashboardDesarrollador() {
             arrEstados[estados] = (arrEstados[estados] || 0) + 1
         })
 
-        return Object.keys(arrEstados).map(key=> ({
-            tipo: key,
-            cantidad: arrEstados[key]
+        return Object.keys(arrEstados).map((key, i)=> ({
+            estados: key,
+            cantidad: arrEstados[key],
+            fill: COLORS_BAR[i % COLORS_BAR.length]
         }))
     }, [tareas])
 
@@ -65,9 +67,10 @@ function DashboardDesarrollador() {
             arrtipo[tipo] = (arrtipo[tipo] || 0) + 1
         })
 
-        return Object.keys(arrtipo).map(key=> ({
+        return Object.keys(arrtipo).map((key, i)=> ({
             tipo: key,
-            cantidad: arrtipo[key]
+            cantidad: arrtipo[key],
+            fill: COLORS_BAR[i % COLORS_BAR.length]
         }))
     }, [tareas])
     //#endregion
@@ -115,16 +118,18 @@ function DashboardDesarrollador() {
                         {/* Tipo de Trabajo MONTARLO TODO */}
                         <div className="bg-blueBase rounded-xl p-6">
                             <h3 className="text-center text-xl font-semibold text-blueDark mb-4">Tipo de trabajo</h3>
-                            <div className="space-y-1 size-20">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={grfTipoTrabajo} layout='horizontal'>
-                                        <Bar dataKey='cantidad' fill='#184E77'/>
-                                        <legend payload={
-                                            grfTipoTrabajo.map((tarea, index) => ({
-                                                value: tarea.tipo,
-                                                type: 'circle',
-                                            }))
-                                        }/>
+                            <div className="space-y-1 w-60 h-60">
+                                <ResponsiveContainer width="100%" height="100%" margin={{ left: 40, right: 20 }}>
+                                    <BarChart data={grfTipoTrabajo} layout='vertical'>
+                                        <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
+                                        <XAxis type="number" hide /> 
+                                        <YAxis 
+                                            dataKey="tipo" 
+                                            type="category" 
+                                            tick={{fontSize: 12, fontWeight: 'bold', fill:'#0B4068'}}
+                                            width={100}
+                                        />
+                                        <Bar dataKey='cantidad' radius={[0, 5, 5, 0]} barSize={20}/>
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
@@ -153,16 +158,24 @@ function DashboardDesarrollador() {
                         {/* Resumen del Estado (Gráfico Circular) */}
                         <div className="bg-blueBase rounded-xl p-6 shadow-sm flex flex-col items-center">
                             <h3 className="text-xl font-semibold text-blueDark mb-6">Resumen del Estado</h3>
-                            <div className="relative w-48 h-48">
+                            <div className="relative w-60 h-60">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <PieChart>
-                                        <Pie data={grfResumenEstado} dataKey='cantidad' fill='#184E77'/>
-                                        <legend payload={
-                                            grfResumenEstado.map((tarea, index) => ({
-                                                value: tarea.estado,
-                                                type: 'circle',
-                                            }))
-                                        }/>
+                                        <Pie 
+                                        data={grfResumenEstado} 
+                                        dataKey='cantidad'
+                                        nameKey='estados'
+                                        cx="50%"
+                                        cy="45%"
+                                        outerRadius={80}
+                                        stroke="none"
+                                        />
+                                        <Tooltip />
+                                        <Legend 
+                                            verticalAlign="bottom" 
+                                            iconType="circle"
+                                            formatter={(value) => <span className="text-sm font-semibold">{value}</span>}
+                                        />
                                     </PieChart>
                                 </ResponsiveContainer>
                             </div>
