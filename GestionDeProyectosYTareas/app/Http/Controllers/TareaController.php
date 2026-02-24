@@ -23,17 +23,18 @@ class TareaController extends Controller
         return response()->json($tareas, 200);
     }
 
-    public function updateTareaDesarrollador(Request $request, $id) {
-        try{
+    public function updateTareaDesarrollador($id, Request $request) {  
             $desarrollador = auth('desarrollador')->user();
 
             $tarea=$request->validate([
-                'estado'=> 'requiered|in:Por Hacer,En Curso,En Revision,Finalizado',
+                'estado'=> 'required|in:Por Hacer,En Curso,En Revision,Finalizado',
             ]);
 
             $desarrollador->tarea()->findOrFail($id)->update([
                 'estado'=>$tarea['estado'],
             ]);
+
+        try{
 
         } catch(\Exception $e) {
             return response()->json(['message'=>'NO se pudo hacer Update de tarea'], 404);

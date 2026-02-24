@@ -10,20 +10,25 @@ import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLat
 function TableroKanbanDesarrollador() {
     const {tareas} = useContext(TareaContext);
     const [searchTerm, setSearchTerm] = useState('');
+    console.log(tareas)
+    const ultSprint = Math.max(...tareas.map(t=> t.sprint?.id || 0))
+    console.log(tareas.sprint?.id)
 
-    const filteredTareas = tareas.filter((tarea) => {
+    const tareasDeUltSprint = tareas.filter(t=> t.sprint?.id === ultSprint)
+
+    const filteredTareas = tareasDeUltSprint.filter((tarea) => {
         const fullName = tarea.nombre.toLowerCase().includes(searchTerm.toLowerCase()); 
         return fullName;
     })
 
     const tareasPorEstado = useMemo(() => {
     return {
-        PorHacer: tareas.filter(tarea => tarea.estado === 'Por Hacer'),
-        EnCurso: tareas.filter(tarea => tarea.estado === 'En Curso'),
-        EnRevision: tareas.filter(tarea => tarea.estado === 'En Revision'),
-        Finalizado: tareas.filter(tarea => tarea.estado === 'Finalizado'),
+        PorHacer: filteredTareas.filter(tarea => tarea.estado === 'Por Hacer'),
+        EnCurso: filteredTareas.filter(tarea => tarea.estado === 'En Curso'),
+        EnRevision: filteredTareas.filter(tarea => tarea.estado === 'En Revision'),
+        Finalizado: filteredTareas.filter(tarea => tarea.estado === 'Finalizado'),
     }
-    }, [tareas])
+    }, [tareasDeUltSprint])
 
 
     return(

@@ -44,6 +44,7 @@ Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsua
 Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios'])->middleware('auth:sanctum');
 Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios'])->middleware('auth:sanctum');
 Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsuarios'])->middleware('auth:sanctum');
+Route::get('indexProyectosAdmin', [AdministradorController::class, 'indexProyectosAdmin'])->middleware('auth:sanctum');
 #endregion
 
 #region PRODUCT OWNER
@@ -92,4 +93,11 @@ Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profi
 Route::get('indexTareasDesarrollador',[TareaController::class, 'indexTareasDesarrollador'])->middleware('auth:sanctum');
 Route::get('showTareaDesarrollador/{id}', [TareaController::class, 'showTareaDesarrollador'])->middleware('auth:sanctum');
 Route::put('updateTareaDesarrollador/{id}', [TareaController::class, 'updateTareaDesarrollador'])->middleware('auth:sanctum');
+#endregion
+
+#region COMENTARIO
+Route::get('indexComentario/{id}', [ComentarioController::class, 'indexComentario'])->middleware('auth:sanctum');
+Route::delete('eliminarComentario/{id}', [ComentarioController::class, 'eliminarComentario'])->middleware('auth:sanctum');
+Route::post('guardarComentario',[ComentarioController::class, 'guardarComentario'])->middleware('auth:sanctum');
+Route::put('updateComentario/{id}', [ComentarioController::class, 'updateComentario'])->middleware('auth:sanctum');
 #endregion

@@ -27,7 +27,7 @@ function MenuTop({rutaPerfil}) {
             </div>
             <div className="flex items-center gap-6 text-blueDark">
                 <button onClick={(e) => {goToProfile(rutaPerfil); e.stopPropagation()}} className="hover:text-BlueDarkDark transition-colors"><UserCircle size={24} /></button>
-                <button onClick={(e)=> {logout; e.stopPropagation()}} className="hover:text-BlueDarkDark transition-colors"><LogOut size={24} /></button>
+                <button onClick={(e)=> {logout(); e.stopPropagation()}} className="hover:text-BlueDarkDark transition-colors"><LogOut size={24} /></button>
             </div>
     </header>
     )

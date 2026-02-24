@@ -37,6 +37,10 @@ function DesarrolladorProfile () {
         })
     }
 
+    const volverAtras = () => {
+        navigate('/DashboardDesarrollador');
+}
+
     return (
         <>
           <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">

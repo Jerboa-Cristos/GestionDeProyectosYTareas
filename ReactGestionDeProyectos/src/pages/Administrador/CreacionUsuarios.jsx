@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 //AQUÍ DEBE ESTAR EL IMPORT PARA EL DOCUMENTO QUE TIENE CONEXIÓN A LA PARTE DE LOS PROYECTOS
-import { guardarUsuarios } from '../../services/adminService';
-import { useState } from 'react';
+import { guardarUsuarios, mostrarProyectos } from '../../services/adminService';
+import { useState, useEffect } from 'react';
 import { User, Mail, Briefcase, Folder, RotateCcw, Plus } from 'lucide-react';
 import MenuTop from '../../Components/MenuTop';
 
@@ -17,15 +17,15 @@ function CreacionUsuarios() {
         proyecto: '',
         rol: '',
         id_administrador: userAdm.id,
-        //id_proyecto: proyecto.id
     })
 
     //TAMBIÉN FALTA LA PARTE DE PASAR
-    /*const [proyecto, setProyecto] = useState()
+    const [proyectos, setProyecto] = useState()
     useEffect(() => {
+        if (!token) return;
         //Aquí se deben cargar los usuarios desde el backend
         const fetchProjects = async () => {
-            NOMBRE FUNCIÓN PARA PROYECTOS().then(res => {
+            mostrarProyectos(token).then(res => {
                 setProyecto(res.data);
             }).catch(err => {
                 console.error("Error al cargar los proyectos:", err);
@@ -33,7 +33,6 @@ function CreacionUsuarios() {
         }
         fetchProjects();
     }, [])
-    */
 
 
 //#region CREACIÓN DEL NUEVO USUARIO
@@ -145,12 +144,13 @@ const GuardarUsuario = async (e) => {
                     <div className="relative">
                         <Folder className="absolute left-4 top-3 text-blueDark" size={20} />
                         <select 
-                        value={formData.proyecto} //ESTO SE CAMBIARÍA POR proyecto.id
+                        value={formData.proyecto}
                         onChange={handleChange}
                         name='proyecto'
                         className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic appearance-none text-center text-gray-500">
-                        <option value="">Elegir proyecto</option>
-                        <option value="1">Proyecto N1</option>
+                            {proyectos.map((proyecto) => (
+                                <option value={proyecto.id}>{proyecto.nombre}</option>
+                            ))}
                         </select>
                         <div className="absolute right-4 top-3 pointer-events-none text-blueDark">
                         <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>

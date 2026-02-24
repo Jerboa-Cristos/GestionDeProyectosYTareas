@@ -7,7 +7,7 @@ const KanbanColumn = ({titulo, tipoEstado}) => (
             <div className="flex flex-col gap-4">
                 {
                 tipoEstado.map((tarea) => (
-                    <KanbanPanel key={tarea.id} titulo={tarea.nombre}/>
+                    <KanbanPanel key={tarea.id} id={tarea.id} titulo={tarea.nombre}/>
                 )) 
                 }
             </div>
