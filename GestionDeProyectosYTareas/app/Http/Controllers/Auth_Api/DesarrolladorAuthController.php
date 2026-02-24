@@ -26,10 +26,10 @@ class DesarrolladorAuthController extends Controller
                 return response()->json(['error' => 'Email y password incorrectas'], 401);
             }
 
+            $input['id'] = $desarrollador->id;
             $input['nombre'] = $desarrollador->nombre;
             $input['rol'] = 'desarrollador';
             $input['email'] = $desarrollador->email;
-            $input['id'] = $desarrollador->id;
             $input['token'] = $desarrollador->createToken('Desarrollador')->plainTextToken;
             
             return response()->json($input);

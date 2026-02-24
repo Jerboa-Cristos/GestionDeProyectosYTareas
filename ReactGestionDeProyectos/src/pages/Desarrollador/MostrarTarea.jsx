@@ -1,16 +1,15 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import MenuTop from "../../Components/MenuTop"
 import { Save } from "lucide-react"
 import { showMiTarea, updateTarea } from '../../services/desarolladorService'
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
-//Creo que hare un componente a parte para las cosas del comentario, pq de otra manera no sería 
-import { mostrarComentarios, showComentario, eliminarComentario, guardarComentario, updateComentario} from '../../services/comentarioService'
-import { useParams, useNavigate } from "react-router-dom"
+import SeccionComentario from "../../Components/Com_Comentario/SeccionComentario";
+import { useParams } from "react-router-dom"
 import { TareaContext } from '../../Context/TareaContext';
 
 function MostrarTarea (){
     const token = localStorage.getItem('token');
-    const {tareas, setTarea} = useContext(TareaContext);
+    const [tarea, setTarea] = useState([])
     const [estado, setEstado] = useState('')
     const {id} = useParams()
 
@@ -46,16 +45,16 @@ function MostrarTarea (){
         <MenuTop rutaPerfil='/desarrollador_profile'/>  
         <div className="flex flex-1 gap-4 overflow-hidden h-full">
                 <MenuLateralDesarrollador/>
-            <main className="flex-1 bg-white rounded-xl shadow-lg p- overflow-auto flex flex-col gap-2">
-                <div className="bg-blueDashboard rounded-xl p-4 h-auto">
+            <main className="flex-1 bg-white rounded-lg shadow-lg overflow-auto flex flex-col gap-2">
+                <div className="bg-blueDashboard rounded-lg -xl p-4 h-auto">
                     <form onSubmit={botonEditarTarea}>
                         <h1 className="text-3xl font-bold text-white mb-6">Detalles Tarea</h1>
                         
                         <label className="font-semibold text-white mt-4 block">Nombre</label>
-                        <h2 className="w-full rounded px-3 py-2 mt-1 bg-blueBase text-blueDark font-medium">{tarea.nombre}</h2>
+                        <h2 className="w-full rounded-lg px-3 py-2 mt-1 bg-blueBase text-blueDark font-medium">{tarea.nombre}</h2>
 
                         <label className="font-semibold text-white mt-4 block">Descripción</label>
-                        <h2 className=" w-full rounded px-3 py-2 mt-1 h-24 bg-blueBase text-blueDark font-medium">{tarea.descripcion}</h2>
+                        <h2 className=" w-full rounded-lg px-3 py-2 mt-1 h-24 bg-blueBase text-blueDark font-medium">{tarea.descripcion}</h2>
 
                         <div className="mt-auto flex flex-row justify-between items-center w-full">
                             <div>
@@ -63,7 +62,7 @@ function MostrarTarea (){
                                 <select
                                 value={estado}
                                 onChange={(e) => setEstado(e.target.value)}
-                                className="rounded bg-blueBase px-3 py-2 w-60 mt-1 text-BlueDarkDark text-blueDark font-medium">
+                                className="rounded-lg bg-blueBase px-3 py-2 w-60 mt-1 text-BlueDarkDark font-medium">
                                     <option value="Por Hacer">Por Hacer</option>
                                     <option value="En Curso">En Curso</option>
                                     <option value="En Revision">En Revisión</option>
@@ -79,9 +78,7 @@ function MostrarTarea (){
                         </div>
                     </form>  
                 </div>
-                <div className="bg-blueDashboard rounded-xl p-4 h-auto">
-
-                </div>
+                <SeccionComentario idTarea={2}/>
             </main>
         </div> 
     </div>
