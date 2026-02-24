@@ -8,6 +8,8 @@ function PerfilUsuario() {
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const {rol, id} = useParams();
+    const [loading, setLoading] = useState(true);
+    const [proyectos, setProyecto] = useState()
     const [formData, setFormData] = useState({
         nombre: '', 
         email: '',
@@ -21,39 +23,32 @@ function PerfilUsuario() {
 
     useEffect(() => {
         //Cargamos la información del usuario solo
-        const fetchUser = async () => {
+        const cargarTodo = async () => {
             if (!token) return;
-            showUsuarios(rol, id, token).then(res => {
+            try{
+                const [resUser, resProyectos] = await Promise.all([
+                showUsuarios(rol, id, token),
+                mostrarProyectos(token),
+                ]);
+
+                setProyecto(resProyectos.data),
                 setFormData({
                     ...formData,
-                    nombre: res.data.nombre || '',
-                    email: res.data.email || '',
-                    oldEmail: res.data.email || '',
-                    oldRol: rol,
+                    nombre: resUser.data.nombre || '',
+                    email: resUser.data.email || '',
+                    oldEmail: resUser.data.email || '',
                     rol: rol,
-                    proyecto: res.data.id_proyecto || ''
+                    oldRol: rol,
+                    proyecto: resUser.data.id_proyecto || '' // Aquí ya existen los proyectos
                 })
-                console.log('Datos: ', res.data)
-            }).catch(err => {
-                console.error("Error al cargar los usuarios:", err);
-            });
+            } catch(err) {
+                console.error('No se pudo cargar los datos por: ' , err)
+            } finally {
+                setLoading(false);
+            }
         }
-        fetchUser();
-     }, [rol, id])
-
-    const [proyectos, setProyecto] = useState()
-    useEffect(() => {
-        if (!token) return;
-        //Aquí se deben cargar los usuarios desde el backend
-        const fetchProjects = async () => {
-            mostrarProyectos(token).then(res => {
-                setProyecto(res.data);
-            }).catch(err => {
-                console.error("Error al cargar los proyectos:", err);
-            });
-        }
-        fetchProjects();
-    }, [])
+        cargarTodo()
+     }, [rol, id, token])
 
 //#region Función para hacer UPDATE del usuario
 const handleChange = (e) => {
@@ -188,8 +183,8 @@ const volverAtras = () => {
                         onChange={handleChange}
                         name='proyecto'
                         className="w-full h-12 bg-white pl-12 pr-10 rounded-none shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic appearance-none text-center text-gray-500">
-                            {proyectos.map((proyecto) => (
-                                <option value={proyecto.id}>{proyecto.nombre}</option>
+                            {proyectos && proyectos.map((proyecto) => (
+                                <option key={proyecto.id} value={proyecto.id}>{proyecto.nombre}</option>
                             ))}
                         </select>
                         <div className="absolute right-4 top-3 pointer-events-none text-blueDark">

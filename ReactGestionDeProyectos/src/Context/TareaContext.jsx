@@ -6,7 +6,6 @@ export const TareaContext = createContext();
 
 export const TareaProvider = ({children}) => {
     const [tareas, setTareas] = useState([])
-    const userDesarrollador = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     const location = useLocation();
 
@@ -21,6 +20,7 @@ export const TareaProvider = ({children}) => {
             if(rutaDesarrollador) {
                 mostrarMisTareas(token).then(res=> {
                     setTareas(res.data);
+                    console.log(res.data)
                 }).catch(err=>{
                     console.error('Error al cargar las tareas:', err)
                 });

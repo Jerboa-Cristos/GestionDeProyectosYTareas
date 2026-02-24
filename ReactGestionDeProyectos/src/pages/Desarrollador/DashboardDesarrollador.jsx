@@ -144,11 +144,11 @@ function DashboardDesarrollador() {
                             {UltCambios.slice(0, 3).map((tarea) => (
                                 <div key={tarea.id} className="bg-turquesa rounded-lg p-3 flex items-center gap-4 text-white text-sm">
                                 {/*Aquí debe estar la imagen del usuario*/}
-                                    <div className="grid grid-cols-3 w-full text-center">
-                                        <span>Nombre Usuario</span>
+                                    <div className="grid grid-cols-4 w-full text-center">
+                                        <span>{tarea.desarrollador.nombre}</span>
                                         <span>{tarea.nombre}</span>
                                         <span>{tarea.estado}</span>
-                                        <span>{tarea.fecha_fin}</span>
+                                        <span>{tarea.sprint.nombre}</span>
                                     </div>
                                 </div>
                             ))}
