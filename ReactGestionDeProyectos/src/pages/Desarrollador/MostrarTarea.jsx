@@ -8,9 +8,10 @@ import { useParams } from "react-router-dom"
 
 function MostrarTarea (){
     const token = localStorage.getItem('token');
-    const [tarea, setTarea] = useState([])
+    const [tarea, setTarea] = useState({})
     const [estado, setEstado] = useState('')
     const {id} = useParams()
+    const idTarea = Number(id);
 
     useEffect(() => {
         const fetchTarea = async () => {
@@ -44,8 +45,8 @@ function MostrarTarea (){
         <MenuTop rutaPerfil='/desarrollador_profile'/>  
         <div className="flex flex-1 gap-4 overflow-hidden h-full">
                 <MenuLateralDesarrollador/>
-            <main className="flex-1 bg-white rounded-lg shadow-lg overflow-auto flex flex-col gap-2">
-                <div className="bg-blueDashboard rounded-lg -xl p-4 h-auto">
+            <main className="flex-1 bg-white rounded-lg shadow-lg overflow-hidden flex flex-col gap-2">
+                <div className="bg-blueDashboard rounded-lg p-4 h-auto">
                     <form onSubmit={botonEditarTarea}>
                         <h1 className="text-3xl font-bold text-white mb-6">Detalles Tarea</h1>
                         
@@ -77,7 +78,9 @@ function MostrarTarea (){
                         </div>
                     </form>  
                 </div>
-                <SeccionComentario idTarea={tarea.id}/>
+                <div className="flex-1 overflow-hidden">
+                    <SeccionComentario idTarea={idTarea}/>
+                </div>
             </main>
         </div> 
     </div>

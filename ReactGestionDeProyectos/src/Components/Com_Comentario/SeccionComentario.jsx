@@ -50,11 +50,11 @@ const SeccionComentario = ({idTarea}) => {
 
 
     return (
-        <div className="bg-blueDashboard rounded-xl p-4 h-auto">
+        <div className="bg-blueDashboard rounded-lg p-4">
             <div>
                 <h2 className="text-2xl font-bold text-white mb-6">Comentarios</h2>
             </div>
-            <div className="space-y-0">
+            <div className="max-h-40 overflow-y-auto pr-2 custom-scrollbar grow-0">
                 {comentarios.map(comentario => (
                     <ElementComentario key={comentario.id} id={comentario.id} user={comentario.autor} text={comentario.texto} onDeleteSuccess={comEliminado}/>
                 ))}
