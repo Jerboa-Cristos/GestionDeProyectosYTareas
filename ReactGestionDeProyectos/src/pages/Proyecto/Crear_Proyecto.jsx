@@ -40,8 +40,11 @@ function Crear_Proyecto() {
     return ( 
         <>
         <MenuTop rutaPerfil='/product_owner_profile'/>
-        <div className="flex ">
-            <Menu_Izquierdo/>
+        <div className="flex flex-col md:flex-row">
+            <div className="hidden md:block w-56">
+            <Menu_Izquierdo />
+
+            </div>
             
 
             <div className="w-full p-6 min-h-screen">

@@ -29,7 +29,7 @@ import DesarrolladorProfile from './pages/Auth/Desarrollador/DesarrolladorProfil
 //PROYECTO
 import Crear_Proyecto from './pages/Proyecto/Crear_Proyecto';
 import Lista_Proyectos from './pages/Proyecto/Lista_Proyectos';
-import Sprints_Proyecto from './pages/Sprint/Lista_Sprints_Proyecto'
+import Lista_Sprints_Proyecto from './pages/Sprint/Lista_Sprints_Proyecto'
 
 //SPRINT
 import Crear_Sprint from './pages/Sprint/Crear_Sprint'
@@ -39,9 +39,9 @@ import Crear_Tarea from './pages/Tarea/Crear_Tarea';
 
 //COMPONENTES QUE REUTILIZAREMOS
 import Menu_Izquierdo from './pages/Menus/Menu_Izquierdo';
-import Mis_Tareas_Product_Owner from './pages/Product_Owner/Mis_Tareas_Product_Owner';
 import Tablero_Kanban_Product_Owner from './pages/Product_Owner/Tablero_Kanban_Product_Owner';
 import Editar_Tarea from './pages/Tarea/Editar_Tarea';
+import Lista_Sprints from './pages/Sprint/Lista_Sprints';
 
 function App() {
   return (
@@ -64,15 +64,16 @@ function App() {
           <Route path='/product_owner_dashboard' element={<ProductOwnerDashboard/>}/>
           <Route path='/lista_proyectos' element={<Lista_Proyectos/>}/>
           <Route path='/menu_izquierdo' element={<Menu_Izquierdo/>}/>
-          <Route path='/mis_tareas_product_owner/:id_sprint' element={<Mis_Tareas_Product_Owner/>}/>
+
           <Route path='/tablero_kanban_product_owner/:id_sprint' element={<Tablero_Kanban_Product_Owner/>}/>
 
           {/*PROYECTO */}
           <Route path='/crear_proyecto' element={<Crear_Proyecto/>}/>
-          <Route path='/mostrar_proyecto/:id_proyecto' element={<Sprints_Proyecto/>}/>
+          <Route path='/mostrar_proyecto/:id_proyecto' element={<Lista_Sprints_Proyecto/>}/>
 
           {/*SPRINT */}
           <Route path='/crear_sprint/:id_proyecto' element={<Crear_Sprint/>}/>
+          <Route path='/lista_sprint/:id_proyecto' element={<Lista_Sprints/>}/>
 
           {/*TAREA */}
           <Route path='/crear_tarea/:id_sprint' element={<Crear_Tarea/>}/>

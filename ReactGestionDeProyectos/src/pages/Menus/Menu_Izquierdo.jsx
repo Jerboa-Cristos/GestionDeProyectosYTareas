@@ -1,32 +1,43 @@
 import {Home, FolderKanban, ClipboardList, ListCheck} from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 function Menu_Izquierdo() {
-  return (
-    <>
-    <aside className="w-56 h-150 bg-blue  mt-6 ml-6">
-        <nav className="h-full w-full flex flex-col bg-blueBase rounded-2xl">
-            <div className="">
-                <ul className="m-4 menu p-0">
+    const proyecto_activo = localStorage.getItem("proyecto_activo")
+    const sprint_activo = localStorage.getItem("sprint_activo")
+
+    let rutaKanban = "/lista_proyectos"
+
+    if(sprint_activo){
+        rutaKanban = `/tablero_kanban_product_owner/${sprint_activo}`
+    }else if(proyecto_activo){
+        rutaKanban = `/lista_sprint/${proyecto_activo}`
+    }
+
+    return (
+        <>
+        <aside className="w-56 h-150 bg-blue  mt-6 ml-6">
+            <nav className="h-full w-full flex flex-col bg-blueBase rounded-2xl">
+                <div className="">
+                    <ul className="m-4 menu p-0">
+                        
+                        <Menu_Items icono={<Home size={20}/>} texto="Panel" ruta="/product_owner_dashboard"/>
+                        <hr />
+                        <Menu_Items icono={<FolderKanban size={20}/>} texto="Proyectos" ruta="/lista_proyectos"/>
+                        <hr />
+                        <Menu_Items icono={<ListCheck size={20}/>} texto="Tablero Kanban" 
+                        ruta={rutaKanban}/>
+                        <hr />
+                       
                     
-                    <Menu_Items icono={<Home size={20}/>} texto="Panel" ruta="/product_owner_dashboard"/>
-                    <hr />
-                    <Menu_Items icono={<FolderKanban size={20}/>} texto="Proyectos" ruta="/lista_proyectos"/>
-                    <hr />
-                    <Menu_Items icono={<ListCheck size={20}/>} texto="Tablero Kanban" ruta=""/>
-                    <hr />
-                    <Menu_Items icono={<ClipboardList size={20}/>} texto="Mis Tareas" ruta="/mis_tareas_product_owner/${id_sprint}"/>
-                    <hr />
-                
 
-                </ul>
-            </div>
+                    </ul>
+                </div>
 
-        </nav>
-    </aside>
-    </>
-  );
-}
+            </nav>
+        </aside>
+        </>
+    );
+    }
 
 export default Menu_Izquierdo
 

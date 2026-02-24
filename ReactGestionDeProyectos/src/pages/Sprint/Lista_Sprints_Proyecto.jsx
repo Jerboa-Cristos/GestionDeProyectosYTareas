@@ -5,13 +5,17 @@ import { useParams, Link } from "react-router-dom"
 import Menu_Izquierdo from '../Menus/Menu_Izquierdo'
 import MenuTop from '../../Components/MenuTop'
 
-function Sprints_Proyecto() {
+function Lista_Sprints_Proyecto() {
     const [proyectos, setProyecto] = useState('')
     const [sprints, setSprint] = useState([])
     //se usa useParams porque el id viene de la URL
     const {id_proyecto} = useParams() //obtener id de la url
    
+    
+    
     useEffect(() => {
+        localStorage.setItem("proyecto_activo", id_proyecto)
+       
         const token = localStorage.getItem('token')
         funcion_mostrar_proyecto(id_proyecto, token)
         .then(res => {
@@ -78,10 +82,19 @@ function Sprints_Proyecto() {
                             key={sprint.id}
                             className="bg-blueDashboard rounded p-4 text-center shadow"
                             >
-                                <Link to={`/tablero_kanban_product_owner/${sprint.id}`}>
+                                <Link to={`/tablero_kanban_product_owner/${sprint.id}`}
+                                onClick={() => localStorage.setItem('sprint_activo', sprint.id)}
+                                >
                                 <p className="font-bold text-lg text-white">{sprint.nombre}</p>
                                 <p className="text-sm text-white">{sprint.fecha_inicio}</p>
                                 
+                                </Link>
+
+                                <Link to={`/tablero_kanban_product_owner/${sprint.id}`}
+                                onClick={() => localStorage.setItem('sprint_activo', sprint.id)}
+                                >
+                                <p className="rounded items-center w-20 p-1 bg-BlueDarkDark text-sm text-white underline mt-2">Ver tareas</p>
+
                                 </Link>
                             </div>
                         ))}
@@ -98,4 +111,4 @@ function Sprints_Proyecto() {
     )
 }
 
-export default Sprints_Proyecto
+export default Lista_Sprints_Proyecto

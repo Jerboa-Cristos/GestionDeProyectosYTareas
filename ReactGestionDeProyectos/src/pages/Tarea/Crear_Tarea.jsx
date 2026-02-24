@@ -9,7 +9,7 @@ import Menu_Izquierdo from "../Menus/Menu_Izquierdo"
 function Crear_Tarea () {
     const [nombre, setNombre] = useState('')
     const [tipo, setTipo] = useState('')
-    const [estado, setEstado] = useState('')
+    const [estado, setEstado] = useState('Por Hacer')
     const [descripcion, setDescripcion] = useState('')
     const [desarrolladores, setDesarrolladores] = useState([])
     const [idDesarrollador, setIdDesarrollador] = useState('')
@@ -27,15 +27,17 @@ function Crear_Tarea () {
             const data = {
                 nombre, 
                 tipo,
-                estado,
+                estado: estado || "Por Hacer",
                 descripcion: descripcion, 
                 fecha_fin: fechaFin,
+                id_sprint: id_sprint,
                 id_desarrollador: idDesarrollador
+
             }
             funcion_crear_tarea(data, id_sprint, token)
             .then(respuesta => {
                 console.log('tarea creada', respuesta.data)
-                navigate(`/mis_tareas_product_owner/${id_sprint}`)
+                navigate(`/tablero_kanban_product_owner/${id_sprint}`)
                 console.log('ID sprint recibido',id_sprint)
                 
             })
@@ -104,7 +106,7 @@ function Crear_Tarea () {
                         value={tipo}
                         onChange={(e) => setTipo(e.target.value)}
                         className="rounded-lg px-4 py-2 bg-blueBase mt-1 text-BlueDarkDark font-semibold">
-                            <option value="">Selecciona el tipo de tarea</option>
+                            
                             <option value={"Backend"}>Backend</option>
                             <option value={"Frontend"}>Frontend</option>
                             <option value={"Diseño"}>Diseño</option>
@@ -118,7 +120,7 @@ function Crear_Tarea () {
                         value={estado}
                         onChange={(e) => setEstado(e.target.value)}
                         className="rounded-lg px-4 py-2 bg-blueBase mt-1 text-BlueDarkDark font-semibold">
-                            <option value="">Selecciona el estado de la tarea</option>
+                            
                             <option value={"Por Hacer"}>Por Hacer</option>
                             <option value={"En Curso"}>En Curso</option>
                             <option value={"En Revisión"}>En Revisión</option>
