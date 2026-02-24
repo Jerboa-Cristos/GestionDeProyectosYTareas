@@ -18,7 +18,7 @@ function ProductOwnerProfile () {
 
     useEffect(() => {
         if(!token){
-            navigate('/product_owner_login')
+            navigate('/')
         }
 
         funcion_product_owner_profile(token)
@@ -37,7 +37,7 @@ function ProductOwnerProfile () {
             })
             .catch(error =>{
                 console.log('No autenticado', error.response)
-                navigate('/product_owner_login')
+                navigate('/')
         })
 
     }, [])

@@ -82,7 +82,7 @@ function GestionUsuarios() {
 
     return (
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
-            <MenuTop rutaLogin='/administrador_login' rutaPerfil='/administrador_profile'/>
+            <MenuTop rutaPerfil='/administrador_profile'/>
             <div className="flex flex-1 gap-4 overflow-hidden h-full">
                 <main 
                 onClick={()=> {setRolFilter(null); setSearchTerm('');}}

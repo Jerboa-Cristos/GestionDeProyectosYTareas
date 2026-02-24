@@ -84,25 +84,29 @@ class AdministradorAuthController extends Controller
 
 
     public function loginAdministrador(Request $request){
-        $request->validate([
+        try{
+
+            $request->validate([
             'email' => 'required|email',
             'password' => 'required'
-        ]);
+            ]);
 
+            $administrador = Administrador::where('email', $request->email)->first();
 
-        $administrador = Administrador::where('email', $request->email)->first();
+            if(!$administrador || !Hash::check($request->password, $administrador->password)){
+                return response()->json(['error' => 'Email y password incorrectas']);
+            }
 
-        if(!$administrador || !Hash::check($request->password, $administrador->password)){
-            return response()->json(['error' => 'Email y password incorrectas']);
-        }
-
-        $input['nombre'] = $administrador->nombre;
-        $input['id'] = $administrador->id;
-        $input['rol'] = 'administrador';
-        $input['token'] = $administrador->createToken('Administrador')->plainTextToken;
-        
-        return response()->json($input);      
+            $input['nombre'] = $administrador->nombre;
+            $input['id'] = $administrador->id;
+            $input['rol'] = 'administrador';
+            $input['token'] = $administrador->createToken('Administrador')->plainTextToken;
             
+            return response()->json($input);  
+
+        } catch(\Exception $e) {
+            return response()->json(['message'=>'No tiene acceso'], 404);
+        }
     }
 
 

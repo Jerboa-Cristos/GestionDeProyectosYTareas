@@ -71,6 +71,8 @@ function AdministradorLogin () {
                 className="mt-1 block w-full rounded-md px-3 py-2 bg-blueBase text-2x2 focus:border-blueDark sm:text-sm placeholder-blueblue" 
                 placeholder="Enter your password"/>
 
+                
+
                 </div>
                 <button type="submit" className="w-full flex justify-center py-2 px-4
                     rounded-md text-sm font-medium text-white bg-blueDark hover:bg-blueblue

@@ -70,7 +70,7 @@ const GuardarUsuario = async (e) => {
 
     return (
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
-            <MenuTop rutaLogin='/administrador_login' rutaPerfil='/administrador_profile'/>
+            <MenuTop rutaPerfil='/administrador_profile'/>
             <main className="flex-1 bg-blueBase rounded-xl shadow-lg p-10 flex flex-col relative m-4 overflow-hidden">
 
                 <h1 className="text-3xl font-bold text-blueDark mb-12">

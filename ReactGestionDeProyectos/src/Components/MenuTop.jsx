@@ -4,14 +4,13 @@ import { UserCircle, LogOut } from 'lucide-react';
 
 
 //Para responsibe design, hay que añadir md: a las variables, ya que cambia las cosas si la pantalla es menos que la mitad
-function MenuTop({rutaPerfil, rutaLogin}) {
+function MenuTop({rutaPerfil}) {
     const navigate = useNavigate()
 
-    const logout = (rutaLogin) => {
+    const logout = () => {
         localStorage.removeItem('user')
         localStorage.removeItem('isAuthenticated')
-        navigate(rutaLogin);
-
+        navigate('/');
     }
 
     const goToProfile = (rutaPerfil) => {
@@ -28,7 +27,7 @@ function MenuTop({rutaPerfil, rutaLogin}) {
             </div>
             <div className="flex items-center gap-6 text-blueDark">
                 <button onClick={(e) => {goToProfile(rutaPerfil); e.stopPropagation()}} className="hover:text-BlueDarkDark transition-colors"><UserCircle size={24} /></button>
-                <button onClick={(e)=> {logout(rutaLogin); e.stopPropagation()}} className="hover:text-BlueDarkDark transition-colors"><LogOut size={24} /></button>
+                <button onClick={(e)=> {logout; e.stopPropagation()}} className="hover:text-BlueDarkDark transition-colors"><LogOut size={24} /></button>
             </div>
     </header>
     )

@@ -16,24 +16,28 @@ class ProductOwnerAuthController extends Controller
 {
     
     public function loginProductOwner(Request $request){
-       $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+        try{ 
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required'
+            ]);
 
 
-        $product_owner = ProductOwner::where('email', $request->email)->first();
+            $product_owner = ProductOwner::where('email', $request->email)->first();
 
-        if(!$product_owner || !Hash::check($request->password, $product_owner->password)){
-            return response()->json(['error' => 'Email y password incorrectas']);
-        }
+            if(!$product_owner || !Hash::check($request->password, $product_owner->password)){
+                return response()->json(['error' => 'Email y password incorrectas']);
+            }
 
-        $input['nombre'] = $product_owner->nombre;
-        $input['id'] = $product_owner->id;
-        $input['rol'] = 'product_owner';
-        $input['token'] = $product_owner->createToken('ProductOwner')->plainTextToken;
-        
-        return response()->json($input);    
+            $input['nombre'] = $product_owner->nombre;
+            $input['id'] = $product_owner->id;
+            $input['rol'] = 'product_owner';
+            $input['token'] = $product_owner->createToken('ProductOwner')->plainTextToken;
+            
+            return response()->json($input); 
+        } catch(\Exception $e) {
+            return response()->json(['message'=>'No tiene acceso'], 404);
+        }   
     }
 
 

@@ -36,7 +36,7 @@ function Sprints_Proyecto() {
 
     return (
         <>
-        <MenuTop/>
+        <MenuTop rutaPerfil='/product_owner_profile'/>
 
         <div className="flex">
             <div className="w-56">

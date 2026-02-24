@@ -17,16 +17,14 @@ import TableroKanbanDesarrollador from './pages/Desarrollador/TableroKanbanDesar
 import { useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 //AUTH
+import Login from './pages/Auth/Login';
 //Administrador
-import AdministradorLogin from './pages/Auth/Administrador/AdministradorLogin';
 import AdministradorProfile from './pages/Auth/Administrador/AdministradorProfile';
 import AdministradorRegister from './pages/Auth/Administrador/AdministradorRegister';
 //Product Owner
-import ProductOwnerLogin from './pages/Auth/ProductOwner/ProductOwnerLogin';
 import ProductOwnerDashboard from './pages/Product_Owner/ProductOwnerDashboard';
 import ProductOwnerProfile from './pages/Product_Owner/ProductOwnerProfile';
 //Desarrollador
-import DesarrolladorLogin from './pages/Auth/Desarrollador/DesarrolladorLogin';
 import DesarrolladorProfile from './pages/Auth/Desarrollador/DesarrolladorProfile';
 
 //PROYECTO
@@ -54,10 +52,10 @@ function App() {
     
       <>
         <Routes>
-        
+          <Route path='/' element={<Login/>}/>
+
           {/*RUTAS AUTH ADMINISTRADOR */}
           <Route path='/administrador_register' element={<AdministradorRegister/>}/>
-          <Route path='/administrador_login' element={<AdministradorLogin/>}/>
           <Route path="/administrador_profile" element={<AdministradorProfile/>}/>   
           <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>
           <Route path="/PerfilUsuario/:rol/:id" element={<PerfilUsuario/>}/>
@@ -66,7 +64,6 @@ function App() {
 
           {/*RUTAS AUTH PRODUCT OWNER */}
           {/*<Route path='ruta del navegador del frontend' element={<Componente/>}/> EJEMPLO DE RUTA*/}
-          <Route path='/product_owner_login' element={<ProductOwnerLogin/>}/>
           <Route path='/product_owner_profile' element={<ProductOwnerProfile/>}/>
           <Route path='/product_owner_dashboard' element={<ProductOwnerDashboard/>}/>
           <Route path='/lista_proyectos' element={<Lista_Proyectos/>}/>
@@ -87,7 +84,6 @@ function App() {
 
 
           {/*RUTAS AUTH DESARROLLADOR */}
-          <Route path='/desarrollador_login' element={<DesarrolladorLogin/>}/>
           <Route path='/desarrollador_profile' element={<DesarrolladorProfile/>}/>
           {/*AQUÍ PONGO EL CONTEXT DE TAREA PARA NO TENER QUE DECLARARLO CADA VEZ */}
         </Routes>
