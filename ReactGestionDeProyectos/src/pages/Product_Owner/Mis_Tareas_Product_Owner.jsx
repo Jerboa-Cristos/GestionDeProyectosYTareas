@@ -51,11 +51,9 @@ function Mis_Tareas_Product_Owner() {
 
 
     return (
-
+        <>
          <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/product_owner_profile'/>
-
-        <>
        
 
             <div className="flex flex-1 gap-4 overflow-hidden h-full">
