@@ -5,7 +5,6 @@ import { showMiTarea, updateTarea } from '../../services/desarolladorService'
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
 import SeccionComentario from "../../Components/Com_Comentario/SeccionComentario";
 import { useParams } from "react-router-dom"
-import { TareaContext } from '../../Context/TareaContext';
 
 function MostrarTarea (){
     const token = localStorage.getItem('token');
@@ -32,7 +31,7 @@ function MostrarTarea (){
         e.preventDefault()
         const token = localStorage.getItem('token')
         if (!token) return;
-        updateTarea(id, estado, token).then(res => {
+        updateTarea(id, {estado: estado}, token).then(res => {
             console.log('Tarea actualizado')
             alert('Tarea actualizada con exito.');
         }).catch(err=>{
@@ -66,7 +65,7 @@ function MostrarTarea (){
                                     <option value="Por Hacer">Por Hacer</option>
                                     <option value="En Curso">En Curso</option>
                                     <option value="En Revision">En Revisión</option>
-                                    <option value="Finalizando">Finalizado</option>
+                                    <option value="Finalizado">Finalizado</option>
                                 </select>
                             </div>
                         
@@ -78,7 +77,7 @@ function MostrarTarea (){
                         </div>
                     </form>  
                 </div>
-                <SeccionComentario idTarea={2}/>
+                <SeccionComentario idTarea={tarea.id}/>
             </main>
         </div> 
     </div>
