@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import './App.css';
 
 //Cris
@@ -14,7 +13,6 @@ import TableroKanbanDesarrollador from './pages/Desarrollador/TableroKanbanDesar
 
 
 //melissa
-import { useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 //AUTH
 import Login from './pages/Auth/Login';
@@ -45,9 +43,6 @@ import Tablero_Kanban_Product_Owner from './pages/Product_Owner/Tablero_Kanban_P
 import Editar_Tarea from './pages/Tarea/Editar_Tarea';
 
 function App() {
-// <Route path="/" element={<Login/>}/> LOGIN NUESTRO
-
-
   return (
     
       <>
