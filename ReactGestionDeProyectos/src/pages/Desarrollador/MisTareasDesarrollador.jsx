@@ -22,18 +22,20 @@ function MisTareasDesarrollador() {
     }, [tareas])
 
     return (
-         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
+         <div className="min-h-screen bg-blueDark p-2 md:p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/desarrollador_profile'/>
-            <div className="flex flex-1 gap-4 overflow-hidden h-full">
+            <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 md:pb-0">
                 <MenuLateralDesarrollador/>
-                <main className="flex-1 bg-white rounded-xl shadow-lg p-8 overflow-auto flex flex-col gap-6">
-                    <h1 className="text-3xl font-bold text-blueDark mb-6">Mis Tareas</h1>
+                <main className="flex-1 bg-white rounded-xl shadow-lg p-4 md:p-8 overflow-y-auto flex flex-col gap-6">
+                    <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-2 md:mb-6 text-center md:text-left">Mis Tareas</h1>
                     
-                    <div className="grid md:grid-cols-4 gap-2">
-                        <ColumnaTareas titulo='Por Hacer' tipoEstado={tareasPorEstado.PorHacer}/>
-                        <ColumnaTareas titulo='En Curso' tipoEstado={tareasPorEstado.EnCurso}/>
-                        <ColumnaTareas titulo='En Revisión' tipoEstado={tareasPorEstado.EnRevision}/>
-                        <ColumnaTareas titulo='Finalizado' tipoEstado={tareasPorEstado.Finalizado}/>
+                    <div className="flex-1 overflow-x-auto md:overflow-x-visible pb-4">
+                        <div className="flex flex-col md:grid md:grid-cols-4 gap-4 min-w-full">
+                            <ColumnaTareas titulo='Por Hacer' tipoEstado={tareasPorEstado.PorHacer}/>
+                            <ColumnaTareas titulo='En Curso' tipoEstado={tareasPorEstado.EnCurso}/>
+                            <ColumnaTareas titulo='En Revisión' tipoEstado={tareasPorEstado.EnRevision}/>
+                            <ColumnaTareas titulo='Finalizado' tipoEstado={tareasPorEstado.Finalizado}/>
+                        </div>
                     </div>
 
                 </main>

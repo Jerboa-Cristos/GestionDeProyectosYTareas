@@ -79,12 +79,12 @@ function DashboardDesarrollador() {
 
 
     return(
-        <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
+        <div className="min-h-screen bg-blueDark p-2 md:p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/desarrollador_profile'/>
-            <div className="flex flex-1 gap-4 overflow-hidden h-full">
+            <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 md:pb-0">
                 <MenuLateralDesarrollador/>
-                <main className="flex-1 bg-white rounded-xl shadow-lg p-8 overflow-auto flex flex-col gap-6">
-                    <h1 className="text-3xl font-bold text-blueDark mb-6">Dashboard</h1>
+                <main className="flex-1 bg-white rounded-xl shadow-lg p-4 md:p-8 overflow-y-auto flex flex-col gap-6">
+                    <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-2 md:mb-6 text-center md:text-left">Dashboard</h1>
 
                     {/* Grid Principal */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -94,31 +94,31 @@ function DashboardDesarrollador() {
                             {/* Tareas Asignadas */}
                             <button 
                             onClick={gotoTareas} 
-                            className="bg-blueDashboard rounded-xl p-6 flex items-center justify-between text-white hover:shadow-lg hover:bg-blueblue transition-all" 
+                            className="bg-blueDashboard rounded-xl p-4 md:p-6 flex items-center justify-between text-white hover:shadow-lg hover:bg-blueblue transition-all group" 
                             >
-                                <div className="flex items-center gap-4">
-                                    <ClipboardList size={80} />
-                                    <span className="text-xl font-semibold leading-tight">Tareas Asignadas</span>
+                                <div className="flex items-center gap-3 md:gap-4">
+                                    <ClipboardList size={50} md:size={12} className="transition-transform group-hover:scale-110" />
+                                    <span className="text-lg md:text-xl font-semibold leading-tight text-left">Tareas Asignadas</span>
                                 </div>
-                                <span className="text-4xl font-bold">{tareas.length}</span>
+                                <span className="text-3xl md:text-4xl font-bold">{tareas.length}</span>
                             </button>
 
                             {/* Tareas Deadline */}
                             <button onClick={gotoTareas} 
-                            className={"bg-warning rounded-xl p-6 flex items-center justify-between text-white relative hover:shadow-lg hover:bg-warningDark transition-all"}>
-                            <div className="flex items-center gap-4">
-                                <Calendar size={60} />
-                                <span className="text-xl font-semibold leading-tight">Tareas Asignadas Deadline</span>
+                           className="bg-warning rounded-xl p-4 md:p-6 flex items-center justify-between text-white relative hover:shadow-lg hover:bg-warningDark transition-all group">
+                            <div className="flex items-center gap-3 md:gap-4">
+                                <Calendar size={12} md:size={16} className="w-12 h-12 md:w-16 md:h-16"/>
+                                <span className="text-lg md:text-xl font-semibold leading-tight text-left">Tareas Asignadas Deadline</span>
                             </div>
-                            <span className="text-4xl font-bold mr-4">{tareasDeadline}</span>
-                            <AlertCircle className="absolute bottom-4 right-4 text-warningDark bg-white rounded-full" size={30} />
+                            <span className="text-3xl md:text-4xl font-bold md:mr-4">{tareasDeadline}</span>
+                            <AlertCircle className="absolute bottom-2 right-2 md:bottom-4 md:right-4 text-warningDark bg-white rounded-full p-1" size={24} />
                             </button>
                         </div>
 
                         {/* Tipo de Trabajo MONTARLO TODO */}
-                        <div className="bg-blueBase rounded-xl p-6">
-                            <h3 className="text-center text-xl font-semibold text-blueDark mb-4">Tipo de trabajo</h3>
-                            <div className="space-y-1 w-60 h-60">
+                        <div className="bg-blueBase rounded-xl p-4 md:p-6 flex flex-col items-center">
+                            <h3 className="text-center text-lg md:text-xl font-semibold text-blueDark mb-4">Tipo de trabajo</h3>
+                            <div className="w-full h-64 max-w-xs md:max-w-none">
                                 <ResponsiveContainer width="100%" height="100%" margin={{ left: 40, right: 20 }}>
                                     <BarChart data={grfTipoTrabajo} layout='vertical'>
                                         <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
@@ -138,17 +138,17 @@ function DashboardDesarrollador() {
 
                     <div className="space-y-6">
                         {/* Últimos Cambios */}
-                        <div className="bg-blueBase rounded-xl p-6 shadow-sm">
-                            <h3 className="text-center text-xl font-semibold text-blueDark mb-6">Últimos Cambios</h3>
+                        <div className="bg-blueBase rounded-xl p-4 md:p-6 shadow-sm">
+                            <h3 className="text-center text-lg md:text-xl font-semibold text-blueDark mb-6">Últimos Cambios</h3>
                             <div className="space-y-3">
                             {UltCambios.slice(0, 3).map((tarea) => (
-                                <div key={tarea.id} className="bg-turquesa rounded-lg p-3 flex items-center gap-4 text-white text-sm">
+                                <div key={tarea.id} className="bg-turquesa rounded-lg p-3 text-white">
                                 {/*Aquí debe estar la imagen del usuario*/}
-                                    <div className="grid grid-cols-4 w-full text-center">
-                                        <span>{tarea.desarrollador.nombre}</span>
-                                        <span>{tarea.nombre}</span>
-                                        <span>{tarea.estado}</span>
-                                        <span>{tarea.sprint.nombre}</span>
+                                    <div className="grid grid-cols-3 md:grid-cols-4 w-full text-center gap-2 text-xs md:text-sm font-medium">
+                                        <span className="font-bold md:font-normal">{tarea.desarrollador.nombre}</span>
+                                        <span className="truncate">{tarea.nombre}</span>
+                                        <span className="rounded px-1">{tarea.estado}</span>
+                                        <span className="hidden md:block italic">{tarea.sprint.nombre}</span>
                                     </div>
                                 </div>
                             ))}
@@ -156,9 +156,9 @@ function DashboardDesarrollador() {
                         </div>
 
                         {/* Resumen del Estado (Gráfico Circular) */}
-                        <div className="bg-blueBase rounded-xl p-6 shadow-sm flex flex-col items-center">
-                            <h3 className="text-xl font-semibold text-blueDark mb-6">Resumen del Estado</h3>
-                            <div className="relative w-60 h-60">
+                        <div className="bg-blueBase rounded-xl p-4 md:p-6 shadow-sm flex flex-col items-center">
+                            <h3 className="text-lg md:text-xl font-semibold text-blueDark mb-6">Resumen del Estado</h3>
+                            <div className="w-full h-64 max-w-xs">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <PieChart>
                                         <Pie 

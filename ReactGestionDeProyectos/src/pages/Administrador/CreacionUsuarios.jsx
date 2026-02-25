@@ -71,7 +71,7 @@ const GuardarUsuario = async (e) => {
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/administrador_profile'/>
             <main className='flex-1 flex flex-col items-center justify-center bg-blueBase rounded-xl shadow-lg p-6 md:p-10 overflow-hidden'>
-
+                <div className='flex flex-col py-10 w-full max-w-lg lg:max-w-2xl items-center'>
                 <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-8 md:mb-12 text-center">
                     <span className="block md:inline">Creación de Usuario</span>
                 </h1>
@@ -167,6 +167,7 @@ const GuardarUsuario = async (e) => {
                     </button>
 
                 </form>
+                </div>
                 <div className="mt-8 flex flex-row justify-between items-center w-full max-w-2xl">
                     <button 
                         onClick={goBack}

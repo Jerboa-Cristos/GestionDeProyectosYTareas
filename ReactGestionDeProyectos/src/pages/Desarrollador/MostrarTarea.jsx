@@ -41,44 +41,49 @@ function MostrarTarea (){
     }
 
     return(
-    <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
+    <div className="min-h-screen bg-blueDark p-2 md:p-4 flex flex-col font-sans">
         <MenuTop rutaPerfil='/desarrollador_profile'/>  
-        <div className="flex flex-1 gap-4 overflow-hidden h-full">
+        <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 md:pb-0">
                 <MenuLateralDesarrollador/>
-            <main className="flex-1 bg-white rounded-lg shadow-lg overflow-hidden flex flex-col gap-2">
-                <div className="bg-blueDashboard rounded-lg p-4 h-auto">
-                    <form onSubmit={botonEditarTarea}>
-                        <h1 className="text-3xl font-bold text-white mb-6">Detalles Tarea</h1>
-                        
-                        <label className="font-semibold text-white mt-4 block">Nombre</label>
-                        <h2 className="w-full rounded-lg px-3 py-2 mt-1 bg-blueBase text-blueDark font-medium">{tarea.nombre}</h2>
-
-                        <label className="font-semibold text-white mt-4 block">Descripción</label>
-                        <h2 className=" w-full rounded-lg px-3 py-2 mt-1 h-24 bg-blueBase text-blueDark font-medium">{tarea.descripcion}</h2>
-
-                        <div className="mt-auto flex flex-row justify-between items-center w-full">
-                            <div>
-                                <label className="font-semibold text-white mt-4 block">Estado</label>
-                                <select
-                                value={estado}
-                                onChange={(e) => setEstado(e.target.value)}
-                                className="rounded-lg bg-blueBase px-3 py-2 w-60 mt-1 text-BlueDarkDark font-medium">
-                                    <option value="Por Hacer">Por Hacer</option>
-                                    <option value="En Curso">En Curso</option>
-                                    <option value="En Revision">En Revisión</option>
-                                    <option value="Finalizado">Finalizado</option>
-                                </select>
+            <main className="flex-1 bg-white rounded-xl shadow-lg flex flex-col overflow-hidden">
+                <div className="bg-blueDashboard p-4 md:p-8 shrink-0 rounded-b-lg">
+                    <form onSubmit={botonEditarTarea} className="max-w-4xl mx-auto">
+                        <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-6 text-center md:text-left">Detalles Tarea</h1>
+                        <div className="grid grid-cols-1 md:gap-4">
+                            <div className="mb-4">
+                                <label className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Nombre</label>
+                                <h2 className="w-full rounded-lg px-4 py-3 mt-1 bg-blueBase text-blueDark font-bold shadow-inner">{tarea.nombre}</h2>
                             </div>
-                        
-                            <button type="submit"
-                                className="bg-blueBase text-blueDark font-bold px-6 py-2 mt-6 rounded-lg hover:bg-GreenLite transition flex items-center gap-2">
-                                <Save size={23} />
-                                Guardar cambios
-                            </button>
-                        </div>
-                    </form>  
+                            <div className="mb-4">
+                                <label className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Descripción</label>
+                                <h2 className="w-full rounded-lg px-4 py-3 mt-1 bg-blueBase text-blueDark font-bold shadow-inner">{tarea.descripcion}</h2>
+                            </div>
+                                <div className="mb-4 flex flex-col md:flex-row justify-between items-end md:items-center gap-2 pt-4">
+                                    <div className="w-full md:w-auto">
+                                        <label className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Estado</label>
+                                        <select
+                                        value={estado}
+                                        onChange={(e) => setEstado(e.target.value)}
+                                        className="rounded-lg bg-blueBase px-4 py-2.5 w-full md:w-64 text-blueDark font-bold 
+                                        focus:ring-2 focus:ring-white outline-none cursor-pointer">
+                                            <option value="Por Hacer">Por Hacer</option>
+                                            <option value="En Curso">En Curso</option>
+                                            <option value="En Revision">En Revisión</option>
+                                            <option value="Finalizado">Finalizado</option>
+                                        </select>
+                                    </div>
+                            
+                                <button type="submit"
+                                    className="w-full md:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
+                                    hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
+                                    <Save size={20} />
+                                    Guardar cambios
+                                </button>
+                            </div>
+                    </div>
+                </form>  
                 </div>
-                <div className="flex-1 overflow-hidden">
+                <div className="flex-1 mt-2 overflow-y-auto md:mt-4">
                     <SeccionComentario idTarea={idTarea}/>
                 </div>
             </main>

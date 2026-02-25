@@ -48,20 +48,22 @@ const ElementComentario = ({id, user, text, onDeleteSuccess}) => {
 
 
     return (
-        <div className="bg-blueDashboard rounded-lg p-1 flex gap-2 items-start flex-row">
-            <div className="flex-1">
-                <div className='flex flex-row gap-3'>
-                    <User2 size={22} className='text-white text-bold rounded-full mt-1'/>
-                    <h3 className="text-white font-bold text-xl">{user.nombre}</h3>
+        <div className="bg-blueDashboard rounded-lg p-3 flex gap-3 items-start flex-row w-full max-w-full">
+            <div className="flex-1 min-w-0">
+                <div className='flex flex-row items-center justify-between gap-3 mb-2'>
+                    <div className='flex items-center gap-2 min-w-0'>
+                        <User2 size={22} className='text-white shrink-0'/>
+                        <h3 className="text-white font-bold text-lg md:text-xl truncate">{user.nombre}</h3>
+                    </div>
                     {idUser == user.id && (
-                        <div className='flex flex-row gap-2'>
+                        <div className='flex flex-row gap-3 shrink-0'>
                             <Edit2 className={`${editando? "text-blueBase" : "text-blueDark"}
-                            hover:text-bluebase hover:scale-110 transition-all cursor-pointer xs:size-7`}
+                            hover:text-bluebase hover:scale-110 transition-all cursor-pointer`}
                             onClick={UpdateComentario}
-                            size={10}/>
-                            <Trash2 className="text-warning hover:text-warningDark hover:scale-110 transition-all cursor-pointer xs:size-7"
+                            size={25} md:size={10}/>
+                            <Trash2 className="text-warning hover:text-warningDark hover:scale-110 transition-all cursor-pointer"
                             onClick={(e)=>{EliminarComentario(id, token); e.stopPropagation();}}
-                            size={10}/> 
+                            size={25} md:size={10}/> 
                         </div>
                     )}
                 </div>
@@ -69,10 +71,10 @@ const ElementComentario = ({id, user, text, onDeleteSuccess}) => {
                     <textarea value={formData.texto}
                     name='texto'
                     onChange={handleChange}
-                    className="w-80 rounded-lg px-3 py-2 mt-1 bg-blueBase text-BlueDarkDark font-semibold text-sm leading-tight placeholder-blueDark">
+                    className="w-full rounded-lg px-3 py-2 bg-blueBase text-BlueDarkDark font-semibold text-sm leading-tight placeholder-blueDark focus:outline-none min-h-20 resize-y">
                     </textarea>
                 ) : (
-                    <p className="w-80 rounded-lg px-3 py-2 mt-1 bg-blueBase text-BlueDarkDark font-semibold text-sm leading-tight">
+                    <p className="w-full rounded-lg px-3 py-2 bg-blueBase text-BlueDarkDark font-semibold text-sm leading-tight wrap-break-words">
                         {text}
                     </p>
                 )}

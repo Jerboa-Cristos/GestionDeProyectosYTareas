@@ -26,11 +26,11 @@ function MenuTop({rutaPerfil}) {
             <div className="flex items-center gap-4 md:gap-8 text-blueDark">
                 <button onClick={(e) => {goToProfile(rutaPerfil); e.stopPropagation()}} 
                 className="flex items-center gap-2 p-2 hover:bg-blueBase rounded-full transition-all active:scale-90" title="Perfil">
-                    <UserCircle size={24} className="md:size-32" /></button>
+                    <UserCircle size={35} md:size={12} /></button>
                 <button onClick={(e)=> {logout(); e.stopPropagation()}} 
                 className="flex items-center gap-2 p-2 hover:text-warningDark hover:bg-red-50 rounded-full transition-all 
                 active:scale-90" title="Salir">
-                    <LogOut size={24} className="md:size-30"/></button>
+                    <LogOut size={35} md:size={12}/></button>
             </div>
     </header>
     )

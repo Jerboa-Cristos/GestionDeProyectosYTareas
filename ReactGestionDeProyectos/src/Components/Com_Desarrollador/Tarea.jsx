@@ -34,13 +34,17 @@ const Tarea = ({ id, title, description, fecha }) => {
 
   return (
     <button key={id} id={id} onClick={gotoTarea} type='button'
-    className="w-full bg-blueBase hover:bg-BlueBaseDark transition-colors rounded-lg p-4 text-left group">
-      <h4 className="text-blueDark font-bold text-lg text-center mb-2">{title}</h4>
-      <p className="text-BlueDarkDark text-xs leading-tight mb-4">
+    className="w-full bg-blueBase hover:bg-BlueBaseDark active:scale-[0.98] transition-all rounded-xl 
+    p-4 text-left group shadow-sm border-l-4 border-transparent hover:border-blueDashboard">
+      <h4 className="text-blueDark font-bold text-base md:text-lg text-center mb-2 
+      group-hover:text-blueDashboard transition-colors">{title}</h4>
+      <p className="text-BlueDarkDark text-[11px] md:text-xs leading-relaxed mb-4 line-clamp-3">
         {descripcionCorta()}
       </p>
-      <div className="flex justify-end items-center gap-1">
-        <Calendar size={22} className={`text-blueDark ${tareasDeadline(fecha)}`}/>
+      <div className="flex justify-between items-center pt-2 border-t border-blueDark/5">
+        <div className="flex items-center gap-2">
+          <Calendar size={22} className={`text-blueDark transition-transform group-hover:rotate-12 ${tareasDeadline(fecha)}`}/>
+        </div>
       </div>
     </button>
   );

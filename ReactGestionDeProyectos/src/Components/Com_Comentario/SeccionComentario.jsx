@@ -50,11 +50,11 @@ const SeccionComentario = ({idTarea}) => {
 
 
     return (
-        <div className="bg-blueDashboard rounded-lg p-4">
-            <div>
-                <h2 className="text-2xl font-bold text-white mb-6">Comentarios</h2>
+        <div className="bg-blueDashboard rounded-xl p-2 md:p-6 flex flex-col h-full shadow-inner">
+            <div className="mb-4">
+                <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">Comentarios</h2>
             </div>
-            <div className="max-h-40 overflow-y-auto pr-2 custom-scrollbar grow-0">
+            <div className="max-h-50 overflow-y-auto custom-scrollbar grow-0">
                 {comentarios.map(comentario => (
                     <ElementComentario key={comentario.id} id={comentario.id} user={comentario.autor} text={comentario.texto} onDeleteSuccess={comEliminado}/>
                 ))}
@@ -70,9 +70,9 @@ const SeccionComentario = ({idTarea}) => {
                     className="w-full bg-white rounded-xl p-4 font-semibold text-blueDark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 min-h-25 resize-none" placeholder='Añadir comentario'>
                     </textarea>
                     <div className="flex justify-end mt-3">
-                    <button type='submit' className="bg-blueBase text-blueDark font-bold px-6 py-2 mt-6 rounded-lg hover:bg-GreenLite transition flex items-center gap-2">
+                    <button type='submit' className="bg-blueBase text-blueDark font-bold px-2 py-2 md:px-4 md:py-6 mt-6 md:mt-2 rounded-lg hover:bg-GreenLite transition flex items-center gap-2">
                         <Send size={20}/>
-                        Enviar
+                        <span>Enviar</span>
                     </button>
                     </div>
                 </form>
