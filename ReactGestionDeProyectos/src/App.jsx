@@ -77,7 +77,7 @@ function App() {
 
           {/*TAREA */}
           <Route path='/crear_tarea/:id_sprint' element={<Crear_Tarea/>}/>
-          <Route path='/editar_tarea' element={<Editar_Tarea/>}/>
+          <Route path='/editar_tarea/:id_sprint/:id_tarea' element={<Editar_Tarea/>}/>
 
 
           {/*RUTAS AUTH DESARROLLADOR */}

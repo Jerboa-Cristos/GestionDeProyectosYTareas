@@ -1,28 +1,66 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import MenuTop from "../../Components/MenuTop"
 import Menu_Izquierdo from "../Menus/Menu_Izquierdo"
 import { Save } from "lucide-react"
-import { funcion_actualizar_tarea } from "../../services/ruta_api_tarea"
+import { funcion_actualizar_tarea, funcion_mostrar_tarea } from "../../services/ruta_api_tarea"
 import { useParams, useNavigate } from "react-router-dom"
+import { mostrarUsuarios } from "../../services/adminService"
+
 
 function Editar_Tarea (){
     const [nombre, setNombre] = useState('')
     const [descripcion, setDescripcion] = useState('')
+    const [tipo, setTipo] = useState('')
     const [estado, setEstado] = useState('')
-    const id_sprint = useParams()
-    const id_tarea = useParams()
+    const [idDesarrollador, setIdDesarrollador] = useState('')
+    const [desarrolladores, setDesarrolladores] = useState([])
+
+    const {id_sprint, id_tarea } = useParams()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+
+        funcion_mostrar_tarea(id_sprint, id_tarea, token)
+        .then(respuesta => {
+            const tarea = respuesta.data
+            setNombre(tarea.nombre)
+            setDescripcion(tarea.descripcion)
+            setTipo(tarea.tipo)
+            setEstado(tarea.estado)
+
+        })
+        .catch(error => console.log('Error al cargar la tarea', error))
+
+        mostrarUsuarios(token)
+            .then(respuesta => {
+                const filtroUsuarios = respuesta.data.filter(
+                    desarrollador => desarrollador.rol === 'Desarrollador'
+                )
+
+                setDesarrolladores(filtroUsuarios)
+
+                console.log('Cargando desarrolador', respuesta.data)
+            })
+
+            .catch(error => {
+                console.log('Error al mostrar desarrolladores', error.respuesta.data)
+            })
+
+    }, [id_sprint, id_tarea])
+
 
     const botonEditarTarea = (e) => {
         e.preventDefault()
         const token = localStorage.getItem('token')
         const data = {
-            nombre, descripcion
+            nombre, descripcion, tipo, estado, id_desarrollador: idDesarrollador
         }
 
         funcion_actualizar_tarea(id_sprint, id_tarea, data, token)
         .then(respuesta => {
             console.log('se ha actualizado la tarea', respuesta.data)
-            navigate('/mis_tareas_product_owner')
+            navigate(`/tablero_kanban_product_owner/${id_sprint}`)
         })
         .catch(error => {
             console.log('Error al editar tarea', error)
@@ -65,15 +103,44 @@ function Editar_Tarea (){
                         
                         </textarea>
 
+                        <label className="block text-white font-semibold">Tipo</label>
+                        <select  
+                        value={tipo}
+                        onChange={(e) => setTipo(e.target.value)}
+                        className="rounded  bg-blueBase px-3 py-2 w-60 mt-1 text-BlueDarkDark">
+                            <option value="Backend">Backend</option>
+                            <option value="Frontend">Frontend</option>
+                            <option value="Diseño">Diseño</option>
+                            <option value="Despliegue">Despliegue</option>
+                            <option value="Testing">Testing</option>
+                        </select>
+
                         <label className="block text-white font-semibold">Estado</label>
                         <select  
+                        value={estado}
                         onChange={(e) => setEstado(e.target.value)}
-
                         className="rounded  bg-blueBase px-3 py-2 w-60 mt-1 text-BlueDarkDark">
-                            <option value="">Por Hacer</option>
-                            <option value="">En Curso</option>
-                            <option value="">En Revisión</option>
-                            <option value="">Finalizado</option>
+                            <option value="Por Hacer">Por Hacer</option>
+                            <option value="En Curso">En Curso</option>
+                            <option value="En Revision">En Revisión</option>
+                            <option value="Finalizado">Finalizado</option>
+                        </select>
+
+                        <label className="font-semibold text-white mt-4 block">Asignar a un desarrollador</label>
+                        <select
+                        value={idDesarrollador}
+                        onChange={(e) => setIdDesarrollador(e.target.value)}
+                        required
+                        className="rounded-lg px-4 py-2 bg-blueBase mt-1"
+                        >
+                            <option value={"Selecciona un desarrollador"}></option>
+                            {desarrolladores.map(desarrollador => (
+                                <option key={desarrollador.id} value={desarrollador.id}>
+                                    {desarrollador.nombre}
+                                    
+                                </option>
+                            ))}
+
                         </select>
                        
 

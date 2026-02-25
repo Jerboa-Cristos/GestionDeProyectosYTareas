@@ -1,17 +1,14 @@
 import { Search } from 'lucide-react';
 
-import KanbanPanel from '../../Components/Com_Desarrollador/KanbanPanel';
 import MenuTop from '../../Components/MenuTop';
 import Menu_Izquierdo from '../Menus/Menu_Izquierdo';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { funcion_listado_tareas_product_owner } from '../../services/ruta_api_tarea';
+import { funcion_eliminar_tarea, funcion_listado_tareas_product_owner } from '../../services/ruta_api_tarea';
+import { MoreVertical } from 'lucide-react';
 
 function Tablero_Kanban_Product_Owner() {
     
-
-
-    //LO QUE VOY A AÑADIR DE AQUI
     const [tareas, setTareas] = useState([])
     const {id_sprint} = useParams()
     const [estado, setEstado] = useState('')
@@ -52,10 +49,77 @@ function Tablero_Kanban_Product_Owner() {
     const enRevision = tareas.filter(tarea => tarea.estado === 'En Revision')
     const finalizada = tareas.filter(tarea => tarea.estado === 'Finalizada')
 
-    //propTarea es una propiedad del Componente Tarea para ?
+    //propTarea es una propiedad del Componente Tarea para identificar el id y asi asociar su nombre y descripcion
     const Tarea = ({propTarea}) => {
+        const [abrirMenu, setAbriMenu] = useState(false)
+        const navigate = useNavigate()
+        const {id_sprint} = useParams()
+
+        const botonEditarTarea = () => {
+            navigate(`/editar_tarea/${id_sprint}/${propTarea.id}`)
+        }
+
+        const eliminarTarea = () => {
+            const token = localStorage.getItem('token')
+            console.log('Eliminar tarea: ', propTarea.id )
+            funcion_eliminar_tarea(id_sprint, propTarea.id, token)
+            .then(respuesta => {
+                console.log('Se ha eliminado la tarea', respuesta.data)
+                setTareas(tareasActuales => tareasActuales.filter(tarea => tarea.id !== propTarea.id))
+            })
+            .catch(error => {
+                console.log('No se ha podido eliminar la tarea', error)
+            })
+
+        }
+        
+
+
         return (
-            <div className='bg-BlueBaseDark rounded-l pb-4 m-5 shadow-md border border-gray-300 hover:shadow-lg transition cursor-pointer text-justify pl-2'>
+
+            <>
+            
+            <div className='relative bg-BlueBaseDark rounded-l pb-4 m-5 shadow-md border border-gray-300 hover:shadow-lg transition cursor-pointer text-justify pl-2'>
+
+            <button
+            className='absolute top-2 right-2 p-1 hover:bg-white rounded'
+            onClick={(e) => {
+                e.stopPropagation()
+                setAbriMenu(!abrirMenu)
+            }}
+            >
+                <MoreVertical size={20} className='text-white'/>
+            </button>
+
+            {abrirMenu && (
+                <div className='absolute top-10 right-2 bg-white text-blueDark shadow-lg rounded-md border w-36 z-20'>
+
+                    <button className='w-full text-left px-4 py-2 hover:bg-GreenLite'
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        setAbriMenu(false)
+                        botonEditarTarea()
+                    }}
+                    >
+                        Editar tarea
+                    </button>
+
+                    <button 
+                    className='w-full text-left px-4 py-2 hover:bg-red-400 text-red-600'
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        setAbriMenu(false)
+                        eliminarTarea()
+                    }}
+                    >
+                        Eliminar tarea
+                    </button>
+                </div>
+
+            )}
+
+
+
                 <h2 className='font-semibold text-white text-lg'>{propTarea.nombre}</h2>
                 <p className=' text-white mt-2 text-sm'> {propTarea.descripcion}</p>
 
@@ -70,11 +134,15 @@ function Tablero_Kanban_Product_Owner() {
                     </span>
                 </div>
             </div>
+            </>
+
+
+
+
         )
     }
 
 
-    //HASTA AQUI
     
     
 

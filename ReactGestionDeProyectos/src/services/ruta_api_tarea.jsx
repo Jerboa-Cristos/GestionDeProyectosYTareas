@@ -13,7 +13,7 @@ export const funcion_crear_tarea = (data, id_sprint, token) => axios.post(APP_UR
     }
 })
 
-export const funcion_mostrar_tarea = (id_sprint, id_tarea ,data, token) => axios.get(APP_URL + `/mostrar_tarea/${id_sprint}/${id_tarea}`, {
+export const funcion_mostrar_tarea = (id_sprint, id_tarea , token) => axios.get(APP_URL + `/mostrar_tarea/${id_sprint}/${id_tarea}`, {
     headers: {
         Authorization: `Bearer ${token}`
     }

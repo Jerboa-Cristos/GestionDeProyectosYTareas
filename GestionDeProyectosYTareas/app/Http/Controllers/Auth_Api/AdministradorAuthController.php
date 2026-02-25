@@ -63,7 +63,7 @@ class AdministradorAuthController extends Controller
         //en unique se pone el nombre de la tabla
         $request->validate([
             'nombre' => 'required|string|max:40',
-            'email' => 'required|email|unique:product_owner,email',
+            'email' => 'required|email|unique:desarrollador,email',
             'password' => 'required|same:confirmed_password',
 
         ]);
