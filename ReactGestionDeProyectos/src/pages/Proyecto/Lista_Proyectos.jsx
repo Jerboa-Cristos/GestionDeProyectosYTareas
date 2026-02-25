@@ -46,6 +46,7 @@ function Lista_Proyectos() {
 
   return (
     <>
+      
       <MenuTop rutaPerfil='/product_owner_profile'/>
 
       <div className="flex min-h-screen">
@@ -54,7 +55,7 @@ function Lista_Proyectos() {
         </div>
 
           <div className="flex-1 p-4 sm:p-6">
-            <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
+            <div className="ml-4 bg-white rounded-xl shadow-sm p-4 sm:p-6 ml-3">
 
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
                 <h1 className="text-2xl sm-text-3xl text-blueDark">

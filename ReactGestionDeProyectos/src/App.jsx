@@ -42,6 +42,7 @@ import Menu_Izquierdo from './pages/Menus/Menu_Izquierdo';
 import Tablero_Kanban_Product_Owner from './pages/Product_Owner/Tablero_Kanban_Product_Owner';
 import Editar_Tarea from './pages/Tarea/Editar_Tarea';
 import Lista_Sprints from './pages/Sprint/Lista_Sprints';
+import Editar_Sprint from './pages/Sprint/Editar_Sprint';
 
 function App() {
   return (
@@ -74,6 +75,7 @@ function App() {
           {/*SPRINT */}
           <Route path='/crear_sprint/:id_proyecto' element={<Crear_Sprint/>}/>
           <Route path='/lista_sprint/:id_proyecto' element={<Lista_Sprints/>}/>
+          <Route path='editar_sprint/:id_proyecto/:id_sprint' element={<Editar_Sprint/>}/>
 
           {/*TAREA */}
           <Route path='/crear_tarea/:id_sprint' element={<Crear_Tarea/>}/>

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { funcion_mostrar_proyecto } from "../../services/ruta_api_proyecto"
-import { funcion_listado_sprint} from '../../services/ruta_api_sprint'
+import { funcion_eliminar_sprint, funcion_listado_sprint} from '../../services/ruta_api_sprint'
 import { useParams, Link } from "react-router-dom"
 import Menu_Izquierdo from '../Menus/Menu_Izquierdo'
 import MenuTop from '../../Components/MenuTop'
+import { MoreVertical } from "lucide-react"
 
 function Lista_Sprints_Proyecto() {
     const [proyectos, setProyecto] = useState('')
@@ -36,6 +37,57 @@ function Lista_Sprints_Proyecto() {
 
     if(!proyectos){
         return <p>Cargando sprints</p>
+    }
+
+    function MenuSprint({ sprint, id_proyecto}) {
+        const [abrirMenu, setAbrirMenu] = useState(false)
+
+        const abrirCerrarMenu = () => setAbrirMenu(!abrirMenu)
+
+        const botonEliminarSprint = () => {
+            const token = localStorage.getItem('token')
+
+            if(!confirm('Seguro que quieres eliminar este sprint')) return
+
+            funcion_eliminar_sprint(id_proyecto, sprint.id, token)
+            .then(respuesta => {
+                window.location.reload()
+            })
+            .catch(error => {
+                console.log('Error al eliminar el sprint', error)
+            })
+            
+
+        }
+        
+        return (
+            <div className="relative">
+                <button
+                onClick={abrirCerrarMenu}
+                className="text-BlueDarkDark hover:text-GreenLite text-xl"
+                >
+                    <MoreVertical size={20} className='text-white'/>
+                </button>
+
+                {abrirMenu && (
+                    <div className="rounded text-left z-10 absolute right-0 mt-2 w-36 bg-white border border-BlueDarkDark">
+                        <Link to={`/editar_sprint/${id_proyecto}/${sprint.id}`} 
+                        className="block w-full text-left px-4 py-2 hover:bg-GreenLite"
+                        >
+                            Editar Sprint
+                        
+                        </Link>
+
+                        <button
+                        onClick={botonEliminarSprint}
+                        className="w-full text-left px-4 py-2 hover:bg-red-400 text-BlueDarkDark"
+                        >
+                            Eliminar
+                        </button>
+                    </div>
+                )}
+            </div>
+        )
     }
 
     return (
@@ -80,8 +132,12 @@ function Lista_Sprints_Proyecto() {
                             {sprints.map((sprint) => (     
                             <div 
                             key={sprint.id}
-                            className="bg-blueDashboard rounded p-4 text-center shadow"
+                            className="bg-blueDashboard rounded p-4 text-center shadow relative"
                             >
+                                <div className="absolute top-2 right-2">
+                                    <MenuSprint id_proyecto={id_proyecto} sprint={sprint}/>
+                                </div>
+
                                 <Link to={`/tablero_kanban_product_owner/${sprint.id}`}
                                 onClick={() => localStorage.setItem('sprint_activo', sprint.id)}
                                 >

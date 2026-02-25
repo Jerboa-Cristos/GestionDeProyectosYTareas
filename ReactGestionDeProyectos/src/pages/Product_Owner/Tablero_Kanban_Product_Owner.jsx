@@ -4,14 +4,14 @@ import MenuTop from '../../Components/MenuTop';
 import Menu_Izquierdo from '../Menus/Menu_Izquierdo';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { funcion_eliminar_tarea, funcion_listado_tareas_product_owner } from '../../services/ruta_api_tarea';
+import { funcion_actualizar_tarea, funcion_eliminar_tarea, funcion_listado_tareas_product_owner } from '../../services/ruta_api_tarea';
 import { MoreVertical } from 'lucide-react';
 
 function Tablero_Kanban_Product_Owner() {
     
     const [tareas, setTareas] = useState([])
     const {id_sprint} = useParams()
-    const [estado, setEstado] = useState('')
+    const [busqueda, setBusqueda] = useState('')
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -44,10 +44,15 @@ function Tablero_Kanban_Product_Owner() {
         })
     }, [id_sprint])
 
-    const porHacer = tareas.filter(tarea => tarea.estado === 'Por Hacer')
-    const enCurso = tareas.filter(tarea => tarea.estado === 'En Curso')
-    const enRevision = tareas.filter(tarea => tarea.estado === 'En Revision')
-    const finalizada = tareas.filter(tarea => tarea.estado === 'Finalizada')
+    const tareasFiltradas = tareas.filter(tarea => 
+        tarea.nombre.toLowerCase().includes(busqueda.toLowerCase()) || 
+        tarea.descripcion.toLowerCase().includes(busqueda.toLowerCase)
+    )
+
+    const porHacer = tareasFiltradas.filter(tarea => tarea.estado === 'Por Hacer')
+    const enCurso = tareasFiltradas.filter(tarea => tarea.estado === 'En Curso')
+    const enRevision = tareasFiltradas.filter(tarea => tarea.estado === 'En Revision')
+    const finalizada = tareasFiltradas.filter(tarea => tarea.estado === 'Finalizado')
 
     //propTarea es una propiedad del Componente Tarea para identificar el id y asi asociar su nombre y descripcion
     const Tarea = ({propTarea}) => {
@@ -62,6 +67,9 @@ function Tablero_Kanban_Product_Owner() {
         const eliminarTarea = () => {
             const token = localStorage.getItem('token')
             console.log('Eliminar tarea: ', propTarea.id )
+
+            if(!confirm('Seguro que quieres eliminar este sprint')) return 
+            
             funcion_eliminar_tarea(id_sprint, propTarea.id, token)
             .then(respuesta => {
                 console.log('Se ha eliminado la tarea', respuesta.data)
@@ -72,13 +80,9 @@ function Tablero_Kanban_Product_Owner() {
             })
 
         }
-        
-
-
+    
         return (
-
             <>
-            
             <div className='relative bg-BlueBaseDark rounded-l pb-4 m-5 shadow-md border border-gray-300 hover:shadow-lg transition cursor-pointer text-justify pl-2'>
 
             <button
@@ -105,7 +109,7 @@ function Tablero_Kanban_Product_Owner() {
                     </button>
 
                     <button 
-                    className='w-full text-left px-4 py-2 hover:bg-red-400 text-red-600'
+                    className='w-full text-left px-4 py-2 hover:bg-red-400 text-BlueDarkDark'
                     onClick={(e) => {
                         e.stopPropagation()
                         setAbriMenu(false)
@@ -117,8 +121,6 @@ function Tablero_Kanban_Product_Owner() {
                 </div>
 
             )}
-
-
 
                 <h2 className='font-semibold text-white text-lg'>{propTarea.nombre}</h2>
                 <p className=' text-white mt-2 text-sm'> {propTarea.descripcion}</p>
@@ -135,17 +137,51 @@ function Tablero_Kanban_Product_Owner() {
                 </div>
             </div>
             </>
-
-
-
-
         )
     }
 
+    const completarSprint = () => {
+        const token = localStorage.getItem('token')
+
+        tareas.forEach(tarea => {
+            const datosActualizados = {
+                nombre: tarea.nombre,
+                tipo: tarea.tipo,
+                estado: 'Finalizado',
+                descripcion: tarea.descripcion,
+                fecha_fin: tarea.fecha_fin,
+                id_sprint: tarea.id_sprint,
+                id_desarrollador: tarea.id_desarrollador
+            }
+            funcion_actualizar_tarea(id_sprint, tarea.id, datosActualizados, token)
+            .then(respuesta => {
+                console.log('Tarea actualizada', tarea.id)
+            })
+            .catch(error => console.log('Error actualizando la tarea', tarea.id, error))
+        })
+
+
+        const tareasActualizadasFrontend = tareas.map(tarea => {
+            return {
+                id: tarea.id,
+                nombre: tarea.nombre,
+                tipo: tarea.tipo,
+                estado: 'Finalizado',
+                descripcion: tarea.descripcion,
+                fecha_fin: tarea.fecha_fin,
+                id_sprint: tarea.id_sprint,
+                id_desarrollador: tarea.id_desarrollador
+            }
+        })
+
+        setTareas(tareasActualizadasFrontend)
+
+        console.log('Sprint completado', id_sprint)
+    }
 
     
-    
 
+    
     return(
         <>
     
@@ -155,19 +191,18 @@ function Tablero_Kanban_Product_Owner() {
 
                 <Menu_Izquierdo />
 
-                <main className="flex-1 bg-white rounded-xl shadow-lg p-8 overflow-auto flex flex-col gap-6">
+                <main className="mt-6 flex-1 bg-white rounded-xl shadow-lg p-8 overflow-auto flex flex-col gap-6">
                     <h1 className="text-3xl font-bold text-blueDark mb-6">Tablero Kanban</h1>
 
                     <div className="flex justify-between items-center mt-4 mb-4">
                     <h2 className="text-xl font-bold text-BlueDarkDark">SPRINTS</h2>
 
-                    <Link
-                    to={`/crear_tarea/${id_sprint}`}
-                    className="bg-blueBase hover:bg-blue-300 transition rounded px-4 py-2 text-BlueDarkDark font-bold shadow"
+                    <button 
+                    className='text-BlueDarkDark font-bold shadow bg-blueBase hover:bg-GreenLite transition  rounded px-4 py-2'
+                    onClick={completarSprint}
                     >
-                    <p>+ Nuevo Tarea</p>
-                    
-                    </Link>
+                        Completar Sprint
+                    </button>
                     </div>
                     
                     {/* Barra de búsqueda */}
@@ -176,6 +211,8 @@ function Tablero_Kanban_Product_Owner() {
                             <input 
                                 type="text"
                                 placeholder="Buscar..."
+                                value={busqueda}
+                                onChange={(e) => setBusqueda(e.target.value)}
                                 className="w-full bg-blueblue text-blueDark pl-10 pr-4 py-2 
                                 rounded-lg
                                 placeholder-white"
@@ -183,9 +220,6 @@ function Tablero_Kanban_Product_Owner() {
                             <Search className="absolute left-3 top-2.5 text-white" size={20} />
                         </div>
                     </div>
-
-                    
-                 
 
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
                         <div className='border border-BlueDarkDark rounded-2xl p-4 '>
@@ -227,27 +261,20 @@ function Tablero_Kanban_Product_Owner() {
                         </div>
                     </div>
 
-
                     <div className="flex justify-between items-center mt-4 mb-4">
 
                     <Link to={`/crear_tarea/${id_sprint}`}
-                    className="bg-blueBase hover:bg-blue-300 transition rounded px-4 py-2 text-BlueDarkDark font-bold shadow"
+                    className="bg-blueBase hover:bg-GreenLite transition rounded px-4 py-2 text-BlueDarkDark font-bold shadow"
                     >
                     <p>+ Nueva Tarea</p>
                     
                     </Link>
                     </div>
-
-                    
-
-               
-
-                  
+            
                 </main>
             </div>
         </div>  
         </>
     )
 }
-
 export default Tablero_Kanban_Product_Owner

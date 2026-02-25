@@ -5,13 +5,14 @@ import { Save } from "lucide-react"
 import { funcion_actualizar_tarea, funcion_mostrar_tarea } from "../../services/ruta_api_tarea"
 import { useParams, useNavigate } from "react-router-dom"
 import { mostrarUsuarios } from "../../services/adminService"
-
+import SeccionComentario from "../../Components/Com_Comentario/SeccionComentario"
 
 function Editar_Tarea (){
     const [nombre, setNombre] = useState('')
     const [descripcion, setDescripcion] = useState('')
     const [tipo, setTipo] = useState('')
     const [estado, setEstado] = useState('')
+    const [fechaFin, setFechaFin] = useState('')
     const [idDesarrollador, setIdDesarrollador] = useState('')
     const [desarrolladores, setDesarrolladores] = useState([])
 
@@ -142,7 +143,18 @@ function Editar_Tarea (){
                             ))}
 
                         </select>
+
+                        <label className="font-semibold text-white mt-4 block">Fecha limite</label>
+                        <input 
+                        value={fechaFin}
+                        onChange={(e) => setFechaFin(e.target.value)}
+                        type="date" 
+                        name="fecha_fin"  
+                        className="rounded-lg px-4 py-2 bg-blueBase mt-1 text-blueDark"/>
+                        
                        
+                        <SeccionComentario id_tarea={id_tarea}/>
+                        
 
 
                         <div className="flex justify-end">
@@ -153,6 +165,9 @@ function Editar_Tarea (){
                         Guardar cambios
                         
                         </button>
+
+
+                        
 
                         </div>
                     </div>
