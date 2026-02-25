@@ -53,7 +53,6 @@ function TableroKanbanDesarrollador() {
                             <Search className="absolute left-3 top-3.5 text-blueDark" size={20} />
                         </div>
                     </div>
-
                     <div className="flex-1 overflow-x-auto md:overflow-x-visible pb-4">
                         <div className="flex flex-col md:grid md:grid-cols-4 gap-4 min-w-full">
                         <KanbanColumn titulo='Por Hacer' tipoEstado={tareasPorEstado.PorHacer}/>

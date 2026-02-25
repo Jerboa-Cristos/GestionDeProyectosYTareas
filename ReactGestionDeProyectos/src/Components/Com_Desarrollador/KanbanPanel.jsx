@@ -1,7 +1,9 @@
 import { CheckSquare, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const KanbanTask = ({ titulo, id }) => {
-
+  const navigate = useNavigate();
+  
   const gotoTarea = (e) => {
     e.stopPropagation()
      if (!id) return;
@@ -11,8 +13,8 @@ const KanbanTask = ({ titulo, id }) => {
 
   return (
     <button key={id} id={id} onClick={gotoTarea}
-    className="w-full bg-white rounded-xl p-4 md:p-6 shadow-sm hover:shadow-md active:scale-[0.98] transition-all text-left 
-    flex flex-col gap-4 md:gap-8 group border-l-4 border-transparent hover:border-blueDark">
+    className="w-full bg-white hover:bg-blueBase rounded-xl p-2 md:p-4 shadow-sm hover:shadow-md transition-all text-left 
+    flex flex-col gap-2 md:gap-4 group">
       <h4 className="text-blueDark font-bold text-base md:text-lg text-center leading-tight">
         {titulo}
       </h4>

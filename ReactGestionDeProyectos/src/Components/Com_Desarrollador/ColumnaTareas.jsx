@@ -9,7 +9,7 @@ return (
         <button onClick={()=> setOpen(!open)} 
             className='w-full bg-blueDashboard rounded-xl p-4 md:p-6 text-white 
             flex items-center justify-between hover:bg-blueblue transition-all shadow-md'>
-            <h1 className="flex-1 text-center text-lg md:text-2xl font-semibold uppercase tracking-wide">{titulo}</h1>
+            <h1 className="flex-1 text-center text-lg md:text-2xl font-semibold tracking-wide">{titulo}</h1>
             <div className={`transition-transform duration-300 ${open ? 'rotate-180' : 'rotate-0'}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />

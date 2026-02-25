@@ -88,16 +88,16 @@ function DashboardDesarrollador() {
 
                     {/* Grid Principal */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div className="space-y-6">
+                        <div className="space-y-5">
                         {/* Tarjetas de Tareas */}
                         <div className="grid grid-cols-1 gap-4">
                             {/* Tareas Asignadas */}
                             <button 
                             onClick={gotoTareas} 
-                            className="bg-blueDashboard rounded-xl p-4 md:p-6 flex items-center justify-between text-white hover:shadow-lg hover:bg-blueblue transition-all group" 
+                            className="bg-blueDashboard rounded-xl p-4 md:p-9 flex items-center justify-between text-white hover:shadow-lg hover:bg-blueblue transition-all group" 
                             >
                                 <div className="flex items-center gap-3 md:gap-4">
-                                    <ClipboardList size={50} md:size={12} className="transition-transform group-hover:scale-110" />
+                                    <ClipboardList size={50} md:size={16} className="transition-transform group-hover:scale-110" />
                                     <span className="text-lg md:text-xl font-semibold leading-tight text-left">Tareas Asignadas</span>
                                 </div>
                                 <span className="text-3xl md:text-4xl font-bold">{tareas.length}</span>
@@ -105,9 +105,9 @@ function DashboardDesarrollador() {
 
                             {/* Tareas Deadline */}
                             <button onClick={gotoTareas} 
-                           className="bg-warning rounded-xl p-4 md:p-6 flex items-center justify-between text-white relative hover:shadow-lg hover:bg-warningDark transition-all group">
+                           className="bg-warning rounded-xl p-4 md:p-9 flex items-center justify-between text-white relative hover:shadow-lg hover:bg-warningDark transition-all group">
                             <div className="flex items-center gap-3 md:gap-4">
-                                <Calendar size={12} md:size={16} className="w-12 h-12 md:w-16 md:h-16"/>
+                                <Calendar size={50} md:size={16} className="transition-transform group-hover:scale-110"/>
                                 <span className="text-lg md:text-xl font-semibold leading-tight text-left">Tareas Asignadas Deadline</span>
                             </div>
                             <span className="text-3xl md:text-4xl font-bold md:mr-4">{tareasDeadline}</span>
@@ -116,7 +116,7 @@ function DashboardDesarrollador() {
                         </div>
 
                         {/* Tipo de Trabajo MONTARLO TODO */}
-                        <div className="bg-blueBase rounded-xl p-4 md:p-6 flex flex-col items-center">
+                        <div className="bg-blueBase rounded-xl p-4 md:p-7 flex flex-col items-center">
                             <h3 className="text-center text-lg md:text-xl font-semibold text-blueDark mb-4">Tipo de trabajo</h3>
                             <div className="w-full h-64 max-w-xs md:max-w-none">
                                 <ResponsiveContainer width="100%" height="100%" margin={{ left: 40, right: 20 }}>

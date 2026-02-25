@@ -20,7 +20,7 @@ const MenuLateralDesarrollador = () => {
     return (
         <aside className="
         fixed bottom-0 left-0 right-0 z-50 bg-blueDark text-white border-t border-blueDark p-1
-        md:relative md:w-64 md:h-full md:bg-blueBase md:text-blueDark md:rounded-xl md:flex md:flex-col md:p-2 md:border-none">
+        md:relative md:w-64 md:bg-blueBase md:text-blueDark md:rounded-xl md:flex md:flex-col md:p-2 md:border-none">
             <nav className="flex flex-row md:flex-col w-full justify-around md:justify-start">
                 <button 
                 onClick={gotoPanel}

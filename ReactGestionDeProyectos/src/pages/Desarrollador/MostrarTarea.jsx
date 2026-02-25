@@ -50,17 +50,17 @@ function MostrarTarea (){
                     <form onSubmit={botonEditarTarea} className="max-w-4xl mx-auto">
                         <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-6 text-center md:text-left">Detalles Tarea</h1>
                         <div className="grid grid-cols-1 md:gap-4">
-                            <div className="mb-4">
-                                <label className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Nombre</label>
+                            <div className="mb-2">
+                                <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Nombre</p>
                                 <h2 className="w-full rounded-lg px-4 py-3 mt-1 bg-blueBase text-blueDark font-bold shadow-inner">{tarea.nombre}</h2>
                             </div>
-                            <div className="mb-4">
-                                <label className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Descripción</label>
+                            <div className="mb-2">
+                                <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Descripción</p>
                                 <h2 className="w-full rounded-lg px-4 py-3 mt-1 bg-blueBase text-blueDark font-bold shadow-inner">{tarea.descripcion}</h2>
                             </div>
-                                <div className="mb-4 flex flex-col md:flex-row justify-between items-end md:items-center gap-2 pt-4">
+                                <div className="mb-2 flex flex-col md:flex-row justify-between items-end md:items-center gap-2 pt-2">
                                     <div className="w-full md:w-auto">
-                                        <label className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Estado</label>
+                                        <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Estado</p>
                                         <select
                                         value={estado}
                                         onChange={(e) => setEstado(e.target.value)}
