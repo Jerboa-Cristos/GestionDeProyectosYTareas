@@ -12,7 +12,8 @@ const SeccionComentario = ({idTarea}) => {
             mostrarComentarios(idTarea, token).then(res=> {
                 setComentarios(res.data);
             }).catch(err=>{
-                console.error('Error al cargar las tareas:', err)
+                console.error('Error al cargar los comentarios: ', err)
+                alert('No se pudieron cargar los comentarios.')
             });
         }
     }, [idTarea, token])
@@ -44,6 +45,7 @@ const SeccionComentario = ({idTarea}) => {
             setFormData({...formData, texto:''})
         }).catch(err => {
             console.error('No se pudo guardar el comentario', err)
+            alert('No se pudo guardar el comentario.')
         })
     }
 //#endregion

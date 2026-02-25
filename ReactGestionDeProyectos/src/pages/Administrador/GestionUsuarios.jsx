@@ -21,6 +21,7 @@ function GestionUsuarios() {
                         console.log(res.data);
                     }).catch(err => {
                         console.error("Error al cargar los usuarios:", err);
+                        alert('Error al cargar a los usuarios.')
                     });
                 }
                 fetchUsers();

@@ -21,19 +21,16 @@ function DesarrolladorProfile () {
         
         funcion_desarrollador_profile({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password}, user.token)
         .then(res => {
-            if(res.data.errors){
-                setErrors(res.data.errors)
-            }else{
-                console.log(res.data)
-                localStorage.setItem("user", JSON.stringify({
-                    ...user,
-                    nombre: res.data.nombre,
-                    email: res.data.email
-                }))
-                
-                
-                navigate('/DashboardDesarrollador')
-            }
+            console.log(res.data)
+            localStorage.setItem("user", JSON.stringify({
+                ...user,
+                nombre: res.data.nombre,
+                email: res.data.email
+            }))
+            navigate('/DashboardDesarrollador')
+        }).catch(err => {
+            setErrors(err)
+            window.alert('Error al cambiar los datos.')
         })
     }
 

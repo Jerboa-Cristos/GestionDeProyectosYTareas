@@ -29,6 +29,7 @@ function CreacionUsuarios() {
                 setProyecto(res.data);
             }).catch(err => {
                 console.error("Error al cargar los proyectos:", err);
+                alert('No se pudieron cargar los proyectos: ', err)
             });
         }
         fetchProjects();

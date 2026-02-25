@@ -43,6 +43,7 @@ function PerfilUsuario() {
                 })
             } catch(err) {
                 console.error('No se pudo cargar los datos por: ' , err)
+                alert('No se pudieron cargar los datos del usuario.')
             } finally {
                 setLoading(false);
             }

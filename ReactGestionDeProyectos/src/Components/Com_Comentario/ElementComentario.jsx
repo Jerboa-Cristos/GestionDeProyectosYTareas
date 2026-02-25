@@ -38,6 +38,7 @@ const ElementComentario = ({id, user, text, onDeleteSuccess}) => {
                 console.log('Comentario actualizado')
             }).catch(err=>{
                 console.error('Error al hacer Update del comentario: ', err)
+                alert('No se pudo actualizar el comentario.')
             })
             setEditando(!editando)
         } else {

@@ -16,42 +16,39 @@ function DesarrolladorLogin () {
         switch(rol) {
             case 'Desarrollador':
                 funcion_desarrollador_login({email: email, password: password}).then(res => {
-                if(res.data.errors){
-                    setErrors(res.data.errors)
-                }else{
                     console.log(res.data)
                     const {nombre, email, id, token} = res.data
                     localStorage.setItem("token", token) 
                     localStorage.setItem("user", JSON.stringify({nombre, email, id}))
                     navigate('/DashboardDesarrollador')
-                }})
+                }).catch(err => {
+                    setErrors(err)
+                    window.alert('No existe tal usuario. Compruebe los datos.')
+                })
                 break;
             case 'Administrador':
                 funcion_administrador_login({email: email, password: password}).then(res => {
-                if(res.data.errors){
-                    setErrors(res.data.errors)
-                }else{
                     console.log(res.data)
-                    const {nombre, email, token, id} = res.data
+                    const {nombre, email, id, token} = res.data
                     localStorage.setItem("token", token) 
                     localStorage.setItem("user", JSON.stringify({nombre, email, id}))
                     navigate('/GestionUsuarios')
-                }})
+                }).catch(err => {
+                    setErrors(err)
+                    window.alert('No existe tal usuario. Compruebe los datos.')
+                })
                 break;
             case 'ProductOwner':
                 funcion_product_owner_login({email: email, password: password}).then(res => {
-                if(res.data.errors){
-                    setErrors(res.data.errors)
-                }else{
                     console.log(res.data)
-                    const {nombre, email, token} = res.data
+                    const {nombre, email, id, token} = res.data
                     localStorage.setItem("token", token) 
-                    localStorage.setItem("user", JSON.stringify({nombre, email}))
+                    localStorage.setItem("user", JSON.stringify({nombre, email, id}))
                     navigate('/product_owner_dashboard')
-                }})
-                break;
-            case '':
-                console.error('Eliga el rol.')
+                }).catch(err => {
+                    setErrors(err)
+                    window.alert('No existe tal usuario. Compruebe los datos.')
+                })
                 break;
         }
     }

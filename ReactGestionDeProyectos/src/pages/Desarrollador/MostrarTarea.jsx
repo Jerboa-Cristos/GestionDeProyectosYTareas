@@ -33,10 +33,10 @@ function MostrarTarea (){
         const token = localStorage.getItem('token')
         if (!token) return;
         updateTarea(id, {estado: estado}, token).then(res => {
-            console.log('Tarea actualizado')
-            alert('Tarea actualizada con exito.');
+            console.log('Tarea actualizada')
         }).catch(err=>{
             console.error('Error al hacer Update del estado de tarea: ', err)
+            alert('Error al actualizar la tarea.')
         })
     }
 
