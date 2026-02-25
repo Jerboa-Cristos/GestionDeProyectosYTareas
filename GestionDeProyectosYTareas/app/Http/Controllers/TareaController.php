@@ -18,22 +18,23 @@ class TareaController extends Controller
         //Devuelve los resultados + guarda los sprints para el futuro + los guarda
         $tareas = Tarea::whereHas('sprint', function ($query) use ($desarrollador) {
             $query->where('id_proyecto', $desarrollador->id_proyecto);
-        })->with('sprint')->get();
+        })->with('sprint', 'desarrollador')->get();
 
         return response()->json($tareas, 200);
     }
 
-    public function updateTareaDesarrollador(Request $request, $id) {
-        try{
+    public function updateTareaDesarrollador($id, Request $request) {  
             $desarrollador = auth('desarrollador')->user();
 
             $tarea=$request->validate([
-                'estado'=> 'requiered|in:Por Hacer,En Curso,En Revision,Finalizado',
+                'estado'=> 'required|in:Por Hacer,En Curso,En Revision,Finalizado',
             ]);
 
             $desarrollador->tarea()->findOrFail($id)->update([
                 'estado'=>$tarea['estado'],
             ]);
+
+        try{
 
         } catch(\Exception $e) {
             return response()->json(['message'=>'NO se pudo hacer Update de tarea'], 404);

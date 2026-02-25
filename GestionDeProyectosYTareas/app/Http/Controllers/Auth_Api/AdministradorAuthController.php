@@ -97,9 +97,10 @@ class AdministradorAuthController extends Controller
                 return response()->json(['error' => 'Email y password incorrectas']);
             }
 
-            $input['nombre'] = $administrador->nombre;
             $input['id'] = $administrador->id;
+            $input['nombre'] = $administrador->nombre;
             $input['rol'] = 'administrador';
+            $input['email'] = $administrador->email;
             $input['token'] = $administrador->createToken('Administrador')->plainTextToken;
             
             return response()->json($input);  

@@ -18,31 +18,30 @@ const MenuLateralDesarrollador = () => {
     }
 
     return (
-        <aside className="w-64 bg-blueBase rounded-xl flex flex-col p-2">
-            <nav className="flex flex-col w-full">
+        <aside className="
+        fixed bottom-0 left-0 right-0 z-50 bg-blueDark text-white border-t border-blueDark p-1
+        md:relative md:w-64 md:bg-blueBase md:text-blueDark md:rounded-xl md:flex md:flex-col md:p-2 md:border-none">
+            <nav className="flex flex-row md:flex-col w-full justify-around md:justify-start">
                 <button 
                 onClick={gotoPanel}
-                className="w-full flex items-center gap-4 px-6 py-4 text-blueDark 
-                hover:bg-BlueBaseDark hover:text-BlueDarkDark transition-all text-left group"
-                >
-                    <Home size={22} className="text-blueDark group-hover:text-BlueDarkDark" />
-                    <span className="text-base font-medium">Panel</span>
+                className="flex-1 md:w-full flex flex-col md:flex-row items-center gap-1 md:gap-4 px-2 py-3 md:px-6 md:py-4 
+            text-blueDark hover:bg-BlueBaseDark hover:text-BlueDarkDark md:hover:bg-BlueBaseDark transition-all text-center md:text-left group rounded-lg">
+                    <Home size={35} className="md:size-10 text-white md:text-blueDark group-hover:text-BlueDarkDark" />
+                    <span className="hidden md:inline text-[10px] text-white md:text-blueDark md:text-base font-medium">Panel</span>
                 </button>
                 <button 
                 onClick={gotoTablero}
-                className="w-full flex items-center gap-4 px-6 py-4 text-blueDark
-                hover:bg-BlueBaseDark hover:text-BlueDarkDark transition-all text-left group"
-                >
-                    <CheckSquare2 size={22} className="text-blueDark group-hover:text-BlueDarkDark"/>
-                    <span className="text-base font-medium">Tablero</span>
+                className="flex-1 md:w-full flex flex-col md:flex-row items-center gap-1 md:gap-4 px-2 py-3 md:px-6 md:py-4 
+            text-blueDark hover:bg-BlueBaseDark hover:text-BlueDarkDark md:hover:bg-BlueBaseDark transition-all text-center md:text-left group rounded-lg">
+                    <CheckSquare2 size={35} className="md:size-10 text-white md:text-blueDark group-hover:text-BlueDarkDark"/>
+                    <span className="hidden md:inline text-[10px] text-white md:text-blueDark md:text-base font-medium">Tablero</span>
                 </button>
                 <button 
                 onClick={gotoTareas}
-                className="w-full flex items-center gap-4 px-6 py-4 text-blueDark
-                hover:bg-BlueBaseDark hover:text-BlueDarkDark transition-all text-left group"
-                >
-                    <NotebookPen size={22} className="text-blueDark group-hover:text-BlueDarkDark"/>
-                    <span className="text-base font-medium">Tareas</span>
+                className="flex-1 md:w-full flex flex-col md:flex-row items-center gap-1 md:gap-4 px-2 py-3 md:px-6 md:py-4 
+            text-blueDark hover:bg-BlueBaseDark hover:text-BlueDarkDark md:hover:bg-BlueBaseDark transition-all text-center md:text-left group rounded-lg">
+                    <NotebookPen size={35} className="md:size-10 text-white md:text-blueDark group-hover:text-BlueDarkDark"/>
+                    <span className="hidden md:inline text-[10px] text-white md:text-blueDark md:text-base font-medium">Tareas</span>
                 </button>
             </nav>
         </aside>

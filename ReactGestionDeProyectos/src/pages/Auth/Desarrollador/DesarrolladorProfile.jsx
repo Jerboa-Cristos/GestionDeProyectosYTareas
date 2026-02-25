@@ -21,76 +21,73 @@ function DesarrolladorProfile () {
         
         funcion_desarrollador_profile({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password}, user.token)
         .then(res => {
-            if(res.data.errors){
-                setErrors(res.data.errors)
-            }else{
-                console.log(res.data)
-                localStorage.setItem("user", JSON.stringify({
-                    ...user,
-                    nombre: res.data.nombre,
-                    email: res.data.email
-                }))
-                
-                
-                navigate('/DashboardDesarrollador')
-            }
+            console.log(res.data)
+            localStorage.setItem("user", JSON.stringify({
+                ...user,
+                nombre: res.data.nombre,
+                email: res.data.email
+            }))
+            navigate('/DashboardDesarrollador')
+        }).catch(err => {
+            setErrors(err)
+            window.alert('Error al cambiar los datos.')
         })
     }
+
+    const volverAtras = () => {
+        navigate('/DashboardDesarrollador');
+}
 
     return (
         <>
           <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/desarrollador_profile'/>
+                <main className='flex-1 flex flex-col items-center justify-center bg-blueBase rounded-xl shadow-lg p-6 md:p-10 overflow-hidden'>
+                    <div className='flex flex-col py-10 w-full max-w-lg lg:max-w-2xl items-center'>
+                    <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-8 md:mb-12 text-center">
+                    <span className="block md:inline">Profile</span>
+                    </h1>
 
-            <div className="flex-1 flex-col">
-
-                <main className="flex-1 bg-blueBase rounded-xl shadow-lg p-10 flex flex-col relative m-4 overflow-hidden">
-                    <h1 className="text-2xl font-bold text-blueDark">Profile</h1>
-
-                    <form onSubmit={submit} className="space-y-6 mt-4 max-w-md mx-auto rounded-lg p-3" method="post">
+                    <form onSubmit={submit} className="w-full flex flex-col gap-4" method="post">
 
                         {
-                        errors.length > 0 && <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                            <ul className="list-disc pl-5 space-y-1 text-sm">
+                        errors.length > 0 && 
+                        <div className="mb-6 p-3 md:p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-r-lg shadow-sm w-full max-w-2xl mx-auto animate-fade-in">
+                            <ul className="list-disc pl-7 space-y-1 text-xs md:text-sm font-medium">
                                 {errors.map((error, index) => 
-                                <li key={index}>{error}</li>
+                                <li key={index} className="leading-tight">{error}</li>
                                 )}
                                 
                             </ul>
                         </div>
                         }
-
-
-                        <div className="grid gap-2">
                             
-                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
-                                <User className="text-blueDark" size={22} />
+                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                                <User className="text-blueDark shrink-0" size={22} />
                                 <input 
                                 value={nombre}
                                 onChange={(e) => setName(e.target.value)}
                                 type="text" 
                                 id="nombre" 
                                 name="nombre" 
-                                className="bg-white h-12 w-full flex px-4 gap-4 focus:outline-none focus:ring-none
-                                text-blueDark text-center font-medium text-lg" 
+                                className="bg-transparent w-full focus:outline-none text-blueDark text-center font-medium text-lg"
                                 placeholder="Enter your name"/>
                             </div>
 
-                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
-                                <Mail className="text-blueDark" size={22} />
+                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                                <Mail className="text-blueDark shrink-0" size={22} />
                                 <input 
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 id="email" 
                                 type="email"
                                 name="email" 
-                                className="bg-white h-12 w-full flex px-4 gap-4 focus:outline-none focus:ring-none
-                                text-blueDark text-center font-medium text-lg" 
+                                className="bg-transparent w-full focus:outline-none text-blueDark text-center font-medium text-lg"
                                 placeholder="Enter your email"/>
                             </div>
                         
-                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
-                                <LockIcon className="text-blueDark" size={22} />
+                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                                <LockIcon className="text-blueDark shrink-0" size={22} />
                                 <input
                                 value={password} 
                                 onChange={(e) => setPassword(e.target.value)}
@@ -98,12 +95,12 @@ function DesarrolladorProfile () {
                                 id="password" 
                                 name="password" 
                                 autoComplete="password"
-                                className="w-full h-12 bg-white px-4 focus:outline-none focus:ring-none italic text-center" 
+                                 className="w-full bg-transparent focus:outline-none italic text-center" 
                                 placeholder="Enter your password"/>
                             </div>
 
-                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
-                                <LockIcon className="text-blueDark" size={22} />
+                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                                <LockIcon className="text-blueDark shrink-0" size={22} />
                                 <input 
                                 value={confirmed_password}
                                 onChange={(e) => setConfirmed_password(e.target.value)}
@@ -111,25 +108,24 @@ function DesarrolladorProfile () {
                                 id="confirmed_password" 
                                 name="confirmed_password"
                                 autoComplete="confirmed_password" 
-                                className="w-full h-12 bg-white px-4 focus:outline-none focus:ring-none italic text-center" 
+                                className="w-full bg-transparent focus:outline-none italic text-center" 
                                 placeholder="Enter to Confirm your password"/>
                             </div>
 
-                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm">
-                                <Briefcase className="text-blueDark" size={22}/>
-                                <p className="bg-white w-full px-4 gap-4 flex-1
-                                text-blueDark text-center font-medium text-lg" >Desarrollador</p>
+                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                                <Briefcase className="text-blueDark shrink-0" size={22}/>
+                                <p className="bg-transparent w-full text-blueDark text-center font-medium text-lg" >Desarrollador</p>
                             </div>
 
                             <button type="submit" 
-                                className="flex bg-blueDashboard text-white px-6 py-2 rounded-lg items-center gap-2 font-medium 
-                                hover:bg-blueblue transition-colors shadow-md">
+                                className="bg-blueDashboard text-white mt-4 px-8 py-3 rounded-lg flex items-center justify-center gap-2 
+                                font-medium hover:bg-blueblue transition-all shadow-md active:scale-95">
                                     <Edit3 size={20} />
                                     Guardar cambios
                             </button>
-                        </div>
                     </form>
-                        <div className="mt-auto flex flex-row justify-between items-center w-full">
+                    </div>
+                        <div className="mt-8 flex flex-row justify-between items-center w-full max-w-2xl">
                             <button 
                             onClick={(e)=>{volverAtras(); e.stopPropagation}}
                             className="text-blueDark hover:scale-110 transition-transform p-2"
@@ -139,7 +135,6 @@ function DesarrolladorProfile () {
                             </button>
                         </div>
                 </main>
-            </div>
         </div>
         </>
 
