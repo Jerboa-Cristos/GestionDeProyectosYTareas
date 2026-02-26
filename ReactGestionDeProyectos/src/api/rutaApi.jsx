@@ -1,3 +1,3 @@
 export default function rutaApi(){
-   return 'http://localhost/api';
+   return 'http://44.214.22.59';
 } 
