@@ -1,3 +1,3 @@
 export default function rutaApi(){
-   return 'http://44.214.22.59';
+   return 'http://100.49.59.32';
 } 
