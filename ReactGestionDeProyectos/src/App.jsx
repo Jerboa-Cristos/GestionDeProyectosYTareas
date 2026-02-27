@@ -49,10 +49,10 @@ function App() {
     
       <>
         <Routes>
-          <Route path='/' element={<Login/>}/>
+          <Route path='/login' element={<Login/>}/>
 
           {/*RUTAS AUTH ADMINISTRADOR */}
-          <Route path='/administrador_register' element={<AdministradorRegister/>}/>
+          <Route path='/' element={<AdministradorRegister/>}/>
           <Route path="/administrador_profile" element={<AdministradorProfile/>}/>   
           <Route path="/GestionUsuarios" element={<GestionUsuarios/>}/>
           <Route path="/PerfilUsuario/:rol/:id" element={<PerfilUsuario/>}/>
