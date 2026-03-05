@@ -53,7 +53,9 @@ Route::get('indexProyectosAdmin', [AdministradorController::class, 'indexProyect
 Route::post('login_product_owner', [ProductOwnerAuthController::class,'loginProductOwner']);
 //Route::get('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner']);
 //MIDDLEWARE
-Route::get('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner'])->middleware('auth:sanctum');
+Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'actualizar_profileProductOwner'])->middleware('auth:sanctum');
+Route::get('profile_product_owner', [ProductOwnerAuthController::class, 'obtenerDatosProfileProductOwner'])->middleware('auth:sanctum');
+
 
 //RUTAS CRUD API PRODUCT OWNER , ya que el es el que crea proyectos
 Route::get('listado_proyectos', [ProductOwnerApiController::class, 'index'])->middleware('auth:sanctum');

@@ -1,94 +1,171 @@
 import MenuTop from "../../Components/MenuTop"
-
+import { User, Mail, Briefcase, Folder, RotateCcw, LockIcon, Edit3 } from 'lucide-react';
 import { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-//import { profile } from "../../services/authService"
-import { funcion_product_owner_profile } from "../../services/authService"
+import { useNavigate } from "react-router-dom"
+import { funcion_obtener_datos_product_owner_profile, funcion_actualizar_product_owner_profile } from "../../services/authService";
 
 function ProductOwnerProfile () {
-    const user = JSON.parse(localStorage.getItem('user')) || {}
+    const user = JSON.parse(localStorage.getItem('user'))
     const token = localStorage.getItem('token')
     console.log(user)
 
-    const [nombre, setNombre] = useState(user.nombre || '')
-    const [email, setEmail] = useState(user.email || '')
+    const [nombre, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmed_password, setConfirmed_password] = useState('')
     const [errors, setErrors] = useState([])
-
     const navigate = useNavigate()
 
     useEffect(() => {
-        if(!token){
-            navigate('/')
-        }
-
-        funcion_product_owner_profile(token)
-        .then(res => {
-                console.log('Autenticado', res.data)
-                console.log(res.data)
-                setNombre(res.data.nombre || '')
-                setEmail(res.data.email || '')
-
-                localStorage.setItem("user", JSON.stringify({
-                    nombre: res.data.nombre,
-                    email: res.data.email
-                }))
-                
-                
-            })
-            .catch(error =>{
-                console.log('No autenticado', error.response)
-                navigate('/')
+        
+        funcion_obtener_datos_product_owner_profile(token)
+        .then(respuesta => {
+            setName(respuesta.data.nombre)
+            setEmail(respuesta.data.email)
+        })
+        .catch(error => {
+            console.log(error)
+            alert('Error al cargar el perfil')
         })
 
     }, [])
 
+        console.log(user , 'user')
+        console.log(token , 'token')
+        const submit = (e) => {
+        e.preventDefault()
+        setErrors([])
+
+
+        
+        funcion_actualizar_product_owner_profile({
+            nombre, 
+            email, 
+            password, 
+            confirmed_password}, token
+        )
+        .then(res => {
+            console.log(res.data)
+            localStorage.setItem("user", JSON.stringify({
+                ...user,
+                nombre: res.data.nombre,
+                email: res.data.email
+            }))
+
+            navigate('/product_owner_dashboard')
+        }).catch(error => {
+            setErrors(error)
+            window.alert('Error al cambiar los datos.')
+        })
+        console.log(user.email, 'email')
+
+    }
+
+    const volverAtras = () => {
+        navigate('/product_owner_dashboard');
+}
+
     return (
         <>
           <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
-            <MenuTop/>
+            <MenuTop rutaPerfil='/product_owner_profile'/>
+                <main className='flex-1 flex flex-col items-center justify-center bg-blueBase rounded-xl shadow-lg p-6 md:p-10 overflow-hidden'>
+                    <div className='flex flex-col py-10 w-full max-w-lg lg:max-w-2xl items-center'>
+                    <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-8 md:mb-12 text-center">
+                    <span className="block md:inline">Profile</span>
+                    </h1>
 
-            <aside className="w-64 bg-white shadow-md p-5">
-                <h2 className="text-xl font-bold mb-6">My app</h2>
-                <nav className="flex flex-col space-y-3">
-                    <Link to="/product_owner_dashboard" className="text-gray-700 hover:text-blue-600">Dashboard</Link>
-                    <Link to="/product_owner_profile" className="text-gray-700 hover:text-blue-600">Profile</Link>
-                </nav>
-            </aside>
+                    <form onSubmit={submit} className="w-full flex flex-col gap-4" method="post">
 
-            <div className="flex-1 flex-col">
-                <header className="bg-white shadow px-6 py-4">
-                    <h1 className="text-2xl font-semibold text-gray-800">Profile</h1>
-                </header>
+                        {
+                        errors.length > 0 && 
+                        <div className="mb-6 p-3 md:p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-r-lg shadow-sm w-full max-w-2xl mx-auto animate-fade-in">
+                            <ul className="list-disc pl-7 space-y-1 text-xs md:text-sm font-medium">
+                                {errors.map((error, index) => 
+                                <li key={index} className="leading-tight">{error}</li>
+                                )}
+                                
+                            </ul>
+                        </div>
+                        }
+                            
+                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                                <User className="text-blueDark shrink-0" size={22} />
+                                <input 
+                                value={nombre}
+                                onChange={(e) => setName(e.target.value)}
+                                type="text" 
+                                id="nombre" 
+                                name="nombre" 
+                                className="bg-transparent w-full focus:outline-none text-blueDark text-center font-medium text-lg"
+                                placeholder="Enter your name"/>
+                            </div>
 
-                <main className="flex-1 p-6">
+                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                                <Mail className="text-blueDark shrink-0" size={22} />
+                                <input 
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                id="email" 
+                                type="email"
+                                name="email" 
+                                className="bg-transparent w-full focus:outline-none text-blueDark text-center font-medium text-lg"
+                                placeholder="Enter your email"/>
+                            </div>
+                        
+                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                                <LockIcon className="text-blueDark shrink-0" size={22} />
+                                <input
+                                value={password} 
+                                onChange={(e) => setPassword(e.target.value)}
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                autoComplete="password"
+                                 className="w-full bg-transparent focus:outline-none italic text-center" 
+                                placeholder="Enter your password"/>
+                            </div>
 
-                    <div  className="space-y-6 mt-4 max-w-md mx-auto border border-blue-300 rounded-lg p-3"   method="post">
-                    <h1 className="font-black text-center text-2x1">Profile</h1>
+                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                                <LockIcon className="text-blueDark shrink-0" size={22} />
+                                <input 
+                                value={confirmed_password}
+                                onChange={(e) => setConfirmed_password(e.target.value)}
+                                type="password" 
+                                id="confirmed_password" 
+                                name="confirmed_password"
+                                autoComplete="confirmed_password" 
+                                className="w-full bg-transparent focus:outline-none italic text-center" 
+                                placeholder="Enter to Confirm your password"/>
+                            </div>
+
+                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                                <Briefcase className="text-blueDark shrink-0" size={22}/>
+                                <p className="bg-transparent w-full text-blueDark text-center font-medium text-lg" >Product Owner</p>
+                            </div>
+
+                            <button type="submit" 
+                                className="bg-blueDashboard text-white mt-4 px-8 py-3 rounded-lg flex items-center justify-center gap-2 
+                                font-medium hover:bg-blueblue transition-all shadow-md active:scale-95">
+                                    <Edit3 size={20} />
+                                    Guardar cambios
+                            </button>
+                    </form>
                     </div>
-
-                    <div className="border border-BlueBaseDark mt-3 p-3 rounded-2xl">
-                        <label className="text-sm leading-none font-medium select-none peer-disabled:cursor">Nombre: </label>
-                        <input
-                        className="mt-1 block w-full rounded-md border text-black border-gray-300 px-3 py-2 text-2x2"
-                        value={nombre} 
-                        type="text"
-                         readOnly
-                        />
-
-                        <label className="text-sm leading-none font-medium select-none peer-disabled:cursor">Email: </label>
-                        <input
-                        className="mt-1 block w-full rounded-md text-black border border-gray-300 px-3 py-2 text-2x2"
-                        value={email} 
-                        type="text" 
-                        readOnly
-                        />
-                    </div>
-
+                        <div className="mt-8 flex flex-row justify-between items-center w-full max-w-2xl">
+                            <button 
+                            onClick={(e)=>{volverAtras(); e.stopPropagation}}
+                            className="text-blueDark hover:scale-110 transition-transform p-2"
+                            title="Volver atrás"
+                            >
+                            <RotateCcw size={40} strokeWidth={2.5} />
+                            </button>
+                        </div>
                 </main>
-            </div>
-          </div>
+        </div>
         </>
 
+        
     )
 }
 

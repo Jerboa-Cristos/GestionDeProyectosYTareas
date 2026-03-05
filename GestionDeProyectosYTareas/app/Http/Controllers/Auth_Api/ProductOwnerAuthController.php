@@ -41,6 +41,16 @@ class ProductOwnerAuthController extends Controller
     }
 
 
+    public function obtenerDatosProfileProductOwner(Request $request) {
+        $datosUsuario = $request->user();
+
+        return response()->json([
+            'nombre' => $datosUsuario->nombre,
+            'email' => $datosUsuario->email
+        ]);
+    }
+
+
     public function actualizar_profileProductOwner(Request $request){
         $validar_product_owner = Validator::make($request->all(), [
             //email en la parte de unique debe escribir asi, sin espacios y coma al final

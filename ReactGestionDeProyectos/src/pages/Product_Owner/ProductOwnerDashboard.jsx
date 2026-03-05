@@ -1,6 +1,6 @@
-import { data, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import MenuTop  from '../../Components/MenuTop'
-import MenuIZquierdo from '../Menus/Menu_Izquierdo'
+import Menu_Izquierdo from '../Menus/Menu_Izquierdo'
 import {  ClipboardList ,Calendar, AlertCircle } from "lucide-react"
 import { useEffect, useState } from "react"
 import { funcion_listado_tareas_product_owner } from "../../services/ruta_api_tarea"
@@ -72,17 +72,15 @@ function ProductOwnerDashboard () {
     }, [])
 
 
-    
-
     return (
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/product_owner_profile'/>
             <div className="flex flex-1 gap-4 overflow-hidden h-full flex-col lg:flex-row">
-                <div className="hidden lg:block">
-                <MenuIZquierdo/>
+                <div className="block lg:block">
+                <Menu_Izquierdo/>
 
                 </div>
-                <main className="mt-6 flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto flex flex-col gap-6">
+                <main className=" flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto flex flex-col gap-6">
                     <h1 className="sm-text-3xl sm:mb-6 text-2xl font-bold text-blueDark mb-4">Dashboard</h1>
 
                     

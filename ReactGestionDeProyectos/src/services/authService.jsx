@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { data } from 'react-router-dom';
 const APP_URL = "http://localhost/api";
 
 // Funciones para interactuar con la API de autenticación
@@ -17,8 +18,12 @@ export const funcion_administrador_profile = (data, token) => axios.get(APP_URL 
 
 //Product Owner
 export const funcion_product_owner_login = (data) => axios.post(APP_URL + '/login_product_owner', data)
-export const funcion_product_owner_profile = (token) => axios.get(APP_URL + '/profile_product_owner', {
+export const funcion_actualizar_product_owner_profile = (data, token) => axios.post(APP_URL + '/profile_product_owner', data, {
     headers: { Authorization: `Bearer ${token}`}
+})
+
+export const funcion_obtener_datos_product_owner_profile = (token) => axios.get(APP_URL + '/profile_product_owner',{
+    headers: {Authorization: `Bearer ${token}`}
 })
 
 
