@@ -30,7 +30,7 @@ import DesarrolladorProfile from './pages/Auth/Desarrollador/DesarrolladorProfil
 import Crear_Proyecto from './pages/Proyecto/Crear_Proyecto';
 import Lista_Proyectos from './pages/Proyecto/Lista_Proyectos';
 import Lista_Sprints_Proyecto from './pages/Sprint/Lista_Sprints_Proyecto'
-
+import Editar_Proyecto from './pages/Proyecto/Editar_Proyecto';
 //SPRINT
 import Crear_Sprint from './pages/Sprint/Crear_Sprint'
 
@@ -71,6 +71,7 @@ function App() {
           {/*PROYECTO */}
           <Route path='/crear_proyecto' element={<Crear_Proyecto/>}/>
           <Route path='/mostrar_proyecto/:id_proyecto' element={<Lista_Sprints_Proyecto/>}/>
+          <Route path='/editar_proyecto/:id_proyecto' element={<Editar_Proyecto/>}/>
 
           {/*SPRINT */}
           <Route path='/crear_sprint/:id_proyecto' element={<Crear_Sprint/>}/>

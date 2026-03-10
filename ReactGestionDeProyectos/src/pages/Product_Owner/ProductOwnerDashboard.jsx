@@ -73,10 +73,10 @@ function ProductOwnerDashboard () {
 
 
     return (
-        <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
+        <div className="h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/product_owner_profile'/>
-            <div className="flex flex-1 gap-4 overflow-hidden h-full flex-col lg:flex-row">
-                <div className="block lg:block">
+            <div className="flex flex-1 gap-4 overflow-hidden  flex-col md:flex-row">
+                <div className="lg:h-full lg:flex">
                 <Menu_Izquierdo/>
 
                 </div>

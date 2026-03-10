@@ -38,13 +38,17 @@ function Crear_Sprint () {
 
     return (
     <>    
-        <MenuTop rutaPerfil='/product_owner_profile'/>
-    
-        <div className="flex">
-            <Menu_Izquierdo/>
-            <div className="w-full p-6 min-h-screen">
 
-                <div className="bg-white rounded-2xl pb-16 ">
+    <div className="h-screen bg-blueDark p-4 flex flex-col">
+        <MenuTop rutaPerfil='/product_owner_profile'/>
+
+        <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
+            <div className="md:h-full md:flex">
+            <Menu_Izquierdo/>
+
+            </div>
+            <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
+
                     <h1 className="p-3 font-bold text-2xl text-blueDark ">Product Backlog</h1>
 
 
@@ -119,6 +123,8 @@ function Crear_Sprint () {
                         </div>
                 </div>
             </div> 
+    
+    
         
 
     </>

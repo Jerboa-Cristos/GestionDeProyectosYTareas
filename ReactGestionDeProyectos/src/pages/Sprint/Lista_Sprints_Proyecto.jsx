@@ -92,17 +92,19 @@ function Lista_Sprints_Proyecto() {
 
     return (
         <>
+
+        <div className="h-screen bg-blueDark p-4 flex flex-col">
         <MenuTop rutaPerfil='/product_owner_profile'/>
 
-        <div className="flex">
-            <div className="w-56">
+        <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
+            <div className="md:h-full md:flex">
             <Menu_Izquierdo/> 
-            </div>
 
-            <div className="flex-1 min-w-0 p-4">
-                
-                <div className="border border-BlueBaseDark rounded bg-white p-5 ml-5 mt-2.5">
-                
+            </div>
+            
+
+            <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
+               
                 <h1 className="text-3xl text-BlueDarkDark font-bold mb-2">
                     {proyectos.nombre}
                 </h1>
@@ -163,6 +165,8 @@ function Lista_Sprints_Proyecto() {
                 </div>
             </div>
         </div>
+       
+
         </>
     )
 }

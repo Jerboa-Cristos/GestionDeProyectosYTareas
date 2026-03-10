@@ -52,13 +52,17 @@ function Editar_Sprint (){
 
 
     return(
-
         <>
-        <MenuTop rutaPerfil='/product_owner_profile'/>  
-    <div className="flex">
-        <Menu_Izquierdo/>
+        <div className='h-screen bg-blueDark p-4 flex flex-col'>
 
-        <div className="w-full p-6 min-h-screen">
+        <MenuTop rutaPerfil='/product_owner_profile'/>  
+        <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
+            <div className='md:h-full md:flex'>
+                <Menu_Izquierdo/>
+
+            </div>
+
+        <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto pb-24">
             <div className="bg-white rounded-xl p-8 h-auto">
 
                 <form onSubmit={botonEditarSprint}>
@@ -120,6 +124,7 @@ function Editar_Sprint (){
             </div>
         </div>
     </div>      
+        </div>
         </>
     )
 }

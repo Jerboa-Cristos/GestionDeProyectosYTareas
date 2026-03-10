@@ -52,9 +52,9 @@ class TareaController extends Controller
     public function tareasProductOwner(Request $request) {
         $product_owner = auth('product_owner')->user();
         
-        $tareas = Tarea::wherehas('sprint.proyecto', function($proyectoConsulta) use ($product_owner) {
+        $tareas = Tarea::wherehas('sprint.proyecto', function($proyectoConsulta) use($product_owner) {
             $proyectoConsulta->where('id_product_owner', $product_owner->id);
-        })->orderBy('updated_at', 'desc')->get();
+        })->with('sprint.proyecto')->orderBy('updated_at', 'desc')->get();
 
         return response()->json($tareas);
         

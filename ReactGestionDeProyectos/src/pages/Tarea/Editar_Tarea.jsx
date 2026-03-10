@@ -72,13 +72,16 @@ function Editar_Tarea (){
     return(
 
         <>
+        <div className="h-screen bg-blueDark p-4 flex flex-col">
+
         <MenuTop rutaPerfil='/product_owner_profile'/>  
-    <div className="flex">
-        <Menu_Izquierdo/>
+        <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
+            <div className="md:h-full md:flex">
+            <Menu_Izquierdo/>
+            </div>
 
-        <div className="w-full p-6 min-h-screen">
-            <div className="bg-white rounded-xl p-8 h-auto">
-
+        <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto pb-24">
+            
                 <form onSubmit={botonEditarTarea}>
                     <div className="bg-blueDashboard rounded-lg p-6">
                         <h2 className="font-bold text-white mb-4 text-[1.2em]">Editar Tarea</h2>
@@ -173,10 +176,11 @@ function Editar_Tarea (){
                     </div>
 
                 </form>   
-            </div>
+            
         </div>
     </div>
         
+        </div>
         
         </>
     )

@@ -69,12 +69,18 @@ function Crear_Tarea () {
 
     return (
     <>  
-    <MenuTop rutaPerfil='/product_owner_profile'/>  
-    <div className="flex">
-        <Menu_Izquierdo/>
 
-        <div className="w-full p-6 min-h-screen">
-            <div className="bg-white rounded-xl p-8 h-auto">
+    <div className="h-screen bg-blueDark p-4 flex flex-col">
+    <MenuTop rutaPerfil='/product_owner_profile'/>  
+
+    <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
+        <div className="md:h-full md:flex">
+            <Menu_Izquierdo/>
+
+        </div>
+
+        <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto pb-24">
+            
 
                 <form onSubmit={botonGuardarTarea}>
                     <div className="bg-blueDashboard rounded-lg p-6">
@@ -105,7 +111,7 @@ function Crear_Tarea () {
                         <select 
                         value={tipo}
                         onChange={(e) => setTipo(e.target.value)}
-                        className="rounded-lg px-4 py-2 bg-blueBase mt-1 text-BlueDarkDark font-semibold">
+                        className="max-w-xs w-full h-10 rounded px-3 bg-blueBase text-BlueDarkDark mt-1 font-semibold">
                             
                             <option value={"Backend"}>Backend</option>
                             <option value={"Frontend"}>Frontend</option>
@@ -119,7 +125,7 @@ function Crear_Tarea () {
                         <select 
                         value={estado}
                         onChange={(e) => setEstado(e.target.value)}
-                        className="rounded-lg px-4 py-2 bg-blueBase mt-1 text-BlueDarkDark font-semibold">
+                        className="max-w-xs w-full h-10 rounded px-3 bg-blueBase text-BlueDarkDark mt-1 font-semibold">
                             
                             <option value={"Por Hacer"}>Por Hacer</option>
                             <option value={"En Curso"}>En Curso</option>
@@ -133,7 +139,7 @@ function Crear_Tarea () {
                         value={idDesarrollador}
                         onChange={(e) => setIdDesarrollador(e.target.value)}
                         required
-                        className="rounded-lg px-4 py-2 bg-blueBase mt-1"
+                        className="max-w-xs w-full h-10 rounded px-3 bg-blueBase text-BlueDarkDark mt-1"
                         >
                             <option value={"Selecciona un desarrollador"}></option>
                             {desarrolladores.map(desarrollador => (
@@ -167,8 +173,9 @@ function Crear_Tarea () {
                     </div>
 
                 </form>   
-            </div>
+            
         </div>
+    </div>
     </div>
     </>
 

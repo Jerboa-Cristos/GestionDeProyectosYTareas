@@ -6,6 +6,7 @@ import MenuTop from '../../Components/MenuTop'
 import { Save } from "lucide-react";
 
 function Crear_Proyecto() {
+    const [esMovil, setEsMovil] = useState(false)
     const [datosForm, setDatosForm] = useState({
         nombre: '',
         descripcion: '', 
@@ -36,20 +37,22 @@ function Crear_Proyecto() {
 
         
     }
-
+console.log('esMovil:', esMovil, 'window.innerWidth:', window.innerWidth)
     return ( 
         <>
+        <div className="h-screen bg-blueDark p-4 flex flex-col">
         <MenuTop rutaPerfil='/product_owner_profile'/>
-        <div className="flex flex-col md:flex-row">
-            <div className="hidden md:block w-56">
-            <Menu_Izquierdo />
 
-            </div>
+        <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
+
+        <div className="md:h-full md:flex">
+            <Menu_Izquierdo/>
+
+        </div>
+         
+            <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
             
-
-            <div className="w-full p-6 min-h-screen">
-                <div className="bg-white rounded-2xl p-5 pb-23">
-                    <h1 className="text-3xl font-bold text-BlueDarkDark mb-4">Mis Proyectos</h1>
+                    <h1 className="text-3xl font-bold text-BlueDarkDark mb-4">Crear Proyecto</h1>
 
 
                     <form 
@@ -103,7 +106,7 @@ function Crear_Proyecto() {
 
                         <div className="flex justify-end">
                             <button
-                            className="text-blueDark bg-blueBase hover:bg-green-300 block font-bold my-10 py-2 px-4 rounded-lg flex items center gap-2"
+                            className="text-blueDark bg-blueBase hover:bg-green-300 font-bold my-10 py-2 px-4 rounded-lg  items-center gap-2"
                             >
                                 
                             <Save size={23} />
@@ -118,8 +121,12 @@ function Crear_Proyecto() {
                 
 
                 </div>
-            </div> 
-        </div>   
+            
+            </div>
+        </div>
+           
+              
+        
     </>
     )
 } 

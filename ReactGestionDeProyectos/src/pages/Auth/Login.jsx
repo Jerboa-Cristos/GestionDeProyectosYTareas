@@ -20,6 +20,7 @@ function DesarrolladorLogin () {
                     const {nombre, email, id, token} = res.data
                     localStorage.setItem("token", token) 
                     localStorage.setItem("user", JSON.stringify({nombre, email, id}))
+                    localStorage.setItem('nombre_usuario', nombre)
                     navigate('/DashboardDesarrollador')
                 }).catch(err => {
                     setErrors(err)
@@ -32,6 +33,7 @@ function DesarrolladorLogin () {
                     const {nombre, email, id, token} = res.data
                     localStorage.setItem("token", token) 
                     localStorage.setItem("user", JSON.stringify({nombre, email, id}))
+                    localStorage.setItem('nombre_usuario', nombre)
                     navigate('/GestionUsuarios')
                 }).catch(err => {
                     setErrors(err)
@@ -44,7 +46,9 @@ function DesarrolladorLogin () {
                     const {nombre, email, id, token} = res.data
                     localStorage.setItem("token", token) 
                     localStorage.setItem("user", JSON.stringify({nombre, email, id}))
+                    localStorage.setItem('nombre_usuario', nombre)
                     navigate('/product_owner_dashboard')
+                    console.log('nombre', nombre)
                 }).catch(err => {
                     setErrors(err)
                     window.alert('No existe tal usuario. Compruebe los datos.')

@@ -1,5 +1,4 @@
 import { Search } from 'lucide-react';
-
 import MenuTop from '../../Components/MenuTop';
 import Menu_Izquierdo from '../Menus/Menu_Izquierdo';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -12,8 +11,10 @@ function Tablero_Kanban_Product_Owner() {
     const [tareas, setTareas] = useState([])
     const {id_sprint} = useParams()
     const [busqueda, setBusqueda] = useState('')
-
+    const [nombreProyecto, setNombreProyecto] = useState('')
+    const [nombreSprint, setNombreSprint] = useState('')
     useEffect(() => {
+        
         const token = localStorage.getItem('token')
         funcion_listado_tareas_product_owner(token)
         .then(respuesta => {
@@ -37,12 +38,22 @@ function Tablero_Kanban_Product_Owner() {
 
             console.log('IDS de sprint de todas las tareas', todasLasTareas.map(t => t.id_sprint))
 
+            if(tareasDelSprint.length > 0){
+                setNombreProyecto(tareasDelSprint[0].sprint.proyecto.nombre)
+                setNombreSprint(tareasDelSprint[0].sprint.nombre)
+                
+            }
+
             setTareas(tareasDelSprint)
+            console.log('tarea completa', tareasDelSprint[0])
+
         })
         .catch(error => {
             console.log('Error al cargar tareas', error)
         })
     }, [id_sprint])
+
+    
 
     const tareasFiltradas = tareas.filter(tarea => 
         tarea.nombre.toLowerCase().includes(busqueda.toLowerCase()) || 
@@ -187,12 +198,19 @@ function Tablero_Kanban_Product_Owner() {
     
          <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/product_owner_profile'/>
-            <div className="flex flex-1 gap-4 overflow-hidden h-full">
-
+            <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
+                <div className='md:h-full md:flex'>
                 <Menu_Izquierdo />
 
-                <main className="mt-6 flex-1 bg-white rounded-xl shadow-lg p-8 overflow-auto flex flex-col gap-6">
+                </div>
+
+                <main className="flex-1 bg-white rounded-xl p-4 sm:p-8 overflow-auto flex flex-col gap-4">
                     <h1 className="text-3xl font-bold text-blueDark mb-6">Tablero Kanban</h1>
+                    <div className='mb-4'>
+                        <h2 className='text-xl font-semibold text-blueDark'>Nombre del proyecto: {nombreProyecto}</h2>
+                        <h2 className='text-xl font-semibold text-BlueDarkDark mt-1'>Nombre del Sprint: {nombreSprint}</h2>
+                    
+                    </div>
 
                     <div className="flex justify-between items-center mt-4 mb-4">
                     <h2 className="text-xl font-bold text-BlueDarkDark">SPRINTS</h2>
