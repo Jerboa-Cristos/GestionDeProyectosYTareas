@@ -1,6 +1,5 @@
 import axios from 'axios';
 import rutaApi from '../api/rutaApi';
-import { data } from 'react-router-dom';
 
 //export const funcion = (data) => axios.post(APP_URL + '/ruta_del_backend', data)
 
