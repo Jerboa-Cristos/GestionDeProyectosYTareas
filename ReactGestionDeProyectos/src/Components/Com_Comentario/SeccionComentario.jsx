@@ -21,6 +21,11 @@ const SeccionComentario = ({idTarea}) => {
     const comEliminado = (idEliminado) => {
         setComentarios(prev => prev.filter(c=> c.id !== idEliminado))
     }
+
+    const comActualizado = (idActualizado, nuevoTexto) => {
+        setComentarios(prev => prev.map(c => c.id === idActualizado ? {...c, texto: nuevoTexto} : c))
+    }
+
 //#region Cosas del form
     const [formData, setFormData] = useState({
         id_tarea: idTarea,
@@ -36,7 +41,6 @@ const SeccionComentario = ({idTarea}) => {
     
 
     const GuardarComentario = async (e) => {
-        e.preventDefault()
         e.stopPropagation()
         guardarComentario(formData, token).then(res => {
             const newComentario = res.data
@@ -58,7 +62,7 @@ const SeccionComentario = ({idTarea}) => {
             </div>
             <div className="max-h-50 overflow-y-auto custom-scrollbar grow-0">
                 {comentarios.map(comentario => (
-                    <ElementComentario key={comentario.id} id={comentario.id} user={comentario.autor} text={comentario.texto} onDeleteSuccess={comEliminado}/>
+                    <ElementComentario key={comentario.id} id={comentario.id} user={comentario.autor} text={comentario.texto} onDeleteSuccess={comEliminado} onUpdateSuccess={comActualizado}/>
                 ))}
             </div>
             <div className="bg-blueDashboard rounded-lg h-auto">

@@ -3,7 +3,7 @@ import {eliminarComentario, updateComentario} from '../../services/comentarioSer
 import { User2, Trash2, Edit2 } from "lucide-react"
 
 
-const ElementComentario = ({id, user, text, onDeleteSuccess}) => {
+const ElementComentario = ({id, user, text, onDeleteSuccess, onUpdateSuccess}) => {
     const token = localStorage.getItem('token');
     const actualUser = JSON.parse(localStorage.getItem('user'));
     const idUser = actualUser.id;
@@ -36,6 +36,7 @@ const ElementComentario = ({id, user, text, onDeleteSuccess}) => {
         if(editando) {
             updateComentario(id, formData, token).then(res => {
                 console.log('Comentario actualizado')
+                onUpdateSuccess(id, formData.texto)
             }).catch(err=>{
                 console.error('Error al hacer Update del comentario: ', err)
                 alert('No se pudo actualizar el comentario.')
