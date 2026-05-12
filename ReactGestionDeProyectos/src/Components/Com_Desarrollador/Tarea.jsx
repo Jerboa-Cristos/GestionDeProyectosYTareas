@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Calendar } from 'lucide-react';
+import { Calendar, Folder,  } from 'lucide-react';
 
 const Tarea = ({ id, title, description, fecha }) => {
   const navigate = useNavigate();

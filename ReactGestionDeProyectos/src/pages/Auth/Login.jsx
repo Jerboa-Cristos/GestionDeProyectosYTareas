@@ -86,7 +86,7 @@ function DesarrolladorLogin () {
 
                 <div className="grid gap-4">
                     <div className="flex flex-col gap-1.5">
-                        <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Email: </label>
+                        <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Correo: </label>
                         <input 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -95,11 +95,11 @@ function DesarrolladorLogin () {
                         name="email" 
                         className="w-full rounded-lg px-4 h-12 bg-blueBase border-none focus:ring-2 focus:ring-blueDark text-blueDark 
                         placeholder-blueblue/60 transition-all" 
-                        placeholder="Enter your email"/>
+                        placeholder="Ponga su correo"/>
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                        <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Password: </label>
+                        <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Contraseña: </label>
                         <input
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)}
@@ -109,7 +109,7 @@ function DesarrolladorLogin () {
                         autoComplete="password"
                         className="w-full rounded-lg px-4 h-12 bg-blueBase border-none focus:ring-2 focus:ring-blueDark text-blueDark 
                         placeholder-blueblue/60 transition-all" 
-                        placeholder="Enter your password"/>
+                        placeholder="Ponga su contraseña"/>
                     </div>
 
                     <div className="flex flex-col gap-1.5">
@@ -119,17 +119,17 @@ function DesarrolladorLogin () {
                         onChange={(e) => setRol(e.target.value)}
                         className="w-full rounded-lg px-4 h-12 bg-blueBase border-none focus:ring-2 focus:ring-blueDark 
                         text-blueDark appearance-none cursor-pointer">
-                            <option value="">Rol...</option>
+                            <option value="">Rol del usuario</option>
                             <option value="Desarrollador">Desarrollador</option>
-                            <option value="Administrador">Admin</option>
-                            <option value="ProductOwner">Product Owner</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="ProductOwner">Propietario del Producto</option>
                         </select>
                     </div>
 
                 </div>
                 <button type="submit" 
                 className="w-full flex justify-center items-center h-12 mt-4 rounded-lg text-base font-bold text-white bg-blueDark 
-                hover:bg-blueblue active:scale-[0.98] transition-all shadow-md">Submit</button>
+                hover:bg-blueblue active:scale-[0.98] transition-all shadow-md">Iniciar sesión</button>
             </form>
         </div>
     </div>

@@ -48,12 +48,8 @@ function GestionUsuarios() {
         e.preventDefault();
         e.stopPropagation();
 
-        if(rolFilter === rol){
-            setRolFilter(null);
-        }else{
-            setRolFilter(rol);
-            setSearchTerm('');
-        }
+        setRolFilter(rol);
+        setSearchTerm('');
     }
 //#endregion
 
@@ -95,26 +91,26 @@ function GestionUsuarios() {
                         <div className="flex flex-wrap justify-center gap-2 md:gap-3">
                             <button 
                             onClick={(e)=>filtrarPorRol(e, 'Administrador')}
-                            className="flex items-center gap-2 bg-blueBase text-blueDark p-3 md:px-4 md:py-2 rounded-lg 
-                            font-medium hover:bg-blueBaseDark transition-colors">
+                            className="flex items-center gap-2 hover:bg-BlueBaseDark focus:bg-BlueBaseDark focus:outline-none focus:ring-3 focus:ring-turquesa bg-blueBase text-blueDark p-3 md:px-4 md:py-2 rounded-lg 
+                            font-medium transition-colors">
                             <UserCog size={20}/>
                             <span className="hidden md:inline">Administrador</span>
                             </button> 
 
                             <button 
                             onClick={(e)=>filtrarPorRol(e, 'Desarrollador')}
-                            className="flex items-center gap-2 bg-blueBase text-blueDark p-3 md:px-4 md:py-2 rounded-lg 
-                            font-medium hover:bg-blueBaseDark transition-colors">
+                            className="flex items-center gap-2 hover:bg-BlueBaseDark focus:bg-BlueBaseDark focus:outline-none focus:ring-3 focus:ring-turquesa bg-blueBase text-blueDark p-3 md:px-4 md:py-2 rounded-lg 
+                            font-medium transition-colors">
                             <Users size={20} />
                             <span className="hidden md:inline">Desarrollador</span>
                             </button>
 
                             <button 
                             onClick={(e)=>filtrarPorRol(e, 'ProductOwner')}
-                            className="flex items-center gap-2 bg-blueBase text-blueDark p-3 md:px-4 md:py-2 rounded-lg 
-                            font-medium hover:bg-blueBaseDark transition-colors">
+                            className="flex items-center gap-2 hover:bg-BlueBaseDark focus:bg-BlueBaseDark focus:outline-none focus:ring-3 focus:ring-turquesa bg-blueBase text-blueDark p-3 md:px-4 md:py-2 rounded-lg 
+                            font-medium transition-colors">
                             <UserCheck size={20} />
-                            <span className="hidden md:inline">Product Owner</span>
+                            <span className="hidden md:inline">Propietario del Producto</span>
                             </button>
                         </div>
                         <div className="relative w-full max-w-md" onClick={(e)=>e.stopPropagation()}>
@@ -123,24 +119,27 @@ function GestionUsuarios() {
                                 placeholder="Buscar..."
                                 value={searchTerm}
                                 onChange={(e)=>{setSearchTerm(e.target.value); setRolFilter(null);}}
-                                className="w-full bg-blueBase text-blueDark pl-10 pr-4 py-2 rounded-lg h-12 placeholder-blueDark
-                                 focus:outline-none focus:ring-2 focus:ring-blueDark"
+                                className="w-full hover:bg-BlueBaseDark bg-blueBase text-blueDark pl-10 pr-4 py-2 rounded-lg h-12 placeholder-blueDark
+                                 focus:outline-none focus:ring-3 focus:ring-turquesa"
                             />
                             <Search className="absolute left-3 top-3.5 text-blueDark" size={20} />
                         </div>
                     </div>
-                    <div className="flex-1 flex flex-col gap-2 overflow-y-auto md:px-10">
+                    <div className="flex-1 flex flex-col gap-2 overflow-y-auto p-0.5 md:px-10">
                        {currentUsers.map((user) => (
                             <button 
                                 key={`${user.rol}-${user.id}`}
                                 onClick={(e)=>{goPerfilUsuario(user.id, user.rol); e.stopPropagation()}}
-                                className="w-full bg-blueBase rounded-lg min-h-16 flex items-center justify-between px-4 
+                                className="w-full hover:bg-BlueBaseDark hover:ring-2 hover:ring-turquesa bg-blueBase rounded-lg min-h-16 flex items-center justify-between px-4 
                                 md:px-6 hover:bg-blueBaseDark transition-all">
                                 <div className="flex items-center gap-4 w-1/3 md:w-40">
                                     <span className="font-bold text-blueDark text-sm md:text-base truncate">{user.nombre}</span>
                                 </div>
                                 <span className="hidden md:block w-1/4 text-blueDark font-medium truncate">{user.email}</span>
-                                <span className="w-1/3 md:w-1/4 text-blueDark font-medium text-sm md:text-base text-center">{user.rol}</span>
+                                <span className="w-1/3 md:w-1/4 text-blueDark font-medium text-sm md:text-base text-center">{
+                                user.rol === 'ProductOwner' ? 'Propietario del Producto' :
+                                user.rol
+                                }</span>
                                 <div className="w-1/6 flex justify-end">
                                 <Trash2 
                                     onClick={(e)=>{eliminarPersona(user.id, user.rol, token); e.stopPropagation();}}

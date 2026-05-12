@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 //AQUÍ DEBE ESTAR EL IMPORT PARA EL DOCUMENTO QUE TIENE CONEXIÓN A LA PARTE DE LOS PROYECTOS
 import { guardarUsuarios, mostrarProyectos } from '../../services/adminService';
 import { useState, useEffect } from 'react';
-import { User, Mail, Briefcase, Folder, RotateCcw, Plus } from 'lucide-react';
+import { User, Mail, Briefcase, Folder, RotateCcw, Plus, LockIcon } from 'lucide-react';
 import MenuTop from '../../Components/MenuTop';
 
 function CreacionUsuarios() {
@@ -74,7 +74,7 @@ const GuardarUsuario = async (e) => {
             <main className='flex-1 flex flex-col items-center justify-center bg-blueBase rounded-xl shadow-lg p-6 md:p-10 overflow-hidden'>
                 <div className='flex flex-col py-10 w-full max-w-lg lg:max-w-2xl items-center'>
                 <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-8 md:mb-12 text-center">
-                    <span className="block md:inline">Creación de Usuario</span>
+                    <span className="block md:inline">Creación de usuario</span>
                 </h1>
                 <form onSubmit={GuardarUsuario} className="w-full flex flex-col gap-4">
           
@@ -85,55 +85,57 @@ const GuardarUsuario = async (e) => {
                         value={formData.nombre}
                         onChange={handleChange}
                         type="text" 
-                        placeholder="Nombre apellidos..." 
+                        placeholder="Nombre apellidos" 
                         className="w-full bg-transparent focus:outline-none text-center italic"
                         />
                     </div>
 
                     <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                        <LockIcon className="text-blueDark shrink-0" size={20} />
                         <input 
                         name='password'
                         value={formData.password} 
                         onChange={handleChange}
                         type="password" 
-                        placeholder="Contraseña..." 
+                        placeholder="Contraseña" 
                         className="w-full bg-transparent focus:outline-none text-center italic"
                         />
                     </div>
                     <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                        <LockIcon className="text-blueDark shrink-0" size={20} />
                         <input 
                         name='confirmed_password'
                         value={formData.confirmed_password}
                         onChange={handleChange}
                         type="password" 
-                        placeholder="Repetir contraseña..." 
+                        placeholder="Confirmar contraseña" 
                         className="w-full bg-transparent focus:outline-none text-center italic"
                         />
                     </div>
 
                     <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
-                        <Mail className="absolute left-4 top-3 text-blueDark" size={20} />
+                        <Mail className="text-blueDark shrink-0" size={20} />
                         <input 
                         name='email'
                         value={formData.email}
                         onChange={handleChange}
                         type="email" 
-                        placeholder="Correo..." 
+                        placeholder="Correo" 
                         className="w-full bg-transparent focus:outline-none text-center italic"
                         />
                     </div>
 
                     <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
-                        <Briefcase className="absolute left-4 top-3 text-blueDark" size={20} />
+                        <Briefcase className="text-blueDark shrink-0" size={20} />
                         <select 
                         name='rol'
                         value={formData.rol}
                         onChange={handleChange}
                         className="w-full bg-transparent appearance-none focus:outline-none italic text-center text-gray-500">
-                        <option value="">Rol...</option>
+                        <option value="">Rol del usuario</option>
                         <option value="Desarrollador">Desarrollador</option>
-                        <option value="Administrador">Admin</option>
-                        <option value="ProductOwner">Product Owner</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="ProductOwner">Propietario del Producto</option>
                         </select>
                         <div className="absolute right-4 top-3 pointer-events-none text-blueDark">
                         <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
@@ -142,12 +144,13 @@ const GuardarUsuario = async (e) => {
 
                     {formData.rol == 'Desarrollador' && (
                     <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
-                        <Folder className="absolute left-4 top-3 text-blueDark" size={20} />
+                        <Folder className="text-blueDark shrink-0" size={20} />
                         <select 
                         value={formData.proyecto}
                         onChange={handleChange}
                         name='proyecto'
                         className="w-full bg-transparent appearance-none focus:outline-none italic text-center text-gray-500">
+                            <option value="">Proyecto asignado</option>
                             {proyectos.map((proyecto) => (
                                 <option value={proyecto.id}>{proyecto.nombre}</option>
                             ))}

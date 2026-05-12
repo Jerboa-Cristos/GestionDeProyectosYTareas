@@ -38,7 +38,7 @@ function AdministradorRegister () {
                 </div>
 
                 <form onSubmit={submit} className="space-y-5" method="post">
-                    <h1 className="text-2xl md:text-3xl font-bold text-center text-blueDark mb-8">Register</h1>
+                    <h1 className="text-2xl md:text-3xl font-bold text-center text-blueDark mb-8">Registro de Administrador</h1>
 
                     {
                     errors.length > 0 && 
@@ -55,7 +55,7 @@ function AdministradorRegister () {
 
                     <div className="grid gap-4">
                     <div className="flex flex-col gap-1.5">
-                        <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Name: </label>  
+                        <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Nombre:</label>  
                         <input 
                         value={nombre}
                         onChange={(e) => setName(e.target.value)}
@@ -64,12 +64,12 @@ function AdministradorRegister () {
                         name="nombre" 
                         className="w-full rounded-lg px-4 h-12 bg-blueBase border-none focus:ring-2 focus:ring-blueDark text-blueDark 
                         placeholder-blueblue/60 transition-all" 
-                        placeholder="Enter your name"/>
+                        placeholder="Ponga su nombre"/>
                     </div>
 
 
                     <div className="flex flex-col gap-1.5">
-                        <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Email: </label>
+                        <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Correo: </label>
                         <input 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -78,11 +78,11 @@ function AdministradorRegister () {
                         name="email" 
                         className="w-full rounded-lg px-4 h-12 bg-blueBase border-none focus:ring-2 focus:ring-blueDark text-blueDark 
                         placeholder-blueblue/60 transition-all" 
-                        placeholder="Enter your email"/>
+                        placeholder="Ponga su correo"/>
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                        <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Password: </label>
+                        <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Contraseña: </label>
                         <input
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)}
@@ -92,11 +92,11 @@ function AdministradorRegister () {
                         autoComplete="password"
                         className="w-full rounded-lg px-4 h-12 bg-blueBase border-none focus:ring-2 focus:ring-blueDark text-blueDark 
                         placeholder-blueblue/60 transition-all" 
-                        placeholder="Enter your password"/>
+                        placeholder="Ponga su contraseña"/>
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                        <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Confirm Password: </label>
+                        <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Confirmar Contraseña: </label>
                         <input 
                         value={confirmed_password}
                         onChange={(e) => setConfirmed_password(e.target.value)}
@@ -106,10 +106,10 @@ function AdministradorRegister () {
                         autoComplete="confirmed_password" 
                         className="w-full rounded-lg px-4 h-12 bg-blueBase border-none focus:ring-2 focus:ring-blueDark text-blueDark 
                         placeholder-blueblue/60 transition-all" 
-                        placeholder="Enter to Confirm your password"/>
+                        placeholder="Ponga su contraseña de nuevo"/>
                     </div>
                     <button type="submit" className="w-full flex justify-center items-center h-12 mt-4 rounded-lg text-base font-bold text-white bg-blueDark 
-                    hover:bg-blueblue active:scale-[0.98] transition-all shadow-md">Submit</button>
+                    hover:bg-blueblue active:scale-[0.98] transition-all shadow-md">Crear cuenta</button>
                     </div>
                 </form>
             </div>

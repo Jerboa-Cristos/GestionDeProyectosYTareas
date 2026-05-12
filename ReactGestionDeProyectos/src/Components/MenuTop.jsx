@@ -27,7 +27,7 @@ function MenuTop({rutaPerfil}) {
                 <div className="bg-blueDark rounded-lg size-10 md:size-12 flex items-center justify-center font-bold
                  text-white text-xl md:text-2xl shadow-inner"> M </div>
 
-                 <p className="hidden md:block font-semibold text-blueDark pl-5 text-xl md:text-2xl">Bienvenido, {nombre_usuario} </p>
+                 <p className="hidden md:block font-semibold text-blueDark pl-5 text-xl md:text-2xl">Bienvenido/a, {nombre_usuario} </p>
             </div>
             <div className="flex items-center gap-4 md:gap-8 text-blueDark">
                 <button onClick={(e) => {goToProfile(rutaPerfil); e.stopPropagation()}} 

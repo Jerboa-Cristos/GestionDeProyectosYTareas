@@ -98,9 +98,9 @@ function DashboardDesarrollador() {
                             >
                                 <div className="flex items-center gap-3 md:gap-4">
                                     <ClipboardList size={50} md:size={16} className="transition-transform group-hover:scale-110" />
-                                    <span className="text-lg md:text-xl font-semibold leading-tight text-left">Tareas Asignadas</span>
+                                    <span className="text-lg md:text-xl font-semibold leading-tight text-left">Tareas asignadas</span>
                                 </div>
-                                <span className="text-3xl md:text-4xl font-bold">{tareas.length}</span>
+                                <span className="text-3xl md:text-4xl font-bold md:mr-4">{tareas.length}</span>
                             </button>
 
                             {/* Tareas Deadline */}
@@ -108,7 +108,7 @@ function DashboardDesarrollador() {
                            className="bg-warning rounded-xl p-4 md:p-9 flex items-center justify-between text-white relative hover:shadow-lg hover:bg-warningDark transition-all group">
                             <div className="flex items-center gap-3 md:gap-4">
                                 <Calendar size={50} md:size={16} className="transition-transform group-hover:scale-110"/>
-                                <span className="text-lg md:text-xl font-semibold leading-tight text-left">Tareas Asignadas Deadline</span>
+                                <span className="text-lg md:text-xl font-semibold leading-tight text-left">Tareas en fecha límite</span>
                             </div>
                             <span className="text-3xl md:text-4xl font-bold md:mr-4">{tareasDeadline}</span>
                             <AlertCircle className="absolute bottom-2 right-2 md:bottom-4 md:right-4 text-warningDark bg-white rounded-full p-1" size={24} />

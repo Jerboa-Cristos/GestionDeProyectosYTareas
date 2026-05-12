@@ -125,7 +125,7 @@ const volverAtras = () => {
                         id="email" 
                         name="email" 
                         className="bg-transparent w-full focus:outline-none text-blueDark text-center font-medium text-lg" 
-                        placeholder="Email del usuario">
+                        placeholder="Correo del usuario">
                             
                     </input>
                 </div>
@@ -149,7 +149,7 @@ const volverAtras = () => {
                     value={formData.password_confirmation}
                     onChange={handleChange}
                     type="password" 
-                    placeholder="Repetir contraseña nueva..." 
+                    placeholder="Confirmar contraseña nueva..." 
                     className="w-full bg-transparent focus:outline-none italic text-center"
                     />
                 </div>
@@ -161,10 +161,10 @@ const volverAtras = () => {
                     value={formData.rol}
                     onChange={handleChange}
                     className="w-full bg-transparent appearance-none text-center text-blueDark font-medium text-lg focus:outline-none">
-                        <option value="">Rol...</option>
-                        <option value="Administrador">Admin</option>
+                        <option value="">Rol del usuario</option>
+                        <option value="Administrador">Administrador</option>
                         <option value="Desarrollador">Desarrollador</option>
-                        <option value="ProductOwner">Product Owner</option>
+                        <option value="ProductOwner">Propietario del Producto</option>
                     </select>
                     <div className="absolute right-4 top-3 pointer-events-none text-blueDark">
                     <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
@@ -181,6 +181,7 @@ const volverAtras = () => {
                         onChange={handleChange}
                         name='proyecto'
                         className="w-full h-12 bg-white pl-12 pr-10 shadow-sm focus:outline-none focus:ring-2 focus:ring-turquesa italic appearance-none text-center text-gray-500">
+                            <option value="">Proyecto asignado</option>
                             {proyectos && proyectos.map((proyecto) => (
                                 <option key={proyecto.id} value={proyecto.id}>{proyecto.nombre}</option>
                             ))}

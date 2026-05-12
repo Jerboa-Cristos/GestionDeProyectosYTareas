@@ -45,7 +45,7 @@ function DesarrolladorProfile () {
                 <main className='flex-1 flex flex-col items-center justify-center bg-blueBase rounded-xl shadow-lg p-6 md:p-10 overflow-hidden'>
                     <div className='flex flex-col py-10 w-full max-w-lg lg:max-w-2xl items-center'>
                     <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-8 md:mb-12 text-center">
-                    <span className="block md:inline">Profile</span>
+                    <span className="block md:inline">Perfil</span>
                     </h1>
 
                     <form onSubmit={submit} className="w-full flex flex-col gap-4" method="post">
@@ -71,7 +71,7 @@ function DesarrolladorProfile () {
                                 id="nombre" 
                                 name="nombre" 
                                 className="bg-transparent w-full focus:outline-none text-blueDark text-center font-medium text-lg"
-                                placeholder="Enter your name"/>
+                                placeholder="Ponga su nombre"/>
                             </div>
 
                             <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
@@ -83,7 +83,7 @@ function DesarrolladorProfile () {
                                 type="email"
                                 name="email" 
                                 className="bg-transparent w-full focus:outline-none text-blueDark text-center font-medium text-lg"
-                                placeholder="Enter your email"/>
+                                placeholder="Ponga su correo"/>
                             </div>
                         
                             <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
@@ -96,7 +96,7 @@ function DesarrolladorProfile () {
                                 name="password" 
                                 autoComplete="password"
                                  className="w-full bg-transparent focus:outline-none italic text-center" 
-                                placeholder="Enter your password"/>
+                                placeholder="Ponga su contraseña"/>
                             </div>
 
                             <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
@@ -109,7 +109,7 @@ function DesarrolladorProfile () {
                                 name="confirmed_password"
                                 autoComplete="confirmed_password" 
                                 className="w-full bg-transparent focus:outline-none italic text-center" 
-                                placeholder="Enter to Confirm your password"/>
+                                placeholder="Ponga su contraseña de nuevo"/>
                             </div>
 
                             <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
