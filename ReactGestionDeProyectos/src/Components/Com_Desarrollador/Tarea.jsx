@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { Calendar, Folder,  } from 'lucide-react';
+import { Calendar, Folder } from 'lucide-react';
 
-const Tarea = ({ id, title, description, fecha }) => {
+const Tarea = ({ id, title, description, fecha, sprint, proyecto }) => {
   const navigate = useNavigate();
 
   const gotoTarea = (e) => {
@@ -43,7 +43,13 @@ const Tarea = ({ id, title, description, fecha }) => {
       </p>
       <div className="flex justify-between items-center pt-2">
         <div className="flex items-center gap-2">
-          <Calendar size={22} className={`text-blueDark ${tareasDeadline(fecha)}`}/>
+          <div title={`Fecha límite: ${fecha}`}>
+            <Calendar size={22} className={`text-blueDark ${tareasDeadline(fecha)}`}/>
+          </div>
+          <div>
+            <p className="text-blueDark text-[11px] md:text-xs"><strong>Proyecto: {proyecto}</strong></p>
+            <p className="text-blueDark text-[11px] md:text-xs"><strong>Sprint: {sprint}</strong></p>
+          </div>
         </div>
       </div>
     </button>

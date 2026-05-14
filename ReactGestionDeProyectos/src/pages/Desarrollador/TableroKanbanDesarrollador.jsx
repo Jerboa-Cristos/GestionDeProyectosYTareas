@@ -38,7 +38,7 @@ function TableroKanbanDesarrollador() {
                 <MenuLateralDesarrollador/>
                 <main className="flex-1 bg-white rounded-xl shadow-lg p-4 md:p-8 overflow-y-auto flex flex-col gap-6">
                     <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-2 md:mb-6 text-center md:text-left">Tablero Kanban</h1>
-                    
+                    <h2 className="text-xl md:text-2xl font-bold text-blueDark text-center md:text-left"><strong>Proyecto:</strong> {tareasDeUltSprint[0]?.sprint?.proyecto?.nombre} - <strong>Sprint:</strong> {tareasDeUltSprint[0]?.sprint?.nombre}</h2>
                     {/* Barra de búsqueda */}
                     <div className="flex justify-center md:justify-start">
                          <div className="relative w-full max-w-md" onClick={(e)=>e.stopPropagation()}>

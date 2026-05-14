@@ -1,13 +1,27 @@
-import { CheckSquare, User } from 'lucide-react';
+import { CheckSquare, User, Calendar } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const KanbanTask = ({ titulo, id }) => {
+const KanbanTask = ({ titulo, id, fecha, desarrollador }) => {
   const navigate = useNavigate();
   
   const gotoTarea = (e) => {
     e.stopPropagation()
      if (!id) return;
     navigate(`/MostrarTarea/${id}`)
+  }
+
+  const tareasDeadline = (fecha) => {
+      const fechaLimiteTarea = new Date(fecha)
+      const fechaActual = new Date()
+      const diasRestantes = Math.abs((fechaLimiteTarea - fechaActual) / 86400000)
+
+      if(diasRestantes > 0 && diasRestantes <= 4) {
+        return 'fill-warningDark'
+      } else if (diasRestantes > 4 && diasRestantes < 10) {
+        return 'fill-[#FFD23D]'
+      } else {
+        return 'fill-GreenLite'
+      }
   }
 
 
@@ -20,10 +34,12 @@ const KanbanTask = ({ titulo, id }) => {
       </h4>
       
       <div className="flex justify-between items-center text-blueDark mt-auto">
-        <div className="flex items-center gap-2 bg-blueBase/30 p-1.5 rounded-lg">
-          <CheckSquare size={30} md:size={22} className="text-blueDark" />
+        <div className="flex items-center gap-2 bg-blueBase/30 p-1.5 rounded-lg" title={`Fecha límite: ${fecha}`}>
+          <Calendar size={30} md:size={20} className={`text-blueDark ${tareasDeadline(fecha)}`}/>
         </div>
-        <User size={35} md:size={22} className="text-blueDark rounded-full p-0.5"  />
+        <div className="flex items-center gap-2 bg-blueBase/30 p-1.5 rounded-lg" title={`Asignado: ${desarrollador}`}>
+          <User size={30} md:size={20} className="text-blueDark rounded-full p-0.5"  />
+        </div>
       </div>
     </button>
   );

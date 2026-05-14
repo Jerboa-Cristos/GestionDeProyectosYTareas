@@ -1,6 +1,7 @@
 import './App.css';
 
 //Cris
+import { Toaster } from 'react-hot-toast'; //Biblioteca para hacer notificaciones tipo toast
 import { TareaProvider } from './Context/TareaContext'; //CONTEXTO DE TAREAS PARA CADA USUARIO
 
 import CreacionUsuarios from './pages/Administrador/CreacionUsuarios';
@@ -48,6 +49,7 @@ function App() {
   return (
     
       <>
+        <Toaster position='bottom-right' reverseOrder={false}/>
         <Routes>
           <Route path='/login' element={<Login/>}/>
 
