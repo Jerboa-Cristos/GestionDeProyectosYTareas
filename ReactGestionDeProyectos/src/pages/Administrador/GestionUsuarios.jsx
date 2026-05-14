@@ -1,6 +1,7 @@
-import { Search, Plus, Users, UserCheck, Trash2, UserCog} from 'lucide-react';
+import { Search, Plus, Users, UserCheck, UserCog} from 'lucide-react';
 import MenuTop from '../../Components/MenuTop';
-import { mostrarUsuarios, eliminarUsuario} from '../../services/adminService';
+import { AlertDeleteUser } from '../../Components/Com_Administrador/AlertDeleteUser';
+import { mostrarUsuarios } from '../../services/adminService';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
@@ -65,18 +66,6 @@ function GestionUsuarios() {
 
 //#endregion
 
-//#region Función para eliminar un usuario
-    const eliminarPersona = (id, rol, token) => {
-        eliminarUsuario(id, rol, token).then(res => {
-            console.log('Usuario eliminado con éxito');
-            // Actualizar la lista de usuarios después de eliminar uno
-            setUsers(users.filter(user => user.id !== id || user.rol !== rol));
-        }).catch(err => {
-            console.error("Error al eliminar el usuario:", err);
-        });
-    }
-//#endregion
-
     return (
         <div className="min-h-screen bg-blueDark p-2 md:p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/administrador_profile'/>
@@ -127,10 +116,10 @@ function GestionUsuarios() {
                     </div>
                     <div className="flex-1 flex flex-col gap-2 overflow-y-auto p-0.5 md:px-10">
                        {currentUsers.map((user) => (
-                            <button 
+                            <div
                                 key={`${user.rol}-${user.id}`}
                                 onClick={(e)=>{goPerfilUsuario(user.id, user.rol); e.stopPropagation()}}
-                                className="w-full hover:bg-BlueBaseDark hover:ring-2 hover:ring-turquesa bg-blueBase rounded-lg min-h-16 flex items-center justify-between px-4 
+                                className="w-full cursor-pointer hover:bg-BlueBaseDark hover:ring-2 hover:ring-turquesa bg-blueBase rounded-lg min-h-16 flex items-center justify-between px-4 
                                 md:px-6 hover:bg-blueBaseDark transition-all">
                                 <div className="flex items-center gap-4 w-1/3 md:w-40">
                                     <span className="font-bold text-blueDark text-sm md:text-base truncate">{user.nombre}</span>
@@ -140,13 +129,10 @@ function GestionUsuarios() {
                                 user.rol === 'ProductOwner' ? 'Propietario del Producto' :
                                 user.rol
                                 }</span>
-                                <div className="w-1/6 flex justify-end">
-                                <Trash2 
-                                    onClick={(e)=>{eliminarPersona(user.id, user.rol, token); e.stopPropagation();}}
-                                    className="text-warning hover:text-warningDark hover:scale-125 transition-all cursor-pointer" 
-                                    size={24} />
+                                <div onClick={(e) => e.stopPropagation()} className="w-1/6 flex justify-end">
+                                <AlertDeleteUser id={user.id} rol={user.rol} token={token} onUserDeleted={() => setUsers(users.filter(u => u.id !== user.id || u.rol !== user.rol))} />
                                 </div>
-                            </button>
+                            </div>
                        ))}
                     </div>
                     <div className="mt-6 flex flex-col md:flex-row gap-4 justify-between items-center w-full md:px-10">

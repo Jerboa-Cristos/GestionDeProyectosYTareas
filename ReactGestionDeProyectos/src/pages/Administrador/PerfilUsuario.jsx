@@ -1,7 +1,9 @@
-import { User, Mail, Briefcase, Folder, RotateCcw, Edit3, Trash2, LockIcon } from 'lucide-react';
+import { User, Mail, Briefcase, Folder, RotateCcw, Edit3, LockIcon } from 'lucide-react';
 import {useParams, useNavigate} from 'react-router-dom';
-import {eliminarUsuario, showUsuarios, updateUsuarios, mostrarProyectos} from '../../services/adminService';
+import { showUsuarios, updateUsuarios, mostrarProyectos} from '../../services/adminService';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { AlertDeleteUser } from '../../Components/Com_Administrador/AlertDeleteUser';
 import MenuTop from '../../Components/MenuTop';
 
 function PerfilUsuario() {
@@ -43,7 +45,7 @@ function PerfilUsuario() {
                 })
             } catch(err) {
                 console.error('No se pudo cargar los datos por: ' , err)
-                alert('No se pudieron cargar los datos del usuario.')
+                toast.error('No se pudieron cargar los datos del usuario.')
             } finally {
                 setLoading(false);
             }
@@ -64,9 +66,10 @@ const UpdateUsuario = (e) => {
     e.preventDefault()
     updateUsuarios(formData, formData.rol, id, token).then(res => {
         console.log('Usuario actualizado')
-        alert('Usuario Actualizado con exito.');
+        toast.success('Usuario actualizado con éxito.');
     }).catch(err=>{
         console.error('Error al hacer Update del usuario: ', err)
+        toast.error('No se pudo actualizar el usuario.');
     })
 }
 //#endregion
@@ -77,17 +80,6 @@ const volverAtras = () => {
 }
 //#endregion
 
-//#region Función para eliminar un usuario
-    const eliminarPersona = async (id, rol, token) => {
-        try {
-            await eliminarUsuario(id, rol, token)
-            console.log('Usuario eliminado con éxito');
-            navigate('/GestionUsuarios', { replace: true });
-        }catch(err) {
-            console.error("Error al eliminar el usuario:", err);
-            alert('No se pudo eliminar el usuario.')
-        }
-    }
 //#endregion
 
     return (
@@ -213,12 +205,7 @@ const volverAtras = () => {
             <RotateCcw size={40} strokeWidth={2.5} />
             </button>
 
-            <button 
-                onClick={(e)=>{eliminarPersona(id, rol, token); e.stopPropagation();}}
-                className="bg-warningDark text-white p-3 rounded-full hover:bg-warning transition-colors shadow-md hover:scale-105"
-                title="Eliminar perfil">
-                <Trash2 size={24} />
-            </button>
+            <AlertDeleteUser id={id} rol={rol} token={token} onUserDeleted={volverAtras} />
         </div>
         </main>
     </div>

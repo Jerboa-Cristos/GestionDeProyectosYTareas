@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { guardarUsuarios, mostrarProyectos } from '../../services/adminService';
 import { useState, useEffect } from 'react';
 import { User, Mail, Briefcase, Folder, RotateCcw, Plus, LockIcon } from 'lucide-react';
+import { toast } from 'react';
 import MenuTop from '../../Components/MenuTop';
 
 function CreacionUsuarios() {
@@ -29,7 +30,7 @@ function CreacionUsuarios() {
                 setProyecto(res.data);
             }).catch(err => {
                 console.error("Error al cargar los proyectos:", err);
-                alert('No se pudieron cargar los proyectos: ', err)
+                toast.error('No se pudieron cargar los proyectos: ', err)
             });
         }
         fetchProjects();
@@ -52,14 +53,16 @@ const handleChange = (e) => {
 
 const GuardarUsuario = async (e) => {
     e.preventDefault()
-    try{
-        await guardarUsuarios(formData, token)
-        console.log('Usuario creado')
+
+    toast.promise(guardarUsuarios(formData, token), {
+        loading: 'Creando usuario...',
+        success: 'Usuario creado con éxito.',
+        error: 'No se pudo crear el usuario.'
+    }).then(() => {
         navigate('/GestionUsuarios')
-    }catch(err){
+    }).catch(err => {
         console.error('Error al crear del usuario: ', err)
-        alert('No se pudo crear el usuario.')
-    }
+    })
 }
 
 //#endregion
