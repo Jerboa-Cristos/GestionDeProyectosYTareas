@@ -12,6 +12,7 @@ function PerfilUsuario() {
     const navigate = useNavigate();
     const {rol, id} = useParams();
     const [loading, setLoading] = useState(true);
+    const [update, setUpdate] = useState(false);
     const [showpassword, setShowPassword] = useState(false);
     const [proyectos, setProyecto] = useState()
     const [formData, setFormData] = useState({
@@ -29,6 +30,12 @@ function PerfilUsuario() {
         //Cargamos la información del usuario solo
         const cargarTodo = async () => {
             if (!token) return;
+
+            if(update) {
+                setUpdate(false);
+                return;
+            }
+
             try{
                 setLoading(true);
                 const [resUser, resProyectos] = await Promise.all([
@@ -71,9 +78,27 @@ const toggleShowPassword = () => {
 
 const UpdateUsuario = (e) => {
     e.preventDefault()
-    updateUsuarios(formData, formData.rol, id, token).then(res => {
+
+    const currRol = formData.rol;
+    const currEmail = formData.email;
+
+    updateUsuarios(formData, currRol, id, token).then(res => {
         console.log('Usuario actualizado')
         toast.success('Usuario actualizado con éxito.');
+
+        setUpdate(true);
+
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            oldRol: currRol,
+            oldEmail: currEmail,
+            password: '',
+            password_confirmation: ''
+        }));
+
+        navigate(`/PerfilUsuario/${currRol}/${id}`, { replace: true });
+
+
     }).catch(err=>{
         console.error('Error al hacer Update del usuario: ', err)
         toast.error('No se pudo actualizar el usuario.');

@@ -111,25 +111,29 @@ class AdministradorController extends Controller
         $passwordAntiguo = null;
 
         if($rol=='Administrador'){
-            $usuarioActual = Administrador::findOrFail($id);
+            $usuarioActual = Administrador::find($id);
 
-        switch($request->oldRol) {
-            case 'Desarrollador':
-                $usuarioAntiguo = Desarrollador::where('email', $request->oldEmail)->first();
-                $passwordAntiguo = $usuarioAntiguo->password;
-                $usuarioAntiguo->delete();
-                break;
-            case 'ProductOwner':
-                $usuarioAntiguo = ProductOwner::where('email', $request->oldEmail)->first();
-                $passwordAntiguo = $usuarioAntiguo->password;
-                $usuarioAntiguo->delete();
-                break;
-            default:
-                if($usuarioActual){
-                    $passwordAntiguo = $usuarioActual->password;
-                }
-                break;
-        }
+            switch($request->oldRol) {
+                case 'Desarrollador':
+                    $usuarioAntiguo = Desarrollador::where('email', $request->oldEmail)->first();
+                    $passwordAntiguo = $usuarioAntiguo->password;
+                    $usuarioAntiguo->delete();
+                    break;
+                case 'ProductOwner':
+                    $usuarioAntiguo = ProductOwner::where('email', $request->oldEmail)->first();
+                    $passwordAntiguo = $usuarioAntiguo->password;
+                    $usuarioAntiguo->delete();
+                    break;
+                default:
+                    if($usuarioActual){
+                        $passwordAntiguo = $usuarioActual->password;
+                    }
+                    break;
+            }
+
+            if ($passwordAntiguo === null && $usuarioActual) {
+                $passwordAntiguo = $usuarioActual->password;
+            }
 
             $admin_info = $request->validate([
                 'nombre'=>'sometimes|max:100',
@@ -145,13 +149,17 @@ class AdministradorController extends Controller
                 $updateData['password']=$passwordAntiguo;
             }
 
-            Administrador::updateOrCreate(['id' => $id], $updateData);
+            if ($request->oldRol == 'Administrador' && $usuarioActual) {
+                $usuarioActual->update($updateData);
+            } else {
+                Administrador::create($updateData);
+            }
 
             return response()->json(['message'=>'Usuario actualizado con exito'], 200);
 
         } else if ($rol=='Desarrollador') {
 
-            $usuarioActual = Desarrollador::findOrFail($id);
+            $usuarioActual = Desarrollador::find($id);
 
             switch($request->oldRol) {
             case 'Administrador':
@@ -169,6 +177,10 @@ class AdministradorController extends Controller
                     $passwordAntiguo = $usuarioActual->password;
                 }
                 break;
+            }
+
+            if ($passwordAntiguo === null && $usuarioActual) {
+                $passwordAntiguo = $usuarioActual->password;
             }
 
             $desarrollador_info = $request->validate([
@@ -189,15 +201,17 @@ class AdministradorController extends Controller
             $updateData['id_administrador']=$administrador->id;
             $updateData['id_proyecto']=$request->proyecto;
 
-            Desarrollador::updateOrCreate(
-                ['id'=>$id],
-                $updateData,
-            );
+            if ($request->oldRol == 'Desarrollador' && $usuarioActual) {
+                $usuarioActual->update($updateData);
+            } else {
+                Desarrollador::create($updateData);
+            }
 
             return response()->json(['message'=>'Usuario actualizado con exito'], 200);
 
         } else if($rol=='ProductOwner') {
-            $usuarioActual = ProductOwner::findOrFail($id);
+
+            $usuarioActual = ProductOwner::find($id);
 
             switch($request->oldRol) {
             case 'Desarrollador':
@@ -214,6 +228,10 @@ class AdministradorController extends Controller
                 if($usuarioActual){
                     $passwordAntiguo = $usuarioActual->password;
                 }
+            }
+
+            if ($passwordAntiguo === null && $usuarioActual) {
+                $passwordAntiguo = $usuarioActual->password;
             }
 
             $productOwner_info = $request->validate([
@@ -233,10 +251,11 @@ class AdministradorController extends Controller
             $administrador = auth('administrador')->user();
             $updateData['id_administrador']=$administrador->id;
 
-            ProductOwner::updateOrCreate(
-                ['id'=>$id],
-                $updateData,
-            );
+            if ($request->oldRol == 'ProductOwner' && $usuarioActual) {
+                $usuarioActual->update($updateData);
+            } else {
+                ProductOwner::create($updateData);
+            }
 
             return response()->json(['message'=>'Usuario actualizado con exito'], 200);
         }
