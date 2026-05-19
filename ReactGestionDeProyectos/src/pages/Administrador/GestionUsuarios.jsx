@@ -45,9 +45,10 @@ function GestionUsuarios() {
 
 //#region Funciones para filtrar por rol
     const filteredUsers = users.filter((user) => {
-        const fullName = user.nombre.toLowerCase().includes(searchTerm.toLowerCase()); 
+        const fullName = user.nombre.toLowerCase().includes(searchTerm.toLowerCase());
+        const emailMatch = user.email.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesRol = rolFilter ? user.rol === rolFilter : true;
-        return fullName && matchesRol;
+        return (fullName || emailMatch) && matchesRol;
     })
 
     const filtrarPorRol = (e, rol) => {

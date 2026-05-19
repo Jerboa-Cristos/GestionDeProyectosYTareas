@@ -18,8 +18,9 @@ function TableroKanbanDesarrollador() {
     const tareasDeUltSprint = tareas.filter(t=> t.sprint?.id === ultSprint)
 
     const filteredTareas = tareasDeUltSprint.filter((tarea) => {
-        const fullName = tarea.nombre.toLowerCase().includes(searchTerm.toLowerCase()); 
-        return fullName;
+        const fullName = tarea.nombre.toLowerCase().includes(searchTerm.toLowerCase());
+        const descriptionMatch = tarea.descripcion.toLowerCase().includes(searchTerm.toLowerCase());
+        return fullName || descriptionMatch;
     })
 
     const tareasPorEstado = useMemo(() => {
