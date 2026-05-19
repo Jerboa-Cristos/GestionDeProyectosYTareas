@@ -1,5 +1,5 @@
 import MenuTop from "../../../Components/MenuTop"
-import { User, Mail, Briefcase, RotateCcw, LockIcon, Edit3 } from 'lucide-react';
+import { User, Mail, Briefcase, RotateCcw, LockIcon, Edit3, Eye, EyeClosed } from 'lucide-react';
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { funcion_administrador_profile } from "../../../services/authService"
@@ -12,6 +12,7 @@ function AdministradorProfile () {
     const [email, setEmail] = useState(user.email)
     const [password, setPassword] = useState('')
     const [confirmed_password, setConfirmed_password] = useState('')
+    const [showpassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState([])
     const navigate = useNavigate()
 
@@ -33,6 +34,10 @@ function AdministradorProfile () {
             window.alert('Error al cambiar los datos.')
         })
     }
+
+    const toggleShowPassword = () => {
+    setShowPassword(prev => !prev);
+}
 
     //#region Función para volver al listado de antes
 const volverAtras = () => {
@@ -89,17 +94,20 @@ const volverAtras = () => {
                             placeholder="Ponga su correo"/>
                         </div>
                        
-                        <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                        <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
                             <LockIcon className="text-blueDark shrink-0" size={22} />
                             <input
                             value={password} 
                             onChange={(e) => setPassword(e.target.value)}
-                            type="password" 
+                            type={showpassword ? 'text' : 'password'} 
                             id="password" 
                             name="password" 
                             autoComplete="password"
                             className="w-full bg-transparent focus:outline-none italic text-center"
                             placeholder="Ponga su contraseña"/>
+                            <button type="button" onClick={toggleShowPassword} className="absolute right-4 top-3 text-blueDark">
+                                {showpassword ? <EyeClosed size={20} /> : <Eye size={20} />}
+                            </button>
                         </div>
 
                         <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
@@ -107,7 +115,7 @@ const volverAtras = () => {
                             <input 
                             value={confirmed_password}
                             onChange={(e) => setConfirmed_password(e.target.value)}
-                            type="password" 
+                            type={showpassword ? 'text' : 'password'}  
                             id="confirmed_password" 
                             name="confirmed_password"
                             autoComplete="confirmed_password" 

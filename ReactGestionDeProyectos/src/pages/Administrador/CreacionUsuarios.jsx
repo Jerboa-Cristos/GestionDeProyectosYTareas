@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 //AQUÍ DEBE ESTAR EL IMPORT PARA EL DOCUMENTO QUE TIENE CONEXIÓN A LA PARTE DE LOS PROYECTOS
 import { guardarUsuarios, mostrarProyectos } from '../../services/adminService';
 import { useState, useEffect } from 'react';
-import { User, Mail, Briefcase, Folder, RotateCcw, Plus, LockIcon } from 'lucide-react';
+import { User, Mail, Briefcase, Folder, RotateCcw, Plus, LockIcon, Eye, EyeClosed } from 'lucide-react';
 import { toast } from 'react';
 import MenuTop from '../../Components/MenuTop';
 import Loading from '../../Components/Loading';
@@ -11,6 +11,7 @@ function CreacionUsuarios() {
     const token = localStorage.getItem('token');
     const userAdm = localStorage.getItem('user');
     const [loading, setLoading] = useState(true);
+    const [showpassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         nombre: '', 
@@ -54,6 +55,10 @@ const handleChange = (e) => {
 
         return newData
     })
+}
+
+const toggleShowPassword = () => {
+    setShowPassword(prev => !prev);
 }
 
 const GuardarUsuario = async (e) => {
@@ -101,24 +106,27 @@ const GuardarUsuario = async (e) => {
                         />
                     </div>
 
-                    <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                    <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
                         <LockIcon className="text-blueDark shrink-0" size={20} />
                         <input 
                         name='password'
                         value={formData.password} 
                         onChange={handleChange}
-                        type="password" 
+                        type={showpassword ? 'text' : 'password'} 
                         placeholder="Contraseña" 
                         className="w-full bg-transparent focus:outline-none text-center italic"
                         />
+                        <button type="button" onClick={toggleShowPassword} className="absolute right-4 top-3 text-blueDark">
+                            {showpassword ? <EyeClosed size={20} /> : <Eye size={20} />}
+                        </button>
                     </div>
-                    <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                    <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
                         <LockIcon className="text-blueDark shrink-0" size={20} />
                         <input 
                         name='confirmed_password'
                         value={formData.confirmed_password}
                         onChange={handleChange}
-                        type="password" 
+                        type={showpassword ? 'text' : 'password'} 
                         placeholder="Confirmar contraseña" 
                         className="w-full bg-transparent focus:outline-none text-center italic"
                         />

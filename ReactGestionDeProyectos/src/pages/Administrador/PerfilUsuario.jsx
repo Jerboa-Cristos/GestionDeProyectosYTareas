@@ -1,4 +1,4 @@
-import { User, Mail, Briefcase, Folder, RotateCcw, Edit3, LockIcon } from 'lucide-react';
+import { User, Mail, Briefcase, Folder, RotateCcw, Edit3, LockIcon, Eye, EyeClosed } from 'lucide-react';
 import {useParams, useNavigate} from 'react-router-dom';
 import { showUsuarios, updateUsuarios, mostrarProyectos} from '../../services/adminService';
 import { useEffect, useState } from 'react';
@@ -12,6 +12,7 @@ function PerfilUsuario() {
     const navigate = useNavigate();
     const {rol, id} = useParams();
     const [loading, setLoading] = useState(true);
+    const [showpassword, setShowPassword] = useState(false);
     const [proyectos, setProyecto] = useState()
     const [formData, setFormData] = useState({
         nombre: '', 
@@ -62,6 +63,10 @@ const handleChange = (e) => {
         ...formData,
         [name]: value
     })
+}
+
+const toggleShowPassword = () => {
+    setShowPassword(prev => !prev);
 }
 
 const UpdateUsuario = (e) => {
@@ -125,16 +130,19 @@ if (loading) return <Loading />
                     </input>
                 </div>
 
-                <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
                     <LockIcon className="text-blueDark shrink-0" size={22} />
                     <input 
                     name='password'
                     value={formData.password} 
                     onChange={handleChange}
-                    type="password" 
+                    type={showpassword ? 'text' : 'password'}
                     placeholder="Contraseña nueva..." 
                     className="w-full bg-transparent focus:outline-none italic text-center"
                     />
+                    <button type="button" onClick={toggleShowPassword} className="absolute right-4 top-3 text-blueDark">
+                            {showpassword ? <EyeClosed size={20} /> : <Eye size={20} />}
+                    </button>
                 </div>
 
                 <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
@@ -143,7 +151,7 @@ if (loading) return <Loading />
                     name='password_confirmation'
                     value={formData.password_confirmation}
                     onChange={handleChange}
-                    type="password" 
+                    type={showpassword ? 'text' : 'password'}
                     placeholder="Confirmar contraseña nueva..." 
                     className="w-full bg-transparent focus:outline-none italic text-center"
                     />

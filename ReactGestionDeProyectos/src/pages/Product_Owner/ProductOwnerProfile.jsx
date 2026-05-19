@@ -1,5 +1,5 @@
 import MenuTop from "../../Components/MenuTop"
-import { User, Mail, Briefcase, Folder, RotateCcw, LockIcon, Edit3 } from 'lucide-react';
+import { User, Mail, Briefcase, Folder, RotateCcw, LockIcon, Edit3, Eye, EyeClosed } from 'lucide-react';
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { funcion_obtener_datos_product_owner_profile, funcion_actualizar_product_owner_profile } from "../../services/authService";
@@ -13,6 +13,7 @@ function ProductOwnerProfile () {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmed_password, setConfirmed_password] = useState('')
+    const [showpassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState([])
     const navigate = useNavigate()
 
@@ -59,6 +60,10 @@ function ProductOwnerProfile () {
         })
         console.log(user.email, 'email')
 
+    }
+
+    const toggleShowPassword = () => {
+    setShowPassword(prev => !prev);
     }
 
     const volverAtras = () => {
@@ -113,17 +118,20 @@ function ProductOwnerProfile () {
                                 placeholder="Enter your email"/>
                             </div>
                         
-                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                            <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
                                 <LockIcon className="text-blueDark shrink-0" size={22} />
                                 <input
                                 value={password} 
                                 onChange={(e) => setPassword(e.target.value)}
-                                type="password" 
+                                type={showpassword ? 'text' : 'password'}  
                                 id="password" 
                                 name="password" 
                                 autoComplete="password"
                                  className="w-full bg-transparent focus:outline-none italic text-center" 
                                 placeholder="Enter your password"/>
+                                <button type="button" onClick={toggleShowPassword} className="absolute right-4 top-3 text-blueDark">
+                                    {showpassword ? <EyeClosed size={20} /> : <Eye size={20} />}
+                                </button>
                             </div>
 
                             <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
@@ -131,7 +139,7 @@ function ProductOwnerProfile () {
                                 <input 
                                 value={confirmed_password}
                                 onChange={(e) => setConfirmed_password(e.target.value)}
-                                type="password" 
+                                type={showpassword ? 'text' : 'password'}  
                                 id="confirmed_password" 
                                 name="confirmed_password"
                                 autoComplete="confirmed_password" 

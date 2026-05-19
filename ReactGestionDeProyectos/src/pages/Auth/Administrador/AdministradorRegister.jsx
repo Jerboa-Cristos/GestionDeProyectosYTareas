@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { funcion_administrador_register } from "../../../services/authService"
+import { Eye, EyeClosed } from 'lucide-react';
 
 function AdministradorRegister () {
     const PantallaAzul = "flex bg-blueDark items-center justify-center min-h-screen";
@@ -9,6 +10,7 @@ function AdministradorRegister () {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmed_password, setConfirmed_password] = useState('')
+    const [showpassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState([])
     const navigate = useNavigate()
 
@@ -25,6 +27,10 @@ function AdministradorRegister () {
                     window.alert('Error al registrarse.')
                 })        
     }
+
+    const toggleShowPassword = () => {
+    setShowPassword(prev => !prev);
+}
 
     return (
         <div className={`${PantallaAzul} flex items-center justify-center p-4 min-h-screen`}>
@@ -83,16 +89,21 @@ function AdministradorRegister () {
 
                     <div className="flex flex-col gap-1.5">
                         <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Contraseña: </label>
-                        <input
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)}
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        autoComplete="password"
-                        className="w-full rounded-lg px-4 h-12 bg-blueBase border-none focus:ring-2 focus:ring-blueDark text-blueDark 
-                        placeholder-blueblue/60 transition-all" 
-                        placeholder="Ponga su contraseña"/>
+                        <div className="relative">
+                            <input
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)}
+                            type={showpassword ? 'text' : 'password'}  
+                            id="password" 
+                            name="password" 
+                            autoComplete="password"
+                            className="w-full rounded-lg px-4 h-12 bg-blueBase border-none focus:ring-2 focus:ring-blueDark text-blueDark 
+                            placeholder-blueblue/60 transition-all" 
+                            placeholder="Ponga su contraseña"/>
+                            <button type="button" onClick={toggleShowPassword} className="absolute right-4 top-3 text-blueDark">
+                                {showpassword ? <EyeClosed size={20} /> : <Eye size={20} />}
+                            </button>
+                        </div>
                     </div>
 
                     <div className="flex flex-col gap-1.5">
@@ -100,7 +111,7 @@ function AdministradorRegister () {
                         <input 
                         value={confirmed_password}
                         onChange={(e) => setConfirmed_password(e.target.value)}
-                        type="password" 
+                        type={showpassword ? 'text' : 'password'}  
                         id="confirmed_password" 
                         name="confirmed_password"
                         autoComplete="confirmed_password" 
