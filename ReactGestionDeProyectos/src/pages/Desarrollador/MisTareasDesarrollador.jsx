@@ -5,10 +5,11 @@ import { useContext, useMemo } from 'react';
 import ColumnaTareas from '../../Components/Com_Desarrollador/ColumnaTareas';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
+import Loading from './Components/Loading';
 
 function MisTareasDesarrollador() {
     const user = JSON.parse(localStorage.getItem('user'))
-    const {tareas} = useContext(TareaContext);
+    const {tareas, loading} = useContext(TareaContext);
 
     const miTareas = tareas.filter(tarea => tarea.id_desarrollador === user.id)
 
@@ -20,6 +21,8 @@ function MisTareasDesarrollador() {
             Finalizado: miTareas.filter(tarea => tarea.estado === 'Finalizado'),
         }
     }, [tareas])
+
+    if (loading) return <Loading />
 
     return (
          <div className="min-h-screen bg-blueDark p-2 md:p-4 flex flex-col font-sans">

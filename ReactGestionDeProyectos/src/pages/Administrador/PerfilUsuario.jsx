@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { AlertDeleteUser } from '../../Components/Com_Administrador/AlertDeleteUser';
 import MenuTop from '../../Components/MenuTop';
+import Loading from '../../Components/Loading';
 
 function PerfilUsuario() {
     const token = localStorage.getItem('token');
@@ -28,6 +29,7 @@ function PerfilUsuario() {
         const cargarTodo = async () => {
             if (!token) return;
             try{
+                setLoading(true);
                 const [resUser, resProyectos] = await Promise.all([
                 showUsuarios(rol, id, token),
                 mostrarProyectos(token),
@@ -80,7 +82,8 @@ const volverAtras = () => {
 }
 //#endregion
 
-//#endregion
+//Si está cargando los datos, mostramos el componente de Loading
+if (loading) return <Loading />
 
     return (
     <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">

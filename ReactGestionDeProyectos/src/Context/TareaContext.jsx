@@ -8,6 +8,7 @@ export const TareaProvider = ({children}) => {
     const [tareas, setTareas] = useState([])
     const token = localStorage.getItem('token');
     const location = useLocation();
+    const [loading, setLoading] = useState(true);
 
 
         useEffect(() => {
@@ -18,17 +19,20 @@ export const TareaProvider = ({children}) => {
                 location.pathname.startsWith(ruta)
             )
             if(rutaDesarrollador) {
+                setLoading(true);
                 mostrarMisTareas(token).then(res=> {
                     setTareas(res.data);
                     console.log(res.data)
                 }).catch(err=>{
                     console.error('Error al cargar las tareas:', err)
-                });
+                }).finally(()=>{
+                    setLoading(false);
+                })
             }
         }, [location.pathname])
 
 return (
-    <TareaContext.Provider value={{tareas, setTareas}}>
+    <TareaContext.Provider value={{tareas, setTareas, loading}}>
         {children}
     </TareaContext.Provider>
 )}

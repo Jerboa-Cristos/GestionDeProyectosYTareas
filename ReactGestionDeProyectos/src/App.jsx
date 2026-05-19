@@ -1,17 +1,21 @@
 import './App.css';
 
 //Cris
+import { Suspense, lazy } from 'react'; //Carga de forma perezosa los componentes, para mejorar el rendimiento
+//Para importar páginas con lazy: const MarkdownPreview = lazy(() => import('./MarkdownPreview.js'));
+import Loading from './Components/Loading'; //Componente de carga para mostrar mientras se cargan todo tipo de cosas
+
 import { Toaster } from 'react-hot-toast'; //Biblioteca para hacer notificaciones tipo toast
 import { TareaProvider } from './Context/TareaContext'; //CONTEXTO DE TAREAS PARA CADA USUARIO
-
-import CreacionUsuarios from './pages/Administrador/CreacionUsuarios';
-import GestionUsuarios from './pages/Administrador/GestionUsuarios';
-import PerfilUsuario from './pages/Administrador/PerfilUsuario';
-//import Login from './pages/Login/login'; //Modificar y adaptarlo al que ya tenemos
-import DashboardDesarrollador from './pages/Desarrollador/DashboardDesarrollador';
-import MisTareasDesarrollador from './pages/Desarrollador/MisTareasDesarrollador';
-import TableroKanbanDesarrollador from './pages/Desarrollador/TableroKanbanDesarrollador';
-import MostrarTarea from './pages/Desarrollador/MostrarTarea';
+//Administrador
+const CreacionUsuarios = lazy(() => import('./pages/Administrador/CreacionUsuarios'));
+const GestionUsuarios = lazy(() => import('./pages/Administrador/GestionUsuarios'));
+const PerfilUsuario = lazy(() => import('./pages/Administrador/PerfilUsuario'));
+//Desarrollador
+const DashboardDesarrollador = lazy(() => import('./pages/Desarrollador/DashboardDesarrollador'));
+const MisTareasDesarrollador = lazy(() => import('./pages/Desarrollador/MisTareasDesarrollador'));
+const TableroKanbanDesarrollador = lazy(() => import('./pages/Desarrollador/TableroKanbanDesarrollador'));
+const MostrarTarea = lazy(() => import('./pages/Desarrollador/MostrarTarea'));
 
 
 //melissa
@@ -19,35 +23,36 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 //AUTH
 import Login from './pages/Auth/Login';
 //Administrador
-import AdministradorProfile from './pages/Auth/Administrador/AdministradorProfile';
+const AdministradorProfile = lazy(() => import('./pages/Auth/Administrador/AdministradorProfile'));
 import AdministradorRegister from './pages/Auth/Administrador/AdministradorRegister';
 //Product Owner
-import ProductOwnerDashboard from './pages/Product_Owner/ProductOwnerDashboard';
-import ProductOwnerProfile from './pages/Product_Owner/ProductOwnerProfile';
+const ProductOwnerDashboard = lazy(() => import('./pages/Product_Owner/ProductOwnerDashboard'));
+const ProductOwnerProfile = lazy(() => import('./pages/Product_Owner/ProductOwnerProfile'));
 //Desarrollador
-import DesarrolladorProfile from './pages/Auth/Desarrollador/DesarrolladorProfile';
+const DesarrolladorProfile = lazy(() => import('./pages/Auth/Desarrollador/DesarrolladorProfile'));
 
 //PROYECTO
-import Crear_Proyecto from './pages/Proyecto/Crear_Proyecto';
-import Lista_Proyectos from './pages/Proyecto/Lista_Proyectos';
-import Lista_Sprints_Proyecto from './pages/Sprint/Lista_Sprints_Proyecto'
-import Editar_Proyecto from './pages/Proyecto/Editar_Proyecto';
+const Crear_Proyecto = lazy(() => import('./pages/Proyecto/Crear_Proyecto'));
+const Lista_Proyectos = lazy(() => import('./pages/Proyecto/Lista_Proyectos'));
+const Lista_Sprints_Proyecto = lazy(() => import('./pages/Sprint/Lista_Sprints_Proyecto'));
+const Editar_Proyecto = lazy(() => import('./pages/Proyecto/Editar_Proyecto'));
+
 //SPRINT
-import Crear_Sprint from './pages/Sprint/Crear_Sprint'
+const Crear_Sprint = lazy(() => import('./pages/Sprint/Crear_Sprint'));
 
 //TAREA
-import Crear_Tarea from './pages/Tarea/Crear_Tarea';
+const Crear_Tarea = lazy(() => import('./pages/Tarea/Crear_Tarea'));
 
 //COMPONENTES QUE REUTILIZAREMOS
 import Menu_Izquierdo from './pages/Menus/Menu_Izquierdo';
-import Tablero_Kanban_Product_Owner from './pages/Product_Owner/Tablero_Kanban_Product_Owner';
-import Editar_Tarea from './pages/Tarea/Editar_Tarea';
-import Lista_Sprints from './pages/Sprint/Lista_Sprints';
-import Editar_Sprint from './pages/Sprint/Editar_Sprint';
+const Tablero_Kanban_Product_Owner = lazy(() => import('./pages/Product_Owner/Tablero_Kanban_Product_Owner'));
+const Editar_Tarea = lazy(() => import('./pages/Tarea/Editar_Tarea'));
+const Lista_Sprints = lazy(() => import('./pages/Sprint/Lista_Sprints'));
+const Editar_Sprint = lazy(() => import('./pages/Sprint/Editar_Sprint'));
 
 function App() {
   return (
-    
+    <Suspense fallback={<Loading />}>
       <>
         <Toaster position='bottom-right' reverseOrder={false}/>
         <Routes>
@@ -101,6 +106,7 @@ function App() {
             </Routes>
           </TareaProvider>
       </>
+    </Suspense>
   )
 }
 

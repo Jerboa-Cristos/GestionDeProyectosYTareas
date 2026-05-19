@@ -6,9 +6,10 @@ import { TareaContext } from '../../Context/TareaContext';
 import KanbanColumn from '../../Components/Com_Desarrollador/KanbanColumn';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
+import Loading from './Components/Loading';
 
 function TableroKanbanDesarrollador() {
-    const {tareas} = useContext(TareaContext);
+    const {tareas, loading} = useContext(TareaContext);
     const [searchTerm, setSearchTerm] = useState('');
     console.log(tareas)
     const ultSprint = Math.max(...tareas.map(t=> t.sprint?.id || 0))
@@ -30,6 +31,7 @@ function TableroKanbanDesarrollador() {
     }
     }, [tareasDeUltSprint])
 
+    if (loading) return <Loading />
 
     return(
          <div className="min-h-screen bg-blueDark p-2 md:p-4 flex flex-col font-sans">

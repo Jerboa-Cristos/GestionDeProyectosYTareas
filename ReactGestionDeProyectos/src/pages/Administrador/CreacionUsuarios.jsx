@@ -5,10 +5,12 @@ import { useState, useEffect } from 'react';
 import { User, Mail, Briefcase, Folder, RotateCcw, Plus, LockIcon } from 'lucide-react';
 import { toast } from 'react';
 import MenuTop from '../../Components/MenuTop';
+import Loading from '../../Components/Loading';
 
 function CreacionUsuarios() {
     const token = localStorage.getItem('token');
     const userAdm = localStorage.getItem('user');
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         nombre: '', 
@@ -26,12 +28,15 @@ function CreacionUsuarios() {
         if (!token) return;
         //Aquí se deben cargar los usuarios desde el backend
         const fetchProjects = async () => {
+            setLoading(true);
             mostrarProyectos(token).then(res => {
                 setProyecto(res.data);
             }).catch(err => {
                 console.error("Error al cargar los proyectos:", err);
                 toast.error('No se pudieron cargar los proyectos: ', err)
-            });
+            }).finally(() => {
+                setLoading(false);
+            })
         }
         fetchProjects();
     }, [])
@@ -70,6 +75,9 @@ const GuardarUsuario = async (e) => {
     function goBack() {
         navigate('/GestionUsuarios')
     }
+
+    //Si está cargando los datos, mostramos el componente de Loading
+    if (loading) return <Loading />
 
     return (
         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">

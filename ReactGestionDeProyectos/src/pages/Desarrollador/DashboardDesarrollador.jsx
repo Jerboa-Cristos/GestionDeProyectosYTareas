@@ -8,10 +8,11 @@ import { ClipboardList, Calendar, AlertCircle } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Pie, PieChart, Legend } from 'recharts';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
+import Loading from './Components/Loading';
 
 function DashboardDesarrollador() {
     const navigate = useNavigate();
-    const {tareas} = useContext(TareaContext);
+    const {tareas, loading} = useContext(TareaContext);
 
     //#region NAVIGACIÓN A OTRAS PÁGINAS
     function gotoTareas() {
@@ -77,6 +78,8 @@ function DashboardDesarrollador() {
 
 //#endregion
 
+
+    if (loading) return <Loading />
 
     return(
         <div className="min-h-screen bg-blueDark p-2 md:p-4 flex flex-col font-sans">

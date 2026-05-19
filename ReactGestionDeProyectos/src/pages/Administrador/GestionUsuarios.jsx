@@ -4,6 +4,7 @@ import { AlertDeleteUser } from '../../Components/Com_Administrador/AlertDeleteU
 import { mostrarUsuarios } from '../../services/adminService';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Loading from '../../Components/Loading';
 
 function GestionUsuarios() {
     const token = localStorage.getItem('token');
@@ -11,18 +12,22 @@ function GestionUsuarios() {
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
     //Cargar los usuarios al cargar la página
     
         useEffect(() => {
             //Aquí se deben cargar los usuarios desde el backend
                 const fetchUsers = async () => {
+                    setLoading(true);
                     mostrarUsuarios(token).then(res => {
                         setUsers(res.data);
                         console.log(res.data);
                     }).catch(err => {
                         console.error("Error al cargar los usuarios:", err);
                         alert('Error al cargar a los usuarios.')
+                    }).finally(() => {
+                        setLoading(false);
                     });
                 }
                 fetchUsers();
@@ -65,6 +70,8 @@ function GestionUsuarios() {
     },[searchTerm, rolFilter])
 
 //#endregion
+
+    if (loading) return <Loading />
 
     return (
         <div className="min-h-screen bg-blueDark p-2 md:p-4 flex flex-col font-sans">
