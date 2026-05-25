@@ -5,7 +5,7 @@ import { useContext, useMemo } from 'react';
 import ColumnaTareas from '../../Components/Com_Desarrollador/ColumnaTareas';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
-import Loading from './Components/Loading';
+import Loading from '../../Components/Loading';
 
 function MisTareasDesarrollador() {
     const user = JSON.parse(localStorage.getItem('user'))

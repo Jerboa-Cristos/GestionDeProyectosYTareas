@@ -6,7 +6,7 @@ import { TareaContext } from '../../Context/TareaContext';
 import KanbanColumn from '../../Components/Com_Desarrollador/KanbanColumn';
 import MenuTop from '../../Components/MenuTop';
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
-import Loading from './Components/Loading';
+import Loading from '../../Components/Loading';
 
 function TableroKanbanDesarrollador() {
     const {tareas, loading} = useContext(TareaContext);

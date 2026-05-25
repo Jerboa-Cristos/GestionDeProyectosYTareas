@@ -44,7 +44,11 @@ class TareaController extends Controller
 
     public function showTareaDesarrollador($id) {
         $desarrollador = auth('desarrollador')->user();
-        $tarea = $desarrollador->tarea()->findOrFail($id);
+
+        $tarea = Tarea::whereHas('sprint', function ($query) use ($desarrollador) {
+            $query->where('id_proyecto', $desarrollador->id_proyecto);
+        })->with('sprint.proyecto', 'desarrollador')->findOrFail($id);
+
         return response()->json($tarea, 200);
     }
 
