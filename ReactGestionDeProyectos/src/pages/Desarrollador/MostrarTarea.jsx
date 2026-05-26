@@ -5,6 +5,7 @@ import { showMiTarea, updateTarea } from '../../services/desarolladorService'
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
 import SeccionComentario from "../../Components/Com_Comentario/SeccionComentario";
 import { useParams } from "react-router-dom"
+import { toast } from 'react-hot-toast'
 
 function MostrarTarea (){
     const token = localStorage.getItem('token');
@@ -19,9 +20,11 @@ function MostrarTarea (){
             showMiTarea(id, token).then(res => {
                 setTarea(res.data);
                 setEstado(res.data.estado);
+                toast.success('Tarea cargada correctamente');
                 console.log(res.data);
             }).catch(err => {
                 console.error('No se pudo cargar la información: ' + err)
+                toast.error('Error al cargar la tarea');
             })
         }
         fetchTarea();
@@ -32,12 +35,17 @@ function MostrarTarea (){
         e.preventDefault()
         const token = localStorage.getItem('token')
         if (!token) return;
-        updateTarea(id, {estado: estado}, token).then(res => {
-            console.log('Tarea actualizada')
-        }).catch(err=>{
-            console.error('Error al hacer Update del estado de tarea: ', err)
-            alert('Error al actualizar la tarea.')
-        })
+
+        toast.promise(updateTarea(id, {estado: estado}, token),
+            {
+                pending: 'Actualizando tarea...',
+                success: 'Tarea actualizada correctamente',
+                error: 'Error al actualizar la tarea'
+            }).then(res => {
+                console.log('Tarea actualizada')
+            }).catch(err=>{
+                console.error('Error al hacer Update del estado de tarea: ', err)
+            })
     }
 
     return(

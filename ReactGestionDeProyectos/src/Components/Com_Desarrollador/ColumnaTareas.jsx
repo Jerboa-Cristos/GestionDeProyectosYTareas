@@ -1,7 +1,8 @@
 import { useState } from "react"
 import Tarea from '../../Components/Com_Desarrollador/Tarea';
+import { Droppable } from '@hello-pangea/dnd'; 
 
-const ColumnaTareas = ({titulo, tipoEstado}) => {
+const ColumnaTareas = ({titulo, estadoID, tipoEstado}) => {
 const [open, setOpen] = useState(true)
 
 return (
@@ -17,13 +18,17 @@ return (
             </div>
         </button>
         <div>
-            <div className={`flex flex-col gap-3 transition-all duration-300 overflow-hidden ${open ? 'max-h-500 opacity-100 mt-2' : 'max-h-0 opacity-0'}`}>
-                {
-                tipoEstado.map((tarea) => (
-                    <Tarea key={tarea.id} id={tarea.id} title={tarea.nombre} description={tarea.descripcion} fecha={tarea.fecha_fin} sprint={tarea.sprint.nombre} proyecto={tarea.sprint.proyecto.nombre}/>
-                )) 
-                }
-            </div>
+            <Droppable droppableId={estadoID}>
+                {(provided) => (
+                    <div ref={provided.innerRef} {...provided.droppableProps} className={`flex flex-col gap-3 transition-all duration-300 ${open ? 'max-h-500 opacity-100 mt-2' : 'max-h-0 opacity-0'}`}>
+                            {
+                            tipoEstado.map((tarea, index) => (
+                                <Tarea key={tarea.id} id={tarea.id} index={index} title={tarea.nombre} description={tarea.descripcion} fecha={tarea.fecha_fin} sprint={tarea.sprint.nombre} proyecto={tarea.sprint.proyecto.nombre}/>
+                            ))}
+                        {provided.placeholder}
+                    </div>
+                )}
+            </Droppable>
         </div>
     </div>
 )}

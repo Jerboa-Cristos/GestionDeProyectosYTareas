@@ -1,11 +1,11 @@
-import { CheckSquare, User, Calendar } from 'lucide-react';
+import { User, Calendar } from 'lucide-react';
+import { Draggable } from '@hello-pangea/dnd'; 
 import { useNavigate } from 'react-router-dom';
 
-const KanbanTask = ({ titulo, id, fecha, desarrollador }) => {
+const KanbanTask = ({ titulo, id, index, fecha, desarrollador }) => {
   const navigate = useNavigate();
   
   const gotoTarea = (e) => {
-    e.stopPropagation()
      if (!id) return;
     navigate(`/MostrarTarea/${id}`)
   }
@@ -26,22 +26,30 @@ const KanbanTask = ({ titulo, id, fecha, desarrollador }) => {
 
 
   return (
-    <button key={id} id={id} onClick={gotoTarea}
-    className="w-full bg-white hover:bg-blueBase rounded-xl p-2 md:p-4 shadow-sm hover:shadow-md transition-all text-left 
-    flex flex-col gap-2 md:gap-4 group">
-      <h4 className="text-blueDark font-bold text-base md:text-lg text-center leading-tight">
-        {titulo}
-      </h4>
-      
-      <div className="flex justify-between items-center text-blueDark mt-auto">
-        <div className="flex items-center gap-2 bg-blueBase/30 p-1.5 rounded-lg" title={`Fecha límite: ${fecha}`}>
-          <Calendar size={30} md:size={20} className={`text-blueDark ${tareasDeadline(fecha)}`}/>
-        </div>
-        <div className="flex items-center gap-2 bg-blueBase/30 p-1.5 rounded-lg" title={`Asignado: ${desarrollador}`}>
-          <User size={30} md:size={20} className="text-blueDark rounded-full p-0.5"  />
+    <Draggable draggableId={id.toString()} index={index}>
+    {(provided) => (
+      <div 
+        ref={provided.innerRef}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+      key={id} id={id} onClick={gotoTarea}
+      className="w-full bg-white hover:bg-blueBase rounded-xl p-2 md:p-4 shadow-sm hover:shadow-md text-left 
+      flex flex-col gap-2 md:gap-4 group">
+        <h4 className="text-blueDark font-bold text-base md:text-lg text-center leading-tight">
+          {titulo}
+        </h4>
+        
+        <div className="flex justify-between items-center text-blueDark mt-auto">
+          <div className="flex items-center gap-2 bg-blueBase/30 p-1.5 rounded-lg" title={`Fecha límite: ${fecha}`}>
+            <Calendar size={30} md:size={20} className={`text-blueDark ${tareasDeadline(fecha)}`}/>
+          </div>
+          <div className="flex items-center gap-2 bg-blueBase/30 p-1.5 rounded-lg" title={`Asignado: ${desarrollador}`}>
+            <User size={30} md:size={20} className="text-blueDark rounded-full p-0.5"  />
+          </div>
         </div>
       </div>
-    </button>
+    )}
+    </Draggable>
   );
 }
 

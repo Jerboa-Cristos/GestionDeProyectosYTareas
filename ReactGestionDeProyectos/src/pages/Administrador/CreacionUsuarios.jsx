@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { guardarUsuarios, mostrarProyectos } from '../../services/adminService';
 import { useState, useEffect } from 'react';
 import { User, Mail, Briefcase, Folder, RotateCcw, Plus, LockIcon, Eye, EyeClosed } from 'lucide-react';
-import { toast } from 'react';
+import { toast } from 'react-hot-toast'
 import MenuTop from '../../Components/MenuTop';
 import Loading from '../../Components/Loading';
 
