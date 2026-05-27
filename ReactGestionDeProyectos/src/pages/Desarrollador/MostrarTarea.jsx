@@ -49,34 +49,34 @@ function MostrarTarea (){
     }
 
     return(
-    <div className="min-h-screen bg-blueDark p-2 md:p-4 flex flex-col font-sans">
+    <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
         <MenuTop rutaPerfil='/desarrollador_profile'/>  
-        <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 md:pb-0">
+        <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 lg:pb-0">
                 <MenuLateralDesarrollador/>
             <main className="flex-1 bg-white rounded-xl shadow-lg flex flex-col overflow-hidden">
-                <div className="bg-blueDashboard p-4 md:p-8 shrink-0 rounded-b-lg">
+                <div className="bg-blueDashboard p-4 lg:p-8 shrink-0 rounded-b-lg">
                     <form onSubmit={botonEditarTarea} className="max-w-4xl mx-auto">
-                        <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-6 text-center md:text-left">Detalles Tarea</h1>
-                        <div className="grid grid-cols-1 md:gap-4">
+                        <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 lg:mb-6 text-center lg:text-left">Detalles Tarea</h1>
+                        <div className="grid grid-cols-1 lg:gap-4">
                             <div>
-                            <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1"><strong>Sprint: {tarea.sprint?.nombre}</strong></p>
-                            <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Asignado a: {tarea.desarrollador?.nombre}</p>
+                            <p className="text-xs lg:text-sm font-bold text-white/80 uppercase ml-1"><strong>Sprint: {tarea.sprint?.nombre}</strong></p>
+                            <p className="text-xs lg:text-sm font-bold text-white/80 uppercase ml-1">Asignado a: {tarea.desarrollador?.nombre}</p>
                             </div>
                             <div className="mb-2">
-                                <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Nombre</p>
+                                <p className="text-xs lg:text-sm font-bold text-white/80 uppercase ml-1">Nombre</p>
                                 <h2 className="w-full rounded-lg px-4 py-3 mt-1 bg-blueBase text-blueDark font-bold shadow-inner">{tarea.nombre}</h2>
                             </div>
                             <div className="mb-2">
-                                <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Descripción</p>
+                                <p className="text-xs lg:text-sm font-bold text-white/80 uppercase ml-1">Descripción</p>
                                 <h2 className="w-full rounded-lg px-4 py-3 mt-1 bg-blueBase text-blueDark font-bold shadow-inner">{tarea.descripcion}</h2>
                             </div>
-                            <div className="mb-2 flex flex-col md:flex-row justify-between items-end md:items-center gap-2 pt-2">
-                                <div className="w-full md:w-auto">
-                                    <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Estado</p>
+                            <div className="mb-2 flex flex-col lg:flex-row justify-between items-end lg:items-center gap-2 pt-2">
+                                <div className="w-full lg:w-auto">
+                                    <p className="text-xs lg:text-sm font-bold text-white/80 uppercase ml-1">Estado</p>
                                     <select
                                     value={estado}
                                     onChange={(e) => setEstado(e.target.value)}
-                                    className="rounded-lg bg-blueBase px-4 py-2.5 w-full md:w-64 text-blueDark font-bold 
+                                    className="rounded-lg bg-blueBase px-4 py-2.5 w-full lg:w-64 text-blueDark font-bold 
                                     focus:ring-2 focus:ring-white outline-none cursor-pointer">
                                         <option value="Por Hacer">Por Hacer</option>
                                         <option value="En Curso">En Curso</option>
@@ -85,7 +85,7 @@ function MostrarTarea (){
                                     </select>
                                 </div>
                                 <button type="submit"
-                                    className="w-full md:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
+                                    className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
                                     hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
                                     <Save size={20} />
                                     Guardar cambios
@@ -94,7 +94,7 @@ function MostrarTarea (){
                         </div>
                     </form>  
                 </div>
-                <div className="flex-1 mt-2 overflow-y-auto md:mt-4">
+                <div className="flex-1 mt-2 overflow-y-auto lg:mt-4">
                     <SeccionComentario idTarea={idTarea}/>
                 </div>
             </main>

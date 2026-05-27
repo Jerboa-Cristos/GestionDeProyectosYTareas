@@ -33,18 +33,18 @@ const KanbanTask = ({ titulo, id, index, fecha, desarrollador }) => {
         {...provided.draggableProps}
         {...provided.dragHandleProps}
       key={id} id={id} onClick={gotoTarea}
-      className="w-full bg-white hover:bg-blueBase rounded-xl p-2 md:p-4 shadow-sm hover:shadow-md text-left 
-      flex flex-col gap-2 md:gap-4 group">
-        <h4 className="text-blueDark font-bold text-base md:text-lg text-center leading-tight">
+      className="w-full bg-white hover:bg-blueBase rounded-xl p-2 lg:p-4 shadow-sm hover:shadow-md text-left 
+      flex flex-col gap-2 lg:gap-4 group">
+        <h4 className="text-blueDark font-bold text-base lg:text-lg text-center leading-tight">
           {titulo}
         </h4>
         
         <div className="flex justify-between items-center text-blueDark mt-auto">
           <div className="flex items-center gap-2 bg-blueBase/30 p-1.5 rounded-lg" title={`Fecha límite: ${fecha}`}>
-            <Calendar size={30} md:size={20} className={`text-blueDark ${tareasDeadline(fecha)}`}/>
+            <Calendar size={30} lg:size={20} className={`text-blueDark ${tareasDeadline(fecha)}`}/>
           </div>
           <div className="flex items-center gap-2 bg-blueBase/30 p-1.5 rounded-lg" title={`Asignado: ${desarrollador}`}>
-            <User size={30} md:size={20} className="text-blueDark rounded-full p-0.5"  />
+            <User size={30} lg:size={20} className="text-blueDark rounded-full p-0.5"  />
           </div>
         </div>
       </div>

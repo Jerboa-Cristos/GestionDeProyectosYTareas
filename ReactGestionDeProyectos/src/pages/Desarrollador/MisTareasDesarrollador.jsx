@@ -66,16 +66,16 @@ function MisTareasDesarrollador() {
     if (loading) return <Loading />
 
     return (
-         <div className="min-h-screen bg-blueDark p-2 md:p-4 flex flex-col font-sans">
+         <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/desarrollador_profile'/>
-            <div className="flex flex-1 gap-4 h-full pb-20 md:pb-0">
+            <div className="flex flex-1 gap-4 h-full pb-20 lg:pb-0">
                 <MenuLateralDesarrollador/>
-                <main className="flex-1 bg-white rounded-xl shadow-lg p-4 md:p-8 flex flex-col gap-6">
+                <main className="flex-1 bg-white rounded-xl shadow-lg p-2 md:p-6 flex flex-col gap-6">
                     <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-2 md:mb-6 text-center md:text-left">Mis Tareas</h1>
                     
                     <DragDropContext onDragEnd={onDragEnd}>
                         <div className="flex-1 pb-4">
-                            <div className="flex flex-col md:grid md:grid-cols-4 gap-4 min-w-full">
+                            <div className="flex flex-col md:grid md:grid-cols-4 gap-4 md:gap-2 min-w-full">
                                 <ColumnaTareas titulo='Por Hacer' estadoID='Por Hacer' tipoEstado={tareasPorEstado.PorHacer}/>
                                 <ColumnaTareas titulo='En Curso' estadoID='En Curso' tipoEstado={tareasPorEstado.EnCurso}/>
                                 <ColumnaTareas titulo='En Revisión' estadoID='En Revision' tipoEstado={tareasPorEstado.EnRevision}/>
