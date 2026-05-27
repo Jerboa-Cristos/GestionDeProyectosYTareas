@@ -58,6 +58,10 @@ function MostrarTarea (){
                     <form onSubmit={botonEditarTarea} className="max-w-4xl mx-auto">
                         <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-6 text-center md:text-left">Detalles Tarea</h1>
                         <div className="grid grid-cols-1 md:gap-4">
+                            <div>
+                            <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1"><strong>Sprint: {tarea.sprint?.nombre}</strong></p>
+                            <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Asignado a: {tarea.desarrollador?.nombre}</p>
+                            </div>
                             <div className="mb-2">
                                 <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Nombre</p>
                                 <h2 className="w-full rounded-lg px-4 py-3 mt-1 bg-blueBase text-blueDark font-bold shadow-inner">{tarea.nombre}</h2>
@@ -66,21 +70,20 @@ function MostrarTarea (){
                                 <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Descripción</p>
                                 <h2 className="w-full rounded-lg px-4 py-3 mt-1 bg-blueBase text-blueDark font-bold shadow-inner">{tarea.descripcion}</h2>
                             </div>
-                                <div className="mb-2 flex flex-col md:flex-row justify-between items-end md:items-center gap-2 pt-2">
-                                    <div className="w-full md:w-auto">
-                                        <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Estado</p>
-                                        <select
-                                        value={estado}
-                                        onChange={(e) => setEstado(e.target.value)}
-                                        className="rounded-lg bg-blueBase px-4 py-2.5 w-full md:w-64 text-blueDark font-bold 
-                                        focus:ring-2 focus:ring-white outline-none cursor-pointer">
-                                            <option value="Por Hacer">Por Hacer</option>
-                                            <option value="En Curso">En Curso</option>
-                                            <option value="En Revision">En Revisión</option>
-                                            <option value="Finalizado">Finalizado</option>
-                                        </select>
-                                    </div>
-                            
+                            <div className="mb-2 flex flex-col md:flex-row justify-between items-end md:items-center gap-2 pt-2">
+                                <div className="w-full md:w-auto">
+                                    <p className="text-xs md:text-sm font-bold text-white/80 uppercase ml-1">Estado</p>
+                                    <select
+                                    value={estado}
+                                    onChange={(e) => setEstado(e.target.value)}
+                                    className="rounded-lg bg-blueBase px-4 py-2.5 w-full md:w-64 text-blueDark font-bold 
+                                    focus:ring-2 focus:ring-white outline-none cursor-pointer">
+                                        <option value="Por Hacer">Por Hacer</option>
+                                        <option value="En Curso">En Curso</option>
+                                        <option value="En Revision">En Revisión</option>
+                                        <option value="Finalizado">Finalizado</option>
+                                    </select>
+                                </div>
                                 <button type="submit"
                                     className="w-full md:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
                                     hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
@@ -88,8 +91,8 @@ function MostrarTarea (){
                                     Guardar cambios
                                 </button>
                             </div>
-                    </div>
-                </form>  
+                        </div>
+                    </form>  
                 </div>
                 <div className="flex-1 mt-2 overflow-y-auto md:mt-4">
                     <SeccionComentario idTarea={idTarea}/>

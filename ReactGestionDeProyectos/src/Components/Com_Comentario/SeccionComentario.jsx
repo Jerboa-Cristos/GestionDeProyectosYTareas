@@ -41,6 +41,7 @@ const SeccionComentario = ({idTarea}) => {
     
 
     const GuardarComentario = async (e) => {
+        e.preventDefault()
         e.stopPropagation()
         guardarComentario(formData, token).then(res => {
             const newComentario = res.data
@@ -60,7 +61,7 @@ const SeccionComentario = ({idTarea}) => {
             <div className="mb-4 ">
                 <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">Comentarios</h2>
             </div>
-            <div className="max-h-50 overflow-y-auto custom-scrollbar grow-0">
+            <div>
                 {comentarios.map(comentario => (
                     <ElementComentario key={comentario.id} id={comentario.id} user={comentario.autor} text={comentario.texto} onDeleteSuccess={comEliminado} onUpdateSuccess={comActualizado}/>
                 ))}

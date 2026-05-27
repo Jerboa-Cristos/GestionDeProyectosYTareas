@@ -50,7 +50,7 @@ const ElementComentario = ({id, user, text, onDeleteSuccess, onUpdateSuccess}) =
 
 
     return (
-        <div className="bg-blueDashboard rounded-lg p-3 flex gap-3 items-start flex-row w-full max-w-full">
+        <div className="bg-blueDashboard rounded-lg p-3 flex items-start flex-row w-full max-w-full">
             <div className="flex-1 min-w-0">
                 <div className='flex flex-row items-center justify-between gap-3 mb-2'>
                     <div className='flex items-center gap-2 min-w-0'>
