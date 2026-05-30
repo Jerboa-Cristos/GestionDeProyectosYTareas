@@ -45,7 +45,7 @@ function AdministradorRegister () {
             return;
         }
 
-
+        setErrors([])
         const token = localStorage.getItem('token')
         funcion_administrador_register({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password}, token)
             .then(res => {

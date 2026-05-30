@@ -3,6 +3,7 @@ import { User, Mail, Briefcase, RotateCcw, LockIcon, Edit3, Eye, EyeClosed } fro
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { funcion_administrador_profile } from "../../../services/authService"
+import { toast } from 'react-hot-toast';
 
 function AdministradorProfile () {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -18,10 +19,39 @@ function AdministradorProfile () {
 
     const submit = (e) => {
         e.preventDefault()
+
+        const validationErrors = []
+
+        if(email === '' || nombre === '') {
+            validationErrors.push('Rellene todos los campos para iniciar sesión.')
+        }
+
+        if(password !== confirmed_password) {
+            validationErrors.push('Las contraseñas no coinciden.')
+        }
+
+        if(!nombre.toLocaleLowerCase().match(/^[A-Za-z\s'-]+$/)) {
+            validationErrors.push('El nombre no puede contener números.')
+        }
+
+        if(nombre.toLocaleLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            validationErrors.push('El nombre no puede tener formato de correo electrónico.')
+        }
+
+        if(!email.toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            validationErrors.push('El correo debe tener el siguiente formato: example@domain.com')
+        }
+
+        if(validationErrors.length > 0) {
+            setErrors(validationErrors)
+            return;
+        }
+
         setErrors([])
         
         funcion_administrador_profile({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password}, user.token)
         .then(res => {
+            toast.success('Perfil actualizado correctamente.')
             console.log(res.data)
             localStorage.setItem("user", JSON.stringify({
                 ...user,
@@ -31,7 +61,7 @@ function AdministradorProfile () {
             navigate('/GestionUsuarios')
         }).catch(err => {
             setErrors(err)
-            window.alert('Error al cambiar los datos.')
+            toast.error('Error al cambiar los datos.')
         })
     }
 
@@ -56,7 +86,7 @@ const volverAtras = () => {
                     <span className="block md:inline">Perfil</span>
                 </h1>
 
-                <form onSubmit={submit} className="w-full flex flex-col gap-4" method="post">
+                <form onSubmit={submit} className="w-full flex flex-col gap-4" method="post" noValidate>
 
                     {
                     errors.length > 0 && 
@@ -70,70 +100,70 @@ const volverAtras = () => {
                     </div>
                     }
                         
-                        <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
-                            <User className="text-blueDark shrink-0" size={22} />
-                            <input 
-                            value={nombre}
-                            onChange={(e) => setName(e.target.value)}
-                            type="text" 
-                            id="nombre" 
-                            name="nombre" 
-                            className="bg-transparent w-full focus:outline-none text-blueDark text-center font-medium text-lg"
-                            placeholder="Ponga su nombre"/>
-                        </div>
+                    <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                        <User className="text-blueDark shrink-0" size={22} />
+                        <input 
+                        value={nombre}
+                        onChange={(e) => setName(e.target.value)}
+                        type="text" 
+                        id="nombre" 
+                        name="nombre" 
+                        className="bg-transparent w-full focus:outline-none text-blueDark text-center font-medium text-lg"
+                        placeholder="Ponga su nombre"/>
+                    </div>
 
-                        <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
-                            <Mail className="text-blueDark shrink-0" size={22} />
-                            <input 
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            id="email" 
-                            type="email"
-                            name="email" 
-                            className="bg-transparent w-full focus:outline-none text-blueDark text-center font-medium text-lg"
-                            placeholder="Ponga su correo"/>
-                        </div>
+                    <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                        <Mail className="text-blueDark shrink-0" size={22} />
+                        <input 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        id="email" 
+                        type="email"
+                        name="email" 
+                        className="bg-transparent w-full focus:outline-none text-blueDark text-center font-medium text-lg"
+                        placeholder="Ponga su correo"/>
+                    </div>
                        
-                        <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
-                            <LockIcon className="text-blueDark shrink-0" size={22} />
-                            <input
-                            value={password} 
-                            onChange={(e) => setPassword(e.target.value)}
-                            type={showpassword ? 'text' : 'password'} 
-                            id="password" 
-                            name="password" 
-                            autoComplete="password"
-                            className="w-full bg-transparent focus:outline-none italic text-center"
-                            placeholder="Ponga su contraseña"/>
-                            <button type="button" onClick={toggleShowPassword} className="absolute right-4 top-3 text-blueDark">
-                                {showpassword ? <EyeClosed size={20} /> : <Eye size={20} />}
-                            </button>
-                        </div>
+                    <div className="relative bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                        <LockIcon className="text-blueDark shrink-0" size={22} />
+                        <input
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)}
+                        type={showpassword ? 'text' : 'password'} 
+                        id="password" 
+                        name="password" 
+                        autoComplete="password"
+                        className="w-full bg-transparent focus:outline-none italic text-center"
+                        placeholder="Ponga su contraseña"/>
+                        <button type="button" onClick={toggleShowPassword} className="absolute right-4 top-3 text-blueDark">
+                            {showpassword ? <EyeClosed size={20} /> : <Eye size={20} />}
+                        </button>
+                    </div>
+
+                    <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
+                        <LockIcon className="text-blueDark shrink-0" size={22} />
+                        <input 
+                        value={confirmed_password}
+                        onChange={(e) => setConfirmed_password(e.target.value)}
+                        type={showpassword ? 'text' : 'password'}  
+                        id="confirmed_password" 
+                        name="confirmed_password"
+                        autoComplete="confirmed_password" 
+                        className="w-full bg-transparent focus:outline-none italic text-center" 
+                        placeholder="Ponga su contraseña de nuevo"/>
+                    </div>
 
                         <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
-                            <LockIcon className="text-blueDark shrink-0" size={22} />
-                            <input 
-                            value={confirmed_password}
-                            onChange={(e) => setConfirmed_password(e.target.value)}
-                            type={showpassword ? 'text' : 'password'}  
-                            id="confirmed_password" 
-                            name="confirmed_password"
-                            autoComplete="confirmed_password" 
-                            className="w-full bg-transparent focus:outline-none italic text-center" 
-                            placeholder="Ponga su contraseña de nuevo"/>
+                            <Briefcase className="text-blueDark shrink-0" size={22}/>
+                            <p className="bg-transparent w-full text-blueDark text-center font-medium text-lg" >Administrador</p>
                         </div>
-
-                            <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
-                                <Briefcase className="text-blueDark shrink-0" size={22}/>
-                                <p className="bg-transparent w-full text-blueDark text-center font-medium text-lg" >Administrador</p>
-                            </div>
-                    
-                        <button type="submit" 
-                        className="bg-blueDashboard text-white mt-4 px-8 py-3 rounded-lg flex items-center justify-center gap-2 
-                        font-medium hover:bg-blueblue transition-all shadow-md active:scale-95">
-                            <Edit3 size={20} />
-                            Guardar cambios
-                        </button>
+                
+                    <button type="submit" 
+                    className="bg-blueDashboard text-white mt-4 px-8 py-3 rounded-lg flex items-center justify-center gap-2 
+                    font-medium hover:bg-blueblue transition-all shadow-md active:scale-95">
+                        <Edit3 size={20} />
+                        Guardar cambios
+                    </button>
                     </form>
                 </div>
                     <div className="mt-8 flex flex-row justify-between items-center w-full max-w-2xl">
@@ -147,9 +177,7 @@ const volverAtras = () => {
                     </div>
             </main>
           </div>
-        </>
-
-        
+        </>  
     )
 }
 

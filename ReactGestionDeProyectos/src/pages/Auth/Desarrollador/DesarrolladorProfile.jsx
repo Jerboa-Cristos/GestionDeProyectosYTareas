@@ -3,6 +3,7 @@ import { User, Mail, Briefcase, Folder, RotateCcw, LockIcon, Edit3, Eye, EyeClos
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { funcion_desarrollador_profile } from "../../../services/authService"
+import { toast } from 'react-hot-toast';
 
 function DesarrolladorProfile () {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -18,10 +19,39 @@ function DesarrolladorProfile () {
 
     const submit = (e) => {
         e.preventDefault()
+
+        const validationErrors = []
+
+        if(email === '' || nombre === '') {
+            validationErrors.push('Rellene todos los campos para iniciar sesión.')
+        }
+
+        if(password !== confirmed_password) {
+            validationErrors.push('Las contraseñas no coinciden.')
+        }
+
+        if(!nombre.toLocaleLowerCase().match(/^[A-Za-z\s'-]+$/)) {
+            validationErrors.push('El nombre no puede contener números.')
+        }
+
+        if(nombre.toLocaleLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            validationErrors.push('El nombre no puede tener formato de correo electrónico.')
+        }
+
+        if(!email.toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            validationErrors.push('El correo debe tener el siguiente formato: example@domain.com')
+        }
+
+        if(validationErrors.length > 0) {
+            setErrors(validationErrors)
+            return;
+        }
+
         setErrors([])
         
         funcion_desarrollador_profile({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password}, user.token)
         .then(res => {
+            toast.success('Perfil actualizado correctamente.')
             console.log(res.data)
             localStorage.setItem("user", JSON.stringify({
                 ...user,
@@ -31,7 +61,7 @@ function DesarrolladorProfile () {
             navigate('/DashboardDesarrollador')
         }).catch(err => {
             setErrors(err)
-            window.alert('Error al cambiar los datos.')
+            toast.error('Error al cambiar los datos.')
         })
     }
 
@@ -53,7 +83,7 @@ function DesarrolladorProfile () {
                     <span className="block md:inline">Perfil</span>
                     </h1>
 
-                    <form onSubmit={submit} className="w-full flex flex-col gap-4" method="post">
+                    <form onSubmit={submit} className="w-full flex flex-col gap-4" method="post" noValidate>
 
                         {
                         errors.length > 0 && 

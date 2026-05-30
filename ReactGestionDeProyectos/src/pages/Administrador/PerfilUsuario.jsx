@@ -14,6 +14,7 @@ function PerfilUsuario() {
     const [loading, setLoading] = useState(true);
     const [update, setUpdate] = useState(false);
     const [showpassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState([])
     const [proyectos, setProyecto] = useState()
     const [formData, setFormData] = useState({
         nombre: '', 
@@ -79,6 +80,35 @@ const toggleShowPassword = () => {
 const UpdateUsuario = (e) => {
     e.preventDefault()
 
+    const validationErrors = []
+
+    if(formData.email === '' || formData.nombre === '') {
+        validationErrors.push('Rellene todos los campos para iniciar sesión.')
+    }
+
+    if(formData.password !== formData.password_confirmation) {
+        validationErrors.push('Las contraseñas no coinciden.')
+    }
+
+    if(!formData.nombre.toLocaleLowerCase().match(/^[A-Za-z\s'-]+$/)) {
+        validationErrors.push('El nombre no puede contener números.')
+    }
+
+    if(formData.nombre.toLocaleLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        validationErrors.push('El nombre no puede tener formato de correo electrónico.')
+    }
+
+    if(!formData.email.toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        validationErrors.push('El correo debe tener el siguiente formato: example@domain.com')
+    }
+
+    if(validationErrors.length > 0) {
+        setErrors(validationErrors)
+        return;
+    }
+
+    setErrors([])
+
     const currRol = formData.rol;
     const currEmail = formData.email;
 
@@ -101,6 +131,7 @@ const UpdateUsuario = (e) => {
 
     }).catch(err=>{
         console.error('Error al hacer Update del usuario: ', err)
+        setErrors(err)
         toast.error('No se pudo actualizar el usuario.');
     })
 }
@@ -125,7 +156,19 @@ if (loading) return <Loading />
                 Perfil del usuario: <span className="block md:inline">{formData.nombre} - {rol}</span>
             </h1>
 
-            <form onSubmit={UpdateUsuario} className="w-full flex flex-col gap-4">
+            <form onSubmit={UpdateUsuario} className="w-full flex flex-col gap-4" noValidate>
+
+                {
+                    errors.length > 0 && 
+                    <div className="mb-6 p-3 md:p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-r-lg shadow-sm w-full max-w-2xl mx-auto animate-fade-in">
+                        <ul className="list-disc pl-7 space-y-1 text-xs md:text-sm font-medium">
+                            {errors.map((error, index) => 
+                            <li key={index} className="leading-tight">{error}</li>
+                            )}
+                            
+                        </ul>
+                    </div>
+                }
                 
                 <div className="bg-white h-12 flex items-center px-4 gap-4 shadow-sm w-full">
                     <User className="text-blueDark shrink-0" size={22} />

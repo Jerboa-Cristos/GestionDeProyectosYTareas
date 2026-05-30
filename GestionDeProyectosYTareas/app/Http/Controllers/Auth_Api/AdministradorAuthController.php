@@ -75,29 +75,35 @@ class AdministradorAuthController extends Controller
 
 
     public function profileAdministrador(Request $request){
-        $validar_administrador = Validator::make($request->all(), [
+        try{
+            $validar_administrador = Validator::make($request->all(), [
             'nombre' => 'required',
-            'email' => 'required|email|unique:administrador,email,' . $request->user()->id
-        ]);
+            'email' => 'required|email|unique:administrador,email,' . $request->user()->id,
+            'password' => 'nullable|same:confirmed_password'
+            ]);
 
-        if($validar_administrador->fails()){
-            return response()->json(['errors' => $validar_administrador->errors()->all()]);
+            if($validar_administrador->fails()){
+                return response()->json(['errors' => $validar_administrador->errors()->all()], 422);
+            }
+
+            //Auth::user() llama al guard administrador definido en config/auth.php para obtener el usuario autenticado
+            $administrador = $request->user();
+
+            $administrador->nombre = $request->nombre;
+            $administrador->email = $request->email;
+
+            if($request->filled('password')){
+                $administrador->password = Hash::make($request->password);
+            }
+
+            $administrador->save();
+            $input['nombre'] = $administrador->nombre;
+            $input['email'] = $administrador->email;
+
+            return response()->json($input);
+
+        } catch(\Exception $e) {
+            return response()->json(['message'=>'Error al guardar el perfil'], 500);
         }
-
-        //Auth::user() llama al guard administrador definido en config/auth.php para obtener el usuario autenticado
-        $administrador = $request->user();
-
-        $administrador->nombre = $request->nombre;
-        $administrador->email = $request->email;
-
-        if($request->password){
-            $administrador->password = Hash::make($request->password);
-        }
-
-        $administrador->save();
-        $input['nombre'] = $administrador->nombre;
-        $input['email'] = $administrador->email;
-
-        return response()->json($input);
     }
 }

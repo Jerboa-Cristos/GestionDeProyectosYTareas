@@ -45,31 +45,36 @@ class DesarrolladorAuthController extends Controller
     
 
     public function profileDesarrollador(Request $request){
-        $validar_desarrollador = Validator::make($request->all(), [
+        try{
+            $validar_desarrollador = Validator::make($request->all(), [
             'nombre' => 'required',
             //en unique se pone la tabla
-            'email' => 'required|email|unique:desarrollador,email,' . $request->user()->id
-        ]);
+            'email' => 'required|email|unique:desarrollador,email,' . $request->user()->id,
+            'password' => 'nullable|same:confirmed_password'
+            ]);
 
-        if($validar_desarrollador->fails()){
-            return response()->json(['errors' => $validar_desarrollador->errors()->all()]);
+            if($validar_desarrollador->fails()){
+                return response()->json(['errors' => $validar_desarrollador->errors()->all()], 422);
+            }
+
+
+            $desarrollador = $request->user();
+
+            $desarrollador->nombre = $request->nombre;
+            $desarrollador->email = $request->email;
+
+            if($request->filled('password')){
+                $desarrollador->password = Hash::make($request->password);
+            }
+
+            $desarrollador->save();
+            $input['nombre'] = $desarrollador->nombre;
+            $input['email'] = $desarrollador->email;
+
+            return response()->json($input);
+
+        }catch(\Exception $e) {
+            return response()->json(['message'=>'No tiene acceso'], 500);
         }
-
-
-        $desarrollador = $request->user();
-
-        $desarrollador->nombre = $request->nombre;
-        $desarrollador->email = $request->email;
-
-        if($request->password){
-            $desarrollador->password = Hash::make($request->password);
-        }
-
-        $desarrollador->save();
-        $input['nombre'] = $desarrollador->nombre;
-        $input['email'] = $desarrollador->email;
-        $input['id'] = $desarrollador->id;
-
-        return response()->json($input);
     }
 }
