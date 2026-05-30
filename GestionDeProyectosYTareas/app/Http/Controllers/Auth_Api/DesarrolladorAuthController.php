@@ -20,10 +20,14 @@ class DesarrolladorAuthController extends Controller
                 'password' => 'required'
             ]);
 
-            $desarrollador = Desarrollador::where('email', $request->email)->firstOrFail();
+            $desarrollador = Desarrollador::where('email', $request->email)->first();
+
+            if(!$desarrollador){
+                return response()->json(['error' => 'Email incorrecto'], 401);
+            }
 
             if(!Hash::check($request->password, $desarrollador->password)){
-                return response()->json(['error' => 'Email y password incorrectas'], 401);
+                return response()->json(['error' => 'Contraseña incorrecta'], 401);
             }
 
             $input['id'] = $desarrollador->id;
@@ -32,10 +36,10 @@ class DesarrolladorAuthController extends Controller
             $input['email'] = $desarrollador->email;
             $input['token'] = $desarrollador->createToken('Desarrollador')->plainTextToken;
             
-            return response()->json($input);
+            return response()->json($input, 200);
 
         } catch(\Exception $e) {
-            return response()->json(['message'=>'No tiene acceso'], 404);
+            return response()->json(['message'=>'Error al iniciar sesión'], 500);
         }   
     }
     

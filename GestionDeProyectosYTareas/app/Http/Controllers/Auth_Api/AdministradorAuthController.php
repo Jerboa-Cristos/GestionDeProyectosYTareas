@@ -16,72 +16,31 @@ class AdministradorAuthController extends Controller
 {
     
     public function registerAdministrador(Request $request ){
-        $request->validate([
-            'nombre' => 'required|string|max:40',
-            'email' => 'required|email|unique:administrador,email',
-            'password' => 'required|same:confirmed_password',
+        try{
+            $request->validate([
+                'nombre' => 'required|string|max:40',
+                'email' => 'required|email|unique:administrador,email',
+                'password' => 'required|same:confirmed_password',
 
-        ]);
+            ]);
 
-        $administrador = Administrador::create([
-            'nombre' => $request->nombre,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+            $administrador = Administrador::create([
+                'nombre' => $request->nombre,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
 
-        $input['nombre'] = $administrador->nombre;
-        $input['id'] = $administrador->id;
-        $input['rol'] = 'administrador';
-        $input['token'] = $administrador->createToken('Administrador')->plainTextToken;
+            $input['nombre'] = $administrador->nombre;
+            $input['id'] = $administrador->id;
+            $input['rol'] = 'administrador';
+            $input['token'] = $administrador->createToken('Administrador')->plainTextToken;
 
-        
-        return response()->json($input);
+            
+            return response()->json($input, 200);
+        }  catch(\Exception $e) {
+            return response()->json(['message'=>'Error al registrar el administrador'], 500);
+        } 
     }
-
-
-     public function registerProductOwner(Request $request ){
-        //en unique se pone el nombre de la tabla
-        $request->validate([
-            'nombre' => 'required|string|max:40',
-            'email' => 'required|email|unique:product_owner,email',
-            'password' => 'required|same:confirmed_password',
-
-        ]);
-
-        $product_owner = ProductOwner::create([
-            'nombre' => $request->nombre,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'id_administrador' => auth()->id,
-        ]);
-
-        
-        return response()->json(['mensaje' => 'product_owner creado correctamente']);
-    }
-
-     public function registerDesarrollador(Request $request ){
-        //en unique se pone el nombre de la tabla
-        $request->validate([
-            'nombre' => 'required|string|max:40',
-            'email' => 'required|email|unique:desarrollador,email',
-            'password' => 'required|same:confirmed_password',
-
-        ]);
-
-        $desarrollador = Desarrollador::create([
-            'nombre' => $request->nombre,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'id_administrador' => auth()->id,
-            'id_proyecto' => $request->id_proyecto
-        ]);
-
-        return response()->json(['mensaje' => 'desarrollador creado']);
-    }
-
-
-
-
 
     public function loginAdministrador(Request $request){
         try{
@@ -93,8 +52,12 @@ class AdministradorAuthController extends Controller
 
             $administrador = Administrador::where('email', $request->email)->first();
 
-            if(!$administrador || !Hash::check($request->password, $administrador->password)){
-                return response()->json(['error' => 'Email y password incorrectas']);
+            if(!$administrador){
+                return response()->json(['error' => 'Email incorrecto'], 401);
+            }
+
+            if(!Hash::check($request->password, $administrador->password)){
+                return response()->json(['error' => 'Contraseña incorrecta'], 401);
             }
 
             $input['id'] = $administrador->id;
@@ -103,10 +66,10 @@ class AdministradorAuthController extends Controller
             $input['email'] = $administrador->email;
             $input['token'] = $administrador->createToken('Administrador')->plainTextToken;
             
-            return response()->json($input);  
+            return response()->json($input, 200);  
 
         } catch(\Exception $e) {
-            return response()->json(['message'=>'No tiene acceso'], 404);
+            return response()->json(['message'=>'Error al iniciar sesión'], 500);
         }
     }
 

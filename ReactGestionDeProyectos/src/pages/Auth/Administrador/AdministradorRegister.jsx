@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { funcion_administrador_register } from "../../../services/authService"
 import { Eye, EyeClosed } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 function AdministradorRegister () {
     const PantallaAzul = "flex bg-blueDark items-center justify-center min-h-screen";
@@ -16,16 +17,45 @@ function AdministradorRegister () {
 
     const submit = (e) => {
         e.preventDefault()
+
+        const validationErrors = []
+
+        if(password === '' || email === '' || nombre === '' || confirmed_password === '') {
+            validationErrors.push('Rellene todos los campos para iniciar sesión.')
+        }
+
+        if(password !== confirmed_password) {
+            validationErrors.push('Las contraseñas no coinciden.')
+        }
+
+        if(!nombre.toLocaleLowerCase().match(/^[A-Za-z\s'-]+$/)) {
+            validationErrors.push('El nombre no puede contener números.')
+        }
+
+        if(nombre.toLocaleLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            validationErrors.push('El nombre no puede tener formato de correo electrónico.')
+        }
+
+        if(!email.toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            validationErrors.push('El correo debe tener el siguiente formato: example@domain.com')
+        }
+
+        if(validationErrors.length > 0) {
+            setErrors(validationErrors)
+            return;
+        }
+
+
         const token = localStorage.getItem('token')
         funcion_administrador_register({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password}, token)
             .then(res => {
                     console.log(res.data)
                     localStorage.setItem("user", JSON.stringify(res.data))
                     navigate('/GestionUsuarios')
+                    toast.success('¡Administrador registrado exitosamente!')
                 }).catch(err => {
-                    setErrors(err)
-                    window.alert('Error al registrarse.')
-                })        
+                    setErrors(['Surgió un error al registrarse.' + err.message])
+                })    
     }
 
     const toggleShowPassword = () => {
@@ -43,7 +73,7 @@ function AdministradorRegister () {
                     </div>
                 </div>
 
-                <form onSubmit={submit} className="space-y-5" method="post">
+                <form onSubmit={submit} className="space-y-5" method="post" noValidate>
                     <h1 className="text-2xl md:text-3xl font-bold text-center text-blueDark mb-8">Registro de Administrador</h1>
 
                     {

@@ -25,8 +25,12 @@ class ProductOwnerAuthController extends Controller
 
             $product_owner = ProductOwner::where('email', $request->email)->first();
 
-            if(!$product_owner || !Hash::check($request->password, $product_owner->password)){
-                return response()->json(['error' => 'Email y password incorrectas']);
+            if(!$product_owner){
+                return response()->json(['error' => 'Email incorrecto'], 401);
+            }
+
+            if(!Hash::check($request->password, $product_owner->password)){
+                return response()->json(['error' => 'Contraseña incorrecta'], 401);
             }
 
             $input['nombre'] = $product_owner->nombre;
@@ -34,9 +38,9 @@ class ProductOwnerAuthController extends Controller
             $input['rol'] = 'product_owner';
             $input['token'] = $product_owner->createToken('ProductOwner')->plainTextToken;
             
-            return response()->json($input); 
+            return response()->json($input, 200); 
         } catch(\Exception $e) {
-            return response()->json(['message'=>'No tiene acceso'], 404);
+            return response()->json(['message'=>'Error al iniciar sesión'], 500);
         }   
     }
 

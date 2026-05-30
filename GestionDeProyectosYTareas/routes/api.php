@@ -32,9 +32,6 @@ Route::get('user', function (Request $request) {
 #region ADMINISTRADOR
 //RUTAS AUTENTICACION ADMINISTRADOR
 Route::post('register_administrador', [AdministradorAuthController::class, 'registerAdministrador'])->middleware('auth:sanctum');
-Route::post('register_product_owner', [AdministradorAuthController::class, 'registerProductOwner'])->middleware('auth:sanctum');
-Route::post('register_desarrollador', [AdministradorAuthController::class, 'registerDesarrollador'])->middleware('auth:sanctum');
-
 Route::post('login_administrador', [AdministradorAuthController::class,'loginAdministrador']);
 //Middleware
 //Route::get('ruta del navegador', [Controlador::class, 'metodo backend'])->middleware('auth:GUARD_DEL_USUARIO'); //carpeta config/auth.php

@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { funcion_desarrollador_login, funcion_administrador_login, funcion_product_owner_login } from "../../services/authService"
 import { Eye, EyeClosed } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 function DesarrolladorLogin () {
     const PantallaAzul = "flex bg-blueDark items-center justify-center min-h-screen";
@@ -15,6 +16,27 @@ function DesarrolladorLogin () {
 
     const submit = (e) => {
         e.preventDefault()
+
+        const validationErrors = []
+
+        if(rol === '') {
+            validationErrors.push('Seleccione un rol para iniciar sesión.')
+        }
+
+        if(password === '' || email === '') {
+            validationErrors.push('Rellene todos los campos para iniciar sesión.')
+        }
+
+        if(!email.toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            validationErrors.push('El correo debe tener el siguiente formato: example@domain.com')
+        }
+
+        if(validationErrors.length > 0) {
+            setErrors(validationErrors)
+            return;
+        }
+
+        setErrors([])
         switch(rol) {
             case 'Desarrollador':
                 funcion_desarrollador_login({email: email, password: password}).then(res => {
@@ -24,9 +46,10 @@ function DesarrolladorLogin () {
                     localStorage.setItem("user", JSON.stringify({nombre, email, id}))
                     localStorage.setItem('nombre_usuario', nombre)
                     navigate('/DashboardDesarrollador')
+                    toast.success('¡Bienvenido, ' + nombre + '!')
                 }).catch(err => {
-                    setErrors(err)
-                    window.alert('No existe tal usuario. Compruebe los datos.')
+                    setErrors(['No existe tal usuario. Compruebe los datos.' + err.message])
+                    return;
                 })
                 break;
             case 'Administrador':
@@ -37,9 +60,10 @@ function DesarrolladorLogin () {
                     localStorage.setItem("user", JSON.stringify({nombre, email, id}))
                     localStorage.setItem('nombre_usuario', nombre)
                     navigate('/GestionUsuarios')
+                    toast.success('¡Bienvenido, ' + nombre + '!')
                 }).catch(err => {
-                    setErrors(err)
-                    window.alert('No existe tal usuario. Compruebe los datos.')
+                    setErrors(['No existe tal usuario. Compruebe los datos.' + err.message])
+                    return;
                 })
                 break;
             case 'ProductOwner':
@@ -51,9 +75,10 @@ function DesarrolladorLogin () {
                     localStorage.setItem('nombre_usuario', nombre)
                     navigate('/product_owner_dashboard')
                     console.log('nombre', nombre)
+                    toast.success('¡Bienvenido, ' + nombre + '!')
                 }).catch(err => {
-                    setErrors(err)
-                    window.alert('No existe tal usuario. Compruebe los datos.')
+                    setErrors(['No existe tal usuario. Compruebe los datos.' + err.message])
+                    return;
                 })
                 break;
         }
@@ -74,7 +99,7 @@ function DesarrolladorLogin () {
                     </div>
                 </div>
 
-                <form onSubmit={submit} className="space-y-5" method="post">
+                <form onSubmit={submit} className="space-y-5" method="post" noValidate>
                 <h1 className="text-2xl md:text-3xl font-bold text-center text-blueDark mb-8">Login</h1>
 
                 {
@@ -101,7 +126,8 @@ function DesarrolladorLogin () {
                         name="email" 
                         className="w-full rounded-lg px-4 h-12 bg-blueBase border-none focus:ring-2 focus:ring-blueDark text-blueDark 
                         placeholder-blueblue/60 transition-all" 
-                        placeholder="Ponga su correo"/>
+                        placeholder="Ponga su correo"
+                        />
                     </div>
 
                     <div className="flex flex-col gap-1.5">
