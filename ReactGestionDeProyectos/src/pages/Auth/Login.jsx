@@ -104,8 +104,7 @@ function DesarrolladorLogin () {
 
                 {
                 errors.length > 0 && 
-                <div className="mb-6 p-3 md:p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-r-lg shadow-sm w-full 
-                max-w-2xl mx-auto animate-fade-in">
+                <div className="mb-6 p-3 md:p-4 bg-red-50 ring-2 border-red-500 text-red-700 rounded-lg shadow-sm w-full max-w-2xl mx-auto animate-fade-in">
                     <ul className="list-disc pl-7 space-y-1 text-xs md:text-sm font-medium">
                         {errors.map((error, index) => 
                         <li key={index} className="leading-tight">{error}</li>
