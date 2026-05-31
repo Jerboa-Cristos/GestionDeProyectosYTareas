@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { UserCircle, LogOut } from 'lucide-react';
 
-
-
 //Para responsibe design, hay que añadir md: a las variables, ya que cambia las cosas si la pantalla es menos que la mitad
 function MenuTop({rutaPerfil}) {
     

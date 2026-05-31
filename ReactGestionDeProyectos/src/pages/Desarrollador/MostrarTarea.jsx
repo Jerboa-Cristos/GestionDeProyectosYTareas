@@ -53,14 +53,16 @@ function MostrarTarea (){
         <MenuTop rutaPerfil='/desarrollador_profile'/>  
         <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 lg:pb-0">
                 <MenuLateralDesarrollador/>
-            <main className="flex-1 bg-white rounded-xl shadow-lg flex flex-col overflow-hidden">
-                <div className="bg-blueDashboard p-4 lg:p-8 shrink-0 rounded-b-lg">
+            <main className="bg-blueDashboard flex-1 rounded-xl shadow-lg flex flex-col overflow-hidden">
+                <div className="p-4 lg:p-8">
                     <form onSubmit={botonEditarTarea} className="max-w-4xl mx-auto">
                         <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 lg:mb-6 text-center lg:text-left">Detalles Tarea</h1>
                         <div className="grid grid-cols-1 lg:gap-4">
                             <div>
                             <p className="text-xs lg:text-sm font-bold text-white/80 uppercase ml-1"><strong>Sprint: {tarea.sprint?.nombre}</strong></p>
-                            <p className="text-xs lg:text-sm font-bold text-white/80 uppercase ml-1">Asignado a: {tarea.desarrollador?.nombre}</p>
+                            <p className="text-xs lg:text-sm font-bold text-white/80 uppercase ml-1" title={tarea.desarrollador?.email}>
+                                Asignado a: {tarea.desarrollador?.nombre}
+                            </p>
                             </div>
                             <div className="mb-2">
                                 <p className="text-xs lg:text-sm font-bold text-white/80 uppercase ml-1">Nombre</p>
@@ -94,7 +96,7 @@ function MostrarTarea (){
                         </div>
                     </form>  
                 </div>
-                <div className="flex-1 mt-2 overflow-y-auto lg:mt-4">
+                <div className="px-4 lg:px-8 m-4 lg:m-4 overflow-y-auto">
                     <SeccionComentario idTarea={idTarea}/>
                 </div>
             </main>
