@@ -34,14 +34,14 @@ const MenuLateralDesarrollador = () => {
                 className="flex-1 lg:w-full flex flex-col lg:flex-row items-center gap-1 lg:gap-4 px-2 py-3 lg:px-6 lg:py-4 
             text-blueDark hover:bg-BlueBaseDark hover:text-BlueDarkDark lg:hover:bg-BlueBaseDark transition-all text-center lg:text-left group rounded-lg">
                     <CheckSquare2 size={35} className="lg:size-10 text-white lg:text-blueDark group-hover:text-BlueDarkDark"/>
-                    <span className="hidden lg:inline text-[10px] text-white lg:text-blueDark lg:text-base font-medium">Tablero</span>
+                    <span className="hidden lg:inline text-[10px] text-white lg:text-blueDark lg:text-base font-medium">Tablero Kanban</span>
                 </button>
                 <button 
                 onClick={gotoTareas}
                 className="flex-1 lg:w-full flex flex-col lg:flex-row items-center gap-1 lg:gap-4 px-2 py-3 lg:px-6 lg:py-4 
             text-blueDark hover:bg-BlueBaseDark hover:text-BlueDarkDark lg:hover:bg-BlueBaseDark transition-all text-center lg:text-left group rounded-lg">
                     <NotebookPen size={35} className="lg:size-10 text-white lg:text-blueDark group-hover:text-BlueDarkDark"/>
-                    <span className="hidden lg:inline text-[10px] text-white lg:text-blueDark lg:text-base font-medium">Tareas</span>
+                    <span className="hidden lg:inline text-[10px] text-white lg:text-blueDark lg:text-base font-medium">Mis Tareas</span>
                 </button>
             </nav>
         </aside>
