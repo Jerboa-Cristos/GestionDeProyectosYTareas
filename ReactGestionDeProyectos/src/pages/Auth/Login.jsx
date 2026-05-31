@@ -86,11 +86,15 @@ function DesarrolladorLogin () {
 
     const toggleShowPassword = () => {
     setShowPassword(prev => !prev);
-}
+    }
+
+    const goRegister = () => {
+        navigate('/')
+    }
 
     return (
         <div className={`${PantallaAzul} flex items-center justify-center p-4 min-h-screen`}>
-             <div className="bg-white p-6 md:p-10 rounded-2xl shadow-xl w-full max-w-100 transition-all">
+             <div className="bg-white p-4 md:p-6 rounded-2xl shadow-xl w-full max-w-100 transition-all">
 
                 <div className="flex justify-center mb-6">
                     <div className="bg-blueDark text-white w-12 h-12 flex items-center justify-center 
@@ -115,7 +119,7 @@ function DesarrolladorLogin () {
                 }
 
                 <div className="grid gap-4">
-                    <div className="flex flex-col gap-1.5">
+                    <div className="flex flex-col gap-1">
                         <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Correo: </label>
                         <input 
                         value={email}
@@ -129,7 +133,7 @@ function DesarrolladorLogin () {
                         />
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
+                    <div className="flex flex-col gap-1">
                         <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Contraseña: </label>
                         <div className="relative">
                             <input
@@ -148,7 +152,7 @@ function DesarrolladorLogin () {
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
+                    <div className="flex flex-col gap-1">
                         <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Rol: </label>
                         <select 
                         value={rol}
@@ -167,6 +171,9 @@ function DesarrolladorLogin () {
                 className="w-full flex justify-center items-center h-12 mt-4 rounded-lg text-base font-bold text-white bg-blueDark 
                 hover:bg-blueblue active:scale-[0.98] transition-all shadow-md">Iniciar sesión</button>
             </form>
+            <div className="mt-4 text-center">
+                <button onClick={goRegister} className="text-gray-400 font-bold text-sm hover:underline">Registrarse (para Administradores)</button>
+            </div>
         </div>
     </div>
     )

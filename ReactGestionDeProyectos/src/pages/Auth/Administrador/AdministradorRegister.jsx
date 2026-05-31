@@ -60,13 +60,17 @@ function AdministradorRegister () {
 
     const toggleShowPassword = () => {
     setShowPassword(prev => !prev);
-}
+    }
+
+    const goLogin = () => {
+        navigate('/login')
+    }
 
     return (
-        <div className={`${PantallaAzul} flex items-center justify-center p-4 min-h-screen`}>
-            <div className="bg-white p-6 md:p-10 rounded-2xl shadow-xl w-full max-w-100 transition-all">
+        <div className={`${PantallaAzul} flex items-center justify-center p-2 min-h-screen`}>
+            <div className="bg-white p-4 md:p-6 rounded-2xl shadow-xl w-full max-w-100 transition-all">
 
-                <div className="flex justify-center mb-6">
+                <div className="flex justify-center mb-4">
                     <div className="bg-blueDark text-white w-12 h-12 flex items-center justify-center 
                     rounded-xl font-extrabold text-xl shadow-lg">
                         M
@@ -74,7 +78,7 @@ function AdministradorRegister () {
                 </div>
 
                 <form onSubmit={submit} className="space-y-5" method="post" noValidate>
-                    <h1 className="text-2xl md:text-3xl font-bold text-center text-blueDark mb-8">Registro de Administrador</h1>
+                    <h1 className="text-2xl md:text-3xl font-bold text-center text-blueDark mb-6">Registro de Administrador</h1>
 
                     {
                     errors.length > 0 && 
@@ -89,7 +93,7 @@ function AdministradorRegister () {
                     }
 
                     <div className="grid gap-4">
-                    <div className="flex flex-col gap-1.5">
+                    <div className="flex flex-col gap-1">
                         <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Nombre:</label>  
                         <input 
                         value={nombre}
@@ -103,7 +107,7 @@ function AdministradorRegister () {
                     </div>
 
 
-                    <div className="flex flex-col gap-1.5">
+                    <div className="flex flex-col gap-1">
                         <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Correo: </label>
                         <input 
                         value={email}
@@ -116,7 +120,7 @@ function AdministradorRegister () {
                         placeholder="Ponga su correo"/>
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
+                    <div className="flex flex-col gap-1">
                         <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Contraseña: </label>
                         <div className="relative">
                             <input
@@ -135,7 +139,7 @@ function AdministradorRegister () {
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
+                    <div className="flex flex-col gap-1">
                         <label className="text-blueDark text-xs md:text-sm font-bold ml-1">Confirmar Contraseña: </label>
                         <input 
                         value={confirmed_password}
@@ -152,6 +156,9 @@ function AdministradorRegister () {
                     hover:bg-blueblue active:scale-[0.98] transition-all shadow-md">Crear cuenta</button>
                     </div>
                 </form>
+                <div className="mt-4 text-center">
+                    <button onClick={goLogin} className="text-gray-400 font-bold text-sm hover:underline">Tengo cuenta</button>
+                </div>
             </div>
         </div>
 
