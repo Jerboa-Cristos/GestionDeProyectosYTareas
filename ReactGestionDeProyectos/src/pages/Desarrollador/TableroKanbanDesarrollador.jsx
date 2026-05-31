@@ -25,13 +25,14 @@ function TableroKanbanDesarrollador() {
     //Sacamos las tareas del sprint elegido
     const tareasDeSprint = tareas.filter(t => t.sprint?.id === selectedSprint)
     //Seleccionamos el sprint más reciente, con la fecha de inicio más cercana a la actualidad.
-    //reduce
+    //Primero hacemos protección para el caso de que sprintsUnicos está vacio
+    //Reduce comprueba cada sprint, dejando el que tiene fecha_inicio más grande o reciente.
     const ultSprint = sprintsUnicos.length > 0 ? sprintsUnicos.reduce((ultimo, actual) => {
     return new Date(actual.fecha_inicio) > new Date(ultimo.fecha_inicio)
         ? actual
         : ultimo;
     }): null;
-    //Si no hay Sprint seleccionado, seleccionamos el último sprint
+    //Si no hay Sprint seleccionado, seleccionamos el último sprint default
     useEffect(() => {
     if (ultSprint && !selectedSprint) {
         setSelectedSprint(ultSprint.id);
