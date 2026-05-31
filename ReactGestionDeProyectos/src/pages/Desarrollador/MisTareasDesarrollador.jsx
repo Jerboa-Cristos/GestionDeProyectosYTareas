@@ -1,6 +1,7 @@
 //Código
+import { Search } from 'lucide-react';
 import { TareaContext } from '../../Context/TareaContext';
-import { useContext, useMemo } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { DragDropContext } from '@hello-pangea/dnd';
 import { toast } from 'react-hot-toast'
 import { updateTarea } from '../../services/desarolladorService';
@@ -13,18 +14,25 @@ import Loading from '../../Components/Loading';
 function MisTareasDesarrollador() {
     const user = JSON.parse(localStorage.getItem('user'))
     const token = localStorage.getItem('token')
+    const [searchTerm, setSearchTerm] = useState('')
     const {tareas, setTareas, loading} = useContext(TareaContext);
 
     const miTareas = tareas.filter(tarea => tarea.id_desarrollador === user.id)
 
+    const filteredTareas = miTareas.filter((tarea) => {
+        const fullName = tarea.nombre.toLowerCase().includes(searchTerm.toLowerCase());
+        const description = tarea.descripcion.toLowerCase().includes(searchTerm.toLowerCase());
+        return fullName || description;
+    })
+
     const tareasPorEstado = useMemo(() => {
         return {
-            PorHacer: miTareas.filter(tarea => tarea.estado === 'Por Hacer'),
-            EnCurso: miTareas.filter(tarea => tarea.estado === 'En Curso'),
-            EnRevision: miTareas.filter(tarea => tarea.estado === 'En Revision'),
-            Finalizado: miTareas.filter(tarea => tarea.estado === 'Finalizado'),
+            PorHacer: filteredTareas.filter(tarea => tarea.estado === 'Por Hacer'),
+            EnCurso: filteredTareas.filter(tarea => tarea.estado === 'En Curso'),
+            EnRevision: filteredTareas.filter(tarea => tarea.estado === 'En Revision'),
+            Finalizado: filteredTareas.filter(tarea => tarea.estado === 'Finalizado'),
         }
-    }, [miTareas])
+    }, [filteredTareas])
 
     const onDragEnd = (result) => {
         console.log(result)
@@ -72,7 +80,19 @@ function MisTareasDesarrollador() {
                 <MenuLateralDesarrollador/>
                 <main className="flex-1 bg-white rounded-xl shadow-lg p-2 md:p-6 flex flex-col gap-6">
                     <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-2 md:mb-6 text-center md:text-left">Mis Tareas</h1>
-                    
+                    <div className="flex flex-col gap-4 items-center md:flex-row md:justify-between">
+                        <div className="relative flex-1 max-w-md" onClick={(e)=>e.stopPropagation()}>
+                            <input 
+                                type="text"
+                                placeholder="Buscar..."
+                                value={searchTerm}
+                                onChange={(e)=>setSearchTerm(e.target.value)}
+                                className="w-full bg-blueBase text-blueDark pl-10 pr-4 h-12 rounded-xl focus:ring-2
+                                 focus:ring-turquesa outline-none transition-all placeholder-blueDark/60"
+                            />
+                            <Search className="absolute left-3 top-3.5 text-blueDark" size={20} />
+                        </div>
+                    </div>
                     <DragDropContext onDragEnd={onDragEnd}>
                         <div className="flex-1 pb-4">
                             <div className="flex flex-col md:grid md:grid-cols-4 gap-4 md:gap-2 min-w-full">
