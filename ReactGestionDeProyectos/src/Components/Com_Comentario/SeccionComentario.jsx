@@ -72,7 +72,7 @@ const SeccionComentario = ({idTarea}) => {
                     onChange={handleChange}
                     onFocus={()=>setEscribiendo(true)}
                     onBlur={()=>{if(formData.texto.trim() === '') setEscribiendo(false)}}
-                    className="w-full bg-white rounded-xl p-4 font-semibold text-blueDark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 min-h-25 resize-none" placeholder='Añadir comentario'>
+                    className="w-full bg-white rounded-xl p-4 font-semibold text-blueDark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 min-h-25 resize-none" placeholder='Añadir comentario. Máximo 300 caracteres.'>
                     </textarea>
                     {escribiendo ? (
                         <div className="flex justify-start">

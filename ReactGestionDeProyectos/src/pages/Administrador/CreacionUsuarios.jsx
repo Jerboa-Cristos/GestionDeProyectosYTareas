@@ -48,7 +48,7 @@ function CreacionUsuarios() {
 const handleChange = (e) => {
     const {name, value} = e.target;
     setFormData(prev => {
-        const newData = {...prev, [name]: value }
+        const newData = {...prev, [name]: value.trim() }
 
         if(name ==='rol' && (value === 'Administrador' || value === 'ProductOwner')){
             newData.proyecto='';
@@ -145,7 +145,7 @@ const GuardarUsuario = async (e) => {
                         value={formData.nombre}
                         onChange={handleChange}
                         type="text" 
-                        placeholder="Nombre apellidos" 
+                        placeholder="Nombre apellidos. Máximo 100 caracteres." 
                         className="w-full bg-transparent focus:outline-none text-center italic"
                         />
                     </div>

@@ -4,6 +4,7 @@ import { Save } from "lucide-react"
 import { showMiTarea, updateTarea } from '../../services/desarolladorService'
 import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
 import SeccionComentario from "../../Components/Com_Comentario/SeccionComentario";
+import Loading from '../../Components/Loading';
 import { useParams } from "react-router-dom"
 import { toast } from 'react-hot-toast'
 
@@ -13,19 +14,24 @@ function MostrarTarea (){
     const [estado, setEstado] = useState('')
     const {id} = useParams()
     const idTarea = Number(id);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchTarea = async () => {
             if (!token) return;
+            setLoading(true);
             showMiTarea(id, token).then(res => {
                 setTarea(res.data);
                 setEstado(res.data.estado);
                 toast.success('Tarea cargada correctamente');
                 console.log(res.data);
+
             }).catch(err => {
                 console.error('No se pudo cargar la información: ' + err)
                 toast.error('Error al cargar la tarea');
-            })
+            }).finally(() => {
+                setLoading(false);
+            });
         }
         fetchTarea();
     }, [id, token])
@@ -40,13 +46,15 @@ function MostrarTarea (){
             {
                 pending: 'Actualizando tarea...',
                 success: 'Tarea actualizada correctamente',
-                error: 'Error al actualizar la tarea'
+                error: 'Error al actualizar la tarea. Puede que la tarea está asignada a otra persona.'
             }).then(res => {
                 console.log('Tarea actualizada')
             }).catch(err=>{
                 console.error('Error al hacer Update del estado de tarea: ', err)
             })
     }
+
+    if (loading) return <Loading />
 
     return(
     <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
@@ -62,6 +70,9 @@ function MostrarTarea (){
                             <p className="text-xs lg:text-sm font-bold text-white/80 uppercase ml-1"><strong>Sprint: {tarea.sprint?.nombre}</strong></p>
                             <p className="text-xs lg:text-sm font-bold text-white/80 uppercase ml-1" title={tarea.desarrollador?.email}>
                                 Asignado a: {tarea.desarrollador?.nombre}
+                            </p>
+                            <p className="text-xs lg:text-sm font-bold text-white/80 uppercase ml-1">
+                                Fecha fin: {tarea.fecha_fin}
                             </p>
                             </div>
                             <div className="mb-2">

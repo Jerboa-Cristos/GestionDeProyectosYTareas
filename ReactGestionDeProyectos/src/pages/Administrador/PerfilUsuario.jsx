@@ -179,7 +179,7 @@ if (loading) return <Loading />
                         id="nombre" 
                         name="nombre" 
                         className="bg-transparent w-full focus:outline-none text-blueDark text-center font-medium text-lg" 
-                        placeholder="Nombre del usuario">
+                        placeholder="Nombre del usuario. Máximo 100 caracteres.">
                             
                     </input>
                 </div>
