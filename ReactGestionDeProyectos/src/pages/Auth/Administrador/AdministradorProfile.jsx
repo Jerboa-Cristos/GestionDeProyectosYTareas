@@ -7,7 +7,7 @@ import { toast } from 'react-hot-toast';
 
 function AdministradorProfile () {
     const user = JSON.parse(localStorage.getItem('user'))
-    console.log(user)
+    const token = localStorage.getItem('token')
 
     const [nombre, setName] = useState(user.nombre)
     const [email, setEmail] = useState(user.email)
@@ -49,7 +49,7 @@ function AdministradorProfile () {
 
         setErrors([])
         
-        funcion_administrador_profile({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password}, user.token)
+        funcion_administrador_profile({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password}, token)
         .then(res => {
             toast.success('Perfil actualizado correctamente.')
             console.log(res.data)

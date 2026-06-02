@@ -9,7 +9,7 @@ import Loading from '../../Components/Loading';
 
 function CreacionUsuarios() {
     const token = localStorage.getItem('token');
-    const userAdm = localStorage.getItem('user');
+    const userAdm = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState([])
     const [showpassword, setShowPassword] = useState(false);
@@ -50,7 +50,7 @@ const handleChange = (e) => {
     setFormData(prev => {
         const newData = {...prev, [name]: value }
 
-        if(name ==='rol' && value === 'Administrador' || value === 'ProductOwner'){
+        if(name ==='rol' && (value === 'Administrador' || value === 'ProductOwner')){
             newData.proyecto='';
         }
 
@@ -64,6 +64,7 @@ const toggleShowPassword = () => {
 
 const GuardarUsuario = async (e) => {
     e.preventDefault()
+    console.log('Datos del formulario: ', formData)
 
     const validationErrors = []
 
@@ -71,7 +72,7 @@ const GuardarUsuario = async (e) => {
         validationErrors.push('Rellene todos los campos para iniciar sesión.')
     }
 
-    if(formData.password !== formData.password_confirmation) {
+    if(formData.password.trim() !== formData.confirmed_password.trim()) {
         validationErrors.push('Las contraseñas no coinciden.')
     }
 
@@ -214,7 +215,9 @@ const GuardarUsuario = async (e) => {
                         className="w-full bg-transparent appearance-none focus:outline-none italic text-center text-gray-500">
                             <option value="">Proyecto asignado</option>
                             {proyectos.map((proyecto) => (
-                                <option value={proyecto.id}>{proyecto.nombre}</option>
+                                <option key={proyecto.id} value={proyecto.id}>
+                                    {proyecto.nombre}
+                                </option>
                             ))}
                         </select>
                         <div className="absolute right-4 top-3 pointer-events-none text-blueDark">

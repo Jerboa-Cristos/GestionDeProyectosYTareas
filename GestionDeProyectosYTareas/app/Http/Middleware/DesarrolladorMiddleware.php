@@ -15,6 +15,11 @@ class DesarrolladorMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        auth()->shouldUse('desarrollador');
+
+        if (!auth()->check()) {
+            return response()->json(['error' => 'No autenticado como desarrollador'], 401);
+        }
         return $next($request);
     }
 }
