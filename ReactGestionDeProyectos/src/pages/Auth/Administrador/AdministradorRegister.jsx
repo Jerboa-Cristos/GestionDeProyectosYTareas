@@ -28,7 +28,7 @@ function AdministradorRegister () {
             validationErrors.push('Las contraseñas no coinciden.')
         }
 
-        if(!nombre.toLocaleLowerCase().match(/^[A-Za-z\s'-]+$/)) {
+        if(!nombre.toLocaleLowerCase().match(/^[\p{L}.\-\s]+$/gu)) {
             validationErrors.push('El nombre no puede contener números.')
         }
 

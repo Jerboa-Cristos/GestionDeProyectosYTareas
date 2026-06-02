@@ -90,7 +90,7 @@ const UpdateUsuario = (e) => {
         validationErrors.push('Las contraseñas no coinciden.')
     }
 
-    if(!formData.nombre.toLocaleLowerCase().match(/^[A-Za-z\s'-]+$/)) {
+    if(!formData.nombre.toLocaleLowerCase().match(/^[\p{L}.\-\s]+$/gu)) {
         validationErrors.push('El nombre no puede contener números.')
     }
 
