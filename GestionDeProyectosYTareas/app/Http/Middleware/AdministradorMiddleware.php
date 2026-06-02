@@ -15,6 +15,11 @@ class AdministradorMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        auth()->shouldUse('administrador');
+
+        if (!auth()->check()) {
+            return response()->json(['error' => 'No autenticado como administrador'], 401);
+        }
         return $next($request);
     }
 }

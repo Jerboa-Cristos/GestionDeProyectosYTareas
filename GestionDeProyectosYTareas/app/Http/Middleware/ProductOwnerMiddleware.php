@@ -15,6 +15,11 @@ class ProductOwnerMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        auth()->shouldUse('product_owner');
+
+        if (!auth()->check()) {
+            return response()->json(['error' => 'No autenticado como product owner'], 401);
+        }
         return $next($request);
     }
 }

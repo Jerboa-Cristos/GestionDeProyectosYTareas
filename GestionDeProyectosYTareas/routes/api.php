@@ -31,17 +31,18 @@ Route::get('user', function (Request $request) {
 
 #region ADMINISTRADOR
 //RUTAS AUTENTICACION ADMINISTRADOR
-Route::post('register_administrador', [AdministradorAuthController::class, 'registerAdministrador'])->middleware('auth:sanctum');
+Route::post('register_administrador', [AdministradorAuthController::class, 'registerAdministrador'])->middleware(['auth.admin', 'auth:sanctum']);;
 Route::post('login_administrador', [AdministradorAuthController::class,'loginAdministrador']);
 //Middleware
 //Route::get('ruta del navegador', [Controlador::class, 'metodo backend'])->middleware('auth:GUARD_DEL_USUARIO'); //carpeta config/auth.php
-Route::get('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware('auth:sanctum');
-Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios'])->middleware('auth:sanctum');
-Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsuarios'])->middleware('auth:sanctum');
-Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios'])->middleware('auth:sanctum');
-Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios'])->middleware('auth:sanctum');
-Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsuarios'])->middleware('auth:sanctum');
-Route::get('indexProyectosAdmin', [AdministradorController::class, 'indexProyectosAdmin'])->middleware('auth:sanctum');
+
+Route::post('profile_administrador', [AdministradorAuthController::class, 'profileAdministrador'])->middleware(['auth.admin', 'auth:sanctum']);
+Route::get('indexUsuarios', [AdministradorController::class, 'indexUsuarios'])->middleware(['auth:sanctum']);
+Route::get('showUsuarios/{rol}/{id}', [AdministradorController::class, 'showUsuarios'])->middleware(['auth.admin', 'auth:sanctum']);
+Route::delete('eliminarUsuarios/{rol}/{id}', [AdministradorController::class, 'eliminarUsuarios'])->middleware(['auth.admin', 'auth:sanctum']);
+Route::post('storeUsuarios',[AdministradorController::class, 'storeUsuarios'])->middleware(['auth.admin', 'auth:sanctum']);
+Route::put('updateUsuarios/{rol}/{id}', [AdministradorController::class, 'updateUsuarios'])->middleware(['auth.admin', 'auth:sanctum']);
+Route::get('indexProyectosAdmin', [AdministradorController::class, 'indexProyectosAdmin'])->middleware(['auth.admin', 'auth:sanctum']);
 #endregion
 
 #region PRODUCT OWNER
@@ -50,32 +51,32 @@ Route::get('indexProyectosAdmin', [AdministradorController::class, 'indexProyect
 Route::post('login_product_owner', [ProductOwnerAuthController::class,'loginProductOwner']);
 //Route::get('profile_product_owner', [ProductOwnerAuthController::class, 'profileProductOwner']);
 //MIDDLEWARE
-Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'actualizar_profileProductOwner'])->middleware('auth:sanctum');
-Route::get('profile_product_owner', [ProductOwnerAuthController::class, 'obtenerDatosProfileProductOwner'])->middleware('auth:sanctum');
+Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'actualizar_profileProductOwner'])->middleware(['auth.po', 'auth:sanctum']);
+Route::get('profile_product_owner', [ProductOwnerAuthController::class, 'obtenerDatosProfileProductOwner'])->middleware(['auth.po', 'auth:sanctum']);
 
 
 //RUTAS CRUD API PRODUCT OWNER , ya que el es el que crea proyectos
-Route::get('listado_proyectos', [ProductOwnerApiController::class, 'index'])->middleware('auth:sanctum');
-Route::post('crear_proyecto', [ProductOwnerApiController::class, 'store'])->middleware('auth:sanctum');
-Route::get('mostrar_proyecto/{id}', [ProductOwnerApiController::class, 'show'])->middleware('auth:sanctum');
-Route::put('actualizar_proyecto/{id}', [ProductOwnerApiController::class, 'update'])->middleware('auth:sanctum');
-Route::delete('eliminar_proyecto/{id}', [ProductOwnerApiController::class, 'destroy'])->middleware('auth:sanctum');
+Route::get('listado_proyectos', [ProductOwnerApiController::class, 'index'])->middleware(['auth.po', 'auth:sanctum']);
+Route::post('crear_proyecto', [ProductOwnerApiController::class, 'store'])->middleware(['auth.po', 'auth:sanctum']);
+Route::get('mostrar_proyecto/{id}', [ProductOwnerApiController::class, 'show'])->middleware(['auth.po', 'auth:sanctum']);
+Route::put('actualizar_proyecto/{id}', [ProductOwnerApiController::class, 'update'])->middleware(['auth.po', 'auth:sanctum']);
+Route::delete('eliminar_proyecto/{id}', [ProductOwnerApiController::class, 'destroy'])->middleware(['auth.po', 'auth:sanctum']);
 
 Route::get('tareas_product_owner', [TareaController::class, 'tareasProductOwner']);
 
 //RUTAS CRUD PROYECTO PARA CREAR/MOSTRAR/ELIMINAR/ACTUALIZAR SPRINT
-Route::get('listado_sprint/{proyecto}', [ProyectoApiController::class, 'index'])->middleware('auth:sanctum');
-Route::post('crear_sprint/{proyecto}', [ProyectoApiController::class, 'store'])->middleware('auth:sanctum');
-Route::get('mostrar_sprint/{proyecto}/{id}', [ProyectoApiController::class, 'show'])->middleware('auth:sanctum');
-Route::put('actualizar_sprint/{proyecto}/{id}', [ProyectoApiController::class, 'update'])->middleware('auth:sanctum');
-Route::delete('eliminar_sprint/{proyecto}/{id}', [ProyectoApiController::class, 'destroy'])->middleware('auth:sanctum');
+Route::get('listado_sprint/{proyecto}', [ProyectoApiController::class, 'index'])->middleware(['auth.po', 'auth:sanctum']);
+Route::post('crear_sprint/{proyecto}', [ProyectoApiController::class, 'store'])->middleware(['auth.po', 'auth:sanctum']);
+Route::get('mostrar_sprint/{proyecto}/{id}', [ProyectoApiController::class, 'show'])->middleware(['auth.po', 'auth:sanctum']);
+Route::put('actualizar_sprint/{proyecto}/{id}', [ProyectoApiController::class, 'update'])->middleware(['auth.po', 'auth:sanctum']);
+Route::delete('eliminar_sprint/{proyecto}/{id}', [ProyectoApiController::class, 'destroy'])->middleware(['auth.po', 'auth:sanctum']);
 
 //RUTAS CRUD TAREAS
-Route::get('listado_tareas/{sprint}', [SprintApiController::class, 'index'])->middleware('auth:sanctum');
-Route::post('crear_tarea/{sprint}', [SprintApiController::class, 'store'])->middleware('auth:sanctum');
-Route::get('mostrar_tarea/{sprint}/{id}', [SprintApiController::class, 'show'])->middleware('auth:sanctum');
-Route::put('actualizar_tarea/{sprint}/{id}', [SprintApiController::class, 'update'])->middleware('auth:sanctum');
-Route::delete('eliminar_tarea/{sprint}/{id}', [SprintApiController::class, 'destroy'])->middleware('auth:sanctum');
+Route::get('listado_tareas/{sprint}', [SprintApiController::class, 'index'])->middleware(['auth.po', 'auth:sanctum']);
+Route::post('crear_tarea/{sprint}', [SprintApiController::class, 'store'])->middleware(['auth.po', 'auth:sanctum']);
+Route::get('mostrar_tarea/{sprint}/{id}', [SprintApiController::class, 'show'])->middleware(['auth.po', 'auth:sanctum']);
+Route::put('actualizar_tarea/{sprint}/{id}', [SprintApiController::class, 'update'])->middleware(['auth.po', 'auth:sanctum']);
+Route::delete('eliminar_tarea/{sprint}/{id}', [SprintApiController::class, 'destroy'])->middleware(['auth.po', 'auth:sanctum']);
 
 //RUTAS PARA EL DESAROLLADOR PARA EL PRODUCT OWNER
 //Ruta para mostrar el listado de desarolladores a la hora de elegir quién hace la tarea
@@ -88,10 +89,10 @@ Route::put('asignarProyecto/{id}',[DesarrolladorController::class, 'asignarProye
 //RUTAS AUTENTICACION DESARROLLADOR
 Route::post('login_desarrollador', [DesarrolladorAuthController::class,'loginDesarrollador']);
 //Middleware
-Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware('auth:sanctum');
-Route::get('indexTareasDesarrollador',[TareaController::class, 'indexTareasDesarrollador'])->middleware('auth:sanctum');
-Route::get('showTareaDesarrollador/{id}', [TareaController::class, 'showTareaDesarrollador'])->middleware('auth:sanctum');
-Route::put('updateTareaDesarrollador/{id}', [TareaController::class, 'updateTareaDesarrollador'])->middleware('auth:sanctum');
+Route::post('profile_desarrollador', [DesarrolladorAuthController::class, 'profileDesarrollador'])->middleware(['auth.dev', 'auth:sanctum']);
+Route::get('indexTareasDesarrollador',[TareaController::class, 'indexTareasDesarrollador'])->middleware(['auth.dev', 'auth:sanctum']);
+Route::get('showTareaDesarrollador/{id}', [TareaController::class, 'showTareaDesarrollador'])->middleware(['auth.dev', 'auth:sanctum']);
+Route::put('updateTareaDesarrollador/{id}', [TareaController::class, 'updateTareaDesarrollador'])->middleware(['auth.dev', 'auth:sanctum']);
 #endregion
 
 #region COMENTARIO

@@ -85,7 +85,7 @@ const SeccionComentario = ({idTarea}) => {
                 </form>
             </div>
             <div className="mt-6">
-                {comentarios.map(comentario => (
+                {comentarios.toReversed().map(comentario => (
                     <ElementComentario key={comentario.id} id={comentario.id} user={comentario.autor} text={comentario.texto} fecha={comentario.updated_at} onDeleteSuccess={comEliminado} onUpdateSuccess={comActualizado}/>
                 ))}
             </div>
