@@ -87,7 +87,7 @@ const UpdateUsuario = (e) => {
 
     const validationErrors = []
 
-    if(rol === '') {
+    if(formData.rol === '') {
         validationErrors.push('Seleccione un rol para actualizar el usuario.')
     }
 

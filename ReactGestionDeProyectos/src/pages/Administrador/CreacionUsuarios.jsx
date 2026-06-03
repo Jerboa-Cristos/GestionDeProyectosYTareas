@@ -68,7 +68,7 @@ const GuardarUsuario = async (e) => {
 
     const validationErrors = []
 
-    if(rol === '') {
+    if(formData.rol === '') {
         validationErrors.push('Seleccione un rol para crear el usuario.')
     }
 
