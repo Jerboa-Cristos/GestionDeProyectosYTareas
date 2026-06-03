@@ -38,23 +38,23 @@ const SeccionComentario = ({idTarea}) => {
     const {name, value} = e.target;
     setFormData({
         ...formData,
-        [name]: value
+        [name]: value.trim().slice(0, 300)
     })}
-    
 
     const GuardarComentario = async (e) => {
         e.preventDefault()
         e.stopPropagation()
-        guardarComentario(formData, token).then(res => {
+        toast.promise(guardarComentario(formData, token), {
+            loading: 'Guardando comentario...',
+            success: 'Comentario guardado correctamente',
+            error: 'No se pudo guardar el comentario.'
+        }).then(res => {
             const newComentario = res.data
-            console.log(newComentario)
             setComentarios(prevComentarios => [...prevComentarios, newComentario]);
             setFormData({...formData, texto:''})
             setEscribiendo(false)
-            toast.success('Comentario guardado correctamente')
         }).catch(err => {
             console.error('No se pudo guardar el comentario', err)
-            toast.error('No se pudo guardar el comentario.')
         })
     }
 //#endregion

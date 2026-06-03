@@ -21,15 +21,15 @@ function AdministradorRegister () {
         const validationErrors = []
 
         if(password === '' || email === '' || nombre === '' || confirmed_password === '') {
-            validationErrors.push('Rellene todos los campos para iniciar sesión.')
+            validationErrors.push('Rellene todos los campos para registrarse.')
         }
 
-        if(password !== confirmed_password) {
+        if(password.trim() !== confirmed_password.trim()) {
             validationErrors.push('Las contraseñas no coinciden.')
         }
 
         if(!nombre.toLocaleLowerCase().match(/^[\p{L}.\-\s]+$/gu)) {
-            validationErrors.push('El nombre no puede contener números.')
+            validationErrors.push('El nombre no puede contener números o caracteres especiales.')
         }
 
         if(nombre.toLocaleLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
@@ -47,7 +47,7 @@ function AdministradorRegister () {
 
         setErrors([])
         const token = localStorage.getItem('token')
-        funcion_administrador_register({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password}, token)
+        funcion_administrador_register({nombre: nombre.trim(), email: email.trim(), password: password.trim(), confirmed_password: confirmed_password.trim()}, token)
             .then(res => {
                     console.log(res.data)
                     localStorage.setItem("user", JSON.stringify(res.data))

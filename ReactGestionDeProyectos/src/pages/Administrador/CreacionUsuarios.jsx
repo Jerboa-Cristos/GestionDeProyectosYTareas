@@ -68,8 +68,12 @@ const GuardarUsuario = async (e) => {
 
     const validationErrors = []
 
+    if(rol === '') {
+        validationErrors.push('Seleccione un rol para crear el usuario.')
+    }
+
     if(formData.email === '' || formData.nombre === '') {
-        validationErrors.push('Rellene todos los campos para iniciar sesión.')
+        validationErrors.push('Rellene todos los campos para crear el usuario.')
     }
 
     if(formData.password.trim() !== formData.confirmed_password.trim()) {
@@ -77,7 +81,7 @@ const GuardarUsuario = async (e) => {
     }
 
     if(!formData.nombre.toLocaleLowerCase().match(/^[\p{L}.\-\s]+$/gu)) {
-        validationErrors.push('El nombre no puede contener números.')
+        validationErrors.push('El nombre no puede contener números o caracteres especiales.')
     }
 
     if(formData.nombre.toLocaleLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {

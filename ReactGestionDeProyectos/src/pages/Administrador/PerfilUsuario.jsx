@@ -67,9 +67,14 @@ function PerfilUsuario() {
 //#region Función para hacer UPDATE del usuario
 const handleChange = (e) => {
     const {name, value} = e.target;
-    setFormData({
-        ...formData,
-        [name]: value
+    setFormData(prev => {
+        const newData = {...prev, [name]: value.trim() }
+
+        if(name ==='rol' && (value === 'Administrador' || value === 'ProductOwner')){
+            newData.proyecto='';
+        }
+
+        return newData
     })
 }
 
@@ -82,16 +87,20 @@ const UpdateUsuario = (e) => {
 
     const validationErrors = []
 
-    if(formData.email === '' || formData.nombre === '') {
-        validationErrors.push('Rellene todos los campos para iniciar sesión.')
+    if(rol === '') {
+        validationErrors.push('Seleccione un rol para actualizar el usuario.')
     }
 
-    if(formData.password !== formData.password_confirmation) {
+    if(formData.email === '' || formData.nombre === '') {
+        validationErrors.push('Rellene todos los campos para actualizar el usuario.')
+    }
+
+    if(formData.password.trim() !== formData.password_confirmation.trim()) {
         validationErrors.push('Las contraseñas no coinciden.')
     }
 
     if(!formData.nombre.toLocaleLowerCase().match(/^[\p{L}.\-\s]+$/gu)) {
-        validationErrors.push('El nombre no puede contener números.')
+        validationErrors.push('El nombre no puede contener números o caracteres especiales.')
     }
 
     if(formData.nombre.toLocaleLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
