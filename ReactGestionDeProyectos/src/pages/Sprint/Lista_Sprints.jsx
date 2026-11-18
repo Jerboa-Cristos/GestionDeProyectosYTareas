@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import MenuTop from "../../Components/MenuTop"
-import Menu_Izquierdo from "../Menus/Menu_Izquierdo"
+import MenuTop from "../../Layout/Menu/MenuTop"
+import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import { funcion_listado_sprint } from "../../services/ruta_api_sprint"
 
 function Lista_Sprints () {
@@ -40,7 +40,7 @@ function Lista_Sprints () {
         
             <div className="flex">
                 <div className="w-56">
-                <Menu_Izquierdo id_proyecto={id_proyecto}/>
+                <MenuProductOwner/>
 
                 </div>
 

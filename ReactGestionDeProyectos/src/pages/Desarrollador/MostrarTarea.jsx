@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from "react"
-import MenuTop from "../../Components/MenuTop"
+import MenuTop from "../../Layout/Menu/MenuTop"
 import { Save } from "lucide-react"
 import { showMiTarea, updateTarea } from '../../services/desarolladorService'
-import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
-import SeccionComentario from "../../Components/Com_Comentario/SeccionComentario";
-import Loading from '../../Components/Loading';
+import MenuDesarrollador from '../../Layout/Com_Desarrollador/MenuDesarrollador';
+import SeccionComentario from "../../Layout/Com_Comentario/SeccionComentario";
+import Loading from '../../Layout/Loading';
 import { useParams } from "react-router-dom"
 import { toast } from 'react-hot-toast'
 
@@ -60,7 +60,7 @@ function MostrarTarea (){
     <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
         <MenuTop rutaPerfil='/desarrollador_profile'/>  
         <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 lg:pb-0">
-                <MenuLateralDesarrollador/>
+                <MenuDesarrollador/>
             <main className="bg-blueDashboard flex-1 rounded-xl shadow-lg flex flex-col overflow-hidden">
                 <div className="p-4 lg:p-8">
                     <form onSubmit={botonEditarTarea} className="max-w-4xl mx-auto">

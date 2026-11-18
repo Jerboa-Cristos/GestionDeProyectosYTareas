@@ -3,9 +3,9 @@ import {useParams, useNavigate} from 'react-router-dom';
 import { showUsuarios, updateUsuarios, mostrarProyectos} from '../../services/adminService';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { AlertDeleteUser } from '../../Components/Com_Administrador/AlertDeleteUser';
-import MenuTop from '../../Components/MenuTop';
-import Loading from '../../Components/Loading';
+import { AlertDeleteUser } from '../../Layout/Com_Administrador/AlertDeleteUser';
+import MenuTop from '../../Layout/Menu/MenuTop';
+import Loading from '../../Layout/Loading';
 
 function PerfilUsuario() {
     const token = localStorage.getItem('token');

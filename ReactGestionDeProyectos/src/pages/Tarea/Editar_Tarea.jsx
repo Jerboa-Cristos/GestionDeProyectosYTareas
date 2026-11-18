@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import MenuTop from "../../Components/MenuTop"
-import Menu_Izquierdo from "../Menus/Menu_Izquierdo"
-import { Save } from "lucide-react"
-import { funcion_actualizar_tarea, funcion_mostrar_tarea } from "../../services/ruta_api_tarea"
 import { useParams, useNavigate } from "react-router-dom"
+import { Save } from "lucide-react"
+import MenuTop from "../../Layout/Menu/MenuTop"
+import MenuProductOwner from "@/Layout/Com_ProductOwner/MenuProductOwner"
+import { funcion_actualizar_tarea, funcion_mostrar_tarea } from "../../services/ruta_api_tarea"
 import { mostrarUsuarios } from "../../services/adminService"
-import SeccionComentario from "../../Components/Com_Comentario/SeccionComentario"
+import SeccionComentario from "../../Layout/Com_Comentario/SeccionComentario"
 
 function Editar_Tarea (){
     const [nombre, setNombre] = useState('')
@@ -77,7 +77,7 @@ function Editar_Tarea (){
         <MenuTop rutaPerfil='/product_owner_profile'/>  
         <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
             <div className="md:h-full md:flex">
-            <Menu_Izquierdo/>
+            <MenuProductOwner/>
             </div>
 
         <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto pb-24">

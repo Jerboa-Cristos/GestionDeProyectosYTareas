@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import MenuTop from "../../Components/MenuTop";
-import { funcion_listado_proyecto, funcion_elimimar_proyecto } from "../../services/ruta_api_proyecto";
-import Menu_Izquierdo from "../Menus/Menu_Izquierdo";
+import { Link} from "react-router-dom";
 import { MoreVertical } from "lucide-react";
+import MenuTop from "../../Layout/Menu/MenuTop";
+import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner";
+import { funcion_listado_proyecto, funcion_elimimar_proyecto } from "../../services/ruta_api_proyecto";
 
 function Lista_Proyectos() {
   const [proyectos, setProyectos] = useState([]);
@@ -45,7 +45,7 @@ function Lista_Proyectos() {
       <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
 
         <div className="md:h-full md:flex">
-        <Menu_Izquierdo />
+        <MenuProductOwner/>
         </div>
 
           <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto pb-24">

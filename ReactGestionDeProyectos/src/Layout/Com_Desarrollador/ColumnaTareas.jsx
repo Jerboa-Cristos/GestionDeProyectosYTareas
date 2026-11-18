@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Tarea from '../../Components/Com_Desarrollador/Tarea';
+import Tarea from './Tarea';
 import { Droppable } from '@hello-pangea/dnd'; 
 
 const ColumnaTareas = ({titulo, estadoID, tipoEstado}) => {

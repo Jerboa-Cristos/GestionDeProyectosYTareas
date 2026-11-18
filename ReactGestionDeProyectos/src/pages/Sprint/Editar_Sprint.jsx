@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import MenuTop from "../../Components/MenuTop"
-import Menu_Izquierdo from "../Menus/Menu_Izquierdo"
-import { Save } from "lucide-react"
 import { useParams, useNavigate } from "react-router-dom"
+import { Save } from "lucide-react"
+import MenuTop from "../../Layout/Menu/MenuTop"
+import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import { funcion_actualizar_sprint, funcion_mostrar_sprint } from "../../services/ruta_api_sprint"
 
 function Editar_Sprint (){
@@ -58,7 +58,7 @@ function Editar_Sprint (){
         <MenuTop rutaPerfil='/product_owner_profile'/>  
         <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
             <div className='md:h-full md:flex'>
-                <Menu_Izquierdo/>
+                <MenuProductOwner/>
 
             </div>
 

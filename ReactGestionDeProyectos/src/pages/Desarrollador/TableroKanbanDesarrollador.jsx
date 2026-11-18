@@ -6,10 +6,10 @@ import { DragDropContext } from '@hello-pangea/dnd';
 import { updateTarea } from '../../services/desarolladorService';
 import { toast } from 'react-hot-toast'
 //Componentes
-import KanbanColumn from '../../Components/Com_Desarrollador/KanbanColumn';
-import MenuTop from '../../Components/MenuTop';
-import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
-import Loading from '../../Components/Loading';
+import KanbanColumn from '../../Layout/Com_Desarrollador/KanbanColumn';
+import MenuTop from '../../Layout/Menu/MenuTop';
+import MenuDesarrollador from '../../Layout/Com_Desarrollador/MenuDesarrollador';
+import Loading from '../../Layout/Loading';
 
 function TableroKanbanDesarrollador() {
     const {tareas, setTareas, loading} = useContext(TareaContext)
@@ -98,7 +98,7 @@ function TableroKanbanDesarrollador() {
          <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/desarrollador_profile'/>
             <div className="flex flex-1 gap-4 h-full pb-20 lg:pb-0">
-                <MenuLateralDesarrollador/>
+                <MenuDesarrollador/>
                 <main className="flex-1 bg-white rounded-xl shadow-lg p-4 lg:p-8 flex flex-col gap-6">
                     <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-2 md:mb-6 text-center md:text-left">Tablero Kanban</h1>
                     <h2 className="text-xl md:text-2xl font-bold text-blueDark text-center md:text-left"><strong>Proyecto:</strong> {tareasDeSprint[0]?.sprint?.proyecto?.nombre} - <strong>Sprint:</strong> {tareasDeSprint[0]?.sprint?.nombre}</h2>

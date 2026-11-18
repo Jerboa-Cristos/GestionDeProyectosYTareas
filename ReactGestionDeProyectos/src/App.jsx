@@ -3,7 +3,7 @@ import './App.css';
 //Cris
 import { Suspense, lazy } from 'react'; //Carga de forma perezosa los componentes, para mejorar el rendimiento
 //Para importar páginas con lazy: const MarkdownPreview = lazy(() => import('./MarkdownPreview.js'));
-import Loading from './Components/Loading'; //Componente de carga para mostrar mientras se cargan todo tipo de cosas
+import Loading from './Layout/Loading'; //Componente de carga para mostrar mientras se cargan todo tipo de cosas
 
 import { Toaster } from 'react-hot-toast'; //Biblioteca para hacer notificaciones tipo toast
 import { TareaProvider } from './Context/TareaContext'; //CONTEXTO DE TAREAS PARA CADA USUARIO
@@ -44,7 +44,7 @@ const Crear_Sprint = lazy(() => import('./pages/Sprint/Crear_Sprint'));
 const Crear_Tarea = lazy(() => import('./pages/Tarea/Crear_Tarea'));
 
 //COMPONENTES QUE REUTILIZAREMOS
-import Menu_Izquierdo from './pages/Menus/Menu_Izquierdo';
+import Menu_Izquierdo from './Layout/Menu/SideMenu';
 const Tablero_Kanban_Product_Owner = lazy(() => import('./pages/Product_Owner/Tablero_Kanban_Product_Owner'));
 const Editar_Tarea = lazy(() => import('./pages/Tarea/Editar_Tarea'));
 const Lista_Sprints = lazy(() => import('./pages/Sprint/Lista_Sprints'));

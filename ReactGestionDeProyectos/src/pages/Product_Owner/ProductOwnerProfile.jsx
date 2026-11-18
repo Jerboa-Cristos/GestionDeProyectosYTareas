@@ -1,5 +1,5 @@
-import MenuTop from "../../Components/MenuTop"
-import { User, Mail, Briefcase, Folder, RotateCcw, LockIcon, Edit3, Eye, EyeClosed } from 'lucide-react';
+import MenuTop from "../../Layout/Menu/MenuTop"
+import { User, Mail, Briefcase, RotateCcw, LockIcon, Edit3, Eye, EyeClosed } from 'lucide-react';
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { funcion_obtener_datos_product_owner_profile, funcion_actualizar_product_owner_profile } from "../../services/authService";

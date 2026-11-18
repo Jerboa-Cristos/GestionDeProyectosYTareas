@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
+import { useParams, Link } from "react-router-dom"
+import { MoreVertical } from "lucide-react"
+import MenuTop from '../../Layout/Menu/MenuTop'
+import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import { funcion_mostrar_proyecto } from "../../services/ruta_api_proyecto"
 import { funcion_eliminar_sprint, funcion_listado_sprint} from '../../services/ruta_api_sprint'
-import { useParams, Link } from "react-router-dom"
-import Menu_Izquierdo from '../Menus/Menu_Izquierdo'
-import MenuTop from '../../Components/MenuTop'
-import { MoreVertical } from "lucide-react"
 
 function Lista_Sprints_Proyecto() {
     const [proyectos, setProyecto] = useState('')
@@ -12,7 +12,6 @@ function Lista_Sprints_Proyecto() {
     //se usa useParams porque el id viene de la URL
     const {id_proyecto} = useParams() //obtener id de la url
    
-    
     
     useEffect(() => {
         localStorage.setItem("proyecto_activo", id_proyecto)
@@ -98,7 +97,7 @@ function Lista_Sprints_Proyecto() {
 
         <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
             <div className="md:h-full md:flex">
-            <Menu_Izquierdo/> 
+            <MenuProductOwner/> 
 
             </div>
             

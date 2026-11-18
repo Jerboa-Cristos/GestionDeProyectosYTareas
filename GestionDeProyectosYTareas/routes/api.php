@@ -26,12 +26,11 @@ Route::get('user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-//Rutas para autenticación ejemplo del tutorial yotube , eliminar despues
 //Route::post('register', [AuthController::class, 'register_user']);
 
 #region ADMINISTRADOR
 //RUTAS AUTENTICACION ADMINISTRADOR
-Route::post('register_administrador', [AdministradorAuthController::class, 'registerAdministrador'])->middleware(['auth.admin', 'auth:sanctum']);;
+Route::post('register_administrador', [AdministradorAuthController::class, 'registerAdministrador'])->middleware(['auth:sanctum']);
 Route::post('login_administrador', [AdministradorAuthController::class,'loginAdministrador']);
 //Middleware
 //Route::get('ruta del navegador', [Controlador::class, 'metodo backend'])->middleware('auth:GUARD_DEL_USUARIO'); //carpeta config/auth.php
@@ -53,7 +52,6 @@ Route::post('login_product_owner', [ProductOwnerAuthController::class,'loginProd
 //MIDDLEWARE
 Route::post('profile_product_owner', [ProductOwnerAuthController::class, 'actualizar_profileProductOwner'])->middleware(['auth.po', 'auth:sanctum']);
 Route::get('profile_product_owner', [ProductOwnerAuthController::class, 'obtenerDatosProfileProductOwner'])->middleware(['auth.po', 'auth:sanctum']);
-
 
 //RUTAS CRUD API PRODUCT OWNER , ya que el es el que crea proyectos
 Route::get('listado_proyectos', [ProductOwnerApiController::class, 'index'])->middleware(['auth.po', 'auth:sanctum']);

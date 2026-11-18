@@ -1,4 +1,4 @@
-import MenuTop from "../../../Components/MenuTop"
+import MenuTop from "../../../Layout/Menu/MenuTop"
 import { User, Mail, Briefcase, Folder, RotateCcw, LockIcon, Edit3, Eye, EyeClosed } from 'lucide-react';
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import MenuTop from "../../Components/MenuTop"
-import Menu_Izquierdo from "../Menus/Menu_Izquierdo"
 import { Save } from "lucide-react"
+import MenuTop from "../../Layout/Menu/MenuTop"
+import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import { useParams, useNavigate } from "react-router-dom"
 import { funcion_actualizar_proyecto, funcion_mostrar_proyecto } from "../../services/ruta_api_proyecto"
 
@@ -55,7 +55,7 @@ function Editar_Proyecto (){
         <MenuTop rutaPerfil='/product_owner_profile'/>  
         <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
             <div className="md:h-full md:flex">
-            <Menu_Izquierdo/>
+            <MenuProductOwner/>
 
             </div>
 

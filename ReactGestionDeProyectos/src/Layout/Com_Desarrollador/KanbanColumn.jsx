@@ -1,4 +1,4 @@
-import KanbanPanel from '../../Components/Com_Desarrollador/KanbanPanel';
+import KanbanPanel from './KanbanPanel';
 import { Droppable } from '@hello-pangea/dnd'; 
 
 const KanbanColumn = ({titulo, estadoID, tipoEstado }) => (

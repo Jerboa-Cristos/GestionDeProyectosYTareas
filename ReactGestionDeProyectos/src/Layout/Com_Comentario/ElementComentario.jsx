@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { updateComentario } from '../../services/comentarioService'
-import { AlertDeleteComent } from '../../Components/Com_Comentario/AlertDeleteComent';
+import { AlertDeleteComent } from './AlertDeleteComent';
 import { User2 } from "lucide-react"
 import { toast } from 'react-hot-toast'
 

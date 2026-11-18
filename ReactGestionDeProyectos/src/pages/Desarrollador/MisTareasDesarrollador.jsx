@@ -6,10 +6,10 @@ import { DragDropContext } from '@hello-pangea/dnd';
 import { toast } from 'react-hot-toast'
 import { updateTarea } from '../../services/desarolladorService';
 //Componentes
-import ColumnaTareas from '../../Components/Com_Desarrollador/ColumnaTareas';
-import MenuTop from '../../Components/MenuTop';
-import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
-import Loading from '../../Components/Loading';
+import ColumnaTareas from '../../Layout/Com_Desarrollador/ColumnaTareas';
+import MenuTop from '../../Layout/Menu/MenuTop';
+import MenuDesarrollador from '../../Layout/Com_Desarrollador/MenuDesarrollador';
+import Loading from '../../Layout/Loading';
 
 function MisTareasDesarrollador() {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -77,7 +77,7 @@ function MisTareasDesarrollador() {
          <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/desarrollador_profile'/>
             <div className="flex flex-1 gap-4 h-full pb-20 lg:pb-0">
-                <MenuLateralDesarrollador/>
+                <MenuDesarrollador/>
                 <main className="flex-1 bg-white rounded-xl shadow-lg p-2 md:p-6 flex flex-col gap-6">
                     <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-2 md:mb-6 text-center md:text-left">Mis Tareas</h1>
                     <div className="flex flex-col gap-4 items-center md:flex-row md:justify-between">

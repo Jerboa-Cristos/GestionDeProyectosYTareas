@@ -1,10 +1,10 @@
 import { Search, Plus, Users, UserCheck, UserCog} from 'lucide-react';
-import MenuTop from '../../Components/MenuTop';
-import { AlertDeleteUser } from '../../Components/Com_Administrador/AlertDeleteUser';
+import MenuTop from '../../Layout/Menu/MenuTop';
+import { AlertDeleteUser } from '../../Layout/Com_Administrador/AlertDeleteUser';
 import { mostrarUsuarios } from '../../services/adminService';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Loading from '../../Components/Loading';
+import Loading from '../../Layout/Loading';
 
 function GestionUsuarios() {
     const token = localStorage.getItem('token');

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { funcion_crear_proyecto } from "../../services/ruta_api_proyecto";
-import Menu_Izquierdo from "../Menus/Menu_Izquierdo";
 import { useNavigate } from "react-router-dom";
-import MenuTop from '../../Components/MenuTop'
 import { Save } from "lucide-react";
+import MenuTop from '../../Layout/Menu/MenuTop'
+import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner";
+import { funcion_crear_proyecto } from "../../services/ruta_api_proyecto";
 
 function Crear_Proyecto() {
     const [esMovil, setEsMovil] = useState(false)
@@ -46,7 +46,7 @@ console.log('esMovil:', esMovil, 'window.innerWidth:', window.innerWidth)
         <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
 
         <div className="md:h-full md:flex">
-            <Menu_Izquierdo/>
+            <MenuProductOwner/>
 
         </div>
          

@@ -1,10 +1,10 @@
- import { Save } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import MenuTop from "../../Components/MenuTop"
-import { mostrarUsuarios } from "../../services/adminService"
+import { Save } from "lucide-react"
+import MenuTop from "../../Layout/Menu/MenuTop"
+import MenuProductOwner from "@/Layout/Com_ProductOwner/MenuProductOwner"
+import { mostrarUsuarios } from "../../services/adminService" //ES DEL ADMIN, COJONES, PEDAZO DE SUBNORMAL
 import { funcion_crear_tarea } from "../../services/ruta_api_tarea"
-import Menu_Izquierdo from "../Menus/Menu_Izquierdo"
 
 function Crear_Tarea () {
     const [nombre, setNombre] = useState('')
@@ -20,51 +20,51 @@ function Crear_Tarea () {
     const navigate = useNavigate()
 
 
-        const botonGuardarTarea = (e) => {
-            e.preventDefault()
+    const botonGuardarTarea = (e) => {
+        e.preventDefault()
 
-            const token = localStorage.getItem('token')
-            const data = {
-                nombre, 
-                tipo,
-                estado: estado || "Por Hacer",
-                descripcion: descripcion, 
-                fecha_fin: fechaFin,
-                id_sprint: id_sprint,
-                id_desarrollador: idDesarrollador
-
-            }
-            funcion_crear_tarea(data, id_sprint, token)
-            .then(respuesta => {
-                console.log('tarea creada', respuesta.data)
-                navigate(`/tablero_kanban_product_owner/${id_sprint}`)
-                console.log('ID sprint recibido',id_sprint)
-                
-            })
-            .catch(error => {
-                console.log('Error al crear tarea', error.respuesta.data)
-            })
+        const token = localStorage.getItem('token')
+        const data = {
+            nombre, 
+            tipo,
+            estado: estado || "Por Hacer",
+            descripcion: descripcion, 
+            fecha_fin: fechaFin,
+            id_sprint: id_sprint,
+            id_desarrollador: idDesarrollador
 
         }
+        funcion_crear_tarea(data, id_sprint, token)
+        .then(respuesta => {
+            console.log('tarea creada', respuesta.data)
+            navigate(`/tablero_kanban_product_owner/${id_sprint}`)
+            console.log('ID sprint recibido',id_sprint)
+            
+        })
+        .catch(error => {
+            console.log('Error al crear tarea', error.respuesta.data)
+        })
 
-        useEffect(() => {
-            const token = localStorage.getItem('token')
+    }
 
-            mostrarUsuarios(token)
-            .then(respuesta => {
-                const filtroUsuarios = respuesta.data.filter(
-                    desarrollador => desarrollador.rol === 'Desarrollador'
-                )
+    useEffect(() => {
+        const token = localStorage.getItem('token')
 
-                setDesarrolladores(filtroUsuarios)
+        mostrarUsuarios(token) //Cambiar la función por la función creada especialmente para mostrar desarrolladores
+        .then(respuesta => {
+            const filtroUsuarios = respuesta.data.filter(
+                desarrollador => desarrollador.rol === 'Desarrollador'
+            )
 
-                console.log('Cargando desarrolador', respuesta.data)
-            })
+            setDesarrolladores(filtroUsuarios)
 
-            .catch(error => {
-                console.log('Error al mostrar desarrolladores', error.respuesta.data)
-            })
-        }, [])
+            console.log('Cargando desarrolador', respuesta.data)
+        })
+
+        .catch(error => {
+            console.log('Error al mostrar desarrolladores', error.respuesta.data)
+        })
+    }, [])
     
 
     return (
@@ -75,8 +75,7 @@ function Crear_Tarea () {
 
     <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
         <div className="md:h-full md:flex">
-            <Menu_Izquierdo/>
-
+            <MenuProductOwner/>
         </div>
 
         <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto pb-24">
@@ -183,28 +182,3 @@ function Crear_Tarea () {
 }
 
 export default Crear_Tarea
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

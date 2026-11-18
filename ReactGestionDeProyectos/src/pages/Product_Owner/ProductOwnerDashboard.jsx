@@ -1,36 +1,58 @@
-import { useNavigate } from "react-router-dom"
-import MenuTop  from '../../Components/MenuTop'
-import Menu_Izquierdo from '../Menus/Menu_Izquierdo'
-import {  ClipboardList ,Calendar, AlertCircle } from "lucide-react"
+//Code
 import { useEffect, useState } from "react"
 import { funcion_listado_tareas_product_owner } from "../../services/ruta_api_tarea"
+//Visual components
+import MenuTop  from '../../Layout/Menu/MenuTop'
+import MenuProductOwner from '../../Layout/Com_ProductOwner/MenuProductOwner'
+import Loading from '../../Layout/Loading';
+import { ClipboardList ,Calendar, AlertCircle } from "lucide-react"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Pie, PieChart, Legend } from 'recharts';
+
 
 function ProductOwnerDashboard () {
     const user = JSON.parse(localStorage.getItem('user'))
-    const navigate = useNavigate()
-
     const [tareas, setTareas] = useState([])
+    const [loading, setLoading] = useState(true);
 
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        funcion_listado_tareas_product_owner( token)
+        .then(res => {
+            setTareas(res.data)
+            console.log(res.data)
+            setLoading(false)
+        })
+        .catch(error => {
+            console.log('Error al cargar tareas', error)
+        })
+    }, [])
+
+//#region FUNCIONES DEL DASHBOARD
+    //#region FILTRO TAREAS POR ESTADO
     const tareasPorHacer = tareas.filter(tarea => tarea.estado === 'Por Hacer').length;
     const tareasEnCurso = tareas.filter(tarea => tarea.estado === 'En Curso').length;
     const tareasEnRevision = tareas.filter(tarea => tarea.estado === 'En Revision').length;
     const tareasFinalizada = tareas.filter(tarea => tarea.estado === 'Finalizado').length;
+    //#endregion
 
-    const hoy = new Date();
+    //#region TAREAS DEADLINE
     const tareasDeadline = tareas.filter(tarea => {
         const fechaFin = new Date(tarea.fecha_fin)
-        const diferenciaFecha = fechaFin -hoy;
-        return diferenciaFecha > 0 && diferenciaFecha < 3 * 24 * 60 * 60 * 1000;
+        const fechaActual = new Date()
+        const diferenciaFecha = Math.abs((fechaFin - fechaActual) / 86400000);
+        return diferenciaFecha > 0 && diferenciaFecha <= 4;
     })
+    //#endregion
 
 
+    //#region GRÁFICO CIRCULAR RESUMEN ESTADO
     const datosGrafico = [
         {label: "Por Hacer", value: tareasPorHacer, color: '#00b4d8'},
         {label: "En Curso", value: tareasEnCurso, color: '#0077b6'},
         {label: "En Revision", value: tareasEnRevision, color: '#ff9f1c'},
         {label: "Finalizado", value: tareasFinalizada, color: '#adb5bd'}
-        
     ]
+
     const total = datosGrafico.reduce((acc, item) => acc + item.value, 0)
 
     const tipoDeTarea = {
@@ -54,53 +76,36 @@ function ProductOwnerDashboard () {
     const porcentajeDiseño = (diseño / totalTipoDeTarea) * 100
     const porcentajeDespliegue = (despliegue / totalTipoDeTarea) * 100
     const porcentajeTesting = (testing / totalTipoDeTarea) * 100
+    //#endregion
 
-    
-    useEffect(() => {
-        const token = localStorage.getItem('token')
+//#endregion
 
-        funcion_listado_tareas_product_owner( token)
-        .then(res => {
-            setTareas(res.data)
-            console.log(res.data)
-        })
-        .catch(error => {
-            console.log('Error al cargar tareas', error)
-        })
-
-
-    }, [])
-
+    if (loading) return <Loading />
 
     return (
-        <div className="h-screen bg-blueDark p-4 flex flex-col font-sans">
+        <div className="min-h-screen bg-blueDark p-2 md:p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/product_owner_profile'/>
-            <div className="flex flex-1 gap-4 overflow-hidden  flex-col md:flex-row">
-                <div className="lg:h-full lg:flex">
-                <Menu_Izquierdo/>
+            <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 lg:pb-0">
+                <MenuProductOwner/>
+                <main className="flex-1 bg-white rounded-xl shadow-lg p-4 lg:p-8 overflow-y-auto flex flex-col gap-6">
+                    <h1 className="text-2xl lg:text-3xl font-bold text-blueDark mb-2 lg:mb-6 text-center lg:text-left">Dashboard</h1>
 
-                </div>
-                <main className=" flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto flex flex-col gap-6">
-                    <h1 className="sm-text-3xl sm:mb-6 text-2xl font-bold text-blueDark mb-4">Dashboard</h1>
-
-                    
+                    {/* Grid Principal */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div className="space-y-6">
-                        
+                        <div className="space-y-5">
+                        {/* Tarjetas de Tareas */}
                         <div className="grid grid-cols-1 gap-4">
-                            
+                            {/* Tareas Asignadas */}
                             <button 
-                            
-                            className="bg-blueDashboard rounded-xl p-6 flex items-center justify-between text-white hover:shadow-lg hover:bg-blueblue transition-all" 
-                            >
+                            className="bg-blueDashboard rounded-xl p-6 flex items-center justify-between text-white 
+                            hover:shadow-lg hover:bg-blueblue transition-all">
                                 <div className="flex items-center gap-4">
                                     <ClipboardList className="w-12 h-12 md:w-20 md:h-20" />
                                     <span className="text-xl font-semibold leading-tight">Tareas </span>
                                 </div>
                                 <span className="text-4xl font-bold">{tareas.length}</span>
                             </button>
-
-                           
+                            {/* Tareas Deadline */}
                             <button  
                             className={"bg-warning rounded-xl p-6 flex items-center justify-between text-white relative hover:shadow-lg hover:bg-warningDark transition-all"}>
                             <div className="flex items-center gap-4">
@@ -112,7 +117,7 @@ function ProductOwnerDashboard () {
                             </button>
                         </div>
 
-                        
+                        {/* Tipo de Trabajo MONTARLO TODO */}
                         <div className="bg-blueBase rounded-xl p-6">
                             <h3 className="text-center text-xl font-semibold text-blueDark mb-4">Tipo de trabajo</h3>
                             <div className="space-y-1">
@@ -121,7 +126,6 @@ function ProductOwnerDashboard () {
                                     <div className="w-full bg-transparent h-6">
                                         <div className="bg-blueBase h-full" style={{width:`${porcentajeBackend}`}}></div>
                                     </div>
-
                                 </div>
 
                                 <div>
@@ -129,7 +133,6 @@ function ProductOwnerDashboard () {
                                     <div className="w-full bg-transparent h-6">
                                         <div className="bg-blueBase h-full" style={{width:`${porcentajeFrontend}`}}></div>
                                     </div>
-
                                 </div>
 
                                 <div>
@@ -137,7 +140,6 @@ function ProductOwnerDashboard () {
                                     <div className="w-full bg-transparent h-6">
                                         <div className="bg-blueBase h-full" style={{width:`${porcentajeDiseño}`}}></div>
                                     </div>
-
                                 </div>
 
                                 <div>
@@ -145,7 +147,6 @@ function ProductOwnerDashboard () {
                                     <div className="w-full bg-transparent h-6">
                                         <div className="bg-blueBase h-full" style={{width:`${porcentajeDespliegue}`}}></div>
                                     </div>
-
                                 </div>
 
                                 <div>
@@ -153,18 +154,13 @@ function ProductOwnerDashboard () {
                                     <div className="w-full bg-transparent h-6">
                                         <div className="bg-blueBase h-full" style={{width:`${porcentajeTesting}`}}></div>
                                     </div>
-
                                 </div>
-
-
-
-                                
                             </div>
                         </div>
                     </div>
 
                     <div className="space-y-6">
-                       
+                       {/* Últimos Cambios */}
                         <div className="bg-blueBase rounded-xl p-6 shadow-sm">
                             <h3 className="text-center text-xl font-semibold text-blueDark mb-6">Últimos Cambios</h3>
                             <div className="space-y-3">
@@ -182,11 +178,10 @@ function ProductOwnerDashboard () {
                             </div>
                         </div>
 
-                       
-
-                        <div className="bg-blueBase rounded-xl p-9 shadow-sm flex flex-col items-center">
-                            <h3 className="text-xl font-semibold text-blueDark mb-6">Resumen del Estado</h3>
-                            <div className="relative w-40 h-40 sm:w-48 sm:h-48 mx-auto">
+                        {/* Resumen del Estado (Gráfico Circular) */}
+                        <div className="bg-blueBase rounded-xl p-4 lg:p-6 shadow-sm flex flex-col items-center">
+                            <h3 className="text-lg lg:text-xl font-semibold text-blueDark mb-6">Resumen del Estado</h3>
+                            <div className="w-full h-64 max-w-xs">
                             
                                 <svg width={220} height={220} viewBox="0 0 32 32">
                                 {(() => {
@@ -225,8 +220,6 @@ function ProductOwnerDashboard () {
 
                                     })
                                 })()}
-
-                                   
                                 </svg>
 
                                 <div className="mt-6 text-blueDark text-sm font-semibold space-y-2 pb-5">
@@ -240,12 +233,8 @@ function ProductOwnerDashboard () {
                                         </div>
                                     ))}
                                 </div>
-                                
-
                             </div>
                         </div>
-
-                        
                     </div>
                 </div>    
             </main>

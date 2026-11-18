@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { funcion_crear_sprint } from "../../services/ruta_api_sprint"
 import { useNavigate, useParams } from "react-router-dom"
-import Menu_Izquierdo from '../Menus/Menu_Izquierdo'
-import MenuTop from '../../Components/MenuTop'
 import { Save } from "lucide-react"
+import MenuTop from '../../Layout/Menu/MenuTop'
+import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 
 function Crear_Sprint () {
     const [nombre, setNombre] = useState('')
@@ -44,7 +44,7 @@ function Crear_Sprint () {
 
         <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
             <div className="md:h-full md:flex">
-            <Menu_Izquierdo/>
+            <MenuProductOwner/>
 
             </div>
             <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">

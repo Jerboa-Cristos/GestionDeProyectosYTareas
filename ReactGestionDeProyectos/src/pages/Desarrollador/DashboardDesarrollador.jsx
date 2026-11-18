@@ -1,24 +1,17 @@
 //Código
-import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useContext, useMemo } from 'react';
 import { TareaContext } from '../../Context/TareaContext';
 //Componentes visuales
 import { ClipboardList, Calendar, AlertCircle } from 'lucide-react';
 //Para instalar este modulo se debe hacer npm install recharts
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Pie, PieChart, Legend } from 'recharts';
-import MenuTop from '../../Components/MenuTop';
-import MenuLateralDesarrollador from '../../Components/Com_Desarrollador/MenuLateralDesarrollador';
-import Loading from '../../Components/Loading';
+import MenuTop from '../../Layout/Menu/MenuTop';
+import MenuDesarrollador from '../../Layout/Com_Desarrollador/MenuDesarrollador';
+import Loading from '../../Layout/Loading';
 
 function DashboardDesarrollador() {
-    const navigate = useNavigate();
     const {tareas, loading} = useContext(TareaContext);
-
-    //#region NAVIGACIÓN A OTRAS PÁGINAS
-    function gotoTareas() {
-        navigate('/MisTareasDesarrollador');
-    }
-    //#endregion
 
 //#region FUNCIONES DEL DASHBOARD
 
@@ -56,7 +49,6 @@ function DashboardDesarrollador() {
             fill: COLORS_BAR[i % COLORS_BAR.length]
         }))
     }, [tareas])
-
     //#endregion
 
     //#region GRÁFICOS TIPO TRABAJO
@@ -85,7 +77,7 @@ function DashboardDesarrollador() {
         <div className="min-h-screen bg-blueDark p-2 md:p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/desarrollador_profile'/>
             <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 lg:pb-0">
-                <MenuLateralDesarrollador/>
+                <MenuDesarrollador/>
                 <main className="flex-1 bg-white rounded-xl shadow-lg p-4 lg:p-8 overflow-y-auto flex flex-col gap-6">
                     <h1 className="text-2xl lg:text-3xl font-bold text-blueDark mb-2 lg:mb-6 text-center lg:text-left">Dashboard</h1>
 
@@ -95,19 +87,17 @@ function DashboardDesarrollador() {
                         {/* Tarjetas de Tareas */}
                         <div className="grid grid-cols-1 gap-4">
                             {/* Tareas Asignadas */}
-                            <button 
-                            onClick={gotoTareas} 
-                            className="bg-blueDashboard rounded-xl p-4 md:p-9 flex items-center justify-between text-white hover:shadow-lg hover:bg-blueblue transition-all group" 
-                            >
+                            <NavLink
+                            to='/MisTareasDesarrollador'
+                            className="bg-blueDashboard rounded-xl p-4 md:p-9 flex items-center justify-between text-white hover:shadow-lg hover:bg-blueblue transition-all group">
                                 <div className="flex items-center gap-3 lg:gap-4">
                                     <ClipboardList size={50} lg:size={16} className="transition-transform group-hover:scale-110" />
                                     <span className="text-lg lg:text-xl font-semibold leading-tight text-left">Tareas asignadas</span>
                                 </div>
                                 <span className="text-3xl lg:text-4xl font-bold lg:mr-4">{tareas.length}</span>
-                            </button>
-
+                            </NavLink>
                             {/* Tareas Deadline */}
-                            <button onClick={gotoTareas} 
+                            <NavLink to='/MisTareasDesarrollador'
                            className="bg-warning rounded-xl p-4 lg:p-9 flex items-center justify-between text-white relative hover:shadow-lg hover:bg-warningDark transition-all group">
                             <div className="flex items-center gap-3 lg:gap-4">
                                 <Calendar size={50} lg:size={16} className="transition-transform group-hover:scale-110"/>
@@ -115,10 +105,10 @@ function DashboardDesarrollador() {
                             </div>
                             <span className="text-3xl lg:text-4xl font-bold lg:mr-4">{tareasDeadline}</span>
                             <AlertCircle className="absolute bottom-2 right-2 lg:bottom-4 lg:right-4 text-warningDark bg-white rounded-full p-1" size={24} />
-                            </button>
+                            </NavLink>
                         </div>
 
-                        {/* Tipo de Trabajo MONTARLO TODO */}
+                        {/* Tipo de Trabajo*/}
                         <div className="bg-blueBase rounded-xl p-4 lg:p-7 flex flex-col items-center">
                             <h3 className="text-center text-lg lg:text-xl font-semibold text-blueDark mb-4">Tipo de trabajo</h3>
                             <div className="w-full h-64 max-w-xs lg:max-w-none">
