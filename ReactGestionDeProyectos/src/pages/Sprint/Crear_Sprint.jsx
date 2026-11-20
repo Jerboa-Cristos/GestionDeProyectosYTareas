@@ -37,36 +37,27 @@ function Crear_Sprint () {
     
 
     return (
-    <>    
-
     <div className="h-screen bg-blueDark p-4 flex flex-col">
         <MenuTop rutaPerfil='/product_owner_profile'/>
-
         <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
             <div className="md:h-full md:flex">
             <MenuProductOwner/>
-
             </div>
             <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
-
-                    <h1 className="p-3 font-bold text-2xl text-blueDark ">Product Backlog</h1>
-
-
+                <h1 className="p-3 font-bold text-2xl text-blueDark ">Product Backlog</h1>
 
                     <div className="bg-white  rounded-xl p-8 ">
                         <form onSubmit={botonGuardarSprint}
-                        className="bg-blueDashboard rounded-lg p-6"
-                        >
+                        className="bg-blueDashboard rounded-lg p-6">
                             <h2 className="font-bold text-white">Crear Sprint</h2>
 
-                                <label className="font-semibold text-white">Título</label>
-                                <input
+                            <label className="font-semibold text-white">Título</label>
+                            <input
                                 value={nombre} 
                                 onChange={(e) => setNombre(e.target.value)}
                                 type="text" 
                                 className="border border-BlueBaseDark w-full rounded px-3 py-2 mt-1 bg-blueBase"
-                                required 
-                                />
+                                required/>
 
                             <div>
                                 <label className="font-semibold text-white">Meta del Sprint</label>
@@ -75,14 +66,10 @@ function Crear_Sprint () {
                                 onChange={(e) => setMeta(e.target.value)} 
                                 name="meta_sprint" 
                                 placeholder="Escribe la meta del sprint"
-                                className="border border-BlueBaseDark w-full rounded px-3 py-2 mt-1 h-24 bg-blueBase"
-                                >
+                                className="border border-BlueBaseDark w-full rounded px-3 py-2 mt-1 h-24 bg-blueBase">
                                 
                                 </textarea>
-
                             </div>
-
-
 
                             <div>
                                 <label className="font-semibold text-white">Duración</label>
@@ -102,33 +89,20 @@ function Crear_Sprint () {
                                 name="fecha_fin"  
                                 className="rounded-lg px-4 py-2 bg-blueBase focus:ring-2 focus:ring-blue-300 focus:outline-none "/>
                                 </div>
-
                             </div>
 
                             <div className="flex justify-end">
-                            <button
-                            className="bg-blueBase text-blueDark font-bold px-6 py-2 mt-4 rounded-lg hover:bg-GreenLite transition flex items-center gap-2"
-                            >
-                            <Save size={23} />
-                            Guardar
-
-                            </button>
-
+                                <button
+                                className="bg-blueBase text-blueDark font-bold px-6 py-2 mt-4 rounded-lg hover:bg-GreenLite transition flex items-center gap-2">
+                                <Save size={20} />
+                                Guardar
+                                </button>
                             </div>
-
-                            
-                            </form>   
-                            </div>
-
-                        </div>
+                        </form>   
+                    </div>
                 </div>
-            </div> 
-    
-    
-        
-
-    </>
-
+            </div>
+        </div> 
     )
 }
 

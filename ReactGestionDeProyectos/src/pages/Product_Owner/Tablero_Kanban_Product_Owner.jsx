@@ -193,16 +193,11 @@ function Tablero_Kanban_Product_Owner() {
     
 
     
-    return(
-        <>
-    
+    return(    
          <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/product_owner_profile'/>
             <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
-                <div className='md:h-full md:flex'>
                 <MenuProductOwner/>
-
-                </div>
 
                 <main className="flex-1 bg-white rounded-xl p-4 sm:p-8 overflow-auto flex flex-col gap-4">
                     <h1 className="text-3xl font-bold text-blueDark mb-6">Tablero Kanban</h1>
@@ -292,7 +287,6 @@ function Tablero_Kanban_Product_Owner() {
                 </main>
             </div>
         </div>  
-        </>
     )
 }
 export default Tablero_Kanban_Product_Owner

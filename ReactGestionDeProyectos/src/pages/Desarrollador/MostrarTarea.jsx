@@ -36,7 +36,6 @@ function MostrarTarea (){
         fetchTarea();
     }, [id, token])
 
-
     const botonEditarTarea = (e) => {
         e.preventDefault()
         const token = localStorage.getItem('token')
@@ -60,7 +59,7 @@ function MostrarTarea (){
     <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
         <MenuTop rutaPerfil='/desarrollador_profile'/>  
         <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 lg:pb-0">
-                <MenuDesarrollador/>
+            <MenuDesarrollador/>
             <main className="bg-blueDashboard flex-1 rounded-xl shadow-lg flex flex-col overflow-hidden">
                 <div className="p-4 lg:p-8">
                     <form onSubmit={botonEditarTarea} className="max-w-4xl mx-auto">

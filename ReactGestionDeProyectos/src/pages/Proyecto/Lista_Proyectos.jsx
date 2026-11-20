@@ -38,50 +38,35 @@ function Lista_Proyectos() {
   console.log(proyectos);
 
   return (
-    <>
-      <div className="h-screen bg-blueDark p-4 flex flex-col">
+    <div className="h-screen bg-blueDark p-4 flex flex-col">
       <MenuTop rutaPerfil='/product_owner_profile'/>
-      
       <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
-
-        <div className="md:h-full md:flex">
         <MenuProductOwner/>
-        </div>
-
           <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto pb-24">
             <div className=" flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-
-             
-                <h1 className="text-2xl sm-text-3xl text-blueDark m-4">
-                  Mis Proyectos
-                </h1>
-
-                <Link
-                  to="/crear_proyecto"
-                  className="bg-blueBase hover:bg-blue-300 transition px-4 py-2 rounded-lg font-semibold text-BlueDarkDark shadow text-center"
-                >
+                <h1 className="text-3xl font-bold text-blueDark mb-6">Mis Proyectos</h1>
+                <Link to="/crear_proyecto"
+                  className="bg-blueBase hover:bg-turquesa hover:text-white transition px-4 py-2 rounded-lg font-semibold text-BlueDarkDark shadow text-center">
                   + Nuevo Proyecto
                 </Link>
-              </div>
-
-              {proyectos.length === 0 ? (
-                <p className="text-warning italic">No hay proyectos creados aún</p>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
-                    {proyectos.map((proyecto) => (
-                      <MenuProyecto
-                      key={proyecto.id}
-                      proyecto={proyecto}
-                      botonEliminarProyecto={botonEliminarProyecto}
-                      />
-                    ))}
-                </div>
-              )}
             </div>
-      
+
+            {proyectos.length === 0 ? (
+              <p className="text-warning italic">No hay proyectos creados aún</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
+                  {proyectos.map((proyecto) => (
+                    <MenuProyecto
+                    key={proyecto.id}
+                    proyecto={proyecto}
+                    botonEliminarProyecto={botonEliminarProyecto}
+                    />
+                  ))}
+              </div>
+            )}
           </div>
-      </div>
-    </>
+        </div>
+    </div>
   )
 }
 
@@ -91,25 +76,21 @@ const MenuProyecto = ({proyecto, botonEliminarProyecto}) => {
     const [abrirMenu, setAbrirMenu] = useState(false)
     return (
       <div className="relative bg-blueblue rounded-xl p-5 shadow hover:shadow-md hover:-translate-y-1 transition w-full flex flex-col justify-center">
-        <button className="absolute top-3 right-3 p-1 hover:bg-white rounded"
+        <button className="absolute top-3 right-3 p-1 hover:bg-turquesa hover:text-white transition-all rounded"
         onClick={(e) => {
           e.stopPropagation()
           setAbrirMenu(!abrirMenu)
-        }}
-        >
+        }}>
           <MoreVertical size={20} className="text-white"/>
-
         </button>
 
         {abrirMenu && (
-          <div className="absolute top-10 right-3 bg-white text-blueDark shadow-lg rounded-md border w-36 z-20">
-            <Link
-            to={`/editar_proyecto/${proyecto.id}`}
+          <div className="absolute top-10 right-3 bg-blueBase text-blueDark shadow-lg rounded-md border w-36 z-20">
+            <Link to={`/editar_proyecto/${proyecto.id}`}
             className="block px-4 py-2 hover:bg-GreenLite"
             onClick={() => {
               setAbrirMenu(false)
-            }}
-            >
+            }}>
               Editar
             </Link>
 
@@ -129,8 +110,8 @@ const MenuProyecto = ({proyecto, botonEliminarProyecto}) => {
 
         <div className="flex flex-col sm:flex-row gap-3 w-full">
           <Link to={`/mostrar_proyecto/${proyecto.id}`}
-          className="w-full bg-white text-blueDark font-semibold px-3 py-2 rounded-md shadow hover:bg-GreenLite transition text-center"
-          >
+          className="w-full bg-blueBase text-blueDark font-semibold px-3 py-2 rounded-md shadow hover:bg-turquesa 
+        hover:text-white transition-all text-center">
             Ver Proyecto
           </Link>
           

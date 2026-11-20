@@ -49,63 +49,56 @@ function Editar_Proyecto (){
 
 
     return(
-        <>
-        <div className="h-screen bg-blueDark p-4 flex flex-col">
-
+    <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
         <MenuTop rutaPerfil='/product_owner_profile'/>  
-        <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
-            <div className="md:h-full md:flex">
+        <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 lg:pb-0">
             <MenuProductOwner/>
-
-            </div>
-
-            <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto pb-24">
-                
-                    <form onSubmit={botonEditarProyecto}>
-                        <div className="bg-blueDashboard rounded-lg p-6">
-                            <h2 className="font-bold text-white mb-4 text-[1.2em]">Editar Proyecto</h2>
-                            
-                            <label className="font-semibold text-white mt-4 block">Nombre</label>
+            <main className='flex-1 bg-white rounded-xl shadow-lg p-4 lg:p-8 overflow-y-auto flex flex-col gap-6'>
+                <div className="flex-1 bg-blueDashboard rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
+                    <form className="max-w-2xl mx-auto grid grid-cols-1 gap-4" onSubmit={botonEditarProyecto}>
+                        <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 lg:mb-6 text-center lg:text-left">Editar Proyecto</h1>
+                        <div>
+                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Nombre</label>
                             <input
                                 value={nombre} 
                                 onChange={(e) => setNombre(e.target.value)}
                                 type="text" 
-                                className="w-full rounded px-3 py-2 mt-1 bg-blueBase border border-BlueBaseDark"
+                                className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
                                 required
-                                placeholder="Escribe el nombre del proyecto" 
-                            />
+                                placeholder="Escribe el nombre del proyecto"/>
+                        </div>
 
-                            <label className="font-semibold text-white mt-4 block">Descripción</label>
+                        <div>
+                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Descripción</label>
                             <textarea
                                 value={descripcion}
                                 onChange={(e) => setDescripcion(e.target.value)} 
-                                className="w-full rounded px-3 py-2 mt-1 h-24 bg-blueBase"
-                                placeholder="Escribe la descripción del proyecto"
-                            />
+                                className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
+                                placeholder="Escribe la descripción del proyecto"/>
+                        </div>
 
-                            <label className="font-semibold text-white mt-4 block">Fecha de finalización</label>
+                        <div>
+                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Fecha de finalización</label>
                             <input 
                                 value={fechaFin}
                                 onChange={(e) => setFechaFin(e.target.value)}
                                 type="date" 
-                                className="rounded-lg px-4 py-2 bg-blueBase mt-1 text-blueDark"
-                            />
+                                className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"/>
+                        </div>
 
-                            <div className="flex justify-end">
-                                <button
-                                    className="bg-blueBase text-blueDark font-bold px-6 py-2 mt-6 rounded-lg hover:bg-GreenLite transition flex items-center gap-2"
-                                >
-                                    <Save size={23} />
-                                    Guardar cambios
-                                </button>
-                            </div>
+                        <div className="flex justify-end">
+                            <button
+                                className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
+                                    hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
+                                <Save size={20} />
+                                Guardar cambios
+                            </button>
                         </div>
                     </form>   
-                
-            </div>
+                </div>
+            </main>
         </div>      
-        </div>
-        </>
+    </div>
     )
 }
 

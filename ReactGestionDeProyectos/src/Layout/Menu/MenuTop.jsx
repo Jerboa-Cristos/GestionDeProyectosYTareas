@@ -12,6 +12,7 @@ function MenuTop({rutaPerfil}) {
         localStorage.removeItem('user')
         localStorage.removeItem('isAuthenticated')
         localStorage.removeItem('nombre_usuario')
+        localStorage.removeItem('token')
         navigate('/login');
     }
 

@@ -6,7 +6,6 @@ import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner";
 import { funcion_crear_proyecto } from "../../services/ruta_api_proyecto";
 
 function Crear_Proyecto() {
-    const [esMovil, setEsMovil] = useState(false)
     const [datosForm, setDatosForm] = useState({
         nombre: '',
         descripcion: '', 
@@ -37,63 +36,45 @@ function Crear_Proyecto() {
 
         
     }
-console.log('esMovil:', esMovil, 'window.innerWidth:', window.innerWidth)
+
     return ( 
-        <>
-        <div className="h-screen bg-blueDark p-4 flex flex-col">
+    <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
         <MenuTop rutaPerfil='/product_owner_profile'/>
-
-        <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
-
-        <div className="md:h-full md:flex">
+        <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 lg:pb-0">
             <MenuProductOwner/>
-
-        </div>
-         
-            <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
-            
-                    <h1 className="text-3xl font-bold text-BlueDarkDark mb-4">Crear Proyecto</h1>
-
-
-                    <form 
-                    method="post" 
-                    className="bg-blueDashboard rounded-lg p-6"
-                    onSubmit={botonGuardarProyecto}
-                    >
-                        <h1 className="text-[1.2em] font-bold text-white mb-6">
-                            Crear de Proyecto
-                        </h1>   
-                        <div className="">
-                            
-                            <label className="font-bold text-white">Nombre del Proyecto*</label>
+            <main className='flex-1 bg-white rounded-xl shadow-lg p-4 lg:p-8 overflow-y-auto flex flex-col gap-6'>
+                <div className="flex-1 bg-blueDashboard rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
+                    <form className="max-w-2xl mx-auto grid grid-cols-1 gap-4" onSubmit={botonGuardarProyecto}>
+                        <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 lg:mb-6 text-center lg:text-left">Crear de Proyecto</h1>
+                        <div>
+                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Nombre del Proyecto</label>
                             <input
                             onChange={e => setDatosForm({
                                 ...datosForm, 
                                 nombre: e.target.value
                             })} 
                             type="text" 
-                            name="nombre" 
-                            required className="border border-gray-300 rounded-md focus:border-blue-300 outline-none focus:ring focus:ring-blue-300 w-full mt-3 mb-3 bg-blueBase p-1"
-                            placeholder="Escribe el nombre aqui"
+                            name="nombre" required 
+                            className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
+                            placeholder="Nombre del proyecto"
                             /> 
                         </div>
-                        
+
                         <div>
-                            <label type="text" name="descripcion" className="font-bold text-white">Descripción del proyecto</label>
+                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Descripción del proyecto</label>
                             <textarea
                             onChange={e => setDatosForm({
                                 ...datosForm,
                                 descripcion: e.target.value
                             })} 
                             name="descripcion" 
-                            placeholder="Escribe la descripción aquí" 
-                            className="border border-gray-300 rounded-md w-full focus:border-blue-500 outline-none focus:ring focus:ring-blue-300 mt-3 p-1  bg-blueBase">
-
+                            placeholder="Descripción del proyecto" 
+                            className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
                             </textarea>
                         </div>
 
                         <div>
-                            <label className="font-bold text-white">Fecha final </label>
+                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Fecha final</label>
                             <input
                             onChange = {e => setDatosForm({
                                 ...datosForm,
@@ -101,33 +82,22 @@ console.log('esMovil:', esMovil, 'window.innerWidth:', window.innerWidth)
                             })} 
                             type="date" 
                             name="fecha_fin" 
-                            className="mt-3 text-white"/>
-                        </div>
-
-                        <div className="flex justify-end">
-                            <button
-                            className="text-blueDark bg-blueBase hover:bg-green-300 font-bold my-10 py-2 px-4 rounded-lg  items-center gap-2"
-                            >
-                                
-                            <Save size={23} />
-                            Guardar 
-                            
-                            </button>
-
+                            className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"/>
                         </div>
                     
-
-                        </form>
-                
-
+                        <div className="flex justify-end">
+                            <button
+                            className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
+                                    hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">                            
+                            <Save size={20} />
+                            Guardar proyecto
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            
-            </div>
+            </main>
         </div>
-           
-              
-        
-    </>
+    </div>
     )
 } 
     
