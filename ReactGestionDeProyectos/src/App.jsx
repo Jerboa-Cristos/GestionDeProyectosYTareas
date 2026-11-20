@@ -71,7 +71,6 @@ function App() {
           <Route path='/product_owner_profile' element={<ProductOwnerProfile/>}/>
           <Route path='/product_owner_dashboard' element={<ProductOwnerDashboard/>}/>
           <Route path='/lista_proyectos' element={<Lista_Proyectos/>}/>
-          <Route path='/menu_izquierdo' element={<Menu_Izquierdo/>}/>
 
           <Route path='/tablero_kanban_product_owner/:id_sprint' element={<Tablero_Kanban_Product_Owner/>}/>
 

@@ -55,16 +55,13 @@ function Lista_Sprints_Proyecto() {
             .catch(error => {
                 console.log('Error al eliminar el sprint', error)
             })
-            
-
         }
         
         return (
-            <div className="relative">
+            <div>
                 <button
                 onClick={abrirCerrarMenu}
-                className="text-BlueDarkDark hover:text-GreenLite text-xl"
-                >
+                className="p-1 hover:bg-turquesa hover:text-white transition-all rounded">
                     <MoreVertical size={20} className='text-white'/>
                 </button>
 
@@ -90,83 +87,51 @@ function Lista_Sprints_Proyecto() {
     }
 
     return (
-        <>
-
-        <div className="h-screen bg-blueDark p-4 flex flex-col">
+    <div className="h-screen bg-blueDark p-4 flex flex-col">
         <MenuTop rutaPerfil='/product_owner_profile'/>
-
         <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
-            <div className="md:h-full md:flex">
             <MenuProductOwner/> 
-
-            </div>
-            
-
-            <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
-               
-                <h1 className="text-3xl text-BlueDarkDark font-bold mb-2">
-                    {proyectos.nombre}
-                </h1>
-
-
-                <h2 className="text-BlueDarkDark font-semibold">PRODUCT OWNER BACKLOG</h2>
-                <h2 className="text-BlueDarkDark font-semibold">BACKLOG</h2>
-
-                
+            <main className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto pb-24">
+                <h1 className="text-3xl font-bold text-blueDark uppercase mb-6">{proyectos.nombre}</h1>
+                <h2 className="text-2xl font-bold text-blueDark mb-6">Backlog</h2>
 
                 <div className="flex justify-between items-center mt-4 mb-4">
-                    <h2 className="text-xl font-bold text-BlueDarkDark">SPRINTS</h2>
+                    <h2 className="text-xl font-bold text-blueDark mb-6">Sprints</h2>
 
                     <Link to={`/crear_sprint/${id_proyecto}`}
-                    className="bg-blueBase hover:bg-blue-300 transition rounded px-4 py-2 text-BlueDarkDark font-bold shadow"
-                    >
+                    className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
+                                hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
                     <p>+ Nuevo Sprint</p>
-                    
                     </Link>
                 </div>
 
                     {
                     sprints.length === 0 
-                    ? (<p className="text-blueDashboard italic">No hay sprints creados aún</p>) 
+                    ? (<h3 className="text-xl font-bold text-blueDark mb-6">No hay sprints creados aún</h3>) 
                     : (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {sprints.map((sprint) => (     
-                            <div 
-                            key={sprint.id}
-                            className="bg-blueDashboard rounded p-4 text-center shadow relative"
-                            >
-                                <div className="absolute top-2 right-2">
+                            <div key={sprint.id}
+                            className="relative bg-blueblue rounded-xl p-5 shadow hover:shadow-md hover:-translate-y-1 transition w-full flex flex-col justify-center">
+
+                                <Link to={`/tablero_kanban_product_owner/${sprint.id}`}
+                                onClick={() => localStorage.setItem('sprint_activo', sprint.id)}
+                                className="w-full bg-blueBase text-blueDark font-semibold px-3 py-2 rounded-md shadow hover:bg-turquesa 
+                                hover:text-white transition-all text-center">
+                                    <h2 className="font-bold text-xl mb-2">{sprint.nombre}</h2>
+                                </Link>
+                                <div className="flex flex-row justify-between mt-4">
+                                    <p className="text-white text-sm">Fecha de inicio: {sprint.fecha_inicio}</p>
                                     <MenuSprint id_proyecto={id_proyecto} sprint={sprint}/>
                                 </div>
-
-                                <Link to={`/tablero_kanban_product_owner/${sprint.id}`}
-                                onClick={() => localStorage.setItem('sprint_activo', sprint.id)}
-                                >
-                                <p className="font-bold text-lg text-white">{sprint.nombre}</p>
-                                <p className="text-sm text-white">{sprint.fecha_inicio}</p>
-                                
-                                </Link>
-
-                                <Link to={`/tablero_kanban_product_owner/${sprint.id}`}
-                                onClick={() => localStorage.setItem('sprint_activo', sprint.id)}
-                                >
-                                <p className="rounded items-center w-20 p-1 bg-BlueDarkDark text-sm text-white underline mt-2">Ver tareas</p>
-
-                                </Link>
                             </div>
                         ))}
                         </div>
                     
-                    )}
-
-
-                
-                </div>
-            </div>
+                    )}    
+            </main>
         </div>
-       
-
-        </>
+    </div>
     )
 }
 

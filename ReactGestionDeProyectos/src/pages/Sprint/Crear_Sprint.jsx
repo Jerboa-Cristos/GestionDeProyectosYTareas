@@ -37,72 +37,67 @@ function Crear_Sprint () {
     
 
     return (
-    <div className="h-screen bg-blueDark p-4 flex flex-col">
+    <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
         <MenuTop rutaPerfil='/product_owner_profile'/>
-        <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
-            <div className="md:h-full md:flex">
+        <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 lg:pb-0">
             <MenuProductOwner/>
-            </div>
-            <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
-                <h1 className="p-3 font-bold text-2xl text-blueDark ">Product Backlog</h1>
-
-                    <div className="bg-white  rounded-xl p-8 ">
-                        <form onSubmit={botonGuardarSprint}
-                        className="bg-blueDashboard rounded-lg p-6">
-                            <h2 className="font-bold text-white">Crear Sprint</h2>
-
-                            <label className="font-semibold text-white">Título</label>
+            <main className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
+                    <div className="flex-1 bg-blueDashboard rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
+                        <form className="max-w-2xl mx-auto grid grid-cols-1 gap-4" onSubmit={botonGuardarSprint}>
+                        <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 lg:mb-6 text-center lg:text-left">Crear Sprint</h1>
+                        <div>
+                           <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Título</label>
                             <input
                                 value={nombre} 
                                 onChange={(e) => setNombre(e.target.value)}
                                 type="text" 
-                                className="border border-BlueBaseDark w-full rounded px-3 py-2 mt-1 bg-blueBase"
-                                required/>
+                                className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
+                                required placeholder="Título del sprint"/>
+                        </div>
 
-                            <div>
-                                <label className="font-semibold text-white">Meta del Sprint</label>
-                                <textarea
-                                value={meta}
-                                onChange={(e) => setMeta(e.target.value)} 
-                                name="meta_sprint" 
-                                placeholder="Escribe la meta del sprint"
-                                className="border border-BlueBaseDark w-full rounded px-3 py-2 mt-1 h-24 bg-blueBase">
-                                
-                                </textarea>
-                            </div>
+                        <div>
+                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Meta del Sprint</label>
+                            <textarea
+                            value={meta}
+                            onChange={(e) => setMeta(e.target.value)} 
+                            name="meta_sprint" 
+                            placeholder="Finalidad del sprint"
+                            className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
+                            </textarea>
+                        </div>
 
-                            <div>
-                                <label className="font-semibold text-white">Duración</label>
-
-                                <div className="grid grid-cols-2 gap-4 mt-1">
+                        <div>
+                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Duración</label>
+                            <div className="grid grid-cols-2 gap-4 mt-1">
                                 <input
                                 required 
                                 value={fechaInicio}
                                 onChange={(e) => setFechaInicio(e.target.value)}
                                 type="date" 
                                 name="fecha_inicio"  
-                                className="rounded-lg px-4 py-2 bg-blueBase focus:ring-2 focus:ring-blue-300 focus:outline-none"/>
+                                className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"/>
                                 <input 
                                 value={fechaFin}
                                 onChange={(e) => setFechaFin(e.target.value)}
                                 type="date" 
                                 name="fecha_fin"  
-                                className="rounded-lg px-4 py-2 bg-blueBase focus:ring-2 focus:ring-blue-300 focus:outline-none "/>
-                                </div>
+                                className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"/>
                             </div>
+                        </div>
 
-                            <div className="flex justify-end">
-                                <button
-                                className="bg-blueBase text-blueDark font-bold px-6 py-2 mt-4 rounded-lg hover:bg-GreenLite transition flex items-center gap-2">
-                                <Save size={20} />
-                                Guardar
-                                </button>
-                            </div>
-                        </form>   
-                    </div>
+                        <div className="flex justify-end">
+                            <button
+                            className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
+                                    hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
+                            <Save size={20}/>
+                            Guardar
+                            </button>
+                        </div>
+                    </form>   
                 </div>
-            </div>
-        </div> 
+            </main>
+        </div>
+    </div> 
     )
 }
 

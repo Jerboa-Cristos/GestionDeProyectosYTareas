@@ -53,8 +53,6 @@ function Tablero_Kanban_Product_Owner() {
         })
     }, [id_sprint])
 
-    
-
     const tareasFiltradas = tareas.filter(tarea => 
         tarea.nombre.toLowerCase().includes(busqueda.toLowerCase()) || 
         tarea.descripcion.toLowerCase().includes(busqueda.toLowerCase)
@@ -88,66 +86,59 @@ function Tablero_Kanban_Product_Owner() {
             })
             .catch(error => {
                 console.log('No se ha podido eliminar la tarea', error)
-            })
-
-        }
+            })}
     
         return (
-            <>
-            <div className='relative bg-BlueBaseDark rounded-l pb-4 m-5 shadow-md border border-gray-300 hover:shadow-lg transition cursor-pointer text-justify pl-2'>
+            <div className="w-full bg-blueBase hover:bg-BlueBaseDark rounded-xl 
+            p-4 text-left shadow-sm border-transparent hover:border-blueDashboard">
+                <div className="flex flex-row justify-between">
+                    <h2 className="text-blueDark font-bold text-base md:text-lg text-center mb-2 
+                group-hover:text-blueDashboard transition-colors">{propTarea.nombre}</h2>
 
-            <button
-            className='absolute top-2 right-2 p-1 hover:bg-white rounded'
-            onClick={(e) => {
-                e.stopPropagation()
-                setAbriMenu(!abrirMenu)
-            }}
-            >
-                <MoreVertical size={20} className='text-white'/>
-            </button>
-
-            {abrirMenu && (
-                <div className='absolute top-10 right-2 bg-white text-blueDark shadow-lg rounded-md border w-36 z-20'>
-
-                    <button className='w-full text-left px-4 py-2 hover:bg-GreenLite'
+                    <button
+                    className="p-1 text-blueDark hover:bg-turquesa hover:text-white transition-all rounded"
                     onClick={(e) => {
                         e.stopPropagation()
-                        setAbriMenu(false)
-                        botonEditarTarea()
-                    }}
-                    >
-                        Editar tarea
+                        setAbriMenu(!abrirMenu)
+                    }}>
+                        <MoreVertical size={20}/>
                     </button>
 
-                    <button 
-                    className='w-full text-left px-4 py-2 hover:bg-red-400 text-BlueDarkDark'
-                    onClick={(e) => {
-                        e.stopPropagation()
-                        setAbriMenu(false)
-                        eliminarTarea()
-                    }}
-                    >
-                        Eliminar tarea
-                    </button>
+                    {abrirMenu && (
+                    <div className='absolute top-10 right-2 bg-white text-blueDark shadow-lg rounded-md border w-36 z-20'>
+
+                        <button className='w-full text-left px-4 py-2 hover:bg-GreenLite'
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            setAbriMenu(false)
+                            botonEditarTarea()
+                        }}>
+                            Editar tarea
+                        </button>
+
+                        <button 
+                        className='w-full text-left px-4 py-2 hover:bg-red-400 text-BlueDarkDark'
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            setAbriMenu(false)
+                            eliminarTarea()
+                        }}>
+                            Eliminar tarea
+                        </button>
+                    </div>
+                    )}
                 </div>
 
-            )}
-
-                <h2 className='font-semibold text-white text-lg'>{propTarea.nombre}</h2>
-                <p className=' text-white mt-2 text-sm'> {propTarea.descripcion}</p>
-
-                <div className='mt-3 flex justify-between items-center'>
+                <p className="text-BlueDarkDark text-[11px] md:text-xs leading-relaxed mb-4 line-clamp-3"> {propTarea.descripcion}</p>
+                <div className="flex justify-between items-center pt-2">
                     <span className='text-xs font-bold px-2 py-1 bg-blueBase text-blueDark rounded'>
-
                         {propTarea.tipo}
                     </span>
-
                     <span className='text-xs text-BlueDarkDark'>
                         {propTarea.fecha_fin}
                     </span>
                 </div>
             </div>
-            </>
         )
     }
 
@@ -194,36 +185,23 @@ function Tablero_Kanban_Product_Owner() {
 
     
     return(    
-         <div className="min-h-screen bg-blueDark p-4 flex flex-col font-sans">
+         <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/product_owner_profile'/>
-            <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
+            <div className="flex flex-1 gap-4 h-full pb-20 lg:pb-0">
                 <MenuProductOwner/>
-
-                <main className="flex-1 bg-white rounded-xl p-4 sm:p-8 overflow-auto flex flex-col gap-4">
-                    <h1 className="text-3xl font-bold text-blueDark mb-6">Tablero Kanban</h1>
+                <main className="flex-1 bg-white rounded-xl shadow-lg p-4 lg:p-8 flex flex-col gap-6">
+                    <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-2 md:mb-4 text-center md:text-left">Tablero Kanban</h1>
                     <div className='mb-4'>
-                        <h2 className='text-xl font-semibold text-blueDark'>Nombre del proyecto: {nombreProyecto}</h2>
-                        <h2 className='text-xl font-semibold text-BlueDarkDark mt-1'>Nombre del Sprint: {nombreSprint}</h2>
-                    
+                        <h2 className="text-xl md:text-2xl font-bold text-blueDark text-center md:text-left">Nombre del proyecto: {nombreProyecto}</h2>
+                        <h3 className="text-xl md:text-2xl font-bold text-blueDark text-center md:text-left">Nombre del Sprint: {nombreSprint}</h3>
                     </div>
 
                     <div className="flex justify-between items-center mt-4 mb-4">
-                    <h2 className="text-xl font-bold text-BlueDarkDark">SPRINTS</h2>
-
-                    <button 
-                    className='text-BlueDarkDark font-bold shadow bg-blueBase hover:bg-GreenLite transition  rounded px-4 py-2'
-                    onClick={completarSprint}
-                    >
-                        Completar Sprint
-                    </button>
-                    </div>
-                    
-                    {/* Barra de búsqueda */}
-                    <div className="mb-8">
+                        {/* Barra de búsqueda */}
                         <div className="relative w-64 max-w-xs">
                             <input 
                                 type="text"
-                                placeholder="Buscar..."
+                                placeholder="Buscar tarea..."
                                 value={busqueda}
                                 onChange={(e) => setBusqueda(e.target.value)}
                                 className="w-full bg-blueblue text-blueDark pl-10 pr-4 py-2 
@@ -232,6 +210,13 @@ function Tablero_Kanban_Product_Owner() {
                             />
                             <Search className="absolute left-3 top-2.5 text-white" size={20} />
                         </div>
+                        
+                        <button 
+                        className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
+                                    hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95"
+                        onClick={completarSprint}>
+                        Completar Sprint
+                        </button>
                     </div>
 
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
@@ -239,7 +224,6 @@ function Tablero_Kanban_Product_Owner() {
                             <h1 className='text-center font-bold text-white mb-4 bg-blueDashboard py-2 rounded'>POR HACER</h1>
                             <div className=''>
                                 {porHacer.map(tarea => 
-                                    
                                     <Tarea key={tarea.id} propTarea={tarea} />
                                 )}
                             </div>
@@ -274,14 +258,12 @@ function Tablero_Kanban_Product_Owner() {
                         </div>
                     </div>
 
-                    <div className="flex justify-between items-center mt-4 mb-4">
-
-                    <Link to={`/crear_tarea/${id_sprint}`}
-                    className="bg-blueBase hover:bg-GreenLite transition rounded px-4 py-2 text-BlueDarkDark font-bold shadow"
-                    >
-                    <p>+ Nueva Tarea</p>
-                    
-                    </Link>
+                    <div className="flex justify-end items-center mt-4 mb-4">
+                        <Link to={`/crear_tarea/${id_sprint}`}
+                        className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
+                                hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
+                        <p>Crear Tarea</p>
+                        </Link>
                     </div>
             
                 </main>
