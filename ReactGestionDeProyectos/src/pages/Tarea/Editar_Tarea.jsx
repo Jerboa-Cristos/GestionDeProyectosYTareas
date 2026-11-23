@@ -6,6 +6,7 @@ import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import Loading from '../../Layout/Loading';
 import { actualizarTarea, mostrarTarea , indexDesarrolladores } from "../../services/tareaService"
 import SeccionComentario from "../../Layout/Com_Comentario/SeccionComentario"
+import { toast } from 'react-hot-toast'
 
 function Editar_Tarea (){
     const token = localStorage.getItem('token')
@@ -34,17 +35,20 @@ function Editar_Tarea (){
             setTipo(tarea.tipo)
             setEstado(tarea.estado)
             setIdDesarrollador(tarea.desarrollador)
-
-        }).catch(error => console.log('Error al cargar la tarea', error))
+            toast.success('Tarea cargada con éxito')
+        }).catch(error => {
+            console.log('Error al cargar la tarea', error)
+            toast.error('Error al cargar la tarea')
+        })
 
 
         indexDesarrolladores(token)
             .then(respuesta => {
                 setDesarrolladores(respuesta.data)
-                console.log('Cargando desarrolador', respuesta.data)
             }).catch(error => {
                 console.log('Error al mostrar desarrolladores', error.respuesta.data)
-            })        .finally(() => {
+                toast.error('Error al cargar los desarrolladores')
+            }).finally(() => {
             setLoading(false);
         })}
         fetchData()
@@ -56,9 +60,11 @@ function Editar_Tarea (){
         const data = {
             nombre, descripcion, tipo, estado, id_desarrollador: idDesarrollador
         }
-        actualizarTarea(id_sprint, id_tarea, data, token)
-        .then(respuesta => {
-            console.log('se ha actualizado la tarea', respuesta.data)
+         toast.promise(actualizarTarea(id_sprint, id_tarea, data, token),{
+            loading: 'Editando tarea...',
+            success: 'Tarea editada con éxito.',
+            error: 'No se pudo editar la tarea.'
+         }).then(() => {
             navigate(`/tablero_kanban_product_owner/${id_sprint}`)
         })
         .catch(error => {

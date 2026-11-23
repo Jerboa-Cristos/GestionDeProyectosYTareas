@@ -4,8 +4,10 @@ import { Save } from "lucide-react"
 import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import { indexDesarrolladores , crearTarea } from "../../services/tareaService"
+import { toast } from 'react-hot-toast'
 
 function Crear_Tarea () {
+    const token = localStorage.getItem('token')
     const [nombre, setNombre] = useState('')
     const [tipo, setTipo] = useState('')
     const [estado, setEstado] = useState('Por Hacer')
@@ -22,7 +24,6 @@ function Crear_Tarea () {
     const botonGuardarTarea = (e) => {
         e.preventDefault()
 
-        const token = localStorage.getItem('token')
         const data = {
             nombre, 
             tipo,
@@ -33,28 +34,27 @@ function Crear_Tarea () {
             id_desarrollador: idDesarrollador
 
         }
-        crearTarea(data, id_sprint, token)
-        .then(respuesta => {
-            console.log('tarea creada', respuesta.data)
+        toast.promise(crearTarea(data, id_sprint, token), {
+            loading: 'Creando tarea...',
+            success: 'Tarea creada con éxito.',
+            error: 'No se pudo crear la tarea.'
+        }).then(() => {
             navigate(`/tablero_kanban_product_owner/${id_sprint}`)
-            console.log('ID sprint recibido',id_sprint)
-            
         })
         .catch(error => {
-            console.log('Error al crear tarea', error.respuesta.data)
+            console.log('Error al crear tarea', error)
         })
 
     }
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
-
         indexDesarrolladores(token)
         .then(respuesta => {
             setDesarrolladores(respuesta.data)
-            console.log('Cargando desarrolador', respuesta.data)
+            toast.success('Desarrolladores cargados con éxito')
         }).catch(error => {
-            console.log('Error al mostrar desarrolladores', error.respuesta.data)
+            console.log('Error al mostrar desarrolladores', error)
+            toast.error('Error al cargar desarrolladores')
         })
     }, [])
     

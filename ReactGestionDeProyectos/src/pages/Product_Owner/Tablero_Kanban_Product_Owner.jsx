@@ -3,6 +3,7 @@ import MenuTop from '../../Layout/Menu/MenuTop';
 import MenuProductOwner from '../../Layout/Com_ProductOwner/MenuProductOwner';
 import TareaPO from '../../Layout/Com_ProductOwner/TareaPO';
 import Loading from '../../Layout/Loading';
+import { toast } from 'react-hot-toast'
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { actualizarTarea, listadoTareasProductOwner } from '../../services/tareaService';
@@ -34,8 +35,10 @@ function Tablero_Kanban_Product_Owner() {
                 setNombreSprint(tareasDelSprint[0].sprint.nombre)
             }
             setTareas(tareasDelSprint)
+            toast.success('Tareas cargadas correctamente')
         }).catch(error => {
             console.log('Error al cargar tareas', error)
+            toast.error('Error al cargar tareas')
         }).finally(() => {
             setLoading(false);
         })}
@@ -65,11 +68,13 @@ function Tablero_Kanban_Product_Owner() {
             }
             actualizarTarea(id_sprint, tarea.id, datosActualizados, token)
             .then(respuesta => {
-                console.log('Tarea actualizada', tarea.id)
+                toast.success('Tarea actualizada correctamente')
             })
-            .catch(error => console.log('Error actualizando la tarea', tarea.id, error))
-        })
-
+            .catch(error => {
+                console.log('Error actualizando la tarea', tarea.id, error)
+                toast.error('Error al actualizar la tarea')
+            })}
+        )
 
         const tareasActualizadasFrontend = tareas.map(tarea => {
             return {
@@ -83,7 +88,6 @@ function Tablero_Kanban_Product_Owner() {
                 id_desarrollador: tarea.id_desarrollador
             }
         })
-
         setTareas(tareasActualizadasFrontend)
     }
 

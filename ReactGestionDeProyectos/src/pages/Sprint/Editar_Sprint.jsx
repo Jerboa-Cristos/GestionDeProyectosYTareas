@@ -5,6 +5,7 @@ import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import Loading from '../../Layout/Loading';
 import { actualizarSprint, mostrarSprint } from "../../services/sprintService"
+import { toast } from 'react-hot-toast'
 
 function Editar_Sprint (){
     const token = localStorage.getItem('token')
@@ -29,11 +30,12 @@ function Editar_Sprint (){
             setMetaSprint(sprint.meta_sprint)
             setFechaInicio(sprint.fecha_inicio?.split('')[0] || '')
             setFechaFin(sprint.fecha_fin?.split('')[0] || '')
-
+            toast.success('Sprint cargado con éxito')
         })
-        .catch(error => 
-            console.log('Error al cargar el sprint', error
-        )).finally(() => {
+        .catch(error => {
+            console.log('Error al cargar el sprint', error)
+            toast.error('Error al cargar el sprint')
+        }).finally(() => {
             setLoading(false);
         })}
         fetchTareas()
@@ -46,9 +48,11 @@ function Editar_Sprint (){
             nombre, meta_sprint, fecha_inicio: fechaInicio, fecha_fin: fechaFin
         }
 
-        actualizarSprint(id_proyecto, id_sprint , data, token)
-        .then(respuesta => {
-            console.log('se ha actualizado el sprint', respuesta.data)
+        toast.promise(actualizarSprint(id_proyecto, id_sprint , data, token), {
+            loading: 'Actualizando sprint...',
+            success: 'Sprint actualizado con éxito.',
+            error: 'No se pudo actualizar el sprint.'
+        }).then(() => {
             navigate(`/mostrar_proyecto/${id_proyecto}`)
         })
         .catch(error => {

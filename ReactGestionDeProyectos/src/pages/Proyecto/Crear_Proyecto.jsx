@@ -4,8 +4,10 @@ import { Save } from "lucide-react";
 import MenuTop from '../../Layout/Menu/MenuTop'
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner";
 import { crearProyecto } from "../../services/proyectoService";
+import { toast } from 'react-hot-toast'
 
 function Crear_Proyecto() {
+    const token = localStorage.getItem('token')
     const [datosForm, setDatosForm] = useState({
         nombre: '',
         descripcion: '', 
@@ -18,15 +20,17 @@ function Crear_Proyecto() {
 
     const botonGuardarProyecto = (e) => {
         e.preventDefault()
-
-        const token = localStorage.getItem('token')
-        crearProyecto(datosForm, token)
-        .then( respuesta => {
+        
+        toast.promise(crearProyecto(datosForm, token), {
+            loading: 'Creando proyecto...',
+            success: 'Proyecto creado con éxito.',
+            error: 'No se pudo crear el proyecto.'
+        }).then(() => {
             navigate('/lista_proyectos')
         })
         .catch(error => {
-            error.data
-        }) 
+            console.error('Error al crear del usuario: ', error)
+        })
     }
 
     return ( 

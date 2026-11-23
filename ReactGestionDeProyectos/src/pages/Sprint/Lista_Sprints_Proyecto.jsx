@@ -6,6 +6,7 @@ import MenuSprint from "../../Layout/Com_ProductOwner/MenuSprint"
 import Loading from '../../Layout/Loading';
 import { mostrarProyecto } from "../../services/proyectoService"
 import { listadoSprint } from "../../services/sprintService"
+import { toast } from 'react-hot-toast'
 
 function Lista_Sprints_Proyecto() {
     const token = localStorage.getItem('token')
@@ -23,17 +24,22 @@ function Lista_Sprints_Proyecto() {
         setLoading(true);
         mostrarProyecto(id_proyecto, token)
         .then(res => {
-            setProyecto(res.data)     
+            setProyecto(res.data)
         })
-        .catch(error => console.log('Error al cargar proyecto', error))
+        .catch(error => {
+            toast.error('Error al cargar el proyecto')
+            console.log('Error al cargar proyecto', error)
+        })
 
         listadoSprint(id_proyecto, token)
         .then(res => {
-            console.log('Respuesta sprint', res.data)
             setSprint(res.data)
+            toast.success('Sprints cargados con éxito')
         })
-        .catch(error => console.log('Error al cargar sprint', error))
-        .finally(() => {
+        .catch(error => {
+            console.log('Error al cargar sprint', error)
+            toast.error('Error al cargar los sprints')
+        }).finally(() => {
             setLoading(false);
         })}
         fetchData()

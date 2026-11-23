@@ -5,6 +5,7 @@ import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import Loading from '../../Layout/Loading';
 import { useParams, useNavigate } from "react-router-dom"
 import { actualizarProyecto, mostrarProyecto } from "../../services/proyectoService"
+import { toast } from 'react-hot-toast';
 
 function Editar_Proyecto (){
     const token = localStorage.getItem('token')
@@ -19,7 +20,7 @@ function Editar_Proyecto (){
     useEffect(() => {
         if (!token) return;
         
-        const fetchTareas = async () => {
+        const fetchProyecto = async () => {
         setLoading(true);
         mostrarProyecto(id_proyecto, token)
         .then(respuesta => {
@@ -27,13 +28,13 @@ function Editar_Proyecto (){
             setNombre(proyecto.nombre)
             setDescripcion(proyecto.descripcion)
             setFechaFin(proyecto.fecha_fin?.split('T')[0] || '')
-        }).catch(error => 
-            console.log('Error al cargar el proyecto', error
-
-        )).finally(() => {
+        }).catch(error => {
+            console.log('Error al cargar el proyecto', error)
+            toast.error('No se pudieron cargar los datos del de proyecto.')
+        }).finally(() => {
             setLoading(false);
         })}
-        fetchTareas()
+        fetchProyecto()
     }, [id_proyecto])
 
 
@@ -45,8 +46,11 @@ function Editar_Proyecto (){
             fecha_fin: fechaFin
         }
 
-        actualizarProyecto(id_proyecto, data, token)
-        .then(respuesta => {
+        toast.promise(actualizarProyecto(id_proyecto, data, token), {
+            loading: 'Editando proyecto...',
+            success: 'Proyecto editado con éxito.',
+            error: 'No se pudo editar el proyecto.'
+        }).then(() => {
             navigate(`/mostrar_proyecto/${id_proyecto}`)
         })
         .catch(error => {

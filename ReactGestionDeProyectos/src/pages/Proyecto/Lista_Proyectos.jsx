@@ -5,6 +5,7 @@ import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner";
 import MenuProyecto from "../../Layout/Com_ProductOwner/MenuProyecto";
 import Loading from '../../Layout/Loading';
 import { listadoProyecto, elimimarProyecto } from "../../services/proyectoService";
+import { toast } from 'react-hot-toast'
 
 function Lista_Proyectos() {
   const token = localStorage.getItem("token")
@@ -16,11 +17,13 @@ function Lista_Proyectos() {
         
     const fetchTareas = async () => {
     setLoading(true);
-    listadoProyecto(token).then((res) => 
-      {setProyectos(res.data)
-      }).catch((err) => 
-        console.error("Error cargando proyectos", err
-      )).finally(() => {
+    listadoProyecto(token).then((res) => {
+      setProyectos(res.data)
+      toast.success('Proyectos cargados con exito.')
+      }).catch((err) => {
+        console.error("Error cargando proyectos", err)
+        toast.error('No se pudo cargar la lista de proyectos.')
+      }).finally(() => {
           setLoading(false);
       })}
         fetchTareas()

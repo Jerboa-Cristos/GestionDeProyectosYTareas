@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Save } from "lucide-react"
 import MenuTop from '../../Layout/Menu/MenuTop'
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
+import { toast } from 'react-hot-toast'
 
 function Crear_Sprint () {
     const [nombre, setNombre] = useState('')
@@ -23,16 +24,16 @@ function Crear_Sprint () {
                 fecha_inicio: fechaInicio, 
                 fecha_fin: fechaFin
             }
-            crearSprint(data, id_proyecto, token)
-            .then(respuesta => {
-                console.log('sprint creado', respuesta.data)
-                console.log('datos enviados')
+            toast.promise(crearSprint(data, id_proyecto, token), {
+                loading: 'Creando sprint...',
+                success: 'Sprint creado con éxito.',
+                error: 'No se pudo crear el sprint.'
+            }).then(() => {
                 navigate(`/mostrar_proyecto/${id_proyecto}`)
             })
             .catch(error => {
-                console.log('Error al crear sprint', error.respuesta.data)
+                console.log('Error al crear sprint', error)
             })
-
         }
     
 
