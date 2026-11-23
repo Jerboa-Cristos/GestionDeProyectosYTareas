@@ -27,13 +27,14 @@ class SprintApiController extends Controller
 
         $tarea = $sprint->tareas()->create($validar);
 
-        return response()->json($tarea);
+        return response()->json($tarea, 200);
     }
 
 
     public function show(Sprint $sprint, $id) {
-        $tarea = $sprint->tareas()->findOrFail($id);
-        return response()->json($tarea);
+        $tarea = $sprint->tareas()->with('desarrollador')->findOrFail($id);
+
+        return response()->json($tarea, 200);
     }
 
     public function update(Request $request, Sprint $sprint, $id) {

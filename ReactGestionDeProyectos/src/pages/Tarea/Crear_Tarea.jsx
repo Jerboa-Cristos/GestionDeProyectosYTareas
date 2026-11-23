@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Save } from "lucide-react"
 import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
-import { mostrarUsuarios } from "../../services/adminService" //ES DEL ADMIN, COJONES, PEDAZO DE SUBNORMAL
+import { indexDesarrolladores } from "../../services/ruta_api_tarea"
 import { funcion_crear_tarea } from "../../services/ruta_api_tarea"
 
 function Crear_Tarea () {
@@ -50,18 +50,11 @@ function Crear_Tarea () {
     useEffect(() => {
         const token = localStorage.getItem('token')
 
-        mostrarUsuarios(token) //Cambiar la función por la función creada especialmente para mostrar desarrolladores
+        indexDesarrolladores(token)
         .then(respuesta => {
-            const filtroUsuarios = respuesta.data.filter(
-                desarrollador => desarrollador.rol === 'Desarrollador'
-            )
-
-            setDesarrolladores(filtroUsuarios)
-
+            setDesarrolladores(respuesta.data)
             console.log('Cargando desarrolador', respuesta.data)
-        })
-
-        .catch(error => {
+        }).catch(error => {
             console.log('Error al mostrar desarrolladores', error.respuesta.data)
         })
     }, [])

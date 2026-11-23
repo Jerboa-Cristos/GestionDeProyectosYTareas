@@ -4,7 +4,7 @@ import { Save } from "lucide-react"
 import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import { funcion_actualizar_tarea, funcion_mostrar_tarea } from "../../services/ruta_api_tarea"
-import { mostrarUsuarios } from "../../services/adminService"
+import { indexDesarrolladores } from "../../services/ruta_api_tarea"
 import SeccionComentario from "../../Layout/Com_Comentario/SeccionComentario"
 
 function Editar_Tarea (){
@@ -29,22 +29,15 @@ function Editar_Tarea (){
             setDescripcion(tarea.descripcion)
             setTipo(tarea.tipo)
             setEstado(tarea.estado)
+            setIdDesarrollador(tarea.desarrollador)
 
-        })
-        .catch(error => console.log('Error al cargar la tarea', error))
+        }).catch(error => console.log('Error al cargar la tarea', error))
 
-        mostrarUsuarios(token)
+        indexDesarrolladores(token)
             .then(respuesta => {
-                const filtroUsuarios = respuesta.data.filter(
-                    desarrollador => desarrollador.rol === 'Desarrollador'
-                )
-
-                setDesarrolladores(filtroUsuarios)
-
+                setDesarrolladores(respuesta.data)
                 console.log('Cargando desarrolador', respuesta.data)
-            })
-
-            .catch(error => {
+            }).catch(error => {
                 console.log('Error al mostrar desarrolladores', error.respuesta.data)
             })
 
@@ -128,7 +121,7 @@ function Editar_Tarea (){
                         onChange={(e) => setIdDesarrollador(e.target.value)}
                         required
                         className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
-                            <option value={"Selecciona un desarrollador"}></option>
+                            <option value={idDesarrollador}>{idDesarrollador.nombre}</option>
                             {desarrolladores.map(desarrollador => (
                                 <option key={desarrollador.id} value={desarrollador.id}>
                                     {desarrollador.nombre}

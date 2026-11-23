@@ -78,7 +78,7 @@ Route::delete('eliminar_tarea/{sprint}/{id}', [SprintApiController::class, 'dest
 
 //RUTAS PARA EL DESAROLLADOR PARA EL PRODUCT OWNER
 //Ruta para mostrar el listado de desarolladores a la hora de elegir quién hace la tarea
-Route::get('indexDesarrolladores', [DesarrolladorController::class, 'indexDesarrolladores']); 
+Route::get('indexDesarrolladores', [DesarrolladorController::class, 'indexDesarrolladores']) ->middleware(['auth.po', 'auth:sanctum']); 
 //Ruta para asignar un proyecto al Desarrollador
 Route::put('asignarProyecto/{id}',[DesarrolladorController::class, 'asignarProyecto']);
 #endregion

@@ -31,6 +31,12 @@ export const funcion_eliminar_tarea = (id_sprint, id_tarea, token) => axios.dele
     }
 })
 
+export const indexDesarrolladores = (token) => axios.get(rutaApi() + `/indexDesarrolladores`, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+
 
 //para mostrar todas las tareas de todos los proyectos
 export const funcion_listado_tareas_product_owner = (token) => axios.get(rutaApi() + `/tareas_product_owner`, {
