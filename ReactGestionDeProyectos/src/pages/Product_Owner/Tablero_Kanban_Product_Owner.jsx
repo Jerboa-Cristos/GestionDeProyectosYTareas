@@ -2,55 +2,44 @@ import { Search } from 'lucide-react';
 import MenuTop from '../../Layout/Menu/MenuTop';
 import MenuProductOwner from '../../Layout/Com_ProductOwner/MenuProductOwner';
 import TareaPO from '../../Layout/Com_ProductOwner/TareaPO';
+import Loading from '../../Layout/Loading';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { actualizarTarea, listadoTareasProductOwner } from '../../services/ruta_api_tarea';
+import { actualizarTarea, listadoTareasProductOwner } from '../../services/tareaService';
 
 function Tablero_Kanban_Product_Owner() {
-    
+    const [loading, setLoading] = useState(true);
+    const token = localStorage.getItem('token')
     const [tareas, setTareas] = useState([])
     const {id_sprint} = useParams()
     const [busqueda, setBusqueda] = useState('')
     const [nombreProyecto, setNombreProyecto] = useState('')
     const [nombreSprint, setNombreSprint] = useState('')
     useEffect(() => {
+        if (!token) return;
         
-        const token = localStorage.getItem('token')
+        const fetchTareas = async () => {
+        setLoading(true);
         listadoTareasProductOwner(token)
         .then(respuesta => {
-            console.log('Mostrandos listado de tareas', respuesta.data)
-
             const todasLasTareas = respuesta.data
-
             const sprintIds = [... new Set(todasLasTareas.map(tarea => tarea.id_sprint))]
-
             let sprintSeleccionado = id_sprint
-
             if(!sprintSeleccionado){
                 sprintSeleccionado = sprintIds[sprintIds.length - 1]
             }
-
-            console.log('Sprint usado en Kanban', sprintSeleccionado)
-
             const tareasDelSprint = todasLasTareas.filter(tarea => tarea.id_sprint == sprintSeleccionado)
-
-            console.log('Tareas del sprint en Kanban', tareasDelSprint)
-
-            console.log('IDS de sprint de todas las tareas', todasLasTareas.map(t => t.id_sprint))
-
             if(tareasDelSprint.length > 0){
                 setNombreProyecto(tareasDelSprint[0].sprint.proyecto.nombre)
                 setNombreSprint(tareasDelSprint[0].sprint.nombre)
-                
             }
-
             setTareas(tareasDelSprint)
-            console.log('tarea completa', tareasDelSprint[0])
-
-        })
-        .catch(error => {
+        }).catch(error => {
             console.log('Error al cargar tareas', error)
-        })
+        }).finally(() => {
+            setLoading(false);
+        })}
+        fetchTareas()
     }, [id_sprint])
 
     const tareasFiltradas = tareas.filter(tarea => 
@@ -64,8 +53,6 @@ function Tablero_Kanban_Product_Owner() {
     const finalizada = tareasFiltradas.filter(tarea => tarea.estado === 'Finalizado')
 
     const completarSprint = () => {
-        const token = localStorage.getItem('token')
-
         tareas.forEach(tarea => {
             const datosActualizados = {
                 nombre: tarea.nombre,
@@ -98,10 +85,10 @@ function Tablero_Kanban_Product_Owner() {
         })
 
         setTareas(tareasActualizadasFrontend)
-
-        console.log('Sprint completado', id_sprint)
     }
-    
+
+    if (loading) return <Loading />
+
     return(    
          <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/product_owner_profile'/>

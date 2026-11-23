@@ -3,10 +3,13 @@ import { useParams, useNavigate } from "react-router-dom"
 import { Save } from "lucide-react"
 import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
-import { actualizarTarea, mostrarTarea , indexDesarrolladores } from "../../services/ruta_api_tarea"
+import Loading from '../../Layout/Loading';
+import { actualizarTarea, mostrarTarea , indexDesarrolladores } from "../../services/tareaService"
 import SeccionComentario from "../../Layout/Com_Comentario/SeccionComentario"
 
 function Editar_Tarea (){
+    const token = localStorage.getItem('token')
+    const [loading, setLoading] = useState(true);
     const [nombre, setNombre] = useState('')
     const [descripcion, setDescripcion] = useState('')
     const [tipo, setTipo] = useState('')
@@ -19,8 +22,10 @@ function Editar_Tarea (){
     const navigate = useNavigate()
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
-
+         if (!token) return;
+        
+        const fetchData = async () => {
+        setLoading(true);
         mostrarTarea(id_sprint, id_tarea, token)
         .then(respuesta => {
             const tarea = respuesta.data
@@ -32,24 +37,25 @@ function Editar_Tarea (){
 
         }).catch(error => console.log('Error al cargar la tarea', error))
 
+
         indexDesarrolladores(token)
             .then(respuesta => {
                 setDesarrolladores(respuesta.data)
                 console.log('Cargando desarrolador', respuesta.data)
             }).catch(error => {
                 console.log('Error al mostrar desarrolladores', error.respuesta.data)
-            })
-
+            })        .finally(() => {
+            setLoading(false);
+        })}
+        fetchData()
     }, [id_sprint, id_tarea])
 
 
     const botonEditarTarea = (e) => {
         e.preventDefault()
-        const token = localStorage.getItem('token')
         const data = {
             nombre, descripcion, tipo, estado, id_desarrollador: idDesarrollador
         }
-
         actualizarTarea(id_sprint, id_tarea, data, token)
         .then(respuesta => {
             console.log('se ha actualizado la tarea', respuesta.data)
@@ -60,6 +66,7 @@ function Editar_Tarea (){
         })
     }
 
+    if (loading) return <Loading />
 
     return(
         <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">

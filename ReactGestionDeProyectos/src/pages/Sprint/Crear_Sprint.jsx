@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { crearSprint } from "../../services/ruta_api_sprint"
+import { crearSprint } from "../../services/sprintService"
 import { useNavigate, useParams } from "react-router-dom"
 import { Save } from "lucide-react"
 import MenuTop from '../../Layout/Menu/MenuTop'

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
-import { funcion_listado_sprint } from "../../services/ruta_api_sprint"
+import { funcion_listado_sprint } from "../../services/sprintService"
 
 function Lista_Sprints () {
     const [sprints, setSprints] = useState([])

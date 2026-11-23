@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Save } from "lucide-react"
 import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
-import { indexDesarrolladores , crearTarea } from "../../services/ruta_api_tarea"
+import { indexDesarrolladores , crearTarea } from "../../services/tareaService"
 
 function Crear_Tarea () {
     const [nombre, setNombre] = useState('')

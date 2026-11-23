@@ -3,39 +3,41 @@ import { Link} from "react-router-dom";
 import MenuTop from "../../Layout/Menu/MenuTop";
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner";
 import MenuProyecto from "../../Layout/Com_ProductOwner/MenuProyecto";
-import { listadoProyecto, elimimarProyecto } from "../../services/ruta_api_proyecto";
+import Loading from '../../Layout/Loading';
+import { listadoProyecto, elimimarProyecto } from "../../services/proyectoService";
 
 function Lista_Proyectos() {
+  const token = localStorage.getItem("token")
+  const [loading, setLoading] = useState(true);
   const [proyectos, setProyectos] = useState([]);
   
   useEffect(() => {
-    const token = localStorage.getItem("token")
-    console.log("token existe", token);
-    listadoProyecto(token)
-      .then((res) => {setProyectos(res.data )
-        console.log('lista p', res.data)
-      })
-      .catch((err) => console.error("Error cargando proyectos", err));
-
+    if (!token) return;
+        
+    const fetchTareas = async () => {
+    setLoading(true);
+    listadoProyecto(token).then((res) => 
+      {setProyectos(res.data)
+      }).catch((err) => 
+        console.error("Error cargando proyectos", err
+      )).finally(() => {
+          setLoading(false);
+      })}
+        fetchTareas()
   }, []);
   
   const botonEliminarProyecto = (id_proyecto) => {
-    const token = localStorage.getItem("token")
     const confirmar = window.confirm('Seguro quieres eliminar el proyecto?')
-
     if(!confirmar){
       return
     }
-
     elimimarProyecto(id_proyecto, token)
     .then(() => {
       setProyectos(proyectosActuales => 
         proyectosActuales.filter(proyecto => proyecto.id !== id_proyecto)
-      )
-    })
-    .catch(error => console.error('Error al eliminar el proyecto', error))
-  } 
-  console.log(proyectos);
+      )}).catch(error => console.error('Error al eliminar el proyecto', error))} 
+
+  if (loading) return <Loading />
 
   return (
     <div className="h-screen bg-blueDark p-4 flex flex-col">

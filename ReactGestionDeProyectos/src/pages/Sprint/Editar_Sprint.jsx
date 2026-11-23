@@ -3,9 +3,12 @@ import { useParams, useNavigate } from "react-router-dom"
 import { Save } from "lucide-react"
 import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
-import { actualizarSprint, mostrarSprint } from "../../services/ruta_api_sprint"
+import Loading from '../../Layout/Loading';
+import { actualizarSprint, mostrarSprint } from "../../services/sprintService"
 
 function Editar_Sprint (){
+    const token = localStorage.getItem('token')
+    const [loading, setLoading] = useState(true);
     const [nombre, setNombre] = useState('')
     const [meta_sprint, setMetaSprint] = useState('')
     const [fechaInicio, setFechaInicio] = useState('')
@@ -15,8 +18,10 @@ function Editar_Sprint (){
     const navigate = useNavigate()
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
-
+        if (!token) return;
+        
+        const fetchTareas = async () => {
+        setLoading(true);
         mostrarSprint(id_proyecto, id_sprint, token)
         .then(respuesta => {
             const sprint = respuesta.data
@@ -26,16 +31,17 @@ function Editar_Sprint (){
             setFechaFin(sprint.fecha_fin?.split('')[0] || '')
 
         })
-        .catch(error => console.log('Error al cargar el sprint', error))
-
-        
-
+        .catch(error => 
+            console.log('Error al cargar el sprint', error
+        )).finally(() => {
+            setLoading(false);
+        })}
+        fetchTareas()
     }, [id_proyecto, id_sprint])
 
 
     const botonEditarSprint = (e) => {
         e.preventDefault()
-        const token = localStorage.getItem('token')
         const data = {
             nombre, meta_sprint, fecha_inicio: fechaInicio, fecha_fin: fechaFin
         }
@@ -50,6 +56,7 @@ function Editar_Sprint (){
         })
     }
 
+    if (loading) return <Loading />
 
     return(
         <div className='h-screen bg-blueDark p-4 flex flex-col'>

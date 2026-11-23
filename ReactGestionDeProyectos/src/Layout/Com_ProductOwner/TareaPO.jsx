@@ -1,7 +1,7 @@
 import { MoreVertical } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { eliminarTarea } from '../../services/ruta_api_tarea';
+import { eliminarTarea } from '../../services/tareaService';
 
  //propTarea es una propiedad del Componente Tarea para identificar el id y asi asociar su nombre y descripcion
 const TareaPO = ({propTarea}) => {

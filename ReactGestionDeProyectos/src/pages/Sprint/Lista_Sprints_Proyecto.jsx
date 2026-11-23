@@ -3,10 +3,13 @@ import { useParams, Link } from "react-router-dom"
 import MenuTop from '../../Layout/Menu/MenuTop'
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import MenuSprint from "../../Layout/Com_ProductOwner/MenuSprint"
-import { mostrarProyecto } from "../../services/ruta_api_proyecto"
-import { listadoSprint } from "../../services/ruta_api_sprint"
+import Loading from '../../Layout/Loading';
+import { mostrarProyecto } from "../../services/proyectoService"
+import { listadoSprint } from "../../services/sprintService"
 
 function Lista_Sprints_Proyecto() {
+    const token = localStorage.getItem('token')
+    const [loading, setLoading] = useState(true);
     const [proyectos, setProyecto] = useState('')
     const [sprints, setSprint] = useState([])
     //se usa useParams porque el id viene de la URL
@@ -14,13 +17,13 @@ function Lista_Sprints_Proyecto() {
    
     
     useEffect(() => {
+       if (!token) return;
         localStorage.setItem("proyecto_activo", id_proyecto)
-       
-        const token = localStorage.getItem('token')
+        const fetchData = async () => {
+        setLoading(true);
         mostrarProyecto(id_proyecto, token)
         .then(res => {
-            setProyecto(res.data)
-             
+            setProyecto(res.data)     
         })
         .catch(error => console.log('Error al cargar proyecto', error))
 
@@ -30,12 +33,13 @@ function Lista_Sprints_Proyecto() {
             setSprint(res.data)
         })
         .catch(error => console.log('Error al cargar sprint', error))
+        .finally(() => {
+            setLoading(false);
+        })}
+        fetchData()
     }, [id_proyecto]) 
 
-
-    if(!proyectos){
-        return <p>Cargando sprints</p>
-    }
+    if (loading) return <Loading />
 
     return (
     <div className="h-screen bg-blueDark p-4 flex flex-col">

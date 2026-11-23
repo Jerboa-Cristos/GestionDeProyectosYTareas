@@ -1,7 +1,7 @@
 import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { Link} from "react-router-dom";
-import { eliminarSprint } from '../../services/ruta_api_sprint'
+import { eliminarSprint } from '../../services/sprintService'
 
 function MenuSprint({ sprint, id_proyecto}) {
         const [abrirMenu, setAbrirMenu] = useState(false)

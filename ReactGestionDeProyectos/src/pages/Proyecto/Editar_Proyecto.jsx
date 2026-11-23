@@ -2,10 +2,13 @@ import { useEffect, useState } from "react"
 import { Save } from "lucide-react"
 import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
+import Loading from '../../Layout/Loading';
 import { useParams, useNavigate } from "react-router-dom"
-import { actualizarProyecto, mostrarProyecto } from "../../services/ruta_api_proyecto"
+import { actualizarProyecto, mostrarProyecto } from "../../services/proyectoService"
 
 function Editar_Proyecto (){
+    const token = localStorage.getItem('token')
+    const [loading, setLoading] = useState(true);
     const [nombre, setNombre] = useState('')
     const [descripcion, setDescripcion] = useState('')
     const [fechaFin, setFechaFin] = useState('')
@@ -14,23 +17,28 @@ function Editar_Proyecto (){
     const navigate = useNavigate()
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
-
+        if (!token) return;
+        
+        const fetchTareas = async () => {
+        setLoading(true);
         mostrarProyecto(id_proyecto, token)
         .then(respuesta => {
             const proyecto = respuesta.data
             setNombre(proyecto.nombre)
             setDescripcion(proyecto.descripcion)
             setFechaFin(proyecto.fecha_fin?.split('T')[0] || '')
-        })
-        .catch(error => console.log('Error al cargar el proyecto', error))
+        }).catch(error => 
+            console.log('Error al cargar el proyecto', error
+
+        )).finally(() => {
+            setLoading(false);
+        })}
+        fetchTareas()
     }, [id_proyecto])
 
 
     const botonEditarProyecto = (e) => {
         e.preventDefault()
-        const token = localStorage.getItem('token')
-
         const data = {
             nombre,
             descripcion,
@@ -39,7 +47,6 @@ function Editar_Proyecto (){
 
         actualizarProyecto(id_proyecto, data, token)
         .then(respuesta => {
-            console.log('Proyecto actualizado', respuesta.data)
             navigate(`/mostrar_proyecto/${id_proyecto}`)
         })
         .catch(error => {
@@ -47,6 +54,7 @@ function Editar_Proyecto (){
         })
     }
 
+    if (loading) return <Loading />
 
     return(
     <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">

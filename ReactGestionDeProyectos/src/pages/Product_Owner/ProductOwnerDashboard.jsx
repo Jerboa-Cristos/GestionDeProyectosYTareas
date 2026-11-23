@@ -1,6 +1,6 @@
 //Code
 import { useEffect, useState } from "react"
-import { listadoTareasProductOwner } from "../../services/ruta_api_tarea"
+import { listadoTareasProductOwner } from "../../services/tareaService"
 //Visual components
 import MenuTop  from '../../Layout/Menu/MenuTop'
 import MenuProductOwner from '../../Layout/Com_ProductOwner/MenuProductOwner'
