@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { Save } from "lucide-react"
 import MenuTop from "../../Layout/Menu/MenuTop"
-import MenuProductOwner from "@/Layout/Com_ProductOwner/MenuProductOwner"
+import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import { funcion_actualizar_tarea, funcion_mostrar_tarea } from "../../services/ruta_api_tarea"
 import { mostrarUsuarios } from "../../services/adminService"
 import SeccionComentario from "../../Layout/Com_Comentario/SeccionComentario"
@@ -70,48 +70,40 @@ function Editar_Tarea (){
 
 
     return(
-
-        <>
-        <div className="h-screen bg-blueDark p-4 flex flex-col">
-
-        <MenuTop rutaPerfil='/product_owner_profile'/>  
-        <div className="flex flex-1 gap-4 overflow-hidden flex-col md:flex-row">
-            <div className="md:h-full md:flex">
+        <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
+            <MenuTop rutaPerfil='/product_owner_profile'/>  
+            <div className="flex flex-1 gap-4 overflow-hidden h-full pb-20 lg:pb-0">
             <MenuProductOwner/>
-            </div>
-
-        <div className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto pb-24">
-            
-                <form onSubmit={botonEditarTarea}>
-                    <div className="bg-blueDashboard rounded-lg p-6">
-                        <h2 className="font-bold text-white mb-4 text-[1.2em]">Editar Tarea</h2>
+                <main className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
+                    <div className="flex-1 bg-blueDashboard rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
+                    <form onSubmit={botonEditarTarea} className="max-w-2xl mx-auto grid grid-cols-1 gap-4">
+                        <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 lg:mb-4 text-center lg:text-left">Editar Tarea</h1>
                         
-                        <label className="font-semibold text-white mt-4 block">Nombre</label>
+                        <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Nombre</label>
                         <input
                         value={nombre} 
                         onChange={(e) => setNombre(e.target.value)}
                         type="text" 
-                        className="w-full rounded px-3 py-2 mt-1 bg-blueBase border border-BlueBaseDark"
+                        className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
                         required
                         placeholder="Escribe el nombre de la tarea aquí" 
                         />
 
-                        <label className="font-semibold text-white mt-4 block">Descripción</label>
+                        <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Descripción</label>
                         <textarea
                         value={descripcion}
                         onChange={(e) => setDescripcion(e.target.value)} 
                         name="descripcion" 
                         placeholder="Escribe la descripcion"
-                        className=" w-full rounded px-3 py-2 mt-1 h-24 bg-blueBase"
-                        >
-                        
+                        className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">                        
                         </textarea>
 
-                        <label className="block text-white font-semibold">Tipo</label>
+                    <div className="grid grid-cols-2 gap-2">
+                        <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Tipo</label>
                         <select  
                         value={tipo}
                         onChange={(e) => setTipo(e.target.value)}
-                        className="rounded  bg-blueBase px-3 py-2 w-60 mt-1 text-BlueDarkDark">
+                        className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
                             <option value="Backend">Backend</option>
                             <option value="Frontend">Frontend</option>
                             <option value="Diseño">Diseño</option>
@@ -119,70 +111,56 @@ function Editar_Tarea (){
                             <option value="Testing">Testing</option>
                         </select>
 
-                        <label className="block text-white font-semibold">Estado</label>
+                        <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Estado</label>
                         <select  
                         value={estado}
                         onChange={(e) => setEstado(e.target.value)}
-                        className="rounded  bg-blueBase px-3 py-2 w-60 mt-1 text-BlueDarkDark">
+                        className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
                             <option value="Por Hacer">Por Hacer</option>
                             <option value="En Curso">En Curso</option>
                             <option value="En Revision">En Revisión</option>
                             <option value="Finalizado">Finalizado</option>
                         </select>
 
-                        <label className="font-semibold text-white mt-4 block">Asignar a un desarrollador</label>
+                        <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Asignar a un desarrollador</label>
                         <select
                         value={idDesarrollador}
                         onChange={(e) => setIdDesarrollador(e.target.value)}
                         required
-                        className="rounded-lg px-4 py-2 bg-blueBase mt-1"
-                        >
+                        className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
                             <option value={"Selecciona un desarrollador"}></option>
                             {desarrolladores.map(desarrollador => (
                                 <option key={desarrollador.id} value={desarrollador.id}>
                                     {desarrollador.nombre}
-                                    
                                 </option>
                             ))}
-
                         </select>
 
-                        <label className="font-semibold text-white mt-4 block">Fecha limite</label>
+                        <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Fecha limite</label>
                         <input 
                         value={fechaFin}
                         onChange={(e) => setFechaFin(e.target.value)}
                         type="date" 
                         name="fecha_fin"  
-                        className="rounded-lg px-4 py-2 bg-blueBase mt-1 text-blueDark"/>
-                        
-                       
-                        <SeccionComentario id_tarea={id_tarea}/>
-                        
+                        className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"/>
+                    </div>    
 
-
-                        <div className="flex justify-end">
+                    <div className="flex justify-end">
                         <button
-                        className="bg-blueBase text-blueDark font-bold px-6 py-2 mt-6 rounded-lg hover:bg-GreenLite transition flex items-center gap-2"
-                        >
-                        <Save size={23} />
+                        className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
+                                        hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
+                        <Save size={20}/>
                         Guardar cambios
-                        
                         </button>
-
-
-                        
-
-                        </div>
                     </div>
-
-                </form>   
-            
+                </form>
+                <div className="px-4 lg:px-8 m-4 lg:m-4 overflow-y-auto">
+                    <SeccionComentario idTarea={id_tarea}/>
+                </div>  
+                </div> 
+            </main>
         </div>
     </div>
-        
-        </div>
-        
-        </>
     )
 }
 

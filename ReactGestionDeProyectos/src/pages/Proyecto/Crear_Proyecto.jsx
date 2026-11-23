@@ -32,9 +32,6 @@ function Crear_Proyecto() {
         .catch(error => {
             error.data
         }) 
-
-
-        
     }
 
     return ( 

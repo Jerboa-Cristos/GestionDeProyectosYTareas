@@ -1,10 +1,10 @@
 import { Search } from 'lucide-react';
 import MenuTop from '../../Layout/Menu/MenuTop';
 import MenuProductOwner from '../../Layout/Com_ProductOwner/MenuProductOwner';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import TareaPO from '../../Layout/Com_ProductOwner/TareaPO';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { funcion_actualizar_tarea, funcion_eliminar_tarea, funcion_listado_tareas_product_owner } from '../../services/ruta_api_tarea';
-import { MoreVertical } from 'lucide-react';
+import { funcion_actualizar_tarea, funcion_listado_tareas_product_owner } from '../../services/ruta_api_tarea';
 
 function Tablero_Kanban_Product_Owner() {
     
@@ -63,85 +63,6 @@ function Tablero_Kanban_Product_Owner() {
     const enRevision = tareasFiltradas.filter(tarea => tarea.estado === 'En Revision')
     const finalizada = tareasFiltradas.filter(tarea => tarea.estado === 'Finalizado')
 
-    //propTarea es una propiedad del Componente Tarea para identificar el id y asi asociar su nombre y descripcion
-    const Tarea = ({propTarea}) => {
-        const [abrirMenu, setAbriMenu] = useState(false)
-        const navigate = useNavigate()
-        const {id_sprint} = useParams()
-
-        const botonEditarTarea = () => {
-            navigate(`/editar_tarea/${id_sprint}/${propTarea.id}`)
-        }
-
-        const eliminarTarea = () => {
-            const token = localStorage.getItem('token')
-            console.log('Eliminar tarea: ', propTarea.id )
-
-            if(!confirm('Seguro que quieres eliminar este sprint')) return 
-            
-            funcion_eliminar_tarea(id_sprint, propTarea.id, token)
-            .then(respuesta => {
-                console.log('Se ha eliminado la tarea', respuesta.data)
-                setTareas(tareasActuales => tareasActuales.filter(tarea => tarea.id !== propTarea.id))
-            })
-            .catch(error => {
-                console.log('No se ha podido eliminar la tarea', error)
-            })}
-    
-        return (
-            <div className="w-full bg-blueBase hover:bg-BlueBaseDark rounded-xl 
-            p-4 text-left shadow-sm border-transparent hover:border-blueDashboard">
-                <div className="flex flex-row justify-between">
-                    <h2 className="text-blueDark font-bold text-base md:text-lg text-center mb-2 
-                group-hover:text-blueDashboard transition-colors">{propTarea.nombre}</h2>
-
-                    <button
-                    className="p-1 text-blueDark hover:bg-turquesa hover:text-white transition-all rounded"
-                    onClick={(e) => {
-                        e.stopPropagation()
-                        setAbriMenu(!abrirMenu)
-                    }}>
-                        <MoreVertical size={20}/>
-                    </button>
-
-                    {abrirMenu && (
-                    <div className='absolute top-10 right-2 bg-white text-blueDark shadow-lg rounded-md border w-36 z-20'>
-
-                        <button className='w-full text-left px-4 py-2 hover:bg-GreenLite'
-                        onClick={(e) => {
-                            e.stopPropagation()
-                            setAbriMenu(false)
-                            botonEditarTarea()
-                        }}>
-                            Editar tarea
-                        </button>
-
-                        <button 
-                        className='w-full text-left px-4 py-2 hover:bg-red-400 text-BlueDarkDark'
-                        onClick={(e) => {
-                            e.stopPropagation()
-                            setAbriMenu(false)
-                            eliminarTarea()
-                        }}>
-                            Eliminar tarea
-                        </button>
-                    </div>
-                    )}
-                </div>
-
-                <p className="text-BlueDarkDark text-[11px] md:text-xs leading-relaxed mb-4 line-clamp-3"> {propTarea.descripcion}</p>
-                <div className="flex justify-between items-center pt-2">
-                    <span className='text-xs font-bold px-2 py-1 bg-blueBase text-blueDark rounded'>
-                        {propTarea.tipo}
-                    </span>
-                    <span className='text-xs text-BlueDarkDark'>
-                        {propTarea.fecha_fin}
-                    </span>
-                </div>
-            </div>
-        )
-    }
-
     const completarSprint = () => {
         const token = localStorage.getItem('token')
 
@@ -180,51 +101,48 @@ function Tablero_Kanban_Product_Owner() {
 
         console.log('Sprint completado', id_sprint)
     }
-
-    
-
     
     return(    
          <div className="min-h-screen bg-blueDark p-2 lg:p-4 flex flex-col font-sans">
             <MenuTop rutaPerfil='/product_owner_profile'/>
             <div className="flex flex-1 gap-4 h-full pb-20 lg:pb-0">
                 <MenuProductOwner/>
-                <main className="flex-1 bg-white rounded-xl shadow-lg p-4 lg:p-8 flex flex-col gap-6">
+                <main className="flex-1 bg-white rounded-xl shadow-lg p-4 lg:p-8 flex flex-col gap-4">
                     <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-2 md:mb-4 text-center md:text-left">Tablero Kanban</h1>
                     <div className='mb-4'>
                         <h2 className="text-xl md:text-2xl font-bold text-blueDark text-center md:text-left">Nombre del proyecto: {nombreProyecto}</h2>
                         <h3 className="text-xl md:text-2xl font-bold text-blueDark text-center md:text-left">Nombre del Sprint: {nombreSprint}</h3>
                     </div>
 
-                    <div className="flex justify-between items-center mt-4 mb-4">
                         {/* Barra de búsqueda */}
-                        <div className="relative w-64 max-w-xs">
-                            <input 
-                                type="text"
-                                placeholder="Buscar tarea..."
-                                value={busqueda}
-                                onChange={(e) => setBusqueda(e.target.value)}
-                                className="w-full bg-blueblue text-blueDark pl-10 pr-4 py-2 
-                                rounded-lg
-                                placeholder-white"
-                            />
-                            <Search className="absolute left-3 top-2.5 text-white" size={20} />
+                        <div className="flex flex-col gap-4 items-center md:flex-row md:justify-between">
+                            <div className="relative w-full lg:w-auto max-w-xs">
+                                <input 
+                                    type="text"
+                                    placeholder="Buscar tarea..."
+                                    value={busqueda}
+                                    onChange={(e) => setBusqueda(e.target.value)}
+                                    className="w-full bg-blueblue text-blueDark pl-10 pr-4 py-2 
+                                    rounded-lg
+                                    placeholder-white"
+                                />
+                                <Search className="absolute left-3 top-2.5 text-white" size={20} />
+                            </div>
+                            
+                            <button 
+                            className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
+                                        hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95"
+                            onClick={completarSprint}>
+                            Completar Sprint
+                            </button>
                         </div>
-                        
-                        <button 
-                        className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
-                                    hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95"
-                        onClick={completarSprint}>
-                        Completar Sprint
-                        </button>
-                    </div>
 
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
                         <div className='border border-BlueDarkDark rounded-2xl p-4 '>
                             <h1 className='text-center font-bold text-white mb-4 bg-blueDashboard py-2 rounded'>POR HACER</h1>
                             <div className=''>
                                 {porHacer.map(tarea => 
-                                    <Tarea key={tarea.id} propTarea={tarea} />
+                                    <TareaPO key={tarea.id} propTarea={tarea} />
                                 )}
                             </div>
                         </div>
@@ -233,7 +151,7 @@ function Tablero_Kanban_Product_Owner() {
                             <h1 className='text-center font-bold text-white mb-4 bg-blueDashboard py-2 rounded'>EN CURSO</h1>
                             <div>
                                 {enCurso.map(tarea => 
-                                    <Tarea key={tarea.id} propTarea={tarea}/>
+                                    <TareaPO key={tarea.id} propTarea={tarea}/>
                                 )}
                             </div>
                         </div>
@@ -242,7 +160,7 @@ function Tablero_Kanban_Product_Owner() {
                             <h1 className='text-center font-bold text-white mb-4 bg-blueDashboard py-2 rounded'>EN REVISIÓN</h1>
                             <div>
                                 {enRevision.map(tarea => 
-                                <Tarea key={tarea.id} propTarea={{tarea}}/>
+                                <TareaPO key={tarea.id} propTarea={{tarea}}/>
 
                                 )}
                             </div>
@@ -252,7 +170,7 @@ function Tablero_Kanban_Product_Owner() {
                             <h1 className='text-center font-bold text-white mb-4 bg-blueDashboard py-2 rounded'>FINALIZADA</h1>
                             <div>
                                 {finalizada.map(tarea => 
-                                    <Tarea key={tarea.id} propTarea={tarea}/>
+                                    <TareaPO key={tarea.id} propTarea={tarea}/>
                                 )}
                             </div>
                         </div>

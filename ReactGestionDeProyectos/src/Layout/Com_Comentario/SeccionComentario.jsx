@@ -76,7 +76,8 @@ const SeccionComentario = ({idTarea}) => {
                     </textarea>
                     {escribiendo ? (
                         <div className="flex justify-start">
-                        <button type='submit' className="bg-blueBase text-blueDark font-bold px-2 py-2 rounded-lg hover:bg-GreenLite transition flex items-center">
+                        <button type='submit' className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
+                                        hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
                             <Send size={20}/>
                             <span>Enviar</span>
                         </button>
