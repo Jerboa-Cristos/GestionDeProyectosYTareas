@@ -3,7 +3,7 @@ import { Link} from "react-router-dom";
 import MenuTop from "../../Layout/Menu/MenuTop";
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner";
 import MenuProyecto from "../../Layout/Com_ProductOwner/MenuProyecto";
-import { funcion_listado_proyecto, funcion_elimimar_proyecto } from "../../services/ruta_api_proyecto";
+import { listadoProyecto, elimimarProyecto } from "../../services/ruta_api_proyecto";
 
 function Lista_Proyectos() {
   const [proyectos, setProyectos] = useState([]);
@@ -11,7 +11,7 @@ function Lista_Proyectos() {
   useEffect(() => {
     const token = localStorage.getItem("token")
     console.log("token existe", token);
-    funcion_listado_proyecto(token)
+    listadoProyecto(token)
       .then((res) => {setProyectos(res.data )
         console.log('lista p', res.data)
       })
@@ -27,7 +27,7 @@ function Lista_Proyectos() {
       return
     }
 
-    funcion_elimimar_proyecto(id_proyecto, token)
+    elimimarProyecto(id_proyecto, token)
     .then(() => {
       setProyectos(proyectosActuales => 
         proyectosActuales.filter(proyecto => proyecto.id !== id_proyecto)

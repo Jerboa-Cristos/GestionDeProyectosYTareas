@@ -3,8 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Save } from "lucide-react"
 import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
-import { indexDesarrolladores } from "../../services/ruta_api_tarea"
-import { funcion_crear_tarea } from "../../services/ruta_api_tarea"
+import { indexDesarrolladores , crearTarea } from "../../services/ruta_api_tarea"
 
 function Crear_Tarea () {
     const [nombre, setNombre] = useState('')
@@ -34,7 +33,7 @@ function Crear_Tarea () {
             id_desarrollador: idDesarrollador
 
         }
-        funcion_crear_tarea(data, id_sprint, token)
+        crearTarea(data, id_sprint, token)
         .then(respuesta => {
             console.log('tarea creada', respuesta.data)
             navigate(`/tablero_kanban_product_owner/${id_sprint}`)

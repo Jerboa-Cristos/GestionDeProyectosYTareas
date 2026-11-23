@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Save } from "lucide-react";
 import MenuTop from '../../Layout/Menu/MenuTop'
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner";
-import { funcion_crear_proyecto } from "../../services/ruta_api_proyecto";
+import { crearProyecto } from "../../services/ruta_api_proyecto";
 
 function Crear_Proyecto() {
     const [datosForm, setDatosForm] = useState({
@@ -20,7 +20,7 @@ function Crear_Proyecto() {
         e.preventDefault()
 
         const token = localStorage.getItem('token')
-        funcion_crear_proyecto(datosForm, token)
+        crearProyecto(datosForm, token)
         .then( respuesta => {
             console.log('proyecto creado', respuesta.data)
             console.log('data enviada', datosForm)

@@ -3,8 +3,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { Save } from "lucide-react"
 import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
-import { funcion_actualizar_tarea, funcion_mostrar_tarea } from "../../services/ruta_api_tarea"
-import { indexDesarrolladores } from "../../services/ruta_api_tarea"
+import { actualizarTarea, mostrarTarea , indexDesarrolladores } from "../../services/ruta_api_tarea"
 import SeccionComentario from "../../Layout/Com_Comentario/SeccionComentario"
 
 function Editar_Tarea (){
@@ -22,7 +21,7 @@ function Editar_Tarea (){
     useEffect(() => {
         const token = localStorage.getItem('token')
 
-        funcion_mostrar_tarea(id_sprint, id_tarea, token)
+        mostrarTarea(id_sprint, id_tarea, token)
         .then(respuesta => {
             const tarea = respuesta.data
             setNombre(tarea.nombre)
@@ -51,7 +50,7 @@ function Editar_Tarea (){
             nombre, descripcion, tipo, estado, id_desarrollador: idDesarrollador
         }
 
-        funcion_actualizar_tarea(id_sprint, id_tarea, data, token)
+        actualizarTarea(id_sprint, id_tarea, data, token)
         .then(respuesta => {
             console.log('se ha actualizado la tarea', respuesta.data)
             navigate(`/tablero_kanban_product_owner/${id_sprint}`)

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { Save } from "lucide-react"
 import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
-import { funcion_actualizar_sprint, funcion_mostrar_sprint } from "../../services/ruta_api_sprint"
+import { actualizarSprint, mostrarSprint } from "../../services/ruta_api_sprint"
 
 function Editar_Sprint (){
     const [nombre, setNombre] = useState('')
@@ -17,7 +17,7 @@ function Editar_Sprint (){
     useEffect(() => {
         const token = localStorage.getItem('token')
 
-        funcion_mostrar_sprint(id_proyecto, id_sprint, token)
+        mostrarSprint(id_proyecto, id_sprint, token)
         .then(respuesta => {
             const sprint = respuesta.data
             setNombre(sprint.nombre)
@@ -40,7 +40,7 @@ function Editar_Sprint (){
             nombre, meta_sprint, fecha_inicio: fechaInicio, fecha_fin: fechaFin
         }
 
-        funcion_actualizar_sprint(id_proyecto, id_sprint , data, token)
+        actualizarSprint(id_proyecto, id_sprint , data, token)
         .then(respuesta => {
             console.log('se ha actualizado el sprint', respuesta.data)
             navigate(`/mostrar_proyecto/${id_proyecto}`)

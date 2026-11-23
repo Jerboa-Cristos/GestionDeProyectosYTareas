@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { funcion_administrador_register } from "../../../services/authService"
+import { administradorRegister } from "../../../services/authService"
 import { Eye, EyeClosed } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
@@ -47,7 +47,7 @@ function AdministradorRegister () {
 
         setErrors([])
         const token = localStorage.getItem('token')
-        funcion_administrador_register({nombre: nombre.trim(), email: email.trim(), password: password.trim(), confirmed_password: confirmed_password.trim()}, token)
+        administradorRegister({nombre: nombre.trim(), email: email.trim(), password: password.trim(), confirmed_password: confirmed_password.trim()}, token)
             .then(res => {
                     console.log(res.data)
                     localStorage.setItem("user", JSON.stringify(res.data))

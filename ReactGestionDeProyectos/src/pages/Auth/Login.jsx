@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { funcion_desarrollador_login, funcion_administrador_login, funcion_product_owner_login } from "../../services/authService"
+import { desarrolladorLogin, administradorLogin, productOwnerLogin } from "../../services/authService"
 import { Eye, EyeClosed } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
@@ -39,7 +39,7 @@ function DesarrolladorLogin () {
         setErrors([])
         switch(rol) {
             case 'Desarrollador':
-                funcion_desarrollador_login({email: email, password: password}).then(res => {
+                desarrolladorLogin({email: email, password: password}).then(res => {
                     console.log(res.data)
                     const {nombre, email, id, token} = res.data
                     localStorage.setItem("token", token) 
@@ -53,7 +53,7 @@ function DesarrolladorLogin () {
                 })
                 break;
             case 'Administrador':
-                funcion_administrador_login({email: email, password: password}).then(res => {
+                administradorLogin({email: email, password: password}).then(res => {
                     console.log(res.data)
                     const {nombre, email, id, token} = res.data
                     localStorage.setItem("token", token) 
@@ -67,7 +67,7 @@ function DesarrolladorLogin () {
                 })
                 break;
             case 'ProductOwner':
-                funcion_product_owner_login({email: email, password: password}).then(res => {
+                productOwnerLogin({email: email, password: password}).then(res => {
                     console.log(res.data)
                     const {nombre, email, id, token} = res.data
                     localStorage.setItem("token", token) 

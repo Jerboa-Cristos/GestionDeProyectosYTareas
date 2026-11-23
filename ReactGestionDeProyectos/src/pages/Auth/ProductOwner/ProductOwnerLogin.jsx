@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { funcion_product_owner_login } from "../../../services/authService"
+import { productOwnerLogin } from "../../../services/authService"
 
 function ProductOwnerLogin () {
     const PantallaAzul = "flex bg-blueDark items-center justify-center min-h-screen";
@@ -14,7 +14,7 @@ function ProductOwnerLogin () {
         e.preventDefault()
         
 
-        funcion_product_owner_login({email: email, password: password}).then(res => {
+        productOwnerLogin({email: email, password: password}).then(res => {
             if(res.data.errors){
                 setErrors(res.data.errors)
             }else{

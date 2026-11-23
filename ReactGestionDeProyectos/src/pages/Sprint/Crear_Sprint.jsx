@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { funcion_crear_sprint } from "../../services/ruta_api_sprint"
+import { crearSprint } from "../../services/ruta_api_sprint"
 import { useNavigate, useParams } from "react-router-dom"
 import { Save } from "lucide-react"
 import MenuTop from '../../Layout/Menu/MenuTop'
@@ -23,7 +23,7 @@ function Crear_Sprint () {
                 fecha_inicio: fechaInicio, 
                 fecha_fin: fechaFin
             }
-            funcion_crear_sprint(data, id_proyecto, token)
+            crearSprint(data, id_proyecto, token)
             .then(respuesta => {
                 console.log('sprint creado', respuesta.data)
                 console.log('datos enviados')

@@ -3,7 +3,7 @@ import { Save } from "lucide-react"
 import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import { useParams, useNavigate } from "react-router-dom"
-import { funcion_actualizar_proyecto, funcion_mostrar_proyecto } from "../../services/ruta_api_proyecto"
+import { actualizarProyecto, mostrarProyecto } from "../../services/ruta_api_proyecto"
 
 function Editar_Proyecto (){
     const [nombre, setNombre] = useState('')
@@ -16,7 +16,7 @@ function Editar_Proyecto (){
     useEffect(() => {
         const token = localStorage.getItem('token')
 
-        funcion_mostrar_proyecto(id_proyecto, token)
+        mostrarProyecto(id_proyecto, token)
         .then(respuesta => {
             const proyecto = respuesta.data
             setNombre(proyecto.nombre)
@@ -37,7 +37,7 @@ function Editar_Proyecto (){
             fecha_fin: fechaFin
         }
 
-        funcion_actualizar_proyecto(id_proyecto, data, token)
+        actualizarProyecto(id_proyecto, data, token)
         .then(respuesta => {
             console.log('Proyecto actualizado', respuesta.data)
             navigate(`/mostrar_proyecto/${id_proyecto}`)

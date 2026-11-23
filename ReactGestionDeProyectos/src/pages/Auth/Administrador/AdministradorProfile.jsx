@@ -2,7 +2,7 @@ import MenuTop from "../../../Layout/Menu/MenuTop"
 import { User, Mail, Briefcase, RotateCcw, LockIcon, Edit3, Eye, EyeClosed } from 'lucide-react';
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { funcion_administrador_profile } from "../../../services/authService"
+import { administradorProfile } from "../../../services/authService"
 import { toast } from 'react-hot-toast';
 
 function AdministradorProfile () {
@@ -49,7 +49,7 @@ function AdministradorProfile () {
 
         setErrors([])
         
-        funcion_administrador_profile({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password}, token)
+        administradorProfile({nombre: nombre, email: email, password: password, confirmed_password: confirmed_password}, token)
         .then(res => {
             toast.success('Perfil actualizado correctamente.')
             console.log(res.data)

@@ -2,7 +2,7 @@ import MenuTop from "../../Layout/Menu/MenuTop"
 import { User, Mail, Briefcase, RotateCcw, LockIcon, Edit3, Eye, EyeClosed } from 'lucide-react';
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { funcion_obtener_datos_product_owner_profile, funcion_actualizar_product_owner_profile } from "../../services/authService";
+import { obtenerDatosProductOwnerProfile, actualizarProductOwnerProfile } from "../../services/authService";
 
 function ProductOwnerProfile () {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -19,7 +19,7 @@ function ProductOwnerProfile () {
 
     useEffect(() => {
         
-        funcion_obtener_datos_product_owner_profile(token)
+        obtenerDatosProductOwnerProfile(token)
         .then(respuesta => {
             setName(respuesta.data.nombre)
             setEmail(respuesta.data.email)
@@ -39,7 +39,7 @@ function ProductOwnerProfile () {
 
 
         
-        funcion_actualizar_product_owner_profile({
+        actualizarProductOwnerProfile({
             nombre, 
             email, 
             password, 

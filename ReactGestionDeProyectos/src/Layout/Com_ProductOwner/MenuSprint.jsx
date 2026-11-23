@@ -1,7 +1,7 @@
 import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { Link} from "react-router-dom";
-import { funcion_eliminar_sprint } from '../../services/ruta_api_sprint'
+import { eliminarSprint } from '../../services/ruta_api_sprint'
 
 function MenuSprint({ sprint, id_proyecto}) {
         const [abrirMenu, setAbrirMenu] = useState(false)
@@ -13,7 +13,7 @@ function MenuSprint({ sprint, id_proyecto}) {
 
             if(!confirm('Seguro que quieres eliminar este sprint')) return
 
-            funcion_eliminar_sprint(id_proyecto, sprint.id, token)
+            eliminarSprint(id_proyecto, sprint.id, token)
             .then(respuesta => {
                 window.location.reload()
             })

@@ -3,28 +3,28 @@ import rutaApi from '../api/rutaApi';
 
 // Funciones para Crear el proyecto
 //export const funcion = (data) => axios.post(APP_URL + '/ruta_del_backend', data)
-export const funcion_listado_proyecto = (token) => axios.get(rutaApi()+ '/listado_proyectos', {
+export const listadoProyecto = (token) => axios.get(rutaApi()+ '/listadoProyectos', {
     headers: {
         Authorization: `Bearer ${token}`
     }
 })
-export const funcion_crear_proyecto = (data, token) => axios.post(rutaApi() + '/crear_proyecto', data, {
+export const crearProyecto = (data, token) => axios.post(rutaApi() + '/crearProyecto', data, {
     headers: {
         Authorization: `Bearer ${token}`
     }
 })
 
-export const funcion_mostrar_proyecto = (id, token) => axios.get(rutaApi() + `/mostrar_proyecto/${id}`, {
+export const mostrarProyecto = (id, token) => axios.get(rutaApi() + `/mostrarProyecto/${id}`, {
     headers: {
         Authorization: `Bearer ${token}`
     }
 })
-export const funcion_actualizar_proyecto = (id, data, token) => axios.put(rutaApi() + `/actualizar_proyecto/${id}`, data, {
+export const actualizarProyecto = (id, data, token) => axios.put(rutaApi() + `/actualizarProyecto/${id}`, data, {
     headers: {
         Authorization: `Bearer ${token}`
     }
 })
-export const funcion_elimimar_proyecto = (id, token) => axios.delete(rutaApi() + `/eliminar_proyecto/${id}`, {
+export const elimimarProyecto = (id, token) => axios.delete(rutaApi() + `/eliminarProyecto/${id}`, {
     headers: {
         Authorization: `Bearer ${token}`
     }

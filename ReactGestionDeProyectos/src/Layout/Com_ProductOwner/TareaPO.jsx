@@ -1,7 +1,7 @@
 import { MoreVertical } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { funcion_eliminar_tarea } from '../../services/ruta_api_tarea';
+import { eliminarTarea } from '../../services/ruta_api_tarea';
 
  //propTarea es una propiedad del Componente Tarea para identificar el id y asi asociar su nombre y descripcion
 const TareaPO = ({propTarea}) => {
@@ -19,7 +19,7 @@ const TareaPO = ({propTarea}) => {
 
             if(!confirm('Seguro que quieres eliminar este sprint')) return 
             
-            funcion_eliminar_tarea(id_sprint, propTarea.id, token)
+            eliminarTarea(id_sprint, propTarea.id, token)
             .then(respuesta => {
                 console.log('Se ha eliminado la tarea', respuesta.data)
                 setTareas(tareasActuales => tareasActuales.filter(tarea => tarea.id !== propTarea.id))

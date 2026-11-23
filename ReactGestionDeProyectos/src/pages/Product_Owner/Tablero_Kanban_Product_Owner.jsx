@@ -4,7 +4,7 @@ import MenuProductOwner from '../../Layout/Com_ProductOwner/MenuProductOwner';
 import TareaPO from '../../Layout/Com_ProductOwner/TareaPO';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { funcion_actualizar_tarea, funcion_listado_tareas_product_owner } from '../../services/ruta_api_tarea';
+import { actualizarTarea, listadoTareasProductOwner } from '../../services/ruta_api_tarea';
 
 function Tablero_Kanban_Product_Owner() {
     
@@ -16,7 +16,7 @@ function Tablero_Kanban_Product_Owner() {
     useEffect(() => {
         
         const token = localStorage.getItem('token')
-        funcion_listado_tareas_product_owner(token)
+        listadoTareasProductOwner(token)
         .then(respuesta => {
             console.log('Mostrandos listado de tareas', respuesta.data)
 
@@ -76,7 +76,7 @@ function Tablero_Kanban_Product_Owner() {
                 id_sprint: tarea.id_sprint,
                 id_desarrollador: tarea.id_desarrollador
             }
-            funcion_actualizar_tarea(id_sprint, tarea.id, datosActualizados, token)
+            actualizarTarea(id_sprint, tarea.id, datosActualizados, token)
             .then(respuesta => {
                 console.log('Tarea actualizada', tarea.id)
             })

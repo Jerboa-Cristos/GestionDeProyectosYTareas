@@ -1,6 +1,6 @@
 //Code
 import { useEffect, useState } from "react"
-import { funcion_listado_tareas_product_owner } from "../../services/ruta_api_tarea"
+import { listadoTareasProductOwner } from "../../services/ruta_api_tarea"
 //Visual components
 import MenuTop  from '../../Layout/Menu/MenuTop'
 import MenuProductOwner from '../../Layout/Com_ProductOwner/MenuProductOwner'
@@ -16,7 +16,7 @@ function ProductOwnerDashboard () {
 
     useEffect(() => {
         const token = localStorage.getItem('token')
-        funcion_listado_tareas_product_owner( token)
+        listadoTareasProductOwner( token)
         .then(res => {
             setTareas(res.data)
             console.log(res.data)

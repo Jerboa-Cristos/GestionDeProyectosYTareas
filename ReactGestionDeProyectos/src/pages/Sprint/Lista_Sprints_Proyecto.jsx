@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
-import { MoreVertical } from "lucide-react"
 import MenuTop from '../../Layout/Menu/MenuTop'
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import MenuSprint from "../../Layout/Com_ProductOwner/MenuSprint"
-import { funcion_mostrar_proyecto } from "../../services/ruta_api_proyecto"
-import { funcion_eliminar_sprint, funcion_listado_sprint} from '../../services/ruta_api_sprint'
+import { mostrarProyecto } from "../../services/ruta_api_proyecto"
+import { listadoSprint } from "../../services/ruta_api_sprint"
 
 function Lista_Sprints_Proyecto() {
     const [proyectos, setProyecto] = useState('')
@@ -18,14 +17,14 @@ function Lista_Sprints_Proyecto() {
         localStorage.setItem("proyecto_activo", id_proyecto)
        
         const token = localStorage.getItem('token')
-        funcion_mostrar_proyecto(id_proyecto, token)
+        mostrarProyecto(id_proyecto, token)
         .then(res => {
             setProyecto(res.data)
              
         })
         .catch(error => console.log('Error al cargar proyecto', error))
 
-        funcion_listado_sprint(id_proyecto, token)
+        listadoSprint(id_proyecto, token)
         .then(res => {
             console.log('Respuesta sprint', res.data)
             setSprint(res.data)
