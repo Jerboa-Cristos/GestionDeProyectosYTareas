@@ -1,5 +1,5 @@
 //Code
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { listadoTareasProductOwner } from "../../services/tareaService"
 //Visual components
 import MenuTop  from '../../Layout/Menu/MenuTop'
@@ -26,13 +26,6 @@ function ProductOwnerDashboard () {
     }, [])
 
 //#region FUNCIONES DEL DASHBOARD
-    //#region FILTRO TAREAS POR ESTADO
-    const tareasPorHacer = tareas.filter(tarea => tarea.estado === 'Por Hacer').length;
-    const tareasEnCurso = tareas.filter(tarea => tarea.estado === 'En Curso').length;
-    const tareasEnRevision = tareas.filter(tarea => tarea.estado === 'En Revision').length;
-    const tareasFinalizada = tareas.filter(tarea => tarea.estado === 'Finalizado').length;
-    //#endregion
-
     //#region TAREAS DEADLINE
     const tareasDeadline = tareas.filter(tarea => {
         const fechaFin = new Date(tarea.fecha_fin)
@@ -42,38 +35,39 @@ function ProductOwnerDashboard () {
     })
     //#endregion
 
+    //#region GRÁFICOS RESUMEN ESTADO
+    const COLORS_BAR = ['#34A0A4', '#184E77', '#1A759F', '#168AAD']
+    const grfResumenEstado = useMemo(() => {
+        const arrEstados = {}
 
-    //#region GRÁFICO CIRCULAR RESUMEN ESTADO
-    const datosGrafico = [
-        {label: "Por Hacer", value: tareasPorHacer, color: '#00b4d8'},
-        {label: "En Curso", value: tareasEnCurso, color: '#0077b6'},
-        {label: "En Revision", value: tareasEnRevision, color: '#ff9f1c'},
-        {label: "Finalizado", value: tareasFinalizada, color: '#adb5bd'}
-    ]
+        tareas.forEach(tarea => {
+            const estados = tarea.estado
+            arrEstados[estados] = (arrEstados[estados] || 0) + 1
+        })
 
-    const total = datosGrafico.reduce((acc, item) => acc + item.value, 0)
+        return Object.keys(arrEstados).map((key, i)=> ({
+            estados: key,
+            cantidad: arrEstados[key],
+            fill: COLORS_BAR[i % COLORS_BAR.length]
+        }))
+    }, [tareas])
+    //#endregion
 
-    const tipoDeTarea = {
-        Backend: tareas.filter(tarea => tarea.tipo === 'Backend').length,
-        Frontend: tareas.filter(tarea => tarea.tipo === 'Frontend').length,
-        Diseño: tareas.filter(tarea => tarea.tipo === 'Diseño').length,
-        Despliegue: tareas.filter(tarea => tarea.tipo === 'Despliegue').length,
-        Testing: tareas.filter(tarea => tarea.tipo === 'Testing').length
-    }
-    
-    const backend = tipoDeTarea.Backend;
-    const frontend = tipoDeTarea.Frontend;
-    const diseño = tipoDeTarea.Diseño;
-    const despliegue = tipoDeTarea.Despliegue;
-    const testing = tipoDeTarea.Testing;
+    //#region GRÁFICOS TIPO TRABAJO
+    const grfTipoTrabajo = useMemo(() => {
+        const arrtipo = {}
 
-    const totalTipoDeTarea = tareas.length > 0 ? tareas.length : 1
+        tareas.forEach(tarea => {
+            const tipo = tarea.tipo
+            arrtipo[tipo] = (arrtipo[tipo] || 0) + 1
+        })
 
-    const porcentajeBackend = (backend / totalTipoDeTarea) * 100
-    const porcentajeFrontend = (frontend / totalTipoDeTarea) * 100
-    const porcentajeDiseño = (diseño / totalTipoDeTarea) * 100
-    const porcentajeDespliegue = (despliegue / totalTipoDeTarea) * 100
-    const porcentajeTesting = (testing / totalTipoDeTarea) * 100
+        return Object.keys(arrtipo).map((key, i)=> ({
+            tipo: key,
+            cantidad: arrtipo[key],
+            fill: COLORS_BAR[i % COLORS_BAR.length]
+        }))
+    }, [tareas])
     //#endregion
 
 //#endregion
@@ -116,43 +110,22 @@ function ProductOwnerDashboard () {
                         </div>
 
                         {/* Tipo de Trabajo MONTARLO TODO */}
-                        <div className="bg-blueBase rounded-xl p-6">
-                            <h3 className="text-center text-xl font-semibold text-blueDark mb-4">Tipo de trabajo</h3>
-                            <div className="space-y-1">
-                                <div>
-                                    <p className="text-sm text-blueDark mb-1">Backend - {backend} tareas</p>
-                                    <div className="w-full bg-transparent h-6">
-                                        <div className="bg-blueBase h-full" style={{width:`${porcentajeBackend}`}}></div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <p className="text-sm text-blueDark mb-1">Frontend - {frontend} tareas</p>
-                                    <div className="w-full bg-transparent h-6">
-                                        <div className="bg-blueBase h-full" style={{width:`${porcentajeFrontend}`}}></div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <p className="text-sm text-blueDark mb-1">Diseño - {diseño} tareas</p>
-                                    <div className="w-full bg-transparent h-6">
-                                        <div className="bg-blueBase h-full" style={{width:`${porcentajeDiseño}`}}></div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <p className="text-sm text-blueDark mb-1">Despliegue - {despliegue} tareas</p>
-                                    <div className="w-full bg-transparent h-6">
-                                        <div className="bg-blueBase h-full" style={{width:`${porcentajeDespliegue}`}}></div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <p className="text-sm text-blueDark mb-1">Testing - {testing} tareas</p>
-                                    <div className="w-full bg-transparent h-6">
-                                        <div className="bg-blueBase h-full" style={{width:`${porcentajeTesting}`}}></div>
-                                    </div>
-                                </div>
+                        <div className="bg-blueBase rounded-xl p-4 lg:p-7 flex flex-col items-center">
+                            <h3 className="text-center text-lg lg:text-xl font-semibold text-blueDark mb-4">Tipo de trabajo</h3>
+                            <div className="w-full h-64 max-w-xs lg:max-w-none">
+                                <ResponsiveContainer width="100%" height="100%" margin={{ left: 40, right: 20 }}>
+                                    <BarChart data={grfTipoTrabajo} layout='vertical'>
+                                        <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
+                                        <XAxis type="number" hide /> 
+                                        <YAxis 
+                                            dataKey="tipo" 
+                                            type="category" 
+                                            tick={{fontSize: 12, fontWeight: 'bold', fill:'#0B4068'}}
+                                            width={100}
+                                        />
+                                        <Bar dataKey='cantidad' radius={[0, 5, 5, 0]} barSize={20}/>
+                                    </BarChart>
+                                </ResponsiveContainer>
                             </div>
                         </div>
                     </div>
@@ -180,57 +153,25 @@ function ProductOwnerDashboard () {
                         <div className="bg-blueBase rounded-xl p-4 lg:p-6 shadow-sm flex flex-col items-center">
                             <h3 className="text-lg lg:text-xl font-semibold text-blueDark mb-6">Resumen del Estado</h3>
                             <div className="w-full h-64 max-w-xs">
-                            
-                                <svg width={220} height={220} viewBox="0 0 32 32">
-                                {(() => {
-                                    let acumulado = 0
-                                    const radio = 16
-                                    const centro = 16
-
-                                    return datosGrafico.map((item, index) => {
-                                        const porcentaje = total == 0 ? 0 : item.value / total
-                                        const anguloInicio = acumulado * 2 * Math.PI
-                                        const anguloFin = (acumulado + porcentaje) * 2 * Math.PI
-                                        acumulado += porcentaje
-
-                                        const x1 = centro + radio * Math.cos(anguloInicio)
-                                        const y1 = centro + radio * Math.sin(anguloInicio)
-                                        const x2 = centro + radio * Math.cos(anguloFin)
-                                        const y2 = centro + radio * Math.sin(anguloFin)
-
-                                        const arcoGrande = porcentaje > 0.5 ? 1 : 0
-
-                                        const path = `
-                                        M${centro} ${centro} 
-                                        L${x1} ${y1}
-                                        A${radio} ${radio} 0 ${arcoGrande} 1 ${x2} ${y2}
-                                        Z`
-
-                                        return (
-                                            <path 
-                                            key={index}
-                                            d={path}
-                                            fill={item.color}
-                                            stroke="white"
-                                            strokeWidth="0.2"
-                                            ></path>
-                                        )
-
-                                    })
-                                })()}
-                                </svg>
-
-                                <div className="mt-6 text-blueDark text-sm font-semibold space-y-2 pb-5">
-                                    {datosGrafico.map((item, i) => (
-                                        <div
-                                        key={i}
-                                        className="flex items-center gap-2" >
-                                            <div className="w-3 h-3 rounded-full" style={{background: item.color}}></div>
-                                            {item.label}: {item.value}
-
-                                        </div>
-                                    ))}
-                                </div>
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <PieChart>
+                                        <Pie 
+                                        data={grfResumenEstado} 
+                                        dataKey='cantidad'
+                                        nameKey='estados'
+                                        cx="50%"
+                                        cy="45%"
+                                        outerRadius={80}
+                                        stroke="none"
+                                        />
+                                        <Tooltip />
+                                        <Legend 
+                                            verticalAlign="bottom" 
+                                            iconType="circle"
+                                            formatter={(value) => <span className="text-sm font-semibold">{value}</span>}
+                                        />
+                                    </PieChart>
+                                </ResponsiveContainer>
                             </div>
                         </div>
                     </div>
