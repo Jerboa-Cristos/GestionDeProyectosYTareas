@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Save } from "lucide-react"
+import { Save , RotateCcw } from "lucide-react"
 import MenuTop from "../../Layout/Menu/MenuTop"
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import Loading from '../../Layout/Loading';
@@ -51,11 +51,15 @@ function Editar_Proyecto (){
             success: 'Proyecto editado con éxito.',
             error: 'No se pudo editar el proyecto.'
         }).then(() => {
-            navigate(`/mostrar_proyecto/${id_proyecto}`)
+            navigate(`/lista_proyectos`)
         })
         .catch(error => {
             console.log('Error al editar proyecto', error)
         })
+    }
+
+    function goBack() {
+        navigate('/lista_proyectos')
     }
 
     if (loading) return <Loading />
@@ -98,8 +102,13 @@ function Editar_Proyecto (){
                                 className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"/>
                         </div>
 
-                        <div className="flex justify-end">
-                            <button
+                        <div className="flex flex-row justify-between items-center w-full max-w-2xl">
+                            <button onClick={goBack}
+                            className="text-blueDark hover:scale-110 transition-transform p-2"
+                            title="Volver atrás">
+                            <RotateCcw size={40} strokeWidth={2.5} />
+                            </button>
+                            <button type='submit'
                                 className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
                                     hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
                                 <Save size={20} />

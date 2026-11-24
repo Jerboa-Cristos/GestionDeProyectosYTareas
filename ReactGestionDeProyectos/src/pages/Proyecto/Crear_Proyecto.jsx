@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Save } from "lucide-react";
+import { Save , RotateCcw } from "lucide-react";
 import MenuTop from '../../Layout/Menu/MenuTop'
 import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner";
 import { crearProyecto } from "../../services/proyectoService";
@@ -29,6 +29,10 @@ function Crear_Proyecto() {
         .catch(error => {
             console.error('Error al crear del usuario: ', error)
         })
+    }
+
+    function goBack() {
+        navigate('/lista_proyectos')
     }
 
     return ( 
@@ -79,8 +83,13 @@ function Crear_Proyecto() {
                             className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"/>
                         </div>
                     
-                        <div className="flex justify-end">
-                            <button
+                        <div className="flex flex-row justify-between items-center w-full max-w-2xl">
+                            <button onClick={goBack}
+                            className="text-blueDark hover:scale-110 transition-transform p-2"
+                            title="Volver atrás">
+                            <RotateCcw size={40} strokeWidth={2.5} />
+                            </button>
+                            <button type='submit'
                             className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
                                     hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">                            
                             <Save size={20} />
