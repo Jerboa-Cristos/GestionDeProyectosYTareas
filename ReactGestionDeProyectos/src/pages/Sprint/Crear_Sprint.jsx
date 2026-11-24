@@ -7,6 +7,7 @@ import MenuProductOwner from "../../Layout/Com_ProductOwner/MenuProductOwner"
 import { toast } from 'react-hot-toast'
 
 function Crear_Sprint () {
+    const [errors, setErrors] = useState([])
     const [nombre, setNombre] = useState('')
     const [meta, setMeta] = useState('')
     const [fechaInicio, setFechaInicio] = useState('')
@@ -49,6 +50,19 @@ function Crear_Sprint () {
                     <div className="flex-1 bg-blueDashboard rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
                         <form className="max-w-2xl mx-auto grid grid-cols-1 gap-4" onSubmit={botonGuardarSprint}>
                         <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 lg:mb-6 text-center lg:text-left">Crear Sprint</h1>
+                        
+                        {
+                            errors.length > 0 && 
+                            <div className="mb-6 p-3 md:p-4 bg-red-50 ring-2 border-red-500 text-red-700 rounded-lg shadow-sm w-full max-w-2xl mx-auto animate-fade-in">
+                                <ul className="list-disc pl-7 space-y-1 text-xs md:text-sm font-medium">
+                                    {errors.map((error, index) => 
+                                    <li key={index} className="leading-tight">{error}</li>
+                                    )}
+                                    
+                                </ul>
+                            </div>
+                        }
+
                         <div>
                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Título</label>
                             <input
@@ -56,7 +70,7 @@ function Crear_Sprint () {
                                 onChange={(e) => setNombre(e.target.value)}
                                 type="text" 
                                 className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
-                                required placeholder="Título del sprint"/>
+                                required placeholder="Título del sprint. Máximo 40 caracteres."/>
                         </div>
 
                         <div>

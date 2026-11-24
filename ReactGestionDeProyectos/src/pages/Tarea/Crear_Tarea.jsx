@@ -8,6 +8,7 @@ import { toast } from 'react-hot-toast'
 
 function Crear_Tarea () {
     const token = localStorage.getItem('token')
+    const [errors, setErrors] = useState([])
     const [nombre, setNombre] = useState('')
     const [tipo, setTipo] = useState('')
     const [estado, setEstado] = useState('Por Hacer')
@@ -70,74 +71,86 @@ function Crear_Tarea () {
             <main className="flex-1 bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
                 <div className="flex-1 bg-blueDashboard rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
                     <form onSubmit={botonGuardarTarea} className="max-w-2xl mx-auto grid grid-cols-1 gap-4">
-                            <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 lg:mb-4 text-center lg:text-left">Crear Tarea</h1>
-                                
-                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Nombre</label>
-                            <input
-                            value={nombre} 
-                            onChange={(e) => setNombre(e.target.value)}
-                            type="text" 
-                            className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
-                            required
-                            placeholder="Escribe el nombre de la tarea aquí" 
-                            />
-
-                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Descripción</label>
-                            <textarea
-                            value={descripcion}
-                            onChange={(e) => setDescripcion(e.target.value)} 
-                            name="descripcion" 
-                            placeholder="Escribe la descripcion"
-                            className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
-                            </textarea>
-
-                            <div className="grid grid-cols-2 gap-2">
-                                <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Tipo de tarea</label>
-                                <select 
-                                value={tipo}
-                                onChange={(e) => setTipo(e.target.value)}
-                                className="rounded-md w-full p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
-                                    <option value={"Backend"}>Backend</option>
-                                    <option value={"Frontend"}>Frontend</option>
-                                    <option value={"Diseño"}>Diseño</option>
-                                    <option value={"Despliegue"}>Despliegue</option>
-                                    <option value={"Testing"}>Testing</option>
-                                </select>
+                        <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 lg:mb-4 text-center lg:text-left">Crear Tarea</h1>
                             
-                                <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Asignar a un desarrollador</label>
-                                <select
-                                value={idDesarrollador}
-                                onChange={(e) => setIdDesarrollador(e.target.value)}
-                                required
-                                className="rounded-md w-full p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
-                                    <option value={"Selecciona un desarrollador"}></option>
-                                    {desarrolladores.map(desarrollador => (
-                                        <option key={desarrollador.id} value={desarrollador.id}>
-                                            {desarrollador.nombre}
-                                            
-                                        </option>
-                                    ))}
-                                </select>
-
-                                <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Fecha limite</label>
-                                <input 
-                                value={fechaFin}
-                                onChange={(e) => setFechaFin(e.target.value)}
-                                type="date" 
-                                name="fecha_fin"  
-                                className="rounded-md w-full p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"/>
+                        {
+                            errors.length > 0 && 
+                            <div className="mb-6 p-3 md:p-4 bg-red-50 ring-2 border-red-500 text-red-700 rounded-lg shadow-sm w-full max-w-2xl mx-auto animate-fade-in">
+                                <ul className="list-disc pl-7 space-y-1 text-xs md:text-sm font-medium">
+                                    {errors.map((error, index) => 
+                                    <li key={index} className="leading-tight">{error}</li>
+                                    )}
+                                    
+                                </ul>
                             </div>
+                        }
 
-                            <div className="flex flex-row justify-between items-center w-full max-w-2xl">
-                            <button onClick={goBack}
-                            className="text-blueDark hover:scale-110 transition-transform p-2"
-                            title="Volver atrás">
-                            <RotateCcw size={40} strokeWidth={2.5} />
-                            </button>
-                            <button type='submit'
-                            className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
-                                        hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
-                                <Save size={20}/>Guardar</button>
+                        <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Nombre</label>
+                        <input
+                        value={nombre} 
+                        onChange={(e) => setNombre(e.target.value)}
+                        type="text" 
+                        className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
+                        required
+                        placeholder="Nombre de tarea. Máximo 40 caracteres." 
+                        />
+
+                        <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Descripción</label>
+                        <textarea
+                        value={descripcion}
+                        onChange={(e) => setDescripcion(e.target.value)} 
+                        name="descripcion" 
+                        placeholder="Descripción de la tarea"
+                        className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
+                        </textarea>
+
+                        <div className="grid grid-cols-2 gap-2">
+                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Tipo de tarea</label>
+                            <select 
+                            value={tipo}
+                            onChange={(e) => setTipo(e.target.value)}
+                            className="rounded-md w-full p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
+                                <option value={"Backend"}>Backend</option>
+                                <option value={"Frontend"}>Frontend</option>
+                                <option value={"Diseño"}>Diseño</option>
+                                <option value={"Despliegue"}>Despliegue</option>
+                                <option value={"Testing"}>Testing</option>
+                            </select>
+                        
+                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Asignar a un desarrollador</label>
+                            <select
+                            value={idDesarrollador}
+                            onChange={(e) => setIdDesarrollador(e.target.value)}
+                            required
+                            className="rounded-md w-full p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
+                                <option value={"Selecciona un desarrollador"}></option>
+                                {desarrolladores.map(desarrollador => (
+                                    <option key={desarrollador.id} value={desarrollador.id}>
+                                        {desarrollador.nombre}
+                                        
+                                    </option>
+                                ))}
+                            </select>
+
+                            <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Fecha limite</label>
+                            <input 
+                            value={fechaFin}
+                            onChange={(e) => setFechaFin(e.target.value)}
+                            type="date" 
+                            name="fecha_fin"  
+                            className="rounded-md w-full p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"/>
+                        </div>
+
+                        <div className="flex flex-row justify-between items-center w-full max-w-2xl">
+                        <button onClick={goBack}
+                        className="text-blueDark hover:scale-110 transition-transform p-2"
+                        title="Volver atrás">
+                        <RotateCcw size={40} strokeWidth={2.5} />
+                        </button>
+                        <button type='submit'
+                        className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
+                                    hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
+                            <Save size={20}/>Guardar</button>
                         </div>
                     </form>
                 </div>

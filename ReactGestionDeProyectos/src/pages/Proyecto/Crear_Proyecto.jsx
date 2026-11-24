@@ -8,7 +8,8 @@ import { toast } from 'react-hot-toast'
 
 function Crear_Proyecto() {
     const token = localStorage.getItem('token')
-    const [datosForm, setDatosForm] = useState({
+    const [errors, setErrors] = useState([])
+    const [formData, setformData] = useState({
         nombre: '',
         descripcion: '', 
         fecha_fin: '',
@@ -19,7 +20,7 @@ function Crear_Proyecto() {
     const botonGuardarProyecto = (e) => {
         e.preventDefault()
         
-        toast.promise(crearProyecto(datosForm, token), {
+        toast.promise(crearProyecto(formData, token), {
             loading: 'Creando proyecto...',
             success: 'Proyecto creado con éxito.',
             error: 'No se pudo crear el proyecto.'
@@ -44,25 +45,37 @@ function Crear_Proyecto() {
                 <div className="flex-1 bg-blueDashboard rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
                     <form className="max-w-2xl mx-auto grid grid-cols-1 gap-4" onSubmit={botonGuardarProyecto}>
                         <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 lg:mb-6 text-center lg:text-left">Crear de Proyecto</h1>
+                        {
+                            errors.length > 0 && 
+                            <div className="mb-6 p-3 md:p-4 bg-red-50 ring-2 border-red-500 text-red-700 rounded-lg shadow-sm w-full max-w-2xl mx-auto animate-fade-in">
+                                <ul className="list-disc pl-7 space-y-1 text-xs md:text-sm font-medium">
+                                    {errors.map((error, index) => 
+                                    <li key={index} className="leading-tight">{error}</li>
+                                    )}
+                                    
+                                </ul>
+                            </div>
+                        }
+                        
                         <div>
                             <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Nombre del Proyecto</label>
                             <input
-                            onChange={e => setDatosForm({
-                                ...datosForm, 
+                            onChange={e => setformData({
+                                ...formData, 
                                 nombre: e.target.value
                             })} 
                             type="text" 
                             name="nombre" required 
                             className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
-                            placeholder="Nombre del proyecto"
+                            placeholder="Nombre del proyecto. Máximo 40 caracteres."
                             /> 
                         </div>
 
                         <div>
                             <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Descripción del proyecto</label>
                             <textarea
-                            onChange={e => setDatosForm({
-                                ...datosForm,
+                            onChange={e => setformData({
+                                ...formData,
                                 descripcion: e.target.value
                             })} 
                             name="descripcion" 
@@ -74,8 +87,8 @@ function Crear_Proyecto() {
                         <div>
                             <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Fecha final</label>
                             <input
-                            onChange = {e => setDatosForm({
-                                ...datosForm,
+                            onChange={e => setformData({
+                                ...formData,
                                 fecha_fin: e.target.value
                             })} 
                             type="date" 

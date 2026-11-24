@@ -9,6 +9,7 @@ import { toast } from 'react-hot-toast'
 
 function Editar_Sprint (){
     const token = localStorage.getItem('token')
+    const [errors, setErrors] = useState([])
     const [loading, setLoading] = useState(true);
     const [nombre, setNombre] = useState('')
     const [meta_sprint, setMetaSprint] = useState('')
@@ -75,6 +76,19 @@ function Editar_Sprint (){
                 <div className="flex-1 bg-blueDashboard rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
                     <form onSubmit={botonEditarSprint} className="max-w-2xl mx-auto grid grid-cols-1 gap-4">
                         <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 lg:mb-6 text-center lg:text-left">Editar Sprint</h1>
+
+                        {
+                            errors.length > 0 && 
+                            <div className="mb-6 p-3 md:p-4 bg-red-50 ring-2 border-red-500 text-red-700 rounded-lg shadow-sm w-full max-w-2xl mx-auto animate-fade-in">
+                                <ul className="list-disc pl-7 space-y-1 text-xs md:text-sm font-medium">
+                                    {errors.map((error, index) => 
+                                    <li key={index} className="leading-tight">{error}</li>
+                                    )}
+                                    
+                                </ul>
+                            </div>
+                        }
+
                         <div>
                             <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Nombre</label>
                             <input
@@ -83,7 +97,7 @@ function Editar_Sprint (){
                             type="text" 
                             className="w-full rounded px-3 py-2 mt-1 bg-blueBase border border-BlueBaseDark"
                             required
-                            placeholder="Título del sprint"/>
+                            placeholder="Título del sprint. Máximo 40 caracteres."/>
                         </div>
 
                         <div>
@@ -92,7 +106,7 @@ function Editar_Sprint (){
                             value={meta_sprint}
                             onChange={(e) => setMetaSprint(e.target.value)} 
                             name="meta_sprint" 
-                            placeholder="Escribe la meta del sprint"
+                            placeholder="Finalidad del sprint"
                             className=" w-full rounded px-3 py-2 mt-1 h-24 bg-blueBase">
                             </textarea>
                         </div>

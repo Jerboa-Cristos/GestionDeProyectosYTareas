@@ -10,6 +10,7 @@ import { toast } from 'react-hot-toast'
 
 function Editar_Tarea (){
     const token = localStorage.getItem('token')
+    const [errors, setErrors] = useState([])
     const [loading, setLoading] = useState(true);
     const [nombre, setNombre] = useState('')
     const [descripcion, setDescripcion] = useState('')
@@ -87,7 +88,19 @@ function Editar_Tarea (){
                     <div className="flex-1 bg-blueDashboard rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
                     <form onSubmit={botonEditarTarea} className="max-w-2xl mx-auto grid grid-cols-1 gap-4">
                         <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 lg:mb-4 text-center lg:text-left">Editar Tarea</h1>
-                        
+
+                        {
+                            errors.length > 0 && 
+                            <div className="mb-6 p-3 md:p-4 bg-red-50 ring-2 border-red-500 text-red-700 rounded-lg shadow-sm w-full max-w-2xl mx-auto animate-fade-in">
+                                <ul className="list-disc pl-7 space-y-1 text-xs md:text-sm font-medium">
+                                    {errors.map((error, index) => 
+                                    <li key={index} className="leading-tight">{error}</li>
+                                    )}
+                                    
+                                </ul>
+                            </div>
+                        }
+
                         <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Nombre</label>
                         <input
                         value={nombre} 
@@ -95,7 +108,7 @@ function Editar_Tarea (){
                         type="text" 
                         className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
                         required
-                        placeholder="Escribe el nombre de la tarea aquí" 
+                        placeholder="Nombre de tarea. Máximo 40 caracteres." 
                         />
 
                         <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Descripción</label>
@@ -103,7 +116,7 @@ function Editar_Tarea (){
                         value={descripcion}
                         onChange={(e) => setDescripcion(e.target.value)} 
                         name="descripcion" 
-                        placeholder="Escribe la descripcion"
+                        placeholder="Descripción de tarea"
                         className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">                        
                         </textarea>
 

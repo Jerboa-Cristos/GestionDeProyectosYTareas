@@ -9,6 +9,7 @@ import { toast } from 'react-hot-toast';
 
 function Editar_Proyecto (){
     const token = localStorage.getItem('token')
+    const [errors, setErrors] = useState([])
     const [loading, setLoading] = useState(true);
     const [nombre, setNombre] = useState('')
     const [descripcion, setDescripcion] = useState('')
@@ -73,6 +74,17 @@ function Editar_Proyecto (){
                 <div className="flex-1 bg-blueDashboard rounded-xl shadow-lg p-4 sm:p-8 overflow-auto">
                     <form className="max-w-2xl mx-auto grid grid-cols-1 gap-4" onSubmit={botonEditarProyecto}>
                         <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2 lg:mb-6 text-center lg:text-left">Editar Proyecto</h1>
+                        {
+                            errors.length > 0 && 
+                            <div className="mb-6 p-3 md:p-4 bg-red-50 ring-2 border-red-500 text-red-700 rounded-lg shadow-sm w-full max-w-2xl mx-auto animate-fade-in">
+                                <ul className="list-disc pl-7 space-y-1 text-xs md:text-sm font-medium">
+                                    {errors.map((error, index) => 
+                                    <li key={index} className="leading-tight">{error}</li>
+                                    )}
+                                    
+                                </ul>
+                            </div>
+                        }
                         <div>
                             <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Nombre</label>
                             <input
@@ -81,7 +93,7 @@ function Editar_Proyecto (){
                                 type="text" 
                                 className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
                                 required
-                                placeholder="Escribe el nombre del proyecto"/>
+                                placeholder="Nombre del proyecto. Máximo 40 caracteres."/>
                         </div>
 
                         <div>
@@ -90,7 +102,7 @@ function Editar_Proyecto (){
                                 value={descripcion}
                                 onChange={(e) => setDescripcion(e.target.value)} 
                                 className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
-                                placeholder="Escribe la descripción del proyecto"/>
+                                placeholder="Descripción del proyecto"/>
                         </div>
 
                         <div>

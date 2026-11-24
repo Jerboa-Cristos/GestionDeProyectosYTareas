@@ -45,9 +45,9 @@ const TareaPO = ({propTarea}) => {
                     </button>
 
                     {abrirMenu && (
-                    <div className='absolute top-10 right-2 bg-white text-blueDark shadow-lg rounded-md border w-36 z-20'>
+                    <div className="rounded text-left z-10 absolute right-0 mt-2 w-36 bg-white border border-BlueDarkDark">
 
-                        <button className='w-full text-left px-4 py-2 hover:bg-GreenLite'
+                        <button className='rounded w-full text-left px-4 py-2 hover:bg-GreenLite'
                         onClick={(e) => {
                             e.stopPropagation()
                             setAbriMenu(false)
@@ -57,7 +57,7 @@ const TareaPO = ({propTarea}) => {
                         </button>
 
                         <button 
-                        className='w-full text-left px-4 py-2 hover:bg-red-400 text-BlueDarkDark'
+                        className='rounded w-full text-left px-4 py-2 hover:bg-red-400 text-BlueDarkDark'
                         onClick={(e) => {
                             e.stopPropagation()
                             setAbriMenu(false)
