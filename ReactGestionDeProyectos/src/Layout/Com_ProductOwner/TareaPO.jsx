@@ -30,7 +30,7 @@ const TareaPO = ({propTarea}) => {
     
         return (
             <div className="w-full bg-blueBase hover:bg-BlueBaseDark rounded-xl 
-            p-4 text-left shadow-sm border-transparent hover:border-blueDashboard">
+          p-4 text-left group shadow-sm border-transparent hover:border-blueDashboard">
                 <div className="flex flex-row justify-between">
                     <h2 className="text-blueDark font-bold text-base md:text-lg text-center mb-2 
                 group-hover:text-blueDashboard transition-colors">{propTarea.nombre}</h2>

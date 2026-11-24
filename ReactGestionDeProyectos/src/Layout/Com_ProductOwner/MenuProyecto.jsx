@@ -17,14 +17,14 @@ const MenuProyecto = ({proyecto, botonEliminarProyecto}) => {
         {abrirMenu && (
           <div className="absolute top-10 right-3 bg-blueBase text-blueDark shadow-lg rounded-md border w-36 z-20">
             <Link to={`/editar_proyecto/${proyecto.id}`}
-            className="block px-4 py-2 hover:bg-GreenLite"
+            className="rounded block px-4 py-2 hover:bg-GreenLite"
             onClick={() => {
               setAbrirMenu(false)
             }}>
               Editar
             </Link>
 
-            <button className="w-full text-left px-4 py-2 hover:bg-red-400 text-BlueDarkDark"
+            <button className="rounded w-full text-left px-4 py-2 hover:bg-red-400 text-BlueDarkDark"
             onClick={() => {
               setAbrirMenu(false)
               botonEliminarProyecto(proyecto.id)

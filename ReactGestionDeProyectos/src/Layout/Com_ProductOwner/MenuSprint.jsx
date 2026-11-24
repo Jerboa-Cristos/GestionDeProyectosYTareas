@@ -33,7 +33,7 @@ function MenuSprint({ sprint, id_proyecto}) {
                 {abrirMenu && (
                     <div className="rounded text-left z-10 absolute right-0 mt-2 w-36 bg-white border border-BlueDarkDark">
                         <Link to={`/editar_sprint/${id_proyecto}/${sprint.id}`} 
-                        className="block w-full text-left px-4 py-2 hover:bg-GreenLite"
+                        className="rounded block w-full text-left px-4 py-2 hover:bg-GreenLite"
                         >
                             Editar Sprint
                         
@@ -41,7 +41,7 @@ function MenuSprint({ sprint, id_proyecto}) {
 
                         <button
                         onClick={botonEliminarSprint}
-                        className="w-full text-left px-4 py-2 hover:bg-red-400 text-BlueDarkDark"
+                        className="rounded w-full text-left px-4 py-2 hover:bg-red-400 text-BlueDarkDark"
                         >
                             Eliminar
                         </button>
