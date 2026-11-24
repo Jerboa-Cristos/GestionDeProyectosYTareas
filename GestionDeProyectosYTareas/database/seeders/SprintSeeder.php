@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Sprint;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class SprintSeeder extends Seeder
 {
@@ -14,15 +14,14 @@ class SprintSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create('es_Es');
-
-        for($i=0; $i<=5; $i++) {
-            DB::table('sprint')->insert([
-                'nombre'=> $faker->word(),
-                'fecha_inicio'=>$faker->date(),
-                'fecha_fin'=>$faker->date(),
-                'id_proyecto'=>1
-            ]);
-        }
+        Sprint::updateOrCreate(
+        ['nombre' => 'Sprint 1'],                        
+        [ 
+            'fecha_inicio' => Carbon::now(),
+            'fecha_fin' => Carbon::now()->addMonths(1),
+            'meta_sprint' => '',
+            'id_proyecto' => 1
+        ]
+        );
     }
 }

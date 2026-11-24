@@ -2,12 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Proyecto;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Faker\Factory as Faker;
+use Carbon\Carbon;
 
 class ProyectoSeeder extends Seeder
 {
@@ -16,17 +14,14 @@ class ProyectoSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create('es_Es');
-
-        for($i=0; $i<=5; $i++) {
-            DB::table('proyecto')->insert([
-                'nombre'=> $faker->name(),
-                'descripcion'=> $faker->text(),
-                'fecha_fin'=>$faker->date(),
-                'created_at'=>date('Y-m-d'),
-                'updated_at'=>date('Y-m-d'),
-                'id_product_owner'=>random_int(1,5)
-            ]);
-        }
+        Proyecto::updateOrCreate(
+        ['nombre' => 'Proyecto demo'],                        
+        [ 
+            'descripcion' => 'Desarrollo de aplicación web.', 
+            'fecha_inicio' => Carbon::now(),
+            'fecha_fin' => Carbon::now()->addMonths(2),
+            'id_product_owner' => 1
+        ]
+        );
     }
 }

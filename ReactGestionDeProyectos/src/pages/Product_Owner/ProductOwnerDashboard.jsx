@@ -10,16 +10,14 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 
 
 function ProductOwnerDashboard () {
-    const user = JSON.parse(localStorage.getItem('user'))
+    const token = localStorage.getItem('token')
     const [tareas, setTareas] = useState([])
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
         listadoTareasProductOwner( token)
         .then(res => {
             setTareas(res.data)
-            console.log(res.data)
             setLoading(false)
         })
         .catch(error => {

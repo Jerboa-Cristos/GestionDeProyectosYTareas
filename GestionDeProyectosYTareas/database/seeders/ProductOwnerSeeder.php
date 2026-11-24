@@ -2,12 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\ProductOwner;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Faker\Factory as Faker;
 
 
 class ProductOwnerSeeder extends Seeder
@@ -17,18 +14,10 @@ class ProductOwnerSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create('es_Es');
-
-        for($i=0; $i<=5; $i++) {
-            DB::table('product_owner')->insert([
-                'nombre'=> $faker->name(),
-                'email'=> $faker->email(),
-                'password'=>$faker->password(5,10),
-               
-                'created_at'=>date('Y-m-d'),
-                'updated_at'=>date('Y-m-d'),
-                'id_administrador'=>1
-            ]);
-        }
+        $password = Hash::make('password123');
+        ProductOwner::updateOrCreate(
+        ['email' => 'po@demo.com'],                        
+        ['nombre' => 'Product Owner Demo', 'password' => $password, 'id_administrador' => 1]
+        );
     }
 }

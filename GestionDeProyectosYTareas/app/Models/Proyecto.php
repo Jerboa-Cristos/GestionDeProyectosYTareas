@@ -15,7 +15,7 @@ class Proyecto extends Model
     }
 
     public function desarrollador(){
-        return $this->belongsTo(Desarrollador::class, 'id_desarrollador');
+        return $this->hasMany(Desarrollador::class, 'id_proyecto');
     }
 
     public function sprints(){
@@ -23,7 +23,7 @@ class Proyecto extends Model
     }
 
     public function tareas(){
-        return $this->hasMany(Tarea::class, 'id_proyecto');
+        return $this->hasManyThrough(Tarea::class, Sprint::class, 'id_proyecto', 'id_sprint');
     }
 
 

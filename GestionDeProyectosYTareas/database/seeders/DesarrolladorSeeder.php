@@ -2,12 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Desarrollador;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Faker\Factory as Faker;
 
 class DesarrolladorSeeder extends Seeder
 {
@@ -16,19 +13,19 @@ class DesarrolladorSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create('es_ES');
+        $password = Hash::make('password123');
+        $dev = [
+            ['dev@demo.com', 'Desarrollador Demo'],
+            ['dev1@demo.com', 'Lucia Navarro'],
+            ['dev2@demo.com', 'Antonio Banderas'],
+        ];
 
-        for($i = 0; $i<=15; $i++) {
-            DB::table('desarrollador')->insert([
-                'nombre' => $faker->name(),
-                'email' => $faker->email(),
-                'password' => $faker->password(5, 10),
-                
-                'created_at' => date('Y-m-d'),
-                'updated_at' =>date('Y-m-d'),
-                'id_administrador' => 1,
-                'id_proyecto' => 1
-            ]);
+        foreach($dev as [$email, $nombre]) {
+            Desarrollador::updateOrCreate(
+            ['email' => $email],                        
+            ['nombre' => $nombre, 'password' => $password, 'id_administrador' => 1, 'id_proyecto' => 1]
+        );
         }
+
     }
 }

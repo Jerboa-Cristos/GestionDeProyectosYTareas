@@ -25,7 +25,6 @@ class ProductOwner extends Authenticatable
         return $this->hasMany(Proyecto::class, 'id_product_owner');
     }
 
-
     public function sprints(){
         return $this->hasManyThrough(Sprint::class, Proyecto::class, 'id_product_owner', 'id_proyecto');
     }

@@ -15,13 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 40);
             $table->text('descripcion');
+            $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin')->nullable();
             $table->timestamps();
 
             //relaciones
             $table->foreignId('id_product_owner')->constrained('product_owner')->cascadeOnDelete()->cascadeOnUpdate();
-
-
 
         });
     }

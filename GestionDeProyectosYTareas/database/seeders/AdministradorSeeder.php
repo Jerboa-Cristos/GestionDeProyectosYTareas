@@ -2,12 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Administrador;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Faker\Factory as Faker;
 
 class AdministradorSeeder extends Seeder
 {
@@ -16,16 +13,10 @@ class AdministradorSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create('es_Es');
-        for($i=0; $i<=5; $i++) {
-            DB::table('administrador')->insert([
-                'nombre'=> $faker->name(),
-                'email'=> $faker->email(),
-                'password'=>$faker->password(5,10),
-                
-                'created_at'=>date('Y-m-d'),
-                'updated_at'=>date('Y-m-d')
-            ]);
-        }
+        $password = Hash::make('password123');
+        Administrador::updateOrCreate(
+        ['email' => 'admin@demo.com'],                        
+        ['nombre' => 'Admin Demo', 'password' => $password]
+        );
     }
 }

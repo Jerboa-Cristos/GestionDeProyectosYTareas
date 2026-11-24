@@ -16,8 +16,6 @@ function Crear_Proyecto() {
     })
     const navigate = useNavigate()
 
-    console.log(datosForm.nombre, datosForm.descripcion, datosForm.fecha_fin)
-
     const botonGuardarProyecto = (e) => {
         e.preventDefault()
         
