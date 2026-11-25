@@ -6,7 +6,7 @@ const MenuProyecto = ({proyecto, botonEliminarProyecto}) => {
     const [abrirMenu, setAbrirMenu] = useState(false)
     return (
       <div className="relative bg-blueblue rounded-xl p-5 shadow hover:shadow-md hover:-translate-y-1 transition w-full flex flex-col justify-center">
-        <button className="absolute top-3 right-3 p-1 hover:bg-turquesa hover:text-white transition-all rounded"
+        <button className="p-1 hover:bg-turquesa hover:text-white transition-all rounded"
         onClick={(e) => {
           e.stopPropagation()
           setAbrirMenu(!abrirMenu)
