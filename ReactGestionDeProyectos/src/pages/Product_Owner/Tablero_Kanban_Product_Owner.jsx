@@ -1,11 +1,12 @@
 import { Search } from 'lucide-react';
 import MenuTop from '../../Layout/Menu/MenuTop';
 import MenuProductOwner from '../../Layout/Com_ProductOwner/MenuProductOwner';
-import TareaPO from '../../Layout/Com_ProductOwner/TareaPO';
 import Loading from '../../Layout/Loading';
+import KanbanColumnPO from '../../Layout/Com_ProductOwner/KanbanColumnPO';
+import { DragDropContext } from '@hello-pangea/dnd'; 
 import { toast } from 'react-hot-toast'
 import { Link, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { actualizarTarea, listadoTareasProductOwner } from '../../services/tareaService';
 
 function Tablero_Kanban_Product_Owner() {
@@ -49,11 +50,56 @@ function Tablero_Kanban_Product_Owner() {
         tarea.nombre.toLowerCase().includes(busqueda.toLowerCase()) || 
         tarea.descripcion.toLowerCase().includes(busqueda.toLowerCase)
     )
+    const tareasPorEstado = useMemo(() => {
+        return {
+        PorHacer: tareasFiltradas.filter(tarea => tarea.estado === 'Por Hacer'),
+        EnCurso: tareasFiltradas.filter(tarea => tarea.estado === 'En Curso'),
+        EnRevision: tareasFiltradas.filter(tarea => tarea.estado === 'En Revision'),
+        Finalizado: tareasFiltradas.filter(tarea => tarea.estado === 'Finalizado')
+        }
+    }, [tareasFiltradas])
 
-    const porHacer = tareasFiltradas.filter(tarea => tarea.estado === 'Por Hacer')
-    const enCurso = tareasFiltradas.filter(tarea => tarea.estado === 'En Curso')
-    const enRevision = tareasFiltradas.filter(tarea => tarea.estado === 'En Revision')
-    const finalizada = tareasFiltradas.filter(tarea => tarea.estado === 'Finalizado')
+    //Funcionamiento del Drag and Drop
+    const onDragEnd = (result) => {
+        if (!token) return;
+        //Al arrastrar una tarjeta, nos devuelve un resultado. Del resultado extraemos de donde viene, a donde va y el ID de lo que va.
+        const { source, destination, draggableId } = result;
+        if (!destination) return; // Si no hay destino, lo devolvemos al origen
+        if (source.droppableId === destination.droppableId && source.index === destination.index) return; //Si lo agarramos, pero no lo movemos, se queda igual
+        // Variables
+        const NewEstado = destination.droppableId; //El estado nuevo
+        const tareaId = parseInt(draggableId); //ID de la tarea que acabamos de mover
+
+        //Optimistic UI, actualizamos visualmente el estado, mientras se hace la petición al back.
+        setTareas(prev =>
+        prev.map(tarea =>
+            tarea.id === tareaId
+                ? { ...tarea, estado: NewEstado }
+                : tarea));
+
+
+        const dataTarea = tareas.find((tarea) => tarea.id === tareaId);
+        const datosActualizados = {
+            nombre: dataTarea.nombre,
+            tipo: dataTarea.tipo,
+            estado: NewEstado,
+            descripcion: dataTarea.descripcion,
+            fecha_fin: dataTarea.fecha_fin,
+            id_sprint: dataTarea.id_sprint,
+            id_desarrollador: dataTarea.id_desarrollador
+        }
+        
+        toast.promise(actualizarTarea(dataTarea.id_sprint, dataTarea.id, datosActualizados, token),{
+            loading: 'Editando tarea...',
+            success: 'Tarea editada con éxito.',
+            error: 'No se pudo editar la tarea.'
+         }).then(() => {
+            navigate(`/tablero_kanban_product_owner/${id_sprint}`)
+        })
+        .catch(error => {
+            console.log('Error al editar tarea', error)
+        })
+    }
 
     const completarSprint = () => {
         tareas.forEach(tarea => {
@@ -67,7 +113,7 @@ function Tablero_Kanban_Product_Owner() {
                 id_desarrollador: tarea.id_desarrollador
             }
             actualizarTarea(id_sprint, tarea.id, datosActualizados, token)
-            .then(respuesta => {
+            .then(() => {
                 toast.success('Tarea actualizada correctamente')
             })
             .catch(error => {
@@ -98,74 +144,43 @@ function Tablero_Kanban_Product_Owner() {
             <MenuTop rutaPerfil='/product_owner_profile'/>
             <div className="flex flex-1 gap-4 h-full pb-20 lg:pb-0">
                 <MenuProductOwner/>
-                <main className="flex-1 bg-white rounded-xl shadow-lg p-4 lg:p-8 flex flex-col gap-4">
+                <main className="flex-1 bg-white rounded-xl shadow-lg p-4 lg:p-8 flex flex-col gap-6">
                     <h1 className="text-2xl md:text-3xl font-bold text-blueDark mb-2 md:mb-4 text-center md:text-left">Tablero Kanban</h1>
-                    <div className='mb-4'>
-                        <h2 className="text-xl md:text-2xl font-bold text-blueDark text-center md:text-left">Nombre del proyecto: {nombreProyecto}</h2>
-                        <h3 className="text-xl md:text-2xl font-bold text-blueDark text-center md:text-left">Nombre del Sprint: {nombreSprint}</h3>
+                    <h2 className="text-xl md:text-2xl font-bold text-blueDark text-center md:text-left">Nombre del proyecto: {nombreProyecto}</h2>
+                    <h3 className="text-xl md:text-2xl font-bold text-blueDark text-center md:text-left">Nombre del Sprint: {nombreSprint}</h3>
+
+                    {/* Barra de búsqueda */}
+                    <div className="flex flex-col gap-4 items-center md:flex-row md:justify-between">
+                        <div className="relative w-full lg:w-auto max-w-xs">
+                            <input 
+                                type="text"
+                                placeholder="Buscar tarea..."
+                                value={busqueda}
+                                onChange={(e) => setBusqueda(e.target.value)}
+                                className="w-full bg-blueblue text-blueDark pl-10 pr-4 py-2 
+                                rounded-lg
+                                placeholder-white"
+                            />
+                            <Search className="absolute left-3 top-2.5 text-white" size={20} />
+                        </div>
+                        
+                        <button 
+                        className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
+                                    hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95"
+                        onClick={completarSprint}>
+                        Completar Sprint
+                        </button>
                     </div>
-
-                        {/* Barra de búsqueda */}
-                        <div className="flex flex-col gap-4 items-center md:flex-row md:justify-between">
-                            <div className="relative w-full lg:w-auto max-w-xs">
-                                <input 
-                                    type="text"
-                                    placeholder="Buscar tarea..."
-                                    value={busqueda}
-                                    onChange={(e) => setBusqueda(e.target.value)}
-                                    className="w-full bg-blueblue text-blueDark pl-10 pr-4 py-2 
-                                    rounded-lg
-                                    placeholder-white"
-                                />
-                                <Search className="absolute left-3 top-2.5 text-white" size={20} />
-                            </div>
-                            
-                            <button 
-                            className="w-full lg:w-auto bg-blueBase text-blueDark font-bold px-4 py-3 rounded-xl hover:bg-turquesa 
-                                        hover:text-white transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95"
-                            onClick={completarSprint}>
-                            Completar Sprint
-                            </button>
-                        </div>
-
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
-                        <div className='border border-BlueDarkDark rounded-2xl p-4 '>
-                            <h1 className='text-center font-bold text-white mb-4 bg-blueDashboard py-2 rounded'>POR HACER</h1>
-                            <div className=''>
-                                {porHacer.map(tarea => 
-                                    <TareaPO key={tarea.id} propTarea={tarea} />
-                                )}
+                    <DragDropContext onDragEnd={onDragEnd}>
+                        <div>
+                            <div className="flex flex-col md:grid md:grid-cols-4 gap-4 min-w-full">
+                                <KanbanColumnPO titulo='Por Hacer' estadoID='Por Hacer' tipoEstado={tareasPorEstado.PorHacer}/>
+                                <KanbanColumnPO titulo='En Curso' estadoID='En Curso' tipoEstado={tareasPorEstado.EnCurso}/>
+                                <KanbanColumnPO titulo='En Revisión' estadoID='En Revision' tipoEstado={tareasPorEstado.EnRevision}/>
+                                <KanbanColumnPO titulo='Finalizado' estadoID='Finalizado' tipoEstado={tareasPorEstado.Finalizado}/>
                             </div>
                         </div>
-
-                        <div className='border border-BlueDarkDark rounded-2xl p-4'>
-                            <h1 className='text-center font-bold text-white mb-4 bg-blueDashboard py-2 rounded'>EN CURSO</h1>
-                            <div>
-                                {enCurso.map(tarea => 
-                                    <TareaPO key={tarea.id} propTarea={tarea}/>
-                                )}
-                            </div>
-                        </div>
-
-                        <div className='border border-BlueDarkDark rounded-2xl p-4'>
-                            <h1 className='text-center font-bold text-white mb-4 bg-blueDashboard py-2 rounded'>EN REVISIÓN</h1>
-                            <div>
-                                {enRevision.map(tarea => 
-                                <TareaPO key={tarea.id} propTarea={{tarea}}/>
-
-                                )}
-                            </div>
-                        </div>
-
-                        <div className='border border-BlueDarkDark rounded-2xl p-4'>
-                            <h1 className='text-center font-bold text-white mb-4 bg-blueDashboard py-2 rounded'>FINALIZADA</h1>
-                            <div>
-                                {finalizada.map(tarea => 
-                                    <TareaPO key={tarea.id} propTarea={tarea}/>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+                    </DragDropContext>     
 
                     <div className="flex justify-end items-center mt-4 mb-4">
                         <Link to={`/crear_tarea/${id_sprint}`}
