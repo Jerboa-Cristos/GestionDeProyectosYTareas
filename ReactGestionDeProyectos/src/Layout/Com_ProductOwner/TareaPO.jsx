@@ -13,7 +13,7 @@ const TareaPO = ({propTarea}) => {
             navigate(`/editar_tarea/${id_sprint}/${propTarea.id}`)
         }
 
-        const eliminarTarea = () => {
+        const eliminar = () => {
             const token = localStorage.getItem('token')
             console.log('Eliminar tarea: ', propTarea.id )
 
@@ -61,7 +61,7 @@ const TareaPO = ({propTarea}) => {
                         onClick={(e) => {
                             e.stopPropagation()
                             setAbriMenu(false)
-                            eliminarTarea()
+                            eliminar()
                         }}>
                             Eliminar tarea
                         </button>

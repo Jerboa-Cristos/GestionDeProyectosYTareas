@@ -33,8 +33,10 @@ function Crear_Tarea () {
             fecha_fin: fechaFin,
             id_sprint: id_sprint,
             id_desarrollador: idDesarrollador
-
         }
+
+        //Test para guardar
+        
         toast.promise(crearTarea(data, id_sprint, token), {
             loading: 'Creando tarea...',
             success: 'Tarea creada con éxito.',
@@ -92,7 +94,7 @@ function Crear_Tarea () {
                         type="text" 
                         className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
                         required
-                        placeholder="Nombre de tarea. Máximo 40 caracteres." 
+                        placeholder="Nombre de tarea. Máximo 100 caracteres." 
                         />
 
                         <label className="text-xs lg:text-sm font-bold text-white uppercase ml-1">Descripción</label>
@@ -100,7 +102,7 @@ function Crear_Tarea () {
                         value={descripcion}
                         onChange={(e) => setDescripcion(e.target.value)} 
                         name="descripcion" 
-                        placeholder="Descripción de la tarea"
+                        placeholder="Descripción de tarea. Máximo 300 caracteres."
                         className="rounded-md w-full mt-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
                         </textarea>
 

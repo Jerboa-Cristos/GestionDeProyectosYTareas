@@ -14,20 +14,4 @@ class DesarrolladorController extends Controller
         $desarrolladores->sortBy('nombre')->values()->all();
         return response()->json($desarrolladores, 200);
     }
-
-    public function asignarProyecto(Request $request, $id) { //PARA HACER UPDATE DEL USUARIO Y AÑADIRLE UN PROYECTO
-    try{
-        $desarrollador_info = $request->validate([
-            'id_proyecto'=>'required|exists:proyecto,id',
-        ]);
-        Desarrollador::findOrFail($id)->update([ 
-            'id_proyecto'=>$desarrollador_info('id_proyecto'),
-        ]);
-
-    } catch(\Exception $e) {
-        return response()->json(['message'=>'NO se pudo hacer asignar el proyecto al usuario'], 404);
-    }
-        return response()->json(['message'=>'Proyecto Asignado'], 200); 
-
-    }
 }

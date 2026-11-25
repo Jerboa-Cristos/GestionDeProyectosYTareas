@@ -47,6 +47,8 @@ function Editar_Proyecto (){
             fecha_fin: fechaFin
         }
 
+        //Test para guardar
+
         toast.promise(actualizarProyecto(id_proyecto, data, token), {
             loading: 'Editando proyecto...',
             success: 'Proyecto editado con éxito.',
@@ -93,7 +95,7 @@ function Editar_Proyecto (){
                                 type="text" 
                                 className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
                                 required
-                                placeholder="Nombre del proyecto. Máximo 40 caracteres."/>
+                                placeholder="Nombre del proyecto. Máximo 100 caracteres."/>
                         </div>
 
                         <div>
@@ -102,7 +104,7 @@ function Editar_Proyecto (){
                                 value={descripcion}
                                 onChange={(e) => setDescripcion(e.target.value)} 
                                 className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
-                                placeholder="Descripción del proyecto"/>
+                                placeholder="Descripción del proyecto. Máximo 300 caracteres"/>
                         </div>
 
                         <div>

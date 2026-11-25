@@ -9,15 +9,11 @@ use App\Http\Controllers\Auth_Api\AdministradorAuthController;
 use App\Http\Controllers\Auth_Api\ProductOwnerAuthController;
 use App\Http\Controllers\Auth_Api\DesarrolladorAuthController;
 //API CRUD
-use App\Http\Controllers\Api\ProductOwnerApiController;
-use App\Http\Controllers\Api\ProyectoApiController;
-use App\Http\Controllers\Api\SprintApiController;
-
-
-use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\ProductOwnerController;
+use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\SprintController;
+use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\DesarrolladorController;
-
 use App\Http\Controllers\TareaController;
 use App\Http\Controllers\ComentarioController;
 
@@ -54,33 +50,31 @@ Route::post('profileProductOwner', [ProductOwnerAuthController::class, 'actualiz
 Route::get('profileProductOwner', [ProductOwnerAuthController::class, 'obtenerDatosProfileProductOwner'])->middleware(['auth.po', 'auth:sanctum']);
 
 //RUTAS CRUD API PRODUCT OWNER , ya que el es el que crea proyectos
-Route::get('listadoProyectos', [ProductOwnerApiController::class, 'index'])->middleware(['auth.po', 'auth:sanctum']);
-Route::post('crearProyecto', [ProductOwnerApiController::class, 'store'])->middleware(['auth.po', 'auth:sanctum']);
-Route::get('mostrarProyecto/{id}', [ProductOwnerApiController::class, 'show'])->middleware(['auth.po', 'auth:sanctum']);
-Route::put('actualizarProyecto/{id}', [ProductOwnerApiController::class, 'update'])->middleware(['auth.po', 'auth:sanctum']);
-Route::delete('eliminarProyecto/{id}', [ProductOwnerApiController::class, 'destroy'])->middleware(['auth.po', 'auth:sanctum']);
+Route::get('listadoProyectos', [ProductOwnerController::class, 'index'])->middleware(['auth.po', 'auth:sanctum']);
+Route::post('crearProyecto', [ProductOwnerController::class, 'store'])->middleware(['auth.po', 'auth:sanctum']);
+Route::get('mostrarProyecto/{id}', [ProductOwnerController::class, 'show'])->middleware(['auth.po', 'auth:sanctum']);
+Route::put('actualizarProyecto/{id}', [ProductOwnerController::class, 'update'])->middleware(['auth.po', 'auth:sanctum']);
+Route::delete('eliminarProyecto/{id}', [ProductOwnerController::class, 'destroy'])->middleware(['auth.po', 'auth:sanctum']);
 
 Route::get('tareasProductOwner', [TareaController::class, 'tareasProductOwner']);
 
 //RUTAS CRUD PROYECTO PARA CREAR/MOSTRAR/ELIMINAR/ACTUALIZAR SPRINT
-Route::get('listadoSprint/{proyecto}', [ProyectoApiController::class, 'index'])->middleware(['auth.po', 'auth:sanctum']);
-Route::post('crearSprint/{proyecto}', [ProyectoApiController::class, 'store'])->middleware(['auth.po', 'auth:sanctum']);
-Route::get('mostrarSprint/{proyecto}/{id}', [ProyectoApiController::class, 'show'])->middleware(['auth.po', 'auth:sanctum']);
-Route::put('actualizarSprint/{proyecto}/{id}', [ProyectoApiController::class, 'update'])->middleware(['auth.po', 'auth:sanctum']);
-Route::delete('eliminarSprint/{proyecto}/{id}', [ProyectoApiController::class, 'destroy'])->middleware(['auth.po', 'auth:sanctum']);
+Route::get('listadoSprint/{proyecto}', [ProyectoController::class, 'index'])->middleware(['auth.po', 'auth:sanctum']);
+Route::post('crearSprint/{proyecto}', [ProyectoController::class, 'store'])->middleware(['auth.po', 'auth:sanctum']);
+Route::get('mostrarSprint/{proyecto}/{id}', [ProyectoController::class, 'show'])->middleware(['auth.po', 'auth:sanctum']);
+Route::put('actualizarSprint/{proyecto}/{id}', [ProyectoController::class, 'update'])->middleware(['auth.po', 'auth:sanctum']);
+Route::delete('eliminarSprint/{proyecto}/{id}', [ProyectoController::class, 'destroy'])->middleware(['auth.po', 'auth:sanctum']);
 
 //RUTAS CRUD TAREAS
-Route::get('listadoTareas/{sprint}', [SprintApiController::class, 'index'])->middleware(['auth.po', 'auth:sanctum']);
-Route::post('crearTarea/{sprint}', [SprintApiController::class, 'store'])->middleware(['auth.po', 'auth:sanctum']);
-Route::get('mostrarTarea/{sprint}/{id}', [SprintApiController::class, 'show'])->middleware(['auth.po', 'auth:sanctum']);
-Route::put('actualizarTarea/{sprint}/{id}', [SprintApiController::class, 'update'])->middleware(['auth.po', 'auth:sanctum']);
-Route::delete('eliminarTarea/{sprint}/{id}', [SprintApiController::class, 'destroy'])->middleware(['auth.po', 'auth:sanctum']);
+Route::get('listadoTareas/{sprint}', [SprintController::class, 'index'])->middleware(['auth.po', 'auth:sanctum']);
+Route::post('crearTarea/{sprint}', [SprintController::class, 'store'])->middleware(['auth.po', 'auth:sanctum']);
+Route::get('mostrarTarea/{sprint}/{id}', [SprintController::class, 'show'])->middleware(['auth.po', 'auth:sanctum']);
+Route::put('actualizarTarea/{sprint}/{id}', [SprintController::class, 'update'])->middleware(['auth.po', 'auth:sanctum']);
+Route::delete('eliminarTarea/{sprint}/{id}', [SprintController::class, 'destroy'])->middleware(['auth.po', 'auth:sanctum']);
 
 //RUTAS PARA EL DESAROLLADOR PARA EL PRODUCT OWNER
 //Ruta para mostrar el listado de desarolladores a la hora de elegir quién hace la tarea
 Route::get('indexDesarrolladores', [DesarrolladorController::class, 'indexDesarrolladores']) ->middleware(['auth.po', 'auth:sanctum']); 
-//Ruta para asignar un proyecto al Desarrollador
-Route::put('asignarProyecto/{id}',[DesarrolladorController::class, 'asignarProyecto']);
 #endregion
 
 #region DESAROLLADOR

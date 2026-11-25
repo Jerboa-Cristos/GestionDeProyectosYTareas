@@ -49,6 +49,8 @@ function Editar_Sprint (){
             nombre, meta_sprint, fecha_inicio: fechaInicio, fecha_fin: fechaFin
         }
 
+        //Test para guardar
+
         toast.promise(actualizarSprint(id_proyecto, id_sprint , data, token), {
             loading: 'Actualizando sprint...',
             success: 'Sprint actualizado con éxito.',
@@ -97,7 +99,7 @@ function Editar_Sprint (){
                             type="text" 
                             className="w-full rounded px-3 py-2 mt-1 bg-blueBase border border-BlueBaseDark"
                             required
-                            placeholder="Título del sprint. Máximo 40 caracteres."/>
+                            placeholder="Título del sprint. Máximo 100 caracteres."/>
                         </div>
 
                         <div>
@@ -106,7 +108,7 @@ function Editar_Sprint (){
                             value={meta_sprint}
                             onChange={(e) => setMetaSprint(e.target.value)} 
                             name="meta_sprint" 
-                            placeholder="Finalidad del sprint"
+                            placeholder="Finalidad del sprint. Máximo 300 caracteres."
                             className=" w-full rounded px-3 py-2 mt-1 h-24 bg-blueBase">
                             </textarea>
                         </div>

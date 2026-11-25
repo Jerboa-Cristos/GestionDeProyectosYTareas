@@ -279,11 +279,7 @@ class AdministradorController extends Controller
 
     //FUNCIONES PARA LISTAR TODOS LOS PROYECTOS
     public function indexProyectosAdmin() {
-        try {
-            $proyectos = Proyecto::all();
-            return response()->json($proyectos);
-        } catch(\Exception $e) {
-            return response()->json(['message'=>'NO se pudo listar proyectos'], 404);
-        }
+        $proyectos = Proyecto::all();
+        return response()->json($proyectos);
     }
 }

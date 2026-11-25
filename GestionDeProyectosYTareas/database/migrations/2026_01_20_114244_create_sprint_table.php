@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('sprint', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 40);
+            $table->string('nombre', 100);
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin')->nullable();
-            $table->text('meta_sprint')->nullable();
+            $table->text('meta_sprint', 300)->nullable();
             $table->timestamps();
 
             //relaciones

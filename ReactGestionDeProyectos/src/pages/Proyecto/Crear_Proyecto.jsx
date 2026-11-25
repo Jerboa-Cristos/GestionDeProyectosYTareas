@@ -19,7 +19,9 @@ function Crear_Proyecto() {
 
     const botonGuardarProyecto = (e) => {
         e.preventDefault()
-        
+
+        //Test para guardar.
+
         toast.promise(crearProyecto(formData, token), {
             loading: 'Creando proyecto...',
             success: 'Proyecto creado con éxito.',
@@ -67,7 +69,7 @@ function Crear_Proyecto() {
                             type="text" 
                             name="nombre" required 
                             className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
-                            placeholder="Nombre del proyecto. Máximo 40 caracteres."
+                            placeholder="Nombre del proyecto. Máximo 100 caracteres."
                             /> 
                         </div>
 
@@ -79,7 +81,7 @@ function Crear_Proyecto() {
                                 descripcion: e.target.value
                             })} 
                             name="descripcion" 
-                            placeholder="Descripción del proyecto" 
+                            placeholder="Descripción del proyecto. Máximo 300 caracteres." 
                             className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
                             </textarea>
                         </div>

@@ -33,12 +33,6 @@ class TareaController extends Controller
             $desarrollador->tarea()->findOrFail($id)->update([
                 'estado'=>$tarea['estado'],
             ]);
-
-        try{
-
-        } catch(\Exception $e) {
-            return response()->json(['message'=>'NO se pudo hacer Update de tarea'], 404);
-        }
         return response()->json(['message'=>'Tarea Actualizada'], 200);
     }
 
@@ -61,6 +55,5 @@ class TareaController extends Controller
         })->with('sprint.proyecto')->orderBy('updated_at', 'desc')->get();
 
         return response()->json($tareas);
-        
     }
 }

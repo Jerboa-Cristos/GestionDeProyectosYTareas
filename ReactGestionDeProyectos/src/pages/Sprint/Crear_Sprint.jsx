@@ -25,6 +25,9 @@ function Crear_Sprint () {
                 fecha_inicio: fechaInicio, 
                 fecha_fin: fechaFin
             }
+
+            //Test para guardar
+            
             toast.promise(crearSprint(data, id_proyecto, token), {
                 loading: 'Creando sprint...',
                 success: 'Sprint creado con éxito.',
@@ -70,7 +73,7 @@ function Crear_Sprint () {
                                 onChange={(e) => setNombre(e.target.value)}
                                 type="text" 
                                 className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none"
-                                required placeholder="Título del sprint. Máximo 40 caracteres."/>
+                                required placeholder="Título del sprint. Máximo 100 caracteres."/>
                         </div>
 
                         <div>
@@ -79,7 +82,7 @@ function Crear_Sprint () {
                             value={meta}
                             onChange={(e) => setMeta(e.target.value)} 
                             name="meta_sprint" 
-                            placeholder="Finalidad del sprint"
+                            placeholder="Finalidad del sprint. Máximo 300 caracteres."
                             className="rounded-md w-full mt-2 mb-2 p-1 bg-blueBase focus:ring-2 focus:ring-turquesa focus:outline-none">
                             </textarea>
                         </div>
